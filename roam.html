@@ -95,7 +95,7 @@ div.sec{display:flex;justify-content:space-between;align-items:baseline;padding:
 .acts{display:flex;align-items:center;gap:4px;padding:12px 12px 0 18px}
 #tb{position:absolute;bottom:0;left:0;right:0;height:84px;padding:0 8px 28px;background:var(--bg);border-top:1px solid var(--s3);display:grid;grid-template-columns:repeat(5,1fr);z-index:20;transition:transform .3s var(--ease)}#tb.off{transform:translateY(120px)}
 #tb button{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:9px;font-size:10px;line-height:12px;font-weight:700;color:var(--tx3);position:relative}
-#tb .ti{position:relative;display:grid}#tb .on .av{box-shadow:0 0 0 2px var(--black)}
+#tb .ti{position:relative;display:grid}#tb .on .av{box-shadow:0 0 0 2px var(--teal)}
 #tb .ctr{padding-top:44px}#tb .circ{position:absolute;left:50%;top:-26px;margin-left:-32px;width:64px;height:64px;border-radius:50%;background:var(--ac);color:var(--black);border:4px solid var(--bg);display:grid;place-items:center;transition:transform .1s,background .2s}
 #tb .ctr:active .circ{transform:scale(.94)}#tb .ctr.on .circ{background:var(--black);color:var(--ac)}
 .bdg{position:absolute;right:-9px;top:-5px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--red);color:var(--white);font-size:10px;line-height:16px;font-weight:700;text-align:center;font-style:normal;box-shadow:0 0 0 2px var(--bg)}.bdg.dot{min-width:9px;width:9px;height:9px;padding:0;right:-4px;top:-3px}
@@ -227,6 +227,147 @@ body{letter-spacing:0}h1{font-size:30px;line-height:35px;letter-spacing:-.03em}h
 .rg::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--white);margin-top:-11px;box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .rg::-moz-range-thumb{width:28px;height:28px;border:0;border-radius:50%;background:var(--white);box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .rgl{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--tx3);margin-top:2px}
+/* =========================================================
+   7. GUMMY SYSTEM v3. No borders anywhere.
+      Blue + white text = actions · Teal / light teal = accents · Pink = tags
+      Depth comes from soft fills, an inner highlight and a soft drop shadow.
+   ========================================================= */
+:root{--dusk:#1947E6;--dusk-d:#1238B5;--dusk-t:#E9EDFF;--teal:#00C6AE;--teal-m:#61E4C5;--teal-t:#D6FCF7;--teal-tt:#EEFDFB;--ink:#18191F;
+--tag:#FFC6DF;--tag-d:#FF9EC8;--tag-ink:#5A0F34;--alert:#F0483E;--fork:#FFC93C;
+--s1:#F6F7FA;--s2:#EEF0F5;--s3:#DCE0E9;--tx2:#5B6070;--tx3:#8A8F9E;
+--gum:inset 0 -3px 0 rgba(24,25,31,.16),inset 0 2px 0 rgba(255,255,255,.34)}
+/* --- Button: blue + white text. Sizes: lg 52 / sm2 36 / xs 28 --- */
+.btn{height:52px;border-radius:999px;background:var(--dusk);color:#fff;font-weight:700;font-size:16px;box-shadow:var(--gum),0 8px 18px rgba(25,71,230,.26);transition:transform .12s,box-shadow .12s,background .15s}
+.btn:active{transform:translateY(2px);box-shadow:inset 0 -1px 0 rgba(24,25,31,.16),inset 0 2px 0 rgba(255,255,255,.3),0 3px 8px rgba(25,71,230,.22)}
+.btn.y{background:var(--dusk);color:#fff}
+.btn.sec,.btn.out{background:var(--dusk-t);color:var(--dusk);box-shadow:inset 0 -3px 0 rgba(25,71,230,.14)}.btn.sec:active{box-shadow:inset 0 -1px 0 rgba(25,71,230,.14)}
+.btn.dg{background:#FDEBEC;color:#BE2B31;box-shadow:inset 0 -3px 0 rgba(190,43,49,.14)}
+.btn:disabled{background:var(--s2);color:var(--tx3);box-shadow:none;opacity:1;transform:none}
+.btn.sm2{height:36px;padding:0 16px;font-size:13px;box-shadow:var(--gum),0 4px 10px rgba(25,71,230,.2)}.btn.sec.sm2{box-shadow:inset 0 -2px 0 rgba(25,71,230,.14)}
+.btn.xs{height:28px;padding:0 12px;font-size:12px;width:auto;box-shadow:var(--gum)}
+.btn.row2{justify-content:space-between;padding:0 8px 0 22px}
+/* --- Icon button --- */
+.ib{background:transparent}.ib.f{background:var(--s2)}.ib.t{background:var(--teal-t)}.ib.p{background:var(--dusk);color:#fff;box-shadow:var(--gum)}.ib.xs{width:32px;height:32px}
+.top .ib{background:rgba(255,255,255,.62)}
+/* --- Filter pill: light teal -> teal --- */
+.pill{background:var(--teal-tt);color:var(--ink);font-weight:700;box-shadow:inset 0 -2px 0 rgba(0,198,174,.2)}
+.pill.on{background:var(--teal);color:#042A25;box-shadow:inset 0 -2px 0 rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.3)}
+/* --- Tag: pink, always --- */
+.tag{height:24px;padding:0 10px;border-radius:999px;background:var(--tag);color:var(--tag-ink);font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:4px;flex:none;box-shadow:inset 0 -2px 0 rgba(90,15,52,.1);white-space:nowrap}
+.tag.ok{background:var(--tag);color:var(--tag-ink)}.tag.d{background:var(--tag-d)}
+.tag2{height:34px;padding:0 6px 0 14px;border:0;background:var(--tag);color:var(--tag-ink);font-weight:700;box-shadow:inset 0 -2px 0 rgba(90,15,52,.12)}
+.tag2 button{background:rgba(255,255,255,.6);color:var(--tag-ink);width:22px;height:22px}.tag2 button:active{background:#fff}
+.tbx{background:var(--s1);border-radius:20px}.tin{color:var(--tx2)}.tpl{background:var(--teal);color:#042A25;box-shadow:var(--gum)}.tpl:active{background:var(--teal-m)}
+.nb{min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--alert);color:#fff;font:800 11px/19px var(--font);text-align:center;display:inline-block}
+/* --- Inputs --- */
+.in{height:52px;border:0;border-radius:16px;background:var(--s2);padding:0 16px;font-weight:500;transition:box-shadow .15s,background .15s}.in:focus{outline:none;background:#fff;box-shadow:0 0 0 3px rgba(0,198,174,.5)}
+.in.bad{background:#FFF1F1;box-shadow:0 0 0 2px #E5484D}textarea.in{height:auto;padding:14px 16px;line-height:22px}
+.fi{display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;border-radius:16px;background:var(--s2);color:var(--tx2);transition:box-shadow .15s,background .15s;width:100%}
+.fi:focus-within{background:#fff;box-shadow:0 0 0 3px rgba(0,198,174,.5)}.fi input,.fi select{flex:1;min-width:0;height:100%;background:none;border:0;outline:none;color:var(--ink);font-weight:500;font-size:15px}
+.fi.sr{border-radius:999px;box-shadow:0 4px 16px rgba(24,25,31,.08);background:#fff}.fi.sr:focus-within{box-shadow:0 0 0 3px rgba(0,198,174,.5)}
+.fi .x{width:28px;height:28px;border-radius:50%;background:var(--s2);display:grid;place-items:center;color:var(--tx2);flex:none}
+.fi.sel{padding-right:10px}.fi.sel select{-webkit-appearance:none;appearance:none;font-weight:600;cursor:pointer}.chev{width:32px;height:32px;border-radius:11px;background:var(--teal);color:#042A25;display:grid;place-items:center;flex:none;box-shadow:var(--gum);pointer-events:none}
+/* --- Toggle --- */
+.sw{width:52px;height:30px;background:#D3D8E3;box-shadow:inset 0 2px 4px rgba(24,25,31,.14)}.sw::after{width:24px;height:24px;top:3px;left:3px;box-shadow:0 2px 5px rgba(24,25,31,.28)}.sw.on{background:var(--teal)}.sw.on::after{transform:translateX(22px)}
+/* --- Radio + Checkbox --- */
+.rd,.cx{display:flex;align-items:center;gap:14px;width:100%;padding:12px 24px;min-height:60px;text-align:left}.rd:active,.cx:active{background:var(--s1)}
+.rdo,.cbx{width:26px;height:26px;flex:none;background:var(--s2);display:grid;place-items:center;box-shadow:inset 0 2px 3px rgba(24,25,31,.1);transition:background .15s,transform .15s;color:transparent}
+.rdo{border-radius:50%}.cbx{border-radius:9px}
+.rd[aria-checked=true] .rdo{background:var(--teal);box-shadow:var(--gum)}.rd[aria-checked=true] .rdo::after{content:"";width:10px;height:10px;border-radius:50%;background:#fff}
+.cx[aria-checked=true] .cbx{background:var(--teal);color:#042A25;box-shadow:var(--gum)}
+.rd .gr b,.cx .gr b{display:block}
+/* --- Segment control --- */
+.seg{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--s2)}
+.seg button{flex:1;min-width:0;height:40px;padding:0 8px;border-radius:999px;font-weight:700;font-size:14px;text-align:center;color:var(--tx2);transition:background .2s,color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg button[aria-checked=true]{background:var(--teal);color:#042A25;box-shadow:var(--gum)}
+/* --- Stepper (qty) --- */
+.qty{display:inline-flex;align-items:center;gap:6px;padding:4px;border-radius:999px;background:var(--s2)}
+.qty button{width:38px;height:38px;border-radius:50%;background:var(--teal);color:#042A25;display:grid;place-items:center;box-shadow:var(--gum);transition:transform .1s}.qty button:active{transform:scale(.92)}.qty button:disabled{background:var(--s3);box-shadow:none;color:var(--tx3)}
+.qty output{min-width:34px;text-align:center;font-weight:800;font-size:17px}
+/* --- Pager dots --- */
+.dots{gap:5px}.dots i{width:6px;height:6px;border-radius:99px;background:#fff;opacity:.6;transition:width .2s}.dots i:first-child{width:18px;opacity:1;background:var(--teal-m)}
+/* --- Slider --- */
+.rg::-webkit-slider-thumb{box-shadow:0 3px 10px rgba(24,25,31,.28),inset 0 -2px 0 rgba(24,25,31,.08)}
+/* --- Tab bar --- */
+#tb{border-top:0;box-shadow:0 -10px 30px rgba(24,25,31,.07)}#tb .on{color:var(--ink)}#tb .on .ti svg{fill:var(--teal-m);stroke:var(--ink)}
+#tb .ctr.on .circ{background:var(--teal);color:#fff}
+.bdg{background:var(--alert)}.bd2{background:var(--alert)}
+/* --- Floating actions --- */
+#fab,#psave{background:var(--dusk);color:#fff;height:52px;padding:0 26px;font-size:16px;}
+#psave:disabled{background:var(--s2);color:var(--tx3);box-shadow:var(--gum);opacity:1}
+.gob{background:var(--dusk);color:#fff;box-shadow:var(--gum),0 8px 18px rgba(25,71,230,.26)}.gob:disabled{background:var(--s2);color:var(--tx3);box-shadow:none}
+.kb{background:var(--s2)}
+/* --- Trip stepper + timeline: filled, no rings --- */
+.sd{border:0;background:var(--s2);color:var(--tx3)}.stp.done .sd{background:var(--teal);color:#042A25}.stp.on .sd{background:var(--dusk);color:#fff}
+.stp::before{height:4px;border-radius:2px;background:var(--s2)}.stp.done::before,.stp.on::before{background:var(--teal)}.stp.lock::before{background:var(--s2)}
+.nd{border:0;background:color-mix(in srgb,var(--lc) 34%,#fff);color:var(--ink)}.tn.org .nd{background:var(--ink)}.tn.cur .nd{background:var(--lc);color:var(--lt)}.tn.done .nd{background:var(--ink);color:#fff}
+.tc .ln::after{border-radius:2px}
+.tn .tag{margin-left:6px;vertical-align:1px}
+/* --- Cards without outlines --- */
+.empty{background:var(--s1)}.ban{background:var(--s1)}.si{background:var(--s2)}
+.tile{background:var(--s2)}.tile:active{background:var(--s3)}
+.fld{box-shadow:0 6px 18px rgba(24,25,31,.1)}.fld.hl{box-shadow:0 6px 18px rgba(24,25,31,.1)}
+.chip{box-shadow:0 6px 18px rgba(24,25,31,.14)}
+/* =========================================================
+   8. MAP (real tiles + overlays)
+   ========================================================= */
+.mp{position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:grab;background:radial-gradient(circle at 30% 20%,#F6F7F9,#E9EDF0)}.mp.drag{cursor:grabbing}
+.mpl{position:absolute;inset:0;will-change:transform}
+.mp-t{position:absolute;inset:0;overflow:visible}.mp-t img{position:absolute;display:block;max-width:none;opacity:0;transition:opacity .3s;user-select:none;-webkit-user-drag:none;filter:saturate(.78) contrast(.92) brightness(1.04)}.mp-t img.ld{opacity:1}
+.mp-r{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(24,25,31,.22))}
+.mp-r path{fill:none;stroke-linecap:round;stroke-linejoin:round}.mp-r .rh{stroke:transparent;stroke-width:28;pointer-events:stroke;cursor:pointer;filter:none}
+.mp-p{position:absolute;inset:0;pointer-events:none}.mp-p>*{pointer-events:auto}
+.mp-fade{position:absolute;left:0;right:0;top:0;height:170px;background:linear-gradient(rgba(255,255,255,.92),rgba(255,255,255,.55) 55%,rgba(255,255,255,0));pointer-events:none}
+.mp-attr{position:absolute;left:12px;bottom:90px;font-size:9px;line-height:12px;color:#6B7280;pointer-events:none;z-index:1}
+.pn{position:absolute;width:40px;height:50px;margin:0;transform:translate(-50%,-100%);filter:drop-shadow(0 6px 6px rgba(24,25,31,.3));transition:transform .2s var(--ease)}.pn:active{transform:translate(-50%,-100%) scale(.94)}
+.pn svg.t{position:absolute;inset:0;width:100%;height:100%}.pn svg.t path{fill:var(--pc,#00B8A0)}
+.pn i.n{position:absolute;left:0;right:0;top:9px;height:20px;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:var(--ink)}.pn i.n svg{display:block}
+.pn .bg{position:absolute;right:-8px;top:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--alert);color:#fff;font:800 11px/20px var(--font);text-align:center;box-shadow:0 3px 6px rgba(240,72,62,.45)}
+.pn.sel{transform:translate(-50%,-100%) scale(1.2);z-index:9999!important}.pn.dim{opacity:.55}
+.pn.alt{--pc:#61E4C5}.pn.alt.sel{--pc:#00C6AE}
+.mdot{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--pc);box-shadow:0 0 0 4px rgba(255,255,255,.85),0 2px 5px rgba(24,25,31,.3)}
+.pl2{position:absolute;transform:translate(-50%,-64px);background:var(--ink);color:#fff;border-radius:10px;padding:4px 10px;font-weight:700;font-size:12px;white-space:nowrap;z-index:9998;pointer-events:none;box-shadow:0 6px 14px rgba(24,25,31,.25)}
+.pb{position:absolute;transform:translate(-50%,-50%);background:var(--fork);color:var(--ink);border-radius:999px;padding:3px 10px;font-weight:800;font-size:12px;box-shadow:var(--gum),0 4px 10px rgba(24,25,31,.2);cursor:pointer;z-index:5}
+.you{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#1947E6;box-shadow:0 0 0 3px #fff,0 0 0 9px rgba(25,71,230,.18);z-index:3;pointer-events:none}
+.mtop2{position:absolute;top:56px;left:16px;right:16px;z-index:6;display:flex;flex-direction:column;gap:10px}.mrow{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.mrow .chip{min-width:0;max-width:56%}.mrow .chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vbtn{height:44px;padding:0 18px 0 14px;border-radius:999px;background:var(--dusk);color:#fff;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--gum),0 8px 18px rgba(25,71,230,.3);white-space:nowrap;flex:none}.vbtn:active{transform:translateY(2px)}
+.pcs{display:flex;gap:8px}.pc2{flex:1;min-width:0;height:48px;padding:0 12px;border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(24,25,31,.14);display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;text-align:left;transition:background .2s}
+.pc2 .gr{min-width:0}.pc2 .gr span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pc2 .gr small{display:block;font-weight:600;font-size:11px;color:var(--tx2)}
+.pc2[aria-pressed=true]{background:var(--teal);box-shadow:var(--gum),0 8px 18px rgba(0,198,174,.3)}.pc2[aria-pressed=true] small{color:#05403A}.pc2 .sw2{width:10px;height:10px;border-radius:50%;flex:none}
+.fcard{position:absolute;left:12px;right:12px;bottom:96px;z-index:16;background:#fff;border-radius:26px;padding:18px;box-shadow:0 14px 44px rgba(24,25,31,.2);display:flex;flex-direction:column;gap:14px;animation:up .35s var(--ease)}
+@keyframes up{from{transform:translateY(24px);opacity:0}}
+.fcard .fh{display:flex;gap:12px;align-items:center}.fcard h2{font-size:19px;line-height:25px}
+.fic{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;flex:none}.fic.al{background:#FFE6E3;color:var(--alert)}.fic.tl{background:var(--teal-t);color:#05544B}.fic.fk{background:#FFF1C2;color:#7A5300}
+.pop{position:absolute;left:12px;right:12px;bottom:258px;z-index:17;background:#fff;border-radius:22px;padding:12px;box-shadow:0 14px 44px rgba(24,25,31,.22);display:flex;gap:12px;align-items:center;animation:up .3s var(--ease)}
+.pop .ph{position:relative;width:76px;height:76px;border-radius:16px;overflow:hidden;flex:none;background:var(--teal-m)}.pop .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pop .gr b{display:block;font-size:16px;line-height:21px}.pop .tag{margin-top:6px}
+.sel1{display:flex;gap:12px;align-items:center;color:var(--tx2)}.sel1 .ring{width:26px;height:26px;border-radius:50%;background:var(--s2);flex:none;box-shadow:inset 0 2px 3px rgba(24,25,31,.1)}
+.conn{margin:-6px 0 -6px 12px;width:3px;height:14px;border-radius:2px;background:var(--s3)}
+.num2{width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:17px;flex:none}
+.art{border-radius:22px;overflow:hidden;background:var(--teal-tt)}.art svg{display:block;width:100%;height:auto}
+.xrow{display:flex;gap:14px;align-items:center;padding:12px 24px;min-height:68px;width:100%;text-align:left}.xrow:active{background:var(--s1)}
+.xic{width:44px;height:44px;border-radius:15px;background:var(--teal-t);color:#05544B;display:grid;place-items:center;flex:none}
+.note{display:flex;gap:10px;align-items:flex-start;margin:6px 24px 0;padding:12px 14px;border-radius:16px;background:var(--s1);color:var(--tx2);font-size:13px;line-height:18px}.note svg{flex:none;margin-top:1px}
+.chg{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--s1)}
+.pathseg{margin:14px 24px 0}.altrow{padding:12px 24px 0;display:flex;flex-direction:column;gap:6px}.altrow .cap{text-align:center}
+.youpath{margin:12px 24px 0;padding:12px 14px;border-radius:16px;background:#FFF6D6;display:flex;gap:10px;align-items:center;color:#5C4200;font-size:13px;line-height:18px;font-weight:600}
+/* =========================================================
+   9. CHAT + PROFILE
+   ========================================================= */
+.top .tt{line-height:19px}.top .tt .cap{display:block;font-weight:600}
+.cs{display:block;padding:0 24px 8px}.cl{margin-top:4px}
+.fcm{display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:10px;box-shadow:0 6px 18px rgba(24,25,31,.1);text-align:left;width:100%}.fcm .xic{background:#FFF1C2;color:#7A5300}
+.bub .fcm{margin:2px 0 0;min-width:220px}.m.me .bub .fcm{color:var(--ink)}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 24px;margin-top:22px}.stat3 div{background:var(--teal-tt);border-radius:20px;padding:14px 8px;text-align:center;box-shadow:inset 0 -3px 0 rgba(0,198,174,.14)}.stat3 b{display:block;font-size:22px;line-height:26px;font-weight:800}.stat3 span{font-size:12px;font-weight:700;color:var(--tx2)}
+.avwrap{position:relative}.avedit{position:absolute;right:-4px;bottom:-2px;width:38px;height:38px;border-radius:50%;background:var(--dusk);color:#fff;display:grid;place-items:center;box-shadow:var(--gum),0 4px 10px rgba(25,71,230,.3)}
+.fl{display:flex;flex-direction:column;gap:14px;padding:0 24px}.fl .rowx{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.rate{display:flex;gap:4px}.rate button{width:44px;height:44px;display:grid;place-items:center;color:#D5D9E3;transition:transform .12s,color .12s}.rate button[aria-pressed=true]{color:#FFB400}.rate button:active{transform:scale(.88)}
+.sub2{font-weight:600;font-size:13px;color:var(--tx2)}
+
+.av.xl{box-shadow:none}#dev:has(#mini:not([hidden])) #psave{bottom:178px}
+input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 2px}
 </style></head>
 <body>
 <div id="dev">
@@ -239,6 +380,9 @@ body{letter-spacing:0}h1{font-size:30px;line-height:35px;letter-spacing:-.03em}h
  <div id="ly"><div class="scrim" data-a="closeLy"></div><div id="lyc" role="dialog" aria-modal="true" tabindex="-1"></div></div>
  <div id="toast" role="status" aria-live="polite"></div><div id="hi"></div>
 </div>
+<template data-art="fork-intro"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
+<template data-art="fork-clear"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
+<template data-art="fork-done"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
 <script>
 const I={'arrow-left':'<path d="M19 12H5M12 19l-7-7 7-7"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>','map-pin':'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',search:'<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>',send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>',
 'message-circle':'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/>','thumbs-up':'<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>','thumbs-down':'<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.7a2 2 0 0 0-2 1.7l-1.4 9a2 2 0 0 0 2 2.3H10zM17 2h2.7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H17"/>',
@@ -281,6 +425,43 @@ T.forEach(t=>{[t.c,t.b]=TC[t.id];t.vs=Object.fromEntries([...t.m].map(k=>[k,1]))
 Object.assign(trip('jb').vs,{P:0,L:0});Object.assign(trip('cn').vs,{P:0,E:0,J:0});Object.assign(trip('game').vs,{P:0});
 trip('jb').stops.push(sp('Clown Show','20:00','smile','Live show · 90 min','Do',30,26,'25 min by car',0,3));
 [[2,1],[3,0],[2,1],[3,0]].forEach((v,i)=>{const s=trip('jb').stops[i];s.u=v[0];s.d=v[1]});trip('cn').stops.forEach((s,i)=>{s.u=[2,1,3][i];s.d=[0,1,0][i]});
+/* ===== v3 DATA: real coordinates, stop attributes, prototype clock ===== */
+const HOME=[1.3509,103.8485]; /* "Your location": Bishan */
+const GEO={'MacRitchie Reservoir':[1.3434,103.8349],'TreeTop Walk':[1.3528,103.8198],'Lornie Trail':[1.3398,103.8302],'Books Actually':[1.2836,103.8316],'Tiong Bahru Bakery':[1.2866,103.8322],'Arcade at Bugis+':[1.2995,103.8555],'Burger Shot':[1.3012,103.8590],'The Loneliest Robot in Great Britain':[1.4605,103.7655],'Dim Sum Ting':[1.4596,103.7612],'Super Mall':[1.4640,103.7640],'Legoland Malaysia':[1.4266,103.6307],'Clown Show':[1.4587,103.7681],'Chengdu Panda Base':[30.7340,104.1450],'Jinli Ancient Street':[30.6450,104.0490],'Hotpot dinner':[30.6552,104.0817],'Marina South Pier':[1.2708,103.8628],'Lazarus Beach':[1.2234,103.8587],'Nando’s Plaza Singapura':[1.3003,103.8453],'East Coast Park':[1.3010,103.9120]};
+const ORG={hike:[1.3376,103.8397],cn:[30.5785,103.9470]};
+const CITY={Malacca:[2.1896,102.2501],'Johor Bahru':[1.4927,103.7414],Penang:[5.4141,100.3288],Bangkok:[13.7563,100.5018],'Kuala Lumpur':[3.139,101.6869]};
+/* outdoor? intensity 0-3. Drives which stops an exigency flags. */
+const ATTR={'MacRitchie Reservoir':{out:1,int:1},'TreeTop Walk':{out:1,int:2},'Lornie Trail':{out:1,int:3},'Legoland Malaysia':{out:1,int:2},'Chengdu Panda Base':{out:1,int:1},'Jinli Ancient Street':{out:1,int:1},'Marina South Pier':{out:1,int:1},'Lazarus Beach':{out:1,int:2},'East Coast Park':{out:1,int:1}};
+const attr=s=>ATTR[s.n]||{out:/park|trail|beach|walk|hike|viewpoint/i.test(s.n+' '+s.s)?1:0,int:0};
+const CLOCK=new Date(2026,9,31,19,41); /* the prototype's "now" (matches the status bar) */
+const hav=(a,b)=>{const r=Math.PI/180,x=Math.sin((b[0]-a[0])*r/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin((b[1]-a[1])*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+const legTxt=(a,b)=>{const k=hav(a,b);return k<1.3?`${Math.max(2,Math.round(k*1000/80))} min walk`:`${Math.max(5,Math.round(k*2.2))} min by car`};
+const cityC=t=>CITY[t.dest]||HOME;
+const sll=(t,s)=>s.ll||(s.ll=GEO[s.n]||(c=>[c[0]+(38-s.y)*.0009,c[1]+(s.x-50)*.0011])(cityC(t)));
+const oll=t=>t.ol||(t.ol=ORG[t.id]||(t.dest?cityC(t):HOME));
+const pathPts=(t,stops)=>[oll(t),...stops.map(s=>sll(t,s))];
+const allPts=t=>[...pathPts(t,t.stops),...(t.fork?t.fork.stops.map(s=>sll(t,s)):[])];
+/* paths (forks): a trip has a main path and at most ONE extra path */
+const pn=k=>k=='P'?(S.p.name||'You'):PE[k][2];
+const myPath=t=>t.fork&&t.fork.members.includes('P')?'fork':'main';
+function pstops(t,p){return p=='fork'&&t.fork?t.fork.stops:baseStops(t)}
+const vpath=t=>t.fork?(S.pv||myPath(t)):'main',vstops=t=>pstops(t,vpath(t));
+const mainMembers=t=>[...t.m].filter(k=>!(t.fork&&t.fork.members.includes(k)));
+const startAt=t=>{const[h,m]=t.t1.split(':').map(Number),d=toDate(t.date);return new Date(d.getFullYear(),d.getMonth(),d.getDate(),h,m)};
+const endAt=t=>{const ms=baseStops(t),l=ms[ms.length-1],[h,m]=(l?l.t:t.t1).split(':').map(Number),d=toDate(t.date);return new Date(d.getFullYear(),d.getMonth(),d.getDate(),h+2,m)};
+const forkWin=t=>CLOCK>=new Date(startAt(t)-24*36e5)&&CLOCK<=endAt(t); /* 24h before start, and during the trip */
+/* exigencies: what changed -> which stops can't be done */
+const EXI=[{id:'weather',ic:'cloud-rain',n:'Inclement weather',s:'Outdoor stops get flagged',f:s=>attr(s).out},
+{id:'stye',ic:'eye',n:'Eye stye',s:'Flags high-intensity outdoor stops. Calm, clean ones stay',f:s=>attr(s).out&&attr(s).int>=3,prof:'Chronic eye stye'},
+{id:'unwell',ic:'activity',n:'Feeling unwell',s:'Flags anything tiring',f:s=>attr(s).int>=2},
+{id:'late',ic:'clock',n:'Running late',s:'Flags the next stop on the clock',f:(s,i)=>i==Math.min(S.leg,99)}];
+/* nearby alternatives are indoor, calm and clean (placeholder places) */
+const ALTP=[{n:'Studio Asobi',s:'Pottery studio · Indoor',k:'Do',i:'image',sc:4.7,rv:'1.2k',pr:'$25–$45',tag:'From your saved reels',why:'Hands-on and low-key. Indoors, clean air, no glare.'},
+{n:'Tea & Tales Café',s:'Café · Air-con',k:'Eat',i:'coffee',sc:4.5,rv:'860',pr:'$8–$18',tag:'Saved by Raymond',why:'Quiet corner seats and a long tea menu.'},
+{n:'The Little Gallery',s:'Gallery · Free entry',k:'Do',i:'image',sc:4.4,rv:'430',pr:'Free',tag:'Popular nearby',why:'A calm, air-conditioned hour with local artists.'},
+{n:'Fold Board Game Café',s:'Board games · Indoor',k:'Do',i:'smile',sc:4.6,rv:'2.1k',pr:'$12–$20',tag:'Saved by Jason',why:'Group-friendly and easy on the eyes.'}];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+
 const POOL=[{n:'House of Gonjol',s:'Art centre · Jln Indera',i:'image',k:'Do'},{n:'Paradigm Mall',s:'Mall · Skudai',i:'bag',k:'Shop'},{n:'Mid Valley Southkey',s:'Mall · Southkey',i:'bag',k:'Shop'},{n:'Hutan Bandar Park',s:'Park · Larkin',i:'sun',k:'Do'}];
 const R=[{h:'Trying shark restaurant!',n:'Shark Restaurant',by:'Bullshark Testosterone',loc:'Beqa Lagoon',c:'cp',i:'anchor',sc:'4.6',pr:'$1–$10',d:'Where sharks come to dine. Get up close with the locals.',f:1},{h:'DIY your own burger',n:'Burger Shot',by:'Moo Moo Chef',loc:'Bugis, Singapore',c:'cg',i:'bag',sc:'4.8',pr:'$10–$20',d:'From slaughter to grill, it’s all you.',f:1},{h:'Dim sum at 2am',n:'Dim Sum Ting',by:'Hungry Eustace',loc:'Jalan Wong Ah Fook, JB',c:'cy',i:'coffee',sc:'4.5',pr:'$5–$15',d:'Steamer baskets stacked to the ceiling.',f:1},{h:'Sunrise yoga on a rooftop',n:'Skyline Studio',by:'Zen Zoe',loc:'Tanjong Pagar',c:'cb',i:'sun',sc:'4.7',pr:'$15–$25',d:'Stretch above the skyline as the sun comes up.',f:0},{h:'Hidden arcade bar',n:'Pixel Pour',by:'Arcade Andy',loc:'Haji Lane',c:'cr',i:'smile',sc:'4.4',pr:'$10–$30',d:'Retro cabinets, craft sodas and a heated leaderboard.',f:0}];
 const CH=[{n:'JB Daytrip',i:'truck',c:'cy',t:'2m',u:2,u2:'PREL',r:['Nice, noted!','Count me in','Haha agreed'],m:[['E','ok who’s driving on the 19th?'],['R','I can! Leaving at 8:30'],['P','Perfect. Voted for dim sum first btw'],['L','ngl the robot thing sounds weird. I’m in though'],['E','Voting closes 9 Nov, don’t forget!']]},{n:'China 3D2N',i:'globe',c:'cb',t:'1h',u:0,u2:'PLJ',r:['On it tonight','Sounds good!'],m:[['L','Voting is open!'],['P','On it tonight']]},{n:'MacRitchie Hike',i:'sun',c:'cg',t:'Mon',u:0,u2:'PJR',r:['See you at 7!','Bringing snacks too'],m:[['J','Meet at the MRT exit at 7am'],['P','Bringing snacks']]}];
@@ -294,7 +475,7 @@ const newF=()=>({dest:'Malacca',start:'2026-11-14',end:'2026-11-15',budget:300,c
 /* ===== STATE + RULES ===== */
 const S={tab:'trips',prev:'trips',stack:{trips:['trips'],map:['map'],reels:['reels'],chat:['chat'],profile:['profile']},cur:'hike',step:2,seg:'up',cat:'All',mapTrip:'hike',nav:0,leg:0,mx:0,fyp:0,th:0,typing:0,inv:true,saved:{0:1,1:1},sh:[],rs:[],q:'',undo:null,newReel:1,f:newF(),fe:{},p:{name:'Plaise',diet:['Vegetarian'],likes:['Cafes','Museums','Hikes'],access:['Step-free routes'],budget:300,dirty:0}};
 const needs=t=>t.st=='voting'&&!t.vs.P?t.stops.filter(s=>s.m==0).length:0;
-const pend=t=>Object.keys(t.vs).filter(k=>!t.vs[k]),fin=t=>t.st!='voting'||!pend(t).length,inItin=s=>s.u>=s.d,mstops=t=>fin(t)?t.stops.filter(inItin):t.stops;
+const pend=t=>Object.keys(t.vs).filter(k=>!t.vs[k]),fin=t=>t.st!='voting'||!pend(t).length,inItin=s=>s.u>=s.d,baseStops=t=>fin(t)?t.stops.filter(inItin):t.stops,mstops=t=>vstops(t);
 const UP=()=>T.filter(t=>!t.left&&dd(t.date)>=0).sort((a,b)=>a.date-b.date),PAST=()=>T.filter(t=>!t.left&&dd(t.date)<0).sort((a,b)=>b.date-a.date),OV=()=>UP().filter(t=>t.stops.length);
 const tasks=()=>[...(S.inv?['inv']:[]),...T.filter(t=>!t.left&&t.st=='voting'&&!t.vs.P).map(t=>t.id)];
 const unread=()=>CH.reduce((a,c)=>a+c.u,0),downvoted=t=>t.stops.some(s=>s.m==-1);
@@ -318,7 +499,7 @@ const Sign=(t,sub,r='')=>`<div class="sign l-${t.c}">${Bullet(t,'l')}<div class=
 const StopIc=s=>`<div class="si">${ic(s.i,20)}</div>`,Mi=(i,l,a,x='')=>`<button class="mi ${x}" data-a="${a}">${ic(i)}${l}</button>`;
 const stxt=t=>fin(t)?(t.st=='done'?'<span class="dotc off"></span>Completed':'<span class="dotc ok"></span>Itinerary ready'):'<span class="dotc wait"></span>Voting open';
 const Stepper=(t,at,live)=>{const dn=t?[1,+!!t.vs.P,+fin(t)]:[0,0,0],g=live?'button':'div';return `<div class="step${t?' l-'+t.c:''}"${live?' role="tablist"':''}>${['Details','Vote','Itinerary'].map((n,i)=>{const lk=t&&i==2&&!fin(t),on=i==at;return `<${g} class="stp${dn[i]?' done':''}${on?' on':''}${lk?' lock':''}"${live?` role="tab" aria-selected="${on}" data-a="step:${i}"`:''}><span class="sd">${lk?ic('lock',12):dn[i]?ic('check',13):i+1}</span>${n}</${g}>`}).join('')}</div>`};
-const Timeline=(t,o)=>`<ol class="tl l-${t.c}">${o.origin?`<li class="tn org"><span class="nd"></span><div class="gr"><b>${o.origin}</b><div class="cap sm">Start</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}${s.tr}</span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div></li>`}).join('')}</ol>`;
+const Timeline=(t,o)=>`<ol class="tl l-${t.c}">${o.origin?`<li class="tn org"><span class="nd"></span><div class="gr"><b>${o.origin}</b><div class="cap sm">Start</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}${s.tr}</span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div>${s.alt?'<span class="tag">Changed</span>':''}</div></li>`}).join('')}</ol>`;
 const Members=t=>[...t.m].map(k=>Row({lead:Av(k,'big'),title:PE[k][2],trail:t.vs[k]?'<span class="tag ok">Voted</span>':'<span class="tag">Voting…</span>'})).join('');
 const VoteRow=(s,i)=>Row({x:'wrap',lead:StopIc(s),title:s.n,sub:`${tt(s.t)} · ${s.s}`,sub2:s.d>s.u?'<span class="err">Below the line · not in itinerary</span>':'',trail:`<div class="vt"><button class="vb up" aria-pressed="${s.m==1}" aria-label="Upvote ${s.n}" data-a="vt:${i}:1">${ic('thumbs-up',18)}</button><span class="cap sm">${s.u}</span><button class="vb dn" aria-pressed="${s.m==-1}" aria-label="Downvote ${s.n}" data-a="vt:${i}:-1">${ic('thumbs-down',18)}</button><span class="cap sm">${s.d}</span></div>`});
 const TripRow=t=>Row({a:`open:${t.id}`,label:`${t.n}, ${fd(t.date)}`,lead:Cover(t,'m'),title:t.n,sub:`${fd(t.date)} · ${rel(t.date)}`,sub2:stxt(t),trail:Stack(t.m)});
@@ -347,7 +528,7 @@ else if(S.step==1){const L=t.stops.map((s,i)=>[s,i]).filter(([s])=>S.cat=='All'|
 b=(t.vs.P?Ban('You’ve voted',pn.length&&!fin(t)?`Waiting on ${pn.join(' & ')}. Your itinerary unlocks once everyone has voted.`:'Everyone’s in. Changing a vote updates the itinerary.',fin(t)?Btn('See itinerary','step:2',{v:'y'}):''):Ban(n?`${n} stop${n==1?'':'s'} to review`:'Ready to submit',`Closes ${fd(t.close)}. The group’s votes decide the itinerary.`,Btn('Submit votes','submit')))
 +`<div class="pills" style="margin:16px 0 4px">${['All','Do','Eat','Shop'].map(c=>Pill(c,'cat:'+c,S.cat==c)).join('')}</div>${L.length?L.map(([s,i])=>VoteRow(s,i)).join(''):Empty('No activities yet','Add places from your saved list below.')}`}
 else b=lk?`<div class="lockc"><div class="si" style="background:var(--white)">${ic('lock',22)}</div><h2>Itinerary locked</h2><div class="cap">It unlocks as soon as everyone has voted.</div><div class="segs">${[...t.m].map(k=>`<i class="${t.vs[k]?'on':''}"></i>`).join('')}</div><div class="cap sm"><b>${t.m.length-pend(t).length} of ${t.m.length}</b> voted</div></div>${Sec('Votes in')}${Members(t)}<div class="pad" style="display:flex;flex-direction:column;gap:10px;margin-top:16px">${pn.length?Btn('Nudge '+pn.join(' & '),'nudge',{v:'sec',i:'send'}):''}${Btn(t.vs.P?'Review my votes':'Go to vote','step:1')}</div>`
-:`${Sec('Itinerary',`<span class="cap sm">${ms.length} stop${ms.length==1?'':'s'}</span>`)}${ms.length?Timeline(t,{stops:ms,origin:t.origin}):Empty('No stops yet','Add activities on the Vote step.')}<p class="cap pad" style="margin-top:16px">Final itinerary, built from everyone’s votes. To change it, change a vote.</p>`;
+:`${pathSeg(t)}${forkBan(t)}${Sec('Itinerary',`<span class="cap sm">${ms.length} stop${ms.length==1?'':'s'}</span>`)}${ms.length?Timeline(t,{stops:ms,origin:t.origin}):Empty('No stops yet','Add activities on the Vote step.')}${altRow(t)}<p class="cap pad" style="margin-top:16px">Final itinerary, built from everyone’s votes. To change it, change a vote.</p>`;
 return `<div class="l-${t.c}"><div class="th">${Top(IBtn('arrow-left','back','Back'),'')}<div class="thd">${Cover(t,'l')}<div class="gr"><h1>${t.n}</h1><div class="dt">${fd(t.date,1)}</div></div></div><div class="tact"><button class="gob" data-a="navigate" ${go?'':'disabled'}>${ic('map-pin',22)}Navigate</button><button class="kb" data-a="menu" aria-label="More trip options">${ic('dots',24,'currentColor')}</button></div><div class="meta">${Stack(t.m)}<span class="cap sm">${t.m.length} going · ${stxt(t)}</span></div></div>
 ${Stepper(t,S.step,true)}<div style="margin-top:8px">${b}</div></div>${S.step==1?`<div class="dock"><button class="fld" data-a="addact">${ic('search',20)}<span>${downvoted(t)?'Suggest someplace new':'Add a new activity'}</span></button></div>`:''}`};
 const MAPBG=`<svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="390" height="844" fill="#F5F4F0"/><path d="M0 590Q80 550 170 610T330 720T390 670V844H0Z" fill="#CFE6F2"/><rect x="236" y="104" width="120" height="76" rx="14" fill="#DDEFD3"/><rect x="24" y="300" width="80" height="96" rx="14" fill="#DDEFD3"/>${[[16,96,88,64],[120,84,64,56],[200,196,88,72],[304,172,72,96],[16,200,64,80],[112,300,88,64],[216,292,72,112],[304,296,72,60],[112,400,80,80],[304,400,72,120],[216,440,72,88],[16,432,72,70]].map(b=>`<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" rx="8" fill="#ECECEA"/>`).join('')}<g stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"><path d="M0 180H390M0 290H390M0 420H390M0 530H390M104 0V844M208 0V560M300 0V844"/><path d="M0 60L390 560" stroke-width="14"/></g></svg>`;
@@ -355,9 +536,6 @@ const poly=(P,c)=>`<polyline class="${c}" points="${P.map(p=>p.join(',')).join('
 const NavTL=(t,ms,cu,live)=>{const dn=live?cu:0;return `<ol class="tl nv l-${t.c}">${dn?`<li class="tdone">${ic('check',14)}${dn} stop${dn>1?'s':''} done</li>`:''}${ms.map((s,i)=>{if(i<dn)return '';const tr=i>dn?`<li class="tc"><span class="ln"></span><span class="cap sm">${ic('clock',12)}${s.tr}</span></li>`:'',info=`<div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div>`;
  if(i==cu)return `${tr}<li class="tn cur"><span class="nd">${i+1}</span>${live?`<button class="cc" data-a="next" aria-label="Arrived at ${s.n}">${info}<span class="arr">${ic('check',20)}</span></button>`:`<div class="cc">${info}</div>`}</li>`;
  return `${tr}<li class="tn ${i==cu+1?'nx':'rest'}"><span class="nd">${i+1}</span>${info}</li>`}).join('')}</ol>`};
-const navSheet=()=>{const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),live=dd(t.date)<=1&&!lk,cu=live?Math.min(S.leg,ms.length-1):0,pn=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
- const sub=lk?`Locked until ${pn} voted. <button class="lk" data-a="mvote">Go to vote</button>`:live?`Heading to ${ms[cu].n} · ${ms[cu].tr}. Tap the stop when you arrive.`:`Preview. Live navigation opens the day before. <button class="lk" data-a="opentrip">Open trip</button>`;
- return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,live)}`};
 V.map=()=>{const L=S.nav?trip(S.mapTrip):null;let svg='',pins='',top='',sh='';
 if(!L){OV().forEach(t=>{const ms=mstops(t),P=ms.map(s=>ov(t,[s.x,s.y])),c=!fin(t);svg+=`<g class="l-${t.c}" data-a="mload:${t.id}">${poly(P,'rc')}${poly(P,'rl'+(c?' dash':''))}${poly(P,'rh')}</g>`;pins+=P.map((p,i)=>i?`<button class="pin d l-${t.c}" ${at(p)} data-a="mload:${t.id}" aria-label="${t.n}, stop ${i+1}"></button>`:`<button class="pin b l-${t.c}${c?' cand':''}" ${at(p)} data-a="mload:${t.id}" aria-label="${t.n}">${t.b}</button>`).join('')});
  top=`<div class="mtop"><label class="fld">${ic('search',20)}<input placeholder="Search places or trips" aria-label="Search the map"></label></div>`;
@@ -370,7 +548,6 @@ return `<div class="mapbg">${MAPBG}</div><svg class="mb" viewBox="0 0 100 100" p
 const visR=()=>R.filter(r=>S.fyp?!r.f:r.f);
 V.reels=()=>`<div class="rtg" role="tablist" aria-label="Feed">${[[0,'Friends'],[1,'For you']].map(([k,l])=>`<button role="tab" aria-selected="${S.fyp==k}" class="${S.fyp==k?'on':''}" data-a="feed:${k}">${l}</button>`).join('<span class="sp" aria-hidden="true"></span>')}</div><div class="rl">${visR().map(r=>{const gi=R.indexOf(r);return `<article class="rv l-${r.c}">${Pic(RP[gi],r.n,800)}<h1>${r.h}</h1><div><b>${r.n}</b> · ${r.loc}</div><div class="cap">${r.d}</div><div class="pills"><span class="pill">★ ${r.sc}</span><span class="pill">${r.pr}</span></div><button class="rinfo" data-a="info:${gi}">${ic('info',20)}Info</button><div class="rail"><button class="ib" aria-pressed="${!!S.saved[gi]}" aria-label="Save ${r.n}" data-a="rsave:${gi}">${ic('bookmark',24,S.saved[gi]?'currentColor':'none')}</button><button class="ib" data-a="toast:Sent to your friends" aria-label="Share ${r.n}">${ic('send')}</button></div></article>`}).join('')}</div>`;
 V.chat=()=>`<div class="hd"><h1>Chat</h1></div><div style="margin-top:8px">${CH.map((c,i)=>Row({a:'thread:'+i,label:c.n+(c.u?`, ${c.u} unread`:''),lead:Cover(trip(c.tid),'m'),title:c.n,sub:c.m[c.m.length-1][1],trail:`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="cap sm">${c.t}</span>${c.u?`<span class="bd2">${c.u}</span>`:''}</div>`})).join('')}</div>`;
-const msg=(m,i,a)=>{const me=m[0]=='P',f=!a[i-1]||a[i-1][0]!=m[0];return `<div class="m ${me?'me':''}">${f&&!me?`<span class="cap sm">${PE[m[0]][2]}</span>`:''}<div class="bub">${m[1]}</div></div>`};
 V.thread=()=>{const c=CH[S.th];return `${Top(IBtn('arrow-left','back','Back'),'')}<div style="text-align:center;margin-top:-40px;padding-bottom:12px"><b>${c.n}</b><div class="cap sm">${c.u2.length} members</div></div><div class="msgs" id="msgs">${c.m.map(msg).join('')}${S.typing?`<div class="m"><div class="bub"><span class="typ" aria-label="Typing"><i></i><i></i><i></i></span></div></div>`:''}</div><div class="comp"><input class="in" id="cin" placeholder="Message" aria-label="Message" onkeydown="if(event.key=='Enter')A.send()"><button class="play" style="width:48px;height:48px" data-a="send" aria-label="Send message">${ic('send',20)}</button></div>`};
 V.profile=()=>{const p=S.p,tg=(k,x)=>Pill(x,`ptag:${k}:${x}`,p[k].includes(x));return `<div class="pad" style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:16px"><span class="av xl l-blue">${(p.name[0]||'P').toUpperCase()}</span><h1>${p.name||'You'}</h1><div class="cap">${T.filter(t=>!t.left).length} trips · 4 friends</div></div>
 <div class="pad" style="margin-top:28px"><label class="lb" for="pn">Name</label><input class="in" id="pn" value="${p.name}" oninput="S.p.name=this.value;pd()"></div>
@@ -403,7 +580,7 @@ const cmpHTML=(gi,j)=>{const a=PXr(gi),b=PXp(SVL()[j]);return `<div class="mh">$
 /* ===== ROUTER ===== */
 const IDS=['trips','trip','form','map','reels','chat','thread','profile'],ROOT={trips:1,map:1,reels:1,chat:1,profile:1},RAW={map:1,reels:1,thread:1};
 const cur=()=>S.stack[S.tab],topId=()=>cur()[cur().length-1];
-const render=id=>{const e=$('#s-'+id);if(!e||!V[id])return;const y=e.scrollTop,h=V[id]();e.innerHTML=RAW[id]?h:`<div class="pg">${h}</div>`;e.scrollTop=y};
+const render=id=>{const e=$('#s-'+id);if(!e||!V[id])return;const y=e.scrollTop,h=V[id]();e.innerHTML=RAW[id]?h:`<div class="pg">${h}</div>`;e.scrollTop=y;if(id=='map'&&typeof mapAfter=='function')mapAfter()};
 IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.dataset.id=id;s.className='scr'+(id=='map'?' nos':id=='reels'?' rls':id=='thread'?' flex':'');$('#app').append(s)});
 const rr=()=>{IDS.forEach(id=>id!='reels'&&render(id));upd()};
 function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','film'],['trips','Trips'],['map','Map','map'],['chat','Chats','message-circle']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
@@ -445,7 +622,7 @@ const A={tadd:(k,el)=>{const inp=el.closest('.tin').querySelector('input');let v
  formnext:()=>{const f=S.f,e={};if(!f.dest.trim())e.dest='Add a destination';const s=f.start&&p8(f.start),en=f.end&&p8(f.end);if(!s)e.start='Pick a start date';else if(dd(s)<0)e.start='Can’t be in the past';if(s&&en&&en<s)e.end='Must be after the start';if(!(+f.budget>0))e.budget='Enter a budget above 0';
   S.fe=e;if(Object.keys(e).length){render('form');return}
   const days=Math.round(((en||s)-s)/864e5)+1,d=f.dest.trim(),id='n'+T.length,m='P'+(f.coll||[]).join(''),c=LINE[(T.length+3)%LINE.length];
-  T.push({id,n:days==1?`${d} Daytrip`:`${d} ${days}D${days-1}N`,date:s,t1:'08:30',c,b:d[0].toUpperCase(),i:'map-pin',m,vs:Object.fromEntries([...m].map(k=>[k,0])),st:'voting',close:addD(NOW,7),budget:`SGD ${f.budget}`,origin:'Your location',o:[16,48],note:'',stops:f.auto?recs(d):[]});
+  T.push({id,dest:d,n:days==1?`${d} Daytrip`:`${d} ${days}D${days-1}N`,date:s,t1:'08:30',c,b:d[0].toUpperCase(),i:'map-pin',m,vs:Object.fromEntries([...m].map(k=>[k,0])),st:'voting',close:addD(NOW,7),budget:`SGD ${f.budget}`,origin:'Your location',o:[16,48],note:'',stops:f.auto?recs(d):[]});
   cur().pop();S.cur=id;S.step=1;S.seg='up';tab('trips');rr();go('trip');toast('Trip created. Invites sent.')},
  feed:k=>{S.fyp=+k;render('reels')},rsave:gi=>{S.saved[gi]=!S.saved[gi];render('reels');toast(S.saved[gi]?'Saved to your places':'Removed from saved')},
  addto:gi=>lay('sheet',tripPick(+gi),'Add to trip'),addtrip:(gi,id)=>{const t=trip(id),r=R[+gi];if(t.stops.some(s=>s.n==r.n)){A.closeLy();return toast(`${r.n} is already in ${t.n}`)}addStop(t,{n:r.n,i:r.i,s:r.loc,k:'Eat'});A.closeLy();rr();toast(`Added to ${t.n}'s vote list`)},
@@ -457,5 +634,218 @@ document.addEventListener('click',e=>{const t=e.target,tb=t.closest('[data-t]');
 document.addEventListener('keydown',e=>{if(e.key=='Escape'&&$('#ly').classList.contains('open'))return A.closeLy();if((e.key=='Enter'||e.key==' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click()}});
 document.addEventListener('pointerdown',e=>{const g=e.target.closest('.grab');if(!g)return;const s=g.parentNode,y0=e.clientY;let dy=0;const mv=v=>dy=v.clientY-y0,up=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);if(s.id=='msh'){if(Math.abs(dy)>6){S.mx=dy<0;s.classList.toggle('x',S.mx);g.dataset.dragged=1;setTimeout(()=>delete g.dataset.dragged,50)}}else if(dy>80)A.closeLy()};addEventListener('pointermove',mv);addEventListener('pointerup',up)});
 document.addEventListener('click',e=>{const g=e.target.closest('#msh .grab');if(g&&g.dataset.dragged)e.stopImmediatePropagation()},true);
+/* =========================================================
+   v3 ADDITIONS
+   ========================================================= */
+Object.assign(I,{'git-branch':'<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>','cloud-rain':'<line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/>',eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',activity:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>','alert-triangle':'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>','chevron-down':'<path d="M6 9l6 6 6-6"/>',camera:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',minus:'<path d="M5 12h14"/>','arrow-right':'<path d="M5 12h14M12 5l7 7-7 7"/>'});
+
+/* ---------- SVG ART SLOTS ----------
+   Drop your own SVG into any <template data-art="NAME"> at the bottom of this file
+   and it replaces the built-in illustration. Names:
+   fork-intro  (320x124)  top of the "What's changed?" sheet
+   fork-clear  (320x124)  shown when nothing in the plan is affected
+   fork-done   (320x124)  shown after you confirm a replacement
+   Tip: use viewBox="0 0 320 124" so it fills the slot without cropping. */
+const pinS=(x,y,c)=>`<path d="M${x} ${y}C${x} ${y} ${x-14} ${y-14} ${x-14} ${y-23}a14 14 0 0 1 28 0c0 9-14 23-14 23z" fill="${c}"/><circle cx="${x}" cy="${y-23}" r="5.5" fill="#fff"/>`;
+const ART={
+'fork-intro':`<svg viewBox="0 0 320 124" role="img" aria-label="A route splitting into two paths"><rect width="320" height="124" fill="#EEFDFB"/><circle cx="276" cy="22" r="52" fill="#D6FCF7"/><circle cx="44" cy="112" r="44" fill="#FFF1C2" opacity=".8"/><path d="M40 84C96 84 118 84 150 72" fill="none" stroke="#00B8A0" stroke-width="7" stroke-linecap="round"/><path d="M150 72C196 56 222 98 282 98" fill="none" stroke="#00B8A0" stroke-width="7" stroke-linecap="round" stroke-dasharray=".1 13"/><path d="M150 72C196 56 220 40 282 40" fill="none" stroke="#FFC93C" stroke-width="7" stroke-linecap="round"/><circle cx="40" cy="84" r="9" fill="#1947E6"/><circle cx="40" cy="84" r="3.5" fill="#fff"/><circle cx="150" cy="72" r="9" fill="#fff"/><circle cx="150" cy="72" r="4" fill="#18191F"/>${pinS(282,98,'#00B8A0')}${pinS(282,40,'#FFC93C')}</svg>`,
+'fork-clear':`<svg viewBox="0 0 320 124" role="img" aria-label="Nothing affected"><rect width="320" height="124" fill="#EEFDFB"/><circle cx="262" cy="30" r="46" fill="#FFF1C2"/><circle cx="60" cy="100" r="50" fill="#D6FCF7"/><path d="M40 62C100 62 140 62 190 62S250 62 282 62" fill="none" stroke="#00B8A0" stroke-width="7" stroke-linecap="round"/><circle cx="160" cy="62" r="30" fill="#00C6AE"/><path d="M146 62l10 10 20-22" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+'fork-done':`<svg viewBox="0 0 320 124" role="img" aria-label="You are on your own path"><rect width="320" height="124" fill="#FFF8DE"/><circle cx="46" cy="20" r="44" fill="#FFEFB0"/><circle cx="286" cy="108" r="50" fill="#D6FCF7"/><path d="M36 92C90 92 120 92 150 80" fill="none" stroke="#B7BFCC" stroke-width="7" stroke-linecap="round" stroke-dasharray=".1 13"/><path d="M150 80C200 64 214 94 284 94" fill="none" stroke="#B7BFCC" stroke-width="7" stroke-linecap="round" stroke-dasharray=".1 13"/><path d="M150 80C196 62 214 38 284 38" fill="none" stroke="#FFC93C" stroke-width="7" stroke-linecap="round"/><path d="M36 92C90 92 120 92 150 80" fill="none" stroke="#FFC93C" stroke-width="7" stroke-linecap="round"/><circle cx="150" cy="80" r="9" fill="#fff"/><circle cx="150" cy="80" r="4" fill="#18191F"/><circle cx="236" cy="48" r="17" fill="#8094FF"/><text x="236" y="54" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-weight="800" font-size="16" fill="#18191F">P</text><circle cx="236" cy="92" r="13" fill="#FFC7DE"/><text x="236" y="97" text-anchor="middle" font-family="Montserrat,Arial,sans-serif" font-weight="800" font-size="13" fill="#18191F">R</text>${pinS(284,38,'#FFC93C')}</svg>`};
+const art=n=>{const t=document.querySelector(`template[data-art="${n}"]`),c=t&&t.innerHTML.trim();return `<div class="art" data-art="${n}">${c||ART[n]||''}</div>`};
+
+/* ---------- v3 state ---------- */
+Object.assign(S,{fx:[],fr:{},fl:[],fi:0,fk:null,ap:null,alts:[],cq:'',pv:null});
+Object.assign(S.p,{bio:'Always down for a hike or a hawker run.',home:'Singapore',pace:'Balanced',move:'MRT & bus',group:4,health:['Chronic eye stye'],notif:{remind:1,vote:1,fork:1},rate:4});
+
+/* ---------- small components ---------- */
+const Seg=(items,cur,act,label)=>`<div class="seg" role="radiogroup" aria-label="${label}">${items.map(([k,l])=>`<button role="radio" aria-checked="${cur==k}" data-a="${act}:${k}">${l}</button>`).join('')}</div>`;
+const Radio=(k,l,sub,cur,act)=>`<button class="rd" role="radio" aria-checked="${cur==k}" data-a="${act}:${encodeURIComponent(k)}"><span class="rdo"></span><span class="gr"><b>${l}</b>${sub?`<span class="cap sm">${sub}</span>`:''}</span></button>`;
+const Switch=(k,l,sub,on)=>`<div class="rowx"><div><b>${l}</b><div class="cap sm">${sub}</div></div><button class="sw${on?' on':''}" role="switch" aria-checked="${!!on}" aria-label="${l}" data-a="pnotif:${k}"></button></div>`;
+const hl=(s,q)=>{s=esc(s);if(!q)return s;const i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?s:s.slice(0,i)+'<mark>'+s.slice(i,i+q.length)+'</mark>'+s.slice(i+q.length)};
+const badgeOf=t=>{if(t.st=='voting'&&!t.vs.P){const n=needs(t);return n>0?String(n):'!'}if(t.id=='read'&&S.inv)return '!';return ''};
+
+/* =========================================================
+   MAP ENGINE: real raster tiles (Esri Light Gray Canvas, no API key), routes + pins drawn on top.
+   Set MAP_STYLE to 'dark' for Esri Dark Gray.
+   ========================================================= */
+const MAP_STYLE='color'; /* 'color' | 'light' | 'dark' */
+const MAP_LAYERS={color:'World_Street_Map',light:'Canvas/World_Light_Gray_Base',dark:'Canvas/World_Dark_Gray_Base'};
+const tileUrl=(z,x,y)=>`https://server.arcgisonline.com/ArcGIS/rest/services/${MAP_LAYERS[MAP_STYLE]}/MapServer/tile/${z}/${y}/${x}`;
+const MERC=(lat,lng,z)=>{const s=256*2**z,sn=Math.sin(lat*Math.PI/180);return[(lng+180)/360*s,(.5-Math.log((1+sn)/(1-sn))/(4*Math.PI))*s]};
+const UNMERC=(x,y,z)=>{const s=256*2**z,n=Math.PI-2*Math.PI*y/s;return[180/Math.PI*Math.atan(.5*(Math.exp(n)-Math.exp(-n))),x/s*360-180]};
+const M={lat:1.35,lng:103.83,z:11,key:null,ok:0,raf:0};
+const TILEBOX=document.createElement('div');TILEBOX.className='mp-t';TILEBOX._t={};
+const RC={red:'#FF5FA2',green:'#00B8A0',blue:'#5B72FF',orange:'#F5A100',yellow:'#E7B200',lime:'#2CC9A5',brown:'#FF7FB0',purple:'#8D7DFF',grey:'#33BBA8',teal:'#2CC9A5'};
+const rcol=t=>RC[t.c]||'#00B8A0';
+const geoTrips=()=>OV().filter(t=>allPts(t).every(p=>hav(p,HOME)<150));
+const live=t=>dd(t.date)<=1&&fin(t);
+const PINT='<svg class="t" viewBox="0 0 40 50" aria-hidden="true"><path d="M20 49C20 49 4 32.5 4 19a16 16 0 0 1 32 0c0 13.5-16 30-16 30z"/><circle cx="20" cy="19" r="10" fill="#fff"/></svg>';
+
+/* What is on the map right now. Returns routes, pins, points to fit, and padding for the cards. */
+function scene(){
+ const R=[],P=[];
+ if(!S.nav){const fit=[HOME];
+  geoTrips().forEach(t=>{const ms=mstops(t),pp=pathPts(t,ms),col=rcol(t),b=badgeOf(t);pp.forEach(p=>fit.push(p));
+   R.push({pts:pp,col,w:6,dash:!fin(t),a:'mload:'+t.id});
+   pp.slice(2).forEach(p=>P.push({dot:1,ll:p,col}));
+   P.push({ll:pp[1],col,txt:t.b,badge:b,a:'mload:'+t.id,label:t.n+(b?', needs your attention':'')})});
+  P.push({you:1,ll:HOME});
+  return{R,P,fit,pad:{t:120,r:46,b:180,l:46},maxZ:13}}
+ const t=trip(S.mapTrip),me=myPath(t),fk=t.fork,mine=mstops(t),col=rcol(t),mp=pathPts(t,baseStops(t)),fp=fk?pathPts(t,fk.stops):null,cur=me=='fork'?fp:mp,lv=live(t),cu=Math.min(S.leg,mine.length-1);
+ if(fk){R.push({pts:mp,col:me=='main'?col:'#A9B1C0',w:me=='main'?6:5,dash:me!='main'||!fin(t),a:`pathpick:main:${t.id}`});R.push({pts:fp,col:'#F2B100',w:me=='fork'?6:5,dash:me!='fork',a:`pathpick:fork:${t.id}`})}
+ else R.push({pts:mp,col,w:6,dash:!fin(t)});
+ if(lv&&cu>0&&!S.fk)R.push({pts:cur.slice(0,cu+1),col:'#18191F',w:6});
+ const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
+ mine.forEach((s,i)=>{const ll=cur[i+1],fr=S.fk&&S.fr[i],o={ll,col,txt:i+1,label:`Stop ${i+1}: ${s.n}`};
+  if(fr){Object.assign(o,{col:'#FFB400',badge:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='sel'}
+  else if(S.fk=='alts')o.cls='dim';
+  else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.badge='!';if(lv&&i<cu){o.txt=ic('check',15);o.col='#18191F'}if(lv&&i==cu)o.cls='sel'}
+  P.push(o)});
+ if(lv&&!S.fk)P.push({lab:esc(mine[cu].n),ll:cur[cu+1]});
+ if(fk&&!S.fk){const ch=Object.keys(fk.ch).map(Number).sort((a,b)=>a-b)[0];
+  if(ch!=null)P.push({pill:esc(pn(fk.owner)),ll:[(fp[ch][0]+fp[ch+1][0])/2,(fp[ch][1]+fp[ch+1][1])/2],a:`pathpick:fork:${t.id}`});
+  Object.keys(fk.ch).forEach(i=>P.push({dot:1,ll:(me=='fork'?mp:fp)[+i+1],col:'#A9B1C0'}))}
+ P.push({you:1,ll:lv&&cu?cur[cu]:cur[0]});
+ let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
+ if(S.fk=='flag')pad.b=300;
+ if(S.fk=='alts'){const i=S.fl[S.fi],c=cur[i+1];S.alts.forEach((a,j)=>{P.push({ll:a.ll,cls:'alt'+(S.ap===j?' sel':''),txt:ic(a.i,16),a:'fpick:'+j,label:`Alternative: ${a.n}`});fit.push(a.ll)});
+  if(S.ap!=null)P.push({lab:esc(S.alts[S.ap].n),ll:S.alts[S.ap].ll});
+  pad={t:150,r:50,b:430,l:50};maxZ=16;fit.length=0;fit.push(c,cur[i],...S.alts.map(a=>a.ll))}
+ return{R,P,fit,pad,maxZ}}
+const mapKey=()=>{const t=S.nav?trip(S.mapTrip):null;return[t?t.id:'ov',S.fk||'',S.fi,t&&t.fork?1:0,t?myPath(t):''].join('|')};
+function mapTarget(W,H){const sc=scene(),pts=sc.fit,pad=sc.pad;if(!pts.length||!W||!H)return null;let z=17;
+ for(;z>3;z-=.25){const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]);if(Math.max(...xs)-Math.min(...xs)<=W-pad.l-pad.r&&Math.max(...ys)-Math.min(...ys)<=H-pad.t-pad.b)break}
+ z=Math.min(z,sc.maxZ);const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]),bx=(Math.min(...xs)+Math.max(...xs))/2,by=(Math.min(...ys)+Math.max(...ys))/2,[lat,lng]=UNMERC(bx-(pad.l-pad.r)/2,by-(pad.t-pad.b)/2,z);return{lat,lng,z}}
+function pathD(P){if(P.length<2)return '';const f=n=>n.toFixed(1),q=p=>f(p[0])+' '+f(p[1]);
+ if(P.length==2){const[a,b]=P,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],dy=b[1]-a[1];return `M${q(a)}Q${f(mx-dy*.16)} ${f(my+dx*.16)} ${q(b)}`}
+ let d=`M${q(P[0])}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;d+=`C${f(p1[0]+(p2[0]-p0[0])/6)} ${f(p1[1]+(p2[1]-p0[1])/6)} ${f(p2[0]-(p3[0]-p1[0])/6)} ${f(p2[1]-(p3[1]-p1[1])/6)} ${q(p2)}`}return d}
+function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
+ if(p.you)return `<span class="you" style="${L}" role="img" aria-label="You are here"></span>`;
+ if(p.dot)return `<span class="mdot" style="${L};--pc:${p.col}"></span>`;
+ if(p.pill)return `<button class="pb" style="${L}" data-a="${p.a}" aria-label="${p.pill}’s path">${p.pill}</button>`;
+ if(p.lab)return `<span class="pl2" style="${L}">${p.lab}</span>`;
+ const g=p.a?'button':'span';return `<${g} class="pn ${p.cls||''}" style="${L};--pc:${p.col||'#00B8A0'};z-index:${Math.round(y)}"${p.a?` data-a="${p.a}"`:''} aria-label="${esc(p.label||'')}">${PINT}<i class="n">${p.txt==null?'':p.txt}</i>${p.badge?`<b class="bg" aria-hidden="true">${p.badge}</b>`:''}</${g}>`}
+function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clientHeight;if(!W||!H)return;
+ const zi=Math.max(2,Math.min(18,Math.round(M.z))),sc=2**(M.z-zi),[cx,cy]=MERC(M.lat,M.lng,zi),n=2**zi,ts=256*sc,x0=Math.floor((cx-W/2/sc)/256)-1,x1=Math.floor((cx+W/2/sc)/256)+1,y0=Math.floor((cy-H/2/sc)/256)-1,y1=Math.floor((cy+H/2/sc)/256)+1,want=new Set(),C=TILEBOX._t;
+ for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++){if(y<0||y>=n)continue;const k=zi+'/'+x+'/'+y;want.add(k);let im=C[k];
+  if(!im){im=C[k]=new Image();im.alt='';im.draggable=false;im.onload=()=>im.classList.add('ld');im.onerror=()=>{};im.src=tileUrl(zi,((x%n)+n)%n,y);TILEBOX.appendChild(im);if(im.complete&&im.naturalWidth)im.classList.add('ld')}
+  im.style.left=((x*256-cx)*sc+W/2).toFixed(2)+'px';im.style.top=((y*256-cy)*sc+H/2).toFixed(2)+'px';im.style.width=im.style.height=(ts+.6).toFixed(2)+'px'}
+ for(const k in C)if(!want.has(k)){C[k].remove();delete C[k]}
+ const sc2=scene(),[mx,my]=MERC(M.lat,M.lng,M.z),pr=ll=>{const q=MERC(ll[0],ll[1],M.z);return[q[0]-mx+W/2,q[1]-my+H/2]};
+ $('#mpr').innerHTML=sc2.R.map(r=>{const d=pathD(r.pts.map(pr));return `<path d="${d}" stroke="${r.col}" stroke-width="${r.w}"${r.dash?` stroke-dasharray="0.1 ${r.w*1.9}"`:''}/>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`}).join('');
+ $('#mpp').innerHTML=sc2.P.map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('')}
+function flyTo(tg){cancelAnimationFrame(M.raf);const a={lat:M.lat,lng:M.lng,z:M.z},t0=performance.now(),ez=x=>x<.5?4*x*x*x:1-(-2*x+2)**3/2;
+ const f=now=>{const k=Math.min(1,(now-t0)/700),e=ez(k);M.lat=a.lat+(tg.lat-a.lat)*e;M.lng=a.lng+(tg.lng-a.lng)*e;M.z=a.z+(tg.z-a.z)*e;mapDraw();if(k<1)M.raf=requestAnimationFrame(f)};M.raf=requestAnimationFrame(f)}
+function mapAfter(){const h=$('#mp');if(!h)return;const l=$('#mpl');if(TILEBOX.parentNode!==l)l.prepend(TILEBOX);
+ const key=mapKey();if(M.key!==key){const tg=mapTarget(h.clientWidth,h.clientHeight);if(tg){M.key=key;const vis=$('#s-map').classList.contains('on');if(M.ok&&vis&&!matchMedia('(prefers-reduced-motion:reduce)').matches){flyTo(tg);M.ok=1;return}cancelAnimationFrame(M.raf);Object.assign(M,tg);M.ok=1}}
+ mapDraw()}
+/* drag to pan, wheel to zoom */
+const MD={on:0,x:0,y:0,dx:0,dy:0,moved:0,t:0};
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb')||(e.pointerType=='mouse'&&e.button))return;cancelAnimationFrame(M.raf);Object.assign(MD,{on:1,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0})});
+addEventListener('pointermove',e=>{if(!MD.on)return;MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`});
+addEventListener('pointerup',()=>{if(!MD.on)return;MD.on=0;if(MD.moved){const[cx,cy]=MERC(M.lat,M.lng,M.z);[M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);$('#mpl').style.transform='';$('#mp').classList.remove('drag');mapDraw();MD.t=Date.now()}});
+document.addEventListener('click',e=>{if(MD.moved&&Date.now()-MD.t<120){e.stopPropagation();e.preventDefault();MD.moved=0}},true);
+document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));mapDraw()},{passive:false});
+
+/* ---------- map screen ---------- */
+const pathChips=t=>{const fk=t.fork,me=myPath(t);return `<div class="pcs" role="group" aria-label="Paths">${[['main','Main path',mainMembers(t).length,'#A9B1C0'],['fork',pn(fk.owner)+'’s path',fk.members.length,'#F2B100']].map(([k,l,n,c])=>`<button class="pc2" aria-pressed="${me==k}" data-a="pathpick:${k}:${t.id}"><span class="sw2" style="background:${c}"></span><span class="gr"><span>${esc(l)}</span><small>${n} going</small></span></button>`).join('')}</div>`};
+const navSheet=()=>{const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=dd(t.date)<=1&&!lk,cu=lv?Math.min(S.leg,ms.length-1):0,pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
+ const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:lv?`Heading to ${ms[cu].n} · ${ms[cu].tr}. Tap the stop when you arrive.`:`Preview. Live navigation opens the day before. <button class="lk" data-a="opentrip">Open trip</button>`;
+ return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,lv)}`};
+const flagCard=t=>{const i=S.fl[S.fi],s=mstops(t)[i],rs=S.fr[i]||[],n=S.fl.length;
+ return `<div class="fcard" role="region" aria-label="Affected stop"><div class="fh"><span class="fic al">${ic('alert-triangle',24)}</span><div class="gr"><div class="sub2">${n>1?`Affected · ${S.fi+1} of ${n}`:'Affected stop'}</div><h2>${s.n}</h2></div>${n>1?`<button class="ib xs f" data-a="fnav:-1" aria-label="Previous affected stop">${ic('arrow-left',16)}</button><button class="ib xs f" data-a="fnav:1" aria-label="Next affected stop">${ic('arrow-right',16)}</button>`:''}</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="cap sm">${tt(s.t)} · ${s.s}</span>${rs.map(r=>`<span class="tag">${EXI.find(e=>e.id==r).n}</span>`).join('')}</div>${Btn('Find alternative','ffind',{i:'search'})}</div>`};
+const altCard=t=>{const i=S.fl[S.fi],s=mstops(t)[i],al=S.alts[S.ap];
+ if(!al)return `<div class="fcard" role="region" aria-label="Choose an alternative"><div class="sel1"><span class="ring"></span><b>Select one of the alternatives above</b></div><div class="conn"></div><div class="fh"><span class="fic al">${ic('alert-triangle',22)}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · this stop gets replaced</div></div></div></div>`;
+ return `<div class="pop"><div class="ph">${Pic(null,al.n,240)}</div><div class="gr"><b>${al.n}</b><div class="cap sm">${al.s}</div>${Stars(al.sc,al.rv)}<span class="tag">${al.tag}</span></div><button class="ib f" data-a="finfo" aria-label="More about ${al.n}">${ic('info',22)}</button></div><div class="fcard"><div class="fh"><span class="num2">${i+1}</span><div class="gr"><h2>${al.n}</h2><div class="cap sm">${tt(s.t)} · ${al.leg}</div></div></div>${Btn('Confirm selection','fconfirm')}</div>`};
+V.map=()=>{const L=S.nav?trip(S.mapTrip):null;let top='',card='';
+ if(L){const can=forkWin(L)&&fin(L)&&!S.fk&&dd(L.date)>=0;
+  top=`<div class="mtop2"><div class="mrow">${S.fk?`<button class="chip" data-a="${S.fk=='alts'?'fback':'fexit'}" aria-label="Back">${ic('arrow-left',18)}<span>Back</span></button>`:`<button class="chip" data-a="endnav" aria-label="Close trip">${ic('x',18)}${Bullet(L,'s')}<span>${L.n}</span></button>`}${can?`<button class="vbtn" data-a="forkopen">${ic('git-branch',18)}View alternatives</button>`:''}</div>${L.fork&&!S.fk?pathChips(L):''}</div>`;
+  card=S.fk=='flag'?flagCard(L):S.fk=='alts'?altCard(L):`<div class="msh nav${S.mx?' x':''}" id="msh"><div class="grab" role="button" tabindex="0" aria-label="Expand or collapse panel" data-a="toggleMx"></div><div id="mc">${navSheet()}</div></div>`}
+ return `<div class="mp" id="mp"><div class="mpl" id="mpl"><svg class="mp-r" id="mpr" aria-hidden="true"></svg><div class="mp-p" id="mpp"></div></div><div class="mp-fade"></div><div class="mp-attr">Tiles © Esri, HERE, Garmin, OpenStreetMap contributors</div>${top}${card}</div>`};
+
+/* ---------- fork flow: layers ---------- */
+const exiHTML=()=>{const t=trip(S.mapTrip);return `<div class="mh"><div class="gr"><h2>What’s changed?</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-intro')}</div><p class="cap pad" style="margin:12px 0 4px">Pick what’s going on. We’ll flag the stops you can’t do and suggest calmer places nearby.</p><div role="group" aria-label="What changed">${EXI.map(e=>`<button class="cx" role="checkbox" aria-checked="${S.fx.includes(e.id)}" data-a="fx:${e.id}"><span class="xic">${ic(e.ic,22)}</span><span class="gr"><b>${e.n}${e.prof&&S.p.health.includes(e.prof)?' <span class="tag">On your profile</span>':''}</b><span class="cap sm">${e.s}</span></span><span class="cbx">${ic('check',16)}</span></button>`).join('')}</div><div class="note">${ic('git-branch',16)}<span>Your group stays on the main path. A trip can have one extra path, and anyone can join it from the map.</span></div><div class="pad" style="margin-top:16px">${Btn('Flag affected stops','fapply',{off:!S.fx.length})}</div>`};
+const clearHTML=()=>`<div class="mh"><div class="gr"><h2>Nothing’s affected</h2><div class="cap sm">Your plan still works</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-clear')}</div><p class="cap pad" style="margin:12px 0 16px">None of the stops on your path clash with what you picked, so there’s nothing to swap.</p><div class="fl">${Btn('Change my answer','fagain',{v:'sec'})}${Btn('Done','closeLy')}</div>`;
+const altInfoHTML=()=>{const al=S.alts[S.ap],x={ph:null,n:al.n,loc:al.s,sc:al.sc,rv:al.rv,pr:al.pr,c:'green',i:al.i};return `<div class="mh"><h2 class="gr">${al.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${Stars(al.sc,al.rv)}</dd><dt>Price</dt><dd>${al.pr}</dd><dt>Distance</dt><dd>${al.leg}</dd><dt>Why this</dt><dd>${al.why}</dd></dl></div><div class="pad" style="margin-top:20px">${Btn('Confirm selection','fconfirm')}</div>`};
+const doneHTML=t=>{const fk=t.fork,ch=Object.keys(fk.ch).map(Number),oth=mainMembers(t).map(pn).join(' and ');return `<div class="mh"><div class="gr"><h2>You’re on ${esc(pn('P'))}’s path</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-done')}</div><div class="fl" style="margin-top:16px">${ch.map(i=>`<div class="chg"><span class="xic">${ic('git-branch',20)}</span><div class="gr"><b>${fk.stops[i].n}</b><div class="cap sm">replaces ${fk.stops[i].from}</div></div></div>`).join('')}<p class="cap">${oth||'Everyone else'} stay on the main path. Share yours and they can join it by tapping its route on the map.</p>${Btn('Invite the group','finvite',{i:'send'})}${Btn('Back to the map','closeLy',{v:'sec'})}</div>`};
+const joinHTML=(t,w)=>{const fk=t.fork,mem=w=='fork'?fk.members:mainMembers(t),nm=w=='fork'?pn(fk.owner)+'’s path':'the main path',ch=Object.keys(fk.ch).map(Number);return `<div class="mh"><div class="gr"><h2>${w=='fork'?'Join '+esc(nm):'Back to the main path'}</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="fl"><div class="chg">${Stack(mem.join(''))}<div class="gr"><b>${mem.length} going</b><div class="cap sm">${mem.map(pn).join(', ')||'No one yet'}</div></div></div>${w=='fork'?ch.map(i=>`<div class="chg"><span class="xic">${ic('git-branch',20)}</span><div class="gr"><b>${esc(fk.stops[i].n)}</b><div class="cap sm">replaces ${esc(fk.stops[i].from)}</div></div></div>`).join(''):`<p class="cap">Follow the group’s original plan. Your changes stay saved if you want to switch back.</p>`}<p class="cap">You can switch paths any time until the trip ends. A trip can have one main path and one extra path.</p>${Btn(w=='fork'?'Join '+esc(nm):'Switch to main path','pathjoin:'+w+':'+t.id)}${Btn('Cancel','closeLy',{v:'sec'})}</div>`};
+const blockedHTML=t=>`<div class="mh"><div class="gr"><h2>This trip already has an extra path</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="fl"><p class="cap">To keep plans simple, a trip can have one main path and one extra path. You can join ${esc(pn(t.fork.owner))}’s path instead of making a new one.</p>${Btn('See '+esc(pn(t.fork.owner))+'’s path','pathpick:fork:'+t.id)}${Btn('Stay on main','closeLy',{v:'sec'})}</div>`;
+
+/* ---------- trip page hooks ---------- */
+const altRow=t=>{if(!fin(t)||!baseStops(t).length||dd(t.date)<0)return '';const w=forkWin(t),bl=t.fork&&!t.fork.members.includes('P');return `<div class="altrow">${Btn(bl?'See paths':'View alternatives','forkopen',{v:'sec',i:'git-branch',off:!w})}<div class="cap sm">${w?(bl?'This trip already has an extra path.':'Something come up? Fork the plan just for you.'):'Opens 24 hours before the trip starts'}</div></div>`};
+const pathSeg=t=>{if(!t.fork)return '';const v=vpath(t);return `<div class="pathseg"><div class="seg" role="radiogroup" aria-label="View path">${[['main','Main path'],['fork',pn(t.fork.owner)+'’s path']].map(([k,l])=>`<button role="radio" aria-checked="${v==k}" data-a="pview:${k}">${esc(l)}</button>`).join('')}</div></div>`};
+const forkBan=t=>{if(!t.fork)return '';const v=vpath(t),me=myPath(t);return v==me?`<div class="youpath">${ic('git-branch',18)}You’re on ${v=='fork'?esc(pn(t.fork.owner))+'’s path':'the main path'}.</div>`:`<div class="ban"><div><b>${v=='fork'?esc(pn(t.fork.owner))+'’s path':'Main path'}</b><div class="cap">${v=='fork'?'Their changes replace '+Object.keys(t.fork.ch).length+' stop'+(Object.keys(t.fork.ch).length==1?'':'s')+'.':'The group’s original plan.'}</div></div>${Btn('Join this path','pathpick:'+v+':'+t.id)}</div>`};
+
+/* ---------- chat ---------- */
+const chatList=()=>{const q=(S.cq||'').trim().toLowerCase(),has=m=>(m[1]||'').toLowerCase().includes(q),L=CH.map((c,i)=>[c,i]).filter(([c])=>!q||c.n.toLowerCase().includes(q)||c.m.some(has));
+ return L.length?L.map(([c,i])=>{const hit=q&&c.m.slice().reverse().find(has),last=(c.m.filter(m=>m[1]).slice(-1)[0]||[0,''])[1];
+  return Row({a:'thread:'+i,label:c.n+(c.u?`, ${c.u} unread`:''),lead:Cover(trip(c.tid),'m'),title:hl(c.n,q),sub:hit?`${hit[0]=='P'?'You':PE[hit[0]][2]}: ${hl(hit[1],q)}`:esc(last),trail:`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="cap sm">${c.t}</span>${c.u?`<span class="bd2">${c.u}</span>`:''}</div>`})}).join(''):`<div style="padding-top:8px">${Empty('No chats found',`Nothing matches “${esc(S.cq)}”.`)}</div>`};
+V.chat=()=>`<div class="hd"><h1>Chat</h1></div><div class="cs" style="margin-top:12px"><label class="fi sr">${ic('search',20)}<input id="cq" type="search" placeholder="Search chats and messages" aria-label="Search chats and messages" value="${esc(S.cq)}" oninput="A.cq(this.value)" autocomplete="off"><button class="x" data-a="cqclear" aria-label="Clear search" ${S.cq?'':'hidden'}>${ic('x',16)}</button></label></div><div id="clist" class="cl">${chatList()}</div>`;
+const forkMsg=tid=>{const t=trip(tid),fk=t.fork,i=Object.keys(fk.ch)[0];return `<button class="fcm" data-a="fview:${tid}"><span class="xic">${ic('git-branch',22)}</span><span class="gr"><b>${esc(pn(fk.owner))}’s path</b><span class="cap sm" style="display:block">${i!=null?`Replaces ${esc(fk.stops[i].from)} with ${esc(fk.stops[i].n)}`:'An extra path'} · tap to view</span></span>${ic('chevron-right',18)}</button>`};
+const msg=(m,i,a)=>{const me=m[0]=='P',f=!a[i-1]||a[i-1][0]!=m[0];return `<div class="m ${me?'me':''}">${f&&!me?`<span class="cap sm">${PE[m[0]][2]}</span>`:''}<div class="bub">${m[3]=='fork'?forkMsg(m[4]):esc(m[1])}</div></div>`};
+V.thread=()=>{const c=CH[S.th];return `<div class="top"><button class="ib" data-a="back" aria-label="Back to chats">${ic('arrow-left')}</button><div class="tt"><b>${c.n}</b><span class="cap sm">${c.u2.length} members</span></div><span></span></div><div class="msgs" id="msgs" style="margin-top:8px">${c.m.map(msg).join('')}${S.typing?`<div class="m"><div class="bub"><span class="typ" aria-label="Typing"><i></i><i></i><i></i></span></div></div>`:''}</div><div class="comp"><input class="in" id="cin" placeholder="Message" aria-label="Message" onkeydown="if(event.key=='Enter')A.send()" style="border-radius:999px"><button class="play" style="width:48px;height:48px;background:var(--dusk);color:#fff;box-shadow:var(--gum)" data-a="send" aria-label="Send message">${ic('send',20)}</button></div>`};
+
+/* ---------- profile ---------- */
+V.profile=()=>{const p=S.p,pc=p.budget;return `<div class="pad" style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:12px"><div class="avwrap"><span class="av xl l-blue">${esc((p.name[0]||'P').toUpperCase())}</span><button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div><h1 style="margin-top:12px">${esc(p.name)||'You'}</h1><div class="cap">${esc(p.home)} · Joined 2025</div></div>
+<div class="stat3"><div><b>${T.filter(t=>!t.left).length}</b><span>Trips</span></div><div><b>4</b><span>Friends</span></div><div><b>${SVL().length}</b><span>Saved</span></div></div>
+${Sec('About you')}<div class="fl"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><label class="lb" for="ph">Home city</label><label class="fi sel"><select id="ph" onchange="S.p.home=this.value;pd()">${['Singapore','Johor Bahru','Kuala Lumpur'].map(c=>`<option${p.home==c?' selected':''}>${c}</option>`).join('')}</select><span class="chev">${ic('chevron-down',18)}</span></label></div></div>
+${Sec('Travel style')}<div class="fl"><div><div class="lb">Pace</div>${Seg([['Chill','Chill'],['Balanced','Balanced'],['Packed','Packed']],p.pace,'ppace','Pace')}</div><div class="rowx"><div><b>Usual group size</b><div class="cap sm">We plan stops and tables around this</div></div><div class="qty" role="group" aria-label="Group size"><button data-a="pgroup:-1" aria-label="Fewer people" ${p.group<=1?'disabled':''}>${ic('minus',18)}</button><output aria-live="polite">${p.group}</output><button data-a="pgroup:1" aria-label="More people" ${p.group>=12?'disabled':''}>${ic('plus',18)}</button></div></div></div>
+<div class="lb pad" style="margin:18px 0 0">Getting around</div><div role="radiogroup" aria-label="Getting around">${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([k,l,s])=>Radio(k,l,s,p.move,'pmove')).join('')}</div>
+${Sec('Budget per trip',`<span class="tag" id="bv">SGD ${p.budget}</span>`)}<div class="pad"><input type="range" class="rg" min="50" max="2000" step="50" value="${p.budget}" style="--v:${(p.budget-50)/1950*100}%" aria-label="Budget per trip in SGD" oninput="S.p.budget=+this.value;this.style.setProperty('--v',((this.value-50)/1950*100)+'%');$('#bv').textContent='SGD '+this.value;pd()"><div class="rgl"><span>SGD 50</span><span>SGD 2,000</span></div></div>
+${Sec('Dietary needs')}<div class="pad">${TagBox('diet',p.diet,'Add a dietary need…',['Halal','Vegetarian','Kosher','Vegan','Gluten-free'])}</div>${Sec('Accessibility needs')}<div class="pad">${TagBox('access',p.access,'Add an accessibility need…',['Step-free routes','Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support'])}</div>
+${Sec('Health & comfort',`<span class="cap sm">Used when plans change</span>`)}<div class="pad">${TagBox('health',p.health,'Add something we should know…',['Chronic eye stye','Asthma','Bad knees','Motion sickness','Heat sensitivity'])}</div>${Sec('Places you like')}<div class="pad">${TagBox('likes',p.likes,'Add a place type…',['Cafes','Museums','Hikes','Movies','Arts & crafts','Beaches','Night markets'])}</div>
+${Sec('Notifications')}<div class="fl">${Switch('remind','Trip reminders','The day before, and on the morning',p.notif.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',p.notif.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',p.notif.fork)}</div>
+${Sec('Rate your last trip')}<div class="pad"><div class="r" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><b>Sunrise at East Coast</b><div class="cap sm">${p.rate?p.rate+' out of 5':'Tap a star'}</div></div><div class="rate" role="group" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button aria-pressed="${n<=p.rate}" aria-label="${n} star${n>1?'s':''}" data-a="prate:${n}">${ic('star',26,n<=p.rate?'currentColor':'none')}</button>`).join('')}</div></div></div>
+${Sec('Saved places',`<span class="cap sm">${SVL().length}</span>`)}${SVL().slice(0,3).map(s=>Row({lead:StopIc(s),title:s.n,sub:byTxt(s.by)})).join('')}`};
+
+/* =========================================================
+   v3 ACTIONS
+   ========================================================= */
+const flagsFor=t=>{const ms=mstops(t),fr={};ms.forEach((s,i)=>{const r=S.fx.filter(id=>EXI.find(e=>e.id==id).f(s,i,t));if(r.length)fr[i]=r});return fr};
+const altsFor=(t,i)=>{const ms=mstops(t),c=sll(t,ms[i]),pv=i?sll(t,ms[i-1]):oll(t),o=[[.0062,-.0085],[-.0048,.0098],[.0088,.0071],[-.0079,-.0052]];return ALTP.map((a,j)=>{const ll=[c[0]+o[j][0]*(1+.2*(i%2)),c[1]+o[j][1]];return Object.assign({},a,{ll,leg:legTxt(pv,ll)})})};
+Object.assign(A,{
+ open:id=>{S.cur=id;S.pv=null;S.step=fin(trip(id))?2:1;go('trip')},
+ navigate:()=>{S.mapTrip=S.cur;S.nav=1;S.leg=0;S.mx=0;S.fk=null;tab('map')},
+ mload:id=>{S.mapTrip=id;S.nav=1;S.leg=0;S.mx=0;S.fk=null;render('map');chrome()},
+ endnav:()=>{S.nav=0;S.leg=0;S.fk=null;S.fl=[];render('map');chrome()},
+ /* fork flow */
+ forkopen:()=>{const onMap=S.nav&&S.tab=='map',t=onMap?trip(S.mapTrip):trip(S.cur);if(!forkWin(t))return toast('Alternatives open 24 hours before the trip starts');
+  if(t.fork&&!t.fork.members.includes('P'))return lay('sheet',blockedHTML(t),'Paths');
+  if(!(onMap&&S.mapTrip==t.id)){S.mapTrip=t.id;S.nav=1;S.leg=0;S.mx=0;S.fk=null;tab('map')}
+  S.fx=[];lay('sheet',exiHTML(),'What’s changed')},
+ fx:id=>{S.fx=S.fx.includes(id)?S.fx.filter(x=>x!=id):[...S.fx,id];setLy(exiHTML())},
+ fapply:()=>{const t=trip(S.mapTrip),fr=flagsFor(t),fl=Object.keys(fr).map(Number);if(!fl.length)return setLy(clearHTML());
+  S.fr=fr;S.fl=fl;S.fi=0;S.ap=null;S.fk='flag';A.closeLy();render('map');chrome();toast(`${ic('check',16)} ${fl.length==1?'One activity':fl.length+' activities'} affected`)},
+ fagain:()=>setLy(exiHTML()),
+ fsel:i=>{S.fi=Math.max(0,S.fl.indexOf(+i));render('map')},fnav:d=>{const n=S.fl.length;S.fi=(S.fi+(+d)+n)%n;render('map')},
+ ffind:()=>{const t=trip(S.mapTrip);S.alts=altsFor(t,S.fl[S.fi]);S.ap=null;S.fk='alts';render('map')},
+ fpick:j=>{S.ap=+j;render('map')},fback:()=>{S.fk='flag';S.ap=null;render('map')},
+ fexit:()=>{S.fk=null;S.fl=[];S.ap=null;render('map')},
+ finfo:()=>lay('sheet',altInfoHTML(),'Place info'),
+ fconfirm:()=>{const t=trip(S.mapTrip),i=S.fl[S.fi],al=S.alts[S.ap];if(!al)return;if($('#ly').classList.contains('open'))A.closeLy();
+  if(!t.fork)t.fork={owner:'P',members:['P'],stops:baseStops(t).map(s=>({...s})),ch:{}};
+  const old=t.fork.stops[i];t.fork.stops[i]={n:al.n,t:old.t,i:al.i,s:al.s,k:al.k,ll:al.ll,x:old.x,y:old.y,tr:al.leg,u:0,d:0,m:0,alt:1,from:old.alt?old.from:old.n};t.fork.ch[i]=1;
+  if(!t.fork.members.includes('P'))t.fork.members.push('P');
+  S.fl.splice(S.fi,1);delete S.fr[i];S.ap=null;S.alts=[];
+  if(S.fl.length){S.fi=Math.min(S.fi,S.fl.length-1);S.fk='flag';rr();render('map');toast(`${ic('check',16)} Swapped. ${S.fl.length} more to review`)}
+  else{S.fk=null;rr();render('map');lay('sheet',doneHTML(t),'Your new path')}},
+ finvite:()=>{const t=trip(S.mapTrip),c=CH.find(c=>c.tid==t.id);if(c){c.m.push(['P','',0,'fork',t.id]);c.t='now'}A.closeLy();rr();toast('Path shared in the '+t.n+' chat')},
+ pathpick:(w,tid)=>{const t=trip(tid||(S.nav?S.mapTrip:S.cur));if(!t||!t.fork)return;if(myPath(t)==w)return toast(`You’re already on ${w=='fork'?pn(t.fork.owner)+'’s':'the main'} path`);if($('#ly').classList.contains('open'))A.closeLy();lay('sheet',joinHTML(t,w),'Join a path')},
+ pathjoin:(w,tid)=>{const t=trip(tid),fk=t.fork;if(w=='fork'){if(!fk.members.includes('P'))fk.members.push('P')}else fk.members=fk.members.filter(k=>k!='P');S.leg=0;S.pv=null;A.closeLy();rr();render('map');chrome();toast(w=='fork'?`You joined ${pn(fk.owner)}’s path`:'You’re back on the main path')},
+ pview:k=>{S.pv=k;render('trip')},
+ fview:tid=>{S.mapTrip=tid;S.nav=1;S.leg=0;S.mx=0;S.fk=null;tab('map')},
+ /* chat */
+ cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
+ /* profile */
+ ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{S.p.move=decodeURIComponent(k);pd();render('profile')},pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
+ pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:n=>{S.p.rate=+n;pd();render('profile')}});
+/* send keeps working with the new message shape */
+A.send=()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length]]);if(S.th==th)S.typing=0;render('thread');bottom();tabbar()},1500)};
+/* swipe in from the left edge = back (pushed screens only) */
+let SW=null;
+document.addEventListener('pointerdown',e=>{if(e.pointerType=='mouse'&&e.button)return;const d=$('#dev').getBoundingClientRect();if(e.clientX-d.left<24&&cur().length>1&&!$('#ly').classList.contains('open'))SW={x:e.clientX,y:e.clientY}});
+document.addEventListener('pointerup',e=>{if(SW&&e.clientX-SW.x>70&&Math.abs(e.clientY-SW.y)<60)A.back();SW=null});
+document.addEventListener('pointercancel',()=>SW=null);
+
 rr();
 </script></body></html>
