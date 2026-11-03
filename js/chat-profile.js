@@ -20,14 +20,15 @@ const PD={
  diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>pTags('diet','Add a dietary need…',['Halal','Vegetarian','Kosher','Vegan','Gluten-free'])},
  access:{nv:1,t:'Accessibility',i:'user',c:'purple',v:()=>pSum(S.p.access),b:()=>pTags('access','Add an accessibility need…',['Step-free routes','Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support'])},
  health:{nv:1,t:'Health & comfort',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>pTags('health','Add something we should know…',['Chronic eye stye','Asthma','Bad knees','Motion sickness','Heat sensitivity'],'Used when plans change.')},
- likes:{t:'Places you like',i:'map-pin',c:'blue',v:()=>pSum(S.p.likes),b:()=>pTags('likes','Add a place type…',['Cafes','Museums','Hikes','Movies','Arts & crafts','Beaches','Night markets'])},
+ likes:{t:'Places you like',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>pTags('likes','Add a place type…',['Cafes','Museums','Hikes','Movies','Arts & crafts','Beaches','Night markets'])},
  notif:{t:'Notifications',i:'clock',c:'red',v:()=>Object.values(S.p.notif).filter(Boolean).length+' on',b:()=>{const n=S.p.notif;return `<div class="fl" style="margin-top:8px">${Switch('remind','Trip reminders','The day before, and on the morning',n.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',n.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',n.fork)}</div>`}},
- rate:{t:'Rate your last trip',i:'star',c:'yellow',v:()=>S.p.rate?S.p.rate+' / 5':'Not rated',b:()=>{const p=S.p;return `<div class="pad" style="margin-top:12px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><b>Sunrise at East Coast</b><div class="cap sm">${p.rate?p.rate+' out of 5':'Tap a star'}</div></div><div class="rate" role="group" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button aria-pressed="${n<=p.rate}" aria-label="${n} star${n>1?'s':''}" data-a="prate:${n}">${ic('star',26,n<=p.rate?'currentColor':'none')}</button>`).join('')}</div></div></div>`}},
+ rate:{t:'My trip ratings',i:'star',c:'yellow',v:()=>'4 trips',b:()=>{const p=S.p;return `<div class="pad" style="margin-top:12px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><b>Sunrise at East Coast</b><div class="cap sm">${p.rate?p.rate+' out of 5':'Tap a star'}</div></div><div class="rate" role="group" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button aria-pressed="${n<=p.rate}" aria-label="${n} star${n>1?'s':''}" data-a="prate:${n}">${ic('star',26,n<=p.rate?'currentColor':'none')}</button>`).join('')}</div></div></div>`}},
  saved:{t:'Saved places',ro:1,i:'bookmark',c:'blue',v:()=>String(SVL().length),b:()=>SVL().length?`<div style="margin-top:8px">${SVL().map(s=>Row({lead:StopIc(s),title:s.n,sub:byTxt(s.by)})).join('')}</div>`:Empty('Nothing saved yet','Tap the bookmark on a reel to save a place.')}
 };
 /* Profile layout: section headers, each holding one or more filled groups */
 const PG=[
- {h:'Preferences',g:[['style','move','budget','likes'],['diet','access','health']]},
+ {h:'Preferences',g:[['style','move','budget','likes']]},
+ {h:'Health & accessibility',g:[['diet','access','health']]},
  {h:'Your activity',g:[['saved','rate']]},
  {h:'Settings',g:[['notif']]}
 ];
