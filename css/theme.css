@@ -174,3 +174,6 @@ body{letter-spacing:0}h1{font-size:30px;line-height:35px;letter-spacing:-.03em}h
 .tile{background:var(--s2)}.tile:active{background:var(--s3)}
 .fld{box-shadow:0 6px 18px rgba(24,25,31,.1)}.fld.hl{box-shadow:0 6px 18px rgba(24,25,31,.1)}
 .chip{box-shadow:0 6px 18px rgba(24,25,31,.14)}
+
+/* keep the last item on Trips clear of the floating Create trip! button */
+#s-trips .pg{padding-bottom:200px}
