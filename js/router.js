@@ -1,5 +1,5 @@
 /* ===== ROUTER: screens, tab bar, chrome, toast ===== */
-const IDS=['trips','trip','form','map','reels','chat','thread','profile'],ROOT={trips:1,map:1,reels:1,chat:1,profile:1},RAW={map:1,reels:1,thread:1};
+const IDS=['trips','trip','form','map','reels','chat','thread','profile','all'],ROOT={trips:1,map:1,reels:1,chat:1,profile:1},RAW={map:1,reels:1,thread:1};
 const cur=()=>S.stack[S.tab],topId=()=>cur()[cur().length-1];
 const render=id=>{const e=$('#s-'+id);if(!e||!V[id])return;const y=e.scrollTop,h=V[id]();e.innerHTML=RAW[id]?h:`<div class="pg">${h}</div>`;e.scrollTop=y;if(id=='map'&&typeof mapAfter=='function')mapAfter()};
 IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.dataset.id=id;s.className='scr'+(id=='map'?' nos':id=='reels'?' rls':id=='thread'?' flex':'');$('#app').append(s)});

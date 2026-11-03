@@ -5,7 +5,7 @@ const A={tadd:(k,el)=>{const inp=el.closest('.tin').querySelector('input');let v
  setTimeout(()=>{const n=$('#s-'+(k=='coll'?'form':'profile')+' [list=dl-'+k+']');n&&n.focus()},30)},
  trm:(k,v)=>{v=decodeURIComponent(v);if(k=='coll'){const f=FR.find(x=>x[0]==v);S.f.coll=S.f.coll.filter(x=>x!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(x=>x!=v);pd();render('profile')}},
  info:gi=>{S.ci=+gi;lay('sheet',infoHTML(+gi),'Place info')},cmpick:()=>setLy(pickHTML(S.ci)),cmpto:j=>setLy(cmpHTML(S.ci,+j)),cmpback:()=>setLy(infoHTML(S.ci)),tab,toast,back:()=>{const s=cur();if(s.length>1){s.pop();upd()}},
- open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;go('trip')},step:i=>{S.step=+i;render('trip')},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},
+ open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;go('trip')},step:i=>{S.step=+i;render('trip')},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
  vt:(i,d)=>{const v=trip(S.cur).stops[i];d=+d;if(v.m==d){d==1?v.u--:v.d--;v.m=0}else{v.m==1&&v.u--;v.m==-1&&v.d--;d==1?v.u++:v.d++;v.m=d}rr()},
  submit:()=>{const t=trip(S.cur),id=t.id;t.vs.P=1;rr();toast('Votes submitted');pend(t).forEach((k,j)=>setTimeout(()=>{t.vs[k]=1;if(!pend(t).length){t.st='final';toast('Everyone’s voted. Your itinerary is ready.');if(S.cur==id&&topId()=='trip')S.step=2}rr()},1700*(j+1)))},
  nudge:()=>toast('Nudge sent to '+pend(trip(S.cur)).filter(k=>k!='P').map(k=>PE[k][2]).join(' & ')),

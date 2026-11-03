@@ -4,6 +4,7 @@ const needs=t=>t.st=='voting'&&!t.vs.P?t.stops.filter(s=>s.m==0).length:0;
 const pend=t=>Object.keys(t.vs).filter(k=>!t.vs[k]),fin=t=>t.st!='voting'||!pend(t).length,inItin=s=>s.u>=s.d,baseStops=t=>fin(t)?t.stops.filter(inItin):t.stops,mstops=t=>vstops(t);
 const UP=()=>T.filter(t=>!t.left&&dd(t.date)>=0).sort((a,b)=>a.date-b.date),PAST=()=>T.filter(t=>!t.left&&dd(t.date)<0).sort((a,b)=>b.date-a.date),OV=()=>UP().filter(t=>t.stops.length);
 const tasks=()=>[...(S.inv?['inv']:[]),...T.filter(t=>!t.left&&t.st=='voting'&&!t.vs.P).map(t=>t.id)];
+const taskDue=id=>id=='inv'?1e15:trip(id).close?+toDate(trip(id).close):1e15,tasksByDue=()=>tasks().map((id,i)=>[id,i]).sort((a,b)=>taskDue(a[0])-taskDue(b[0])||a[1]-b[1]).map(x=>x[0]);
 const unread=()=>CH.reduce((a,c)=>a+c.u,0),downvoted=t=>t.stops.some(s=>s.m==-1);
 const SVL=()=>{const x=[...SAVED];R.forEach((r,i)=>{if(S.saved[i]&&!x.some(y=>y.n==r.n))x.push({n:r.n,s:r.loc,i:r.i,k:'Eat',by:'P'})});return x};
 const byTxt=(by='P')=>{const n=[...by].map(k=>k=='P'?'you':PE[k]?PE[k][2]:k);return 'Saved by '+(n.length>2?n.slice(0,2).join(', ')+` +${n.length-2}`:n.join(' & '))};
