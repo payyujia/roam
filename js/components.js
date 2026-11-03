@@ -24,3 +24,21 @@ const InviteRow=()=>{const t=trip('read');return `<div class="row wrap rq"><div 
 /* tag component */
 const Tag=(k,x)=>`<span class="tag2">${esc(x)}<button aria-label="Remove ${esc(x)}" data-a="trm:${k}:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
 const TagBox=(k,vals,ph,sg=[])=>`<div class="tbx"><div class="tin">${ic('search',18)}<input class="tip" list="dl-${k}" placeholder="${ph}" aria-label="${ph}" autocomplete="off" onkeydown="if(event.key=='Enter'){event.preventDefault();A.tadd('${k}',this)}"><button class="tpl" aria-label="Add" data-a="tadd:${k}">${ic('plus',18)}</button></div><datalist id="dl-${k}">${sg.filter(x=>!vals.includes(x)).map(x=>`<option value="${x}">`).join('')}</datalist>${vals.length?`<div class="tags">${vals.map(x=>Tag(k,x)).join('')}</div>`:''}</div>`;
+
+/* ===== REEL VIDEOS =====
+   One short vertical clip per reel, same order as R in data.js.
+   Drop the files in /videos. A missing/broken file silently falls back to the photo (RP). */
+const RVID=['videos/shark.mp4','videos/burger.mp4','videos/dimsum.mp4','videos/skyline.mp4','videos/pixel.mp4'];
+const Reel=(gi,seed)=>`${Pic(RP[gi],seed,800)}${RVID[gi]?`<video class="rvid" src="${RVID[gi]}" muted loop playsinline preload="metadata" disablepictureinpicture aria-hidden="true" onerror="this.remove()"></video>`:''}`;
+let _rio;
+const reelsOn=()=>S.tab=='reels'&&topId()=='reels';
+/* Play only the reel that is mostly on screen; pause the rest (and everything when off the Reels tab). */
+function reelsSync(){$$('#s-reels video.rvid').forEach(v=>{const a=v.closest('.rv'),go=reelsOn()&&a&&a.dataset.vis=='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches;if(go){v.muted=true;const p=v.play();p&&p.catch(()=>{})}else v.pause()})}
+function reelsAfter(){
+ const feed=$('#s-reels .rfeed');if(_rio)_rio.disconnect();if(!feed)return;
+ feed.querySelectorAll('video.rvid').forEach(v=>{v.muted=true;v.addEventListener('playing',()=>v.classList.add('on'))});
+ _rio=new IntersectionObserver(es=>{es.forEach(en=>{en.target.dataset.vis=en.isIntersecting?'1':'0';const v=en.target.querySelector('video.rvid');if(v&&!en.isIntersecting)v.currentTime=0});reelsSync()},{root:feed,threshold:.6});
+ feed.querySelectorAll('.rv').forEach(a=>_rio.observe(a));
+ /* tap anywhere (not on a button) to pause / resume */
+ feed.addEventListener('click',e=>{if(e.target.closest('button'))return;const v=e.target.closest('.rv')?.querySelector('video.rvid');if(!v)return;v.paused?v.play().catch(()=>{}):v.pause()});
+}

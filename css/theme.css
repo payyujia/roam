@@ -177,3 +177,5 @@ body{letter-spacing:0}h1{font-size:30px;line-height:35px;letter-spacing:-.03em}h
 
 /* keep the last item on Trips clear of the floating Create trip! button */
 #s-trips .pg{padding-bottom:200px}
+/* reel videos: sit above the photo, below the gradient + UI; fade in once actually playing */
+.rv>video.rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity .3s;background:transparent}.rv>video.rvid.on{opacity:1}
