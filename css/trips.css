@@ -23,3 +23,16 @@ button.trow:active{background:rgba(0,0,0,.03)}
 .task .due.hot{color:#D9480F;font-weight:700}
 .tmain .cap,.task .due{white-space:nowrap}
 .tact{gap:6px}.tact .ib{width:36px;height:36px}
+/* task buttons: sit on the same centre line (and right edge) as the Review pill */
+.trow .tact{padding:0;margin:0;align-items:center}
+/* status bar: iOS style - time + location arrow, signal, wifi, battery with level inside */
+#sb{font-size:15px;font-weight:600;letter-spacing:-.01em}
+#sb .sbt,#sb .sbr{display:flex;align-items:center}
+#sb .sbt{gap:5px}#sb .sbr{gap:6px}
+#sb .sbb{position:relative;display:inline-block;width:27px;height:13px;border-radius:4px;background:#8E8E93;margin-right:3px}
+#sb .sbb::after{content:"";position:absolute;right:-3px;top:4.5px;width:1.5px;height:4px;border-radius:0 1px 1px 0;background:rgba(24,25,31,.4)}
+#sb .sbb i{position:absolute;left:0;top:0;bottom:0;width:12%;min-width:4px;border-radius:4px 0 0 4px;background:#E5484D}
+#sb .sbb b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;line-height:1;font-weight:700;color:#fff;mix-blend-mode:normal}
+/* profile photo: sits over the initial; if the file is missing the initial still shows */
+.av,.pav{position:relative;overflow:hidden}
+.av>img,.pav>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
