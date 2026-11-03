@@ -1,0 +1,2 @@
+/* ===== BOOT: first render ===== */
+rr();

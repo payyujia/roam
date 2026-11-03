@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Roam</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5' fill='%23FCCC0A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Styles: order matters, later files override earlier ones -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/shell.css">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/map.css">
+<link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+<div id="dev">
+ <div id="sb" aria-hidden="true"><span>7:41</span><svg width="64" height="12" viewBox="0 0 68 12" fill="currentColor"><rect y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" width="3" height="12" rx="1"/><rect x="28" y="1" width="26" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="30" y="3" width="17" height="7" rx="1.5"/></svg></div>
+ <main id="app"></main>
+ <button id="fab" data-a="newtrip" hidden>Create trip!</button>
+ <button id="psave" data-a="psave" hidden></button>
+ <button id="mini" class="mini" data-a="tab:map" hidden></button>
+ <nav id="tb" aria-label="Main"></nav>
+ <div id="ly"><div class="scrim" data-a="closeLy"></div><div id="lyc" role="dialog" aria-modal="true" tabindex="-1"></div></div>
+ <div id="toast" role="status" aria-live="polite"></div><div id="hi"></div>
+</div>
+<template data-art="fork-intro"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
+<template data-art="fork-clear"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
+<template data-art="fork-done"><!-- paste your SVG here (viewBox="0 0 320 124"). Empty = built-in art. --></template>
+
+<!-- Scripts: classic scripts share one global scope, so load order matters -->
+<script src="js/icons.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/components.js"></script>
+<script src="js/views.js"></script>
+<script src="js/router.js"></script>
+<script src="js/actions.js"></script>
+<script src="js/fork-art.js"></script>
+<script src="js/state-v3.js"></script>
+<script src="js/map-engine.js"></script>
+<script src="js/map-screen.js"></script>
+<script src="js/chat-profile.js"></script>
+<script src="js/actions-v3.js"></script>
+<script src="js/main.js"></script>
+</body></html>
