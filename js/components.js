@@ -5,7 +5,14 @@ const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','ph
 const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
 const Cover=(t,z='m')=>`<div class="cover z-${z} l-${t.c}" aria-hidden="true">${Pic(PH[t.id],t.n,z=='l'||z=='xl'?600:240)}</div>`;
 /* Local illustrated profile pictures: shared by trip members, friends, and the profile tab. */
-const AVATAR={P:'img/avatars/plaise.svg',R:'img/avatars/raymond.svg',E:'img/avatars/eustace.svg',L:'img/avatars/ling-ling.svg',J:'img/avatars/jason.svg'};
+/* Photographic demo profiles. Photos are loaded from Unsplash, not AI illustrations. */
+const AVATAR={
+ P:'https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&fit=crop&crop=faces&w=256&h=256&q=75',
+ R:'https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&fit=crop&crop=faces&w=256&h=256&q=75',
+ E:'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&crop=faces&w=256&h=256&q=75',
+ L:'https://images.unsplash.com/photo-1745434159123-5b99b94206ca?auto=format&fit=crop&crop=faces&w=256&h=256&q=75',
+ J:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&crop=faces&w=256&h=256&q=75'
+};
 const Av=(k,z='')=>{const p=PE[k];if(!p)return '';return `<span class="av ${z} l-${p[1]}" title="${esc(k==='P'?(S.p.name||'You'):p[2])}">${esc(p[0])}<img src="${AVATAR[k]}" alt="" decoding="async" onerror="this.remove()"></span>`},Stack=s=>`<span class="st" aria-hidden="true">${[...s].map(k=>Av(k)).join('')}</span>`;
 const Btn=(l,a,o={})=>`<button class="btn ${o.v||''}" data-a="${a}"${o.off?' disabled':''}>${o.i?ic(o.i,20):''}${l}</button>`;
 const IBtn=(i,a,l,v='',s=24)=>`<button class="ib ${v}" data-a="${a}" aria-label="${l}">${ic(i,s)}</button>`;
