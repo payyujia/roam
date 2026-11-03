@@ -35,6 +35,8 @@ Object.assign(A,{
  /* chat */
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
+ pdet:k=>{S.pd=k;S.p.dirty=0;go('pdet')},
+ psave:()=>{S.p.dirty=0;A.back();toast('Changes saved')},
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{S.p.move=decodeURIComponent(k);pd();render('profile')},pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
  pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:n=>{S.p.rate=+n;pd();render('profile')}});
 /* send keeps working with the new message shape */

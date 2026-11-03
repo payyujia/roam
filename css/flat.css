@@ -1,0 +1,37 @@
+/* =========================================================
+   FLAT: no borders, no shadows, no 3D press effects.
+   Loaded last, so it wins over the older styles.
+   To bring any look back, delete the rule here.
+   ========================================================= */
+
+/* 1. Shadows and rings off, on every button, field, card and sheet */
+.btn,.btn:active,.btn.sec,.btn.out,.btn.dg,.btn.sm2,.btn.xs,.btn:disabled,
+.ib,.ib.p,.gob,.gob:disabled,.play,.pill,.pill.on,.tag,.tag2,.tpl,.chev,
+.fld,.fld.hl,.fi,.fi.sr,.fi:focus-within,.fi.sr:focus-within,
+.in,.in:focus,.in.bad,.sw,.sw::after,.rdo,.cbx,
+.rd[aria-checked=true] .rdo,.cx[aria-checked=true] .cbx,
+.seg button[aria-checked=true],.qty button,.qty button:disabled,
+#fab,#psave,#psave:disabled,.mini,#toast,.chip,.rinfo,.avedit,.fcm,.feat,.win,
+.z-l,.z-xl,.msh,.pop,.fcard,.pc2,.pc2[aria-pressed=true],.pl2,.pb,.vbtn,
+.stat3 div,.st .av,.bdg,#tb,#tb .on .av,#tb .ctr:active .circ,
+.pin.b,.pin.d,.pin.stn,.pn .bg,.nv .tn.cur .nd,
+#dev{box-shadow:none!important}
+.rg::-webkit-slider-thumb{box-shadow:none!important}
+.rg::-moz-range-thumb{box-shadow:none!important}
+.mp-r,.pn{filter:none}
+
+/* 2. Borders off */
+.in,.fld,.tag2,#tb,.mh,#dev{border:0!important}
+
+/* 3. Fields keep a soft fill so they still read as fields */
+.fld:not(.hl),.fi.sr{background:var(--s2)}
+.in:focus,.fi:focus-within,.fi.sr:focus-within{background:#E6E6E6}
+.in.bad{background:#FFF1F1}
+
+/* 4. Slider thumb: a flat accent dot */
+.rg::-webkit-slider-thumb{background:var(--ac)}
+.rg::-moz-range-thumb{background:var(--ac)}
+
+/* 5. Press feedback without the 3D drop */
+.btn:active,.gob:active,#fab:active,#psave:active{transform:scale(.97)}
+#tb .ctr:active .circ{transform:scale(.95)}
