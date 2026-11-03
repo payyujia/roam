@@ -4,7 +4,9 @@ const PH={hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b783
 const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f'];
 const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
 const Cover=(t,z='m')=>`<div class="cover z-${z} l-${t.c}" aria-hidden="true">${Pic(PH[t.id],t.n,z=='l'||z=='xl'?600:240)}</div>`;
-const Av=(k,z='')=>`<span class="av ${z} l-${PE[k][1]}" title="${PE[k][2]}">${PE[k][0]}</span>`,Stack=s=>`<span class="st" aria-hidden="true">${[...s].map(k=>Av(k)).join('')}</span>`;
+/* Local illustrated profile pictures: shared by trip members, friends, and the profile tab. */
+const AVATAR={P:'img/avatars/plaise.svg',R:'img/avatars/raymond.svg',E:'img/avatars/eustace.svg',L:'img/avatars/ling-ling.svg',J:'img/avatars/jason.svg'};
+const Av=(k,z='')=>{const p=PE[k];if(!p)return '';return `<span class="av ${z} l-${p[1]}" title="${esc(k==='P'?(S.p.name||'You'):p[2])}">${esc(p[0])}<img src="${AVATAR[k]}" alt="" decoding="async" onerror="this.remove()"></span>`},Stack=s=>`<span class="st" aria-hidden="true">${[...s].map(k=>Av(k)).join('')}</span>`;
 const Btn=(l,a,o={})=>`<button class="btn ${o.v||''}" data-a="${a}"${o.off?' disabled':''}>${o.i?ic(o.i,20):''}${l}</button>`;
 const IBtn=(i,a,l,v='',s=24)=>`<button class="ib ${v}" data-a="${a}" aria-label="${l}">${ic(i,s)}</button>`;
 const Pill=(l,a,on)=>`<button class="pill${on?' on':''}" aria-pressed="${!!on}" data-a="${a}">${l}</button>`;
