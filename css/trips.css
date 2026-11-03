@@ -41,3 +41,24 @@ button.trow:active{background:rgba(0,0,0,.03)}
 .dtile{height:58px;gap:1px}
 .dtile i{font-style:normal;font-size:9px;line-height:10px;font-weight:800;letter-spacing:.1em;color:var(--tx2)}
 .dtile.hot i{color:#D9480F}
+
+/* ===== DUE-DATE COLOUR CODING (Tasks + Your trips) ===== */
+:root{--tier1:#BCCBFA;--tier2:#DCE4FC;--tier3:#EDF1FD}
+.tier{background:var(--tier)}
+.tier.t1{--tier:var(--tier1)}.tier.t2{--tier:var(--tier2)}.tier.t3{--tier:var(--tier3)}
+.tier.t0{--tier:var(--s1)} /* past trips: neutral grey */
+
+/* Tasks: one card per task instead of one shared grey card */
+.tlist{background:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.trow.tier{border-radius:20px}
+.trow+.trow::before{content:none}
+.trow.tier .tgo{background:#fff}
+
+/* Trips: each row becomes a card */
+.row.tier{width:100%;margin:0 0 8px;padding:10px 14px;border-radius:20px;min-height:72px}
+
+/* press state keeps the tint (the old rules set a transparent background) */
+button.trow.tier:active,button.row.tier:active{background:var(--tier);filter:brightness(.97)}
+
+/* darker captions on the strongest tint so small text stays readable */
+.tier.t1 .cap,.tier.t1 .due:not(.hot){color:#363E5C}

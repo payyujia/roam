@@ -11,3 +11,8 @@ const rel=d=>{const n=dd(d);return n==0?'Today':n==1?'Tomorrow':n>1?`In ${n} day
 const iso=d=>{const dt=toDate(d);return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`},p8=s=>{const[a,b,c]=s.split('-');return new Date(+a,b-1,+c)};
 const t12=t=>{const[h,m]=t.split(':').map(Number);return[`${h%12||12}:${String(m).padStart(2,'0')}`,h<12?'am':'pm']},tt=t=>t12(t).join(' '),addD=(d,n)=>{const dt=toDate(d);return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate()+n)};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+
+/* ===== DUE-DATE COLOUR TIERS =====
+   1 = due in 3 days or less (or overdue) | 2 = within one calendar month | 3 = further away / no deadline */
+const monthAhead=()=>{const y=NOW.getFullYear(),m=NOW.getMonth()+1,last=new Date(y,m+1,0).getDate();return new Date(y,m,Math.min(NOW.getDate(),last))};
+const tier=d=>{if(d==null)return 3;const n=dd(d);return n<=3?1:n<=dd(monthAhead())?2:3};
