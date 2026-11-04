@@ -51,3 +51,23 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   padding:16px 24px 62px;
   background:linear-gradient(to bottom,rgba(255,255,255,0),var(--white) 20%);
 }
+
+/* Vote rows: activity information opens a detail sheet; vote buttons stay separate. */
+#s-trip .vote-row{gap:8px}
+#s-trip .vote-detail{flex:1;display:flex;align-items:center;gap:10px;min-width:0;text-align:left;border-radius:12px;padding:4px 0}
+#s-trip .vote-detail .gr{min-width:0;flex:1}
+#s-trip .vote-detail .gr b,#s-trip .vote-detail .gr .cap{display:block;overflow:hidden;text-overflow:ellipsis}
+#s-trip .vote-detail .gr .cap{white-space:nowrap}
+#s-trip .vote-detail .gr .cap:has(.err){white-space:normal;line-height:16px}
+#s-trip .vote-detail-chevron{display:grid;place-items:center;flex:none;color:var(--tx3)}
+#s-trip .vote-detail:active{background:var(--s1)}
+#s-trip .vote-row .vt{flex:none}
+/* Activity information sheet */
+.activity-details{padding-top:12px;padding-bottom:28px;display:flex;flex-direction:column;gap:20px}
+.activity-facts{display:flex;flex-direction:column;gap:0}
+.activity-facts>div{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--s2)}
+.activity-facts dt{flex:0 0 42%;font-size:13px;color:var(--tx2)}
+.activity-facts dd{flex:1;font-size:14px;font-weight:600;text-align:right;overflow-wrap:anywhere}
+.activity-vote-totals{display:flex;flex-direction:column;gap:10px}
+.activity-vote-totals>div{display:flex;gap:18px;align-items:center}
+.activity-vote-totals>div span{display:inline-flex;align-items:center;gap:6px;color:var(--tx2)}
