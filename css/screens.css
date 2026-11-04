@@ -71,3 +71,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 .activity-vote-totals{display:flex;flex-direction:column;gap:10px}
 .activity-vote-totals>div{display:flex;gap:18px;align-items:center}
 .activity-vote-totals>div span{display:inline-flex;align-items:center;gap:6px;color:var(--tx2)}
+/* Trip header: line up the back arrow with the cover art (24px page gutter),
+   and provide a clear gap between the arrow and cover photo. */
+#s-trip .th .top{padding-left:24px;padding-right:24px}
+#s-trip .th .thd{padding-top:20px}

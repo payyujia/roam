@@ -31,7 +31,7 @@ button.trow:active{background:rgba(0,0,0,.03)}
 #sb .sbt{gap:5px}#sb .sbr{gap:6px}
 #sb .sbb{position:relative;display:inline-block;width:27px;height:13px;border-radius:4px;background:#8E8E93;margin-right:3px}
 #sb .sbb::after{content:"";position:absolute;right:-3px;top:4.5px;width:1.5px;height:4px;border-radius:0 1px 1px 0;background:rgba(24,25,31,.4)}
-#sb .sbb i{position:absolute;left:0;top:0;bottom:0;width:12%;min-width:4px;border-radius:4px 0 0 4px;background:#E5484D}
+#sb .sbb i{position:absolute;left:0;top:0;bottom:0;width:90%;min-width:4px;border-radius:4px 0 0 4px;background:#30343B}
 #sb .sbb b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;line-height:1;font-weight:700;color:#fff;mix-blend-mode:normal}
 /* profile photo: sits over the initial; if the file is missing the initial still shows */
 .av,.pav{position:relative;overflow:hidden}
