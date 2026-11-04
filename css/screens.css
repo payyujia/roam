@@ -30,9 +30,14 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 .top{padding-top:16px}
 /* iPhone-style status bar: translucent blur that fades in once the page scrolls under it */
 #sb::before{content:"";position:absolute;inset:0 0 -8px;z-index:-1;background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);opacity:0;transition:opacity .2s}
-#dev.sbb #sb::before{opacity:1}
+#dev.sbb #sb::before{opacity:1;background:var(--white);inset:0;-webkit-mask-image:none;mask-image:none}
 /* profile: section headers + Save bar fixed at the end of a subpage */
 .ph{padding:28px 30px 0}.ph+.sg{margin-top:10px}
 .pg:has(>.dock.sv){padding-bottom:92px}
 .dock.sv{padding-bottom:38px}
 #dev:has(#mini:not([hidden])) .dock.sv{bottom:186px}
+/* Keep the trip progress tabs readable as the voting list scrolls.
+   They pin immediately below the 50px status bar instead of passing underneath it. */
+#s-trip .step{position:sticky;top:50px;z-index:8;background:var(--white);padding-bottom:12px}
+/* Long vote-status messages must not get cut off by shared one-line row styles. */
+#s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
