@@ -19,6 +19,10 @@
 #ly{position:absolute;inset:0;z-index:40;visibility:hidden;transition:visibility 0s .3s}#ly.open{visibility:visible;transition:none}
 .scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .25s}.open .scrim{opacity:1}
 #lyc{position:absolute;background:var(--white);outline:none}#lyc.sheet{left:0;right:0;bottom:0;max-height:92%;border-radius:var(--r3) var(--r3) 0 0;transform:translateY(105%);transition:transform .36s var(--ease);display:flex;flex-direction:column}.open #lyc.sheet{transform:none}
+/* The three-dot trip options menu is a static overlay: no drag handle or swipe-up animation. */
+#lyc.menu{left:0;right:0;bottom:0;max-height:92%;border-radius:var(--r3) var(--r3) 0 0;display:flex;flex-direction:column;opacity:0;transition:opacity .14s ease}
+.open #lyc.menu{opacity:1}
+#lyc.menu .lyb{padding-top:14px}
 #lyc.dlg{left:28px;right:28px;top:50%;border-radius:16px;opacity:0;transform:translateY(-46%) scale(.96);transition:opacity .2s,transform .28s var(--ease)}.open #lyc.dlg{opacity:1;transform:translateY(-50%)}
 .lyb{overflow:auto;padding:0 0 28px;display:flex;flex-direction:column}.dlg .lyb{padding:24px;gap:8px}
 .grab{height:20px;flex:none;display:grid;place-items:center;cursor:grab;touch-action:none}.grab::before{content:"";width:36px;height:4px;border-radius:2px;background:var(--s3)}
