@@ -49,7 +49,7 @@ ${Sec('Budget per trip',`<span class="cap sm" id="bv">SGD ${p.budget}</span>`)}<
 ${Sec('Saved places',`<span class="cap sm">${SVL().length}</span>`)}${SVL().slice(0,3).map(s=>Row({lead:StopIc(s),title:s.n,sub:byTxt(s.by)})).join('')}`};
 /* layers (sheets + dialogs) */
 let lastF=null;
-function lay(type,html,label){const c=$('#lyc');lastF=document.activeElement;c.className=type;c.setAttribute('aria-label',label);c.innerHTML=(type=='sheet'?'<div class="grab"></div>':'')+`<div class="lyb">${html}</div>`;$('#ly').classList.add('open');$('#app').inert=$('#tb').inert=$('#fab').inert=$('#psave').inert=$('#mini').inert=true;setTimeout(()=>c.focus(),60)}
+function lay(type,html,label){const c=$('#lyc');lastF=document.activeElement;c.className=type;c.setAttribute('aria-label',label);c.innerHTML=(type=='sheet'?'<div class="grab"></div>':'')+`<div class="lyb">${html}</div>`;$('#ly').classList.add('open');$('#app').inert=$('#tb').inert=$('#fab').inert=$('#psave').inert=true;setTimeout(()=>c.focus(),60)}
 const setLy=h=>{$('#lyc .lyb').innerHTML=h},hdr=(t,sub)=>`<div class="mh">${Cover(t,'xs')}<div class="gr"><b>${t.n}</b><div class="cap sm">${sub||fd(t.date)}</div></div>${IBtn('x','closeLy','Close')}</div>`;
 /* Activity facts are grounded in the trip's existing stop data, not invented venue details. */
 const activityHTML=i=>{

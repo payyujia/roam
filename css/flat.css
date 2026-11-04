@@ -11,7 +11,7 @@
 .in,.in:focus,.in.bad,.sw,.sw::after,.rdo,.cbx,
 .rd[aria-checked=true] .rdo,.cx[aria-checked=true] .cbx,
 .seg button[aria-checked=true],.qty button,.qty button:disabled,
-#fab,#psave,#psave:disabled,.mini,#toast,.chip,.rinfo,.avedit,.fcm,.feat,.win,
+#fab,#psave,#psave:disabled,#toast,.chip,.rinfo,.avedit,.fcm,.feat,.win,
 .z-l,.z-xl,.msh,.pop,.fcard,.pc2,.pc2[aria-pressed=true],.pl2,.pb,.vbtn,
 .stat3 div,.st .av,.bdg,#tb,#tb .on .av,#tb .ctr:active .circ,
 .pin.b,.pin.d,.pin.stn,.pn .bg,.nv .tn.cur .nd,
