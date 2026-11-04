@@ -1,8 +1,8 @@
 /* ===== TRIPS HOME v4 ===== */
 /* status bar: time and battery line up with the page margins (24px) */
 #sb{padding-left:24px;padding-right:24px}
-/* room at the end of the page so the last row scrolls clear of the pinned Create trip! pill */
-#s-trips .pg{padding-bottom:190px}
+/* Extra space at the end of the Home feed keeps the last trip card well clear of the pinned Create trip! button when scrolled to the bottom. */
+#s-trips .pg{padding-bottom:230px}
 /* Create trip! pill: pinned above the centre Trips button; page content scrolls underneath it */
 #fab[data-s=trips]{bottom:140px;height:48px;padding:0 28px;font-size:16px;font-weight:800;box-shadow:var(--gum),0 10px 24px rgba(25,71,230,.35)}
 /* tasks: one agenda row per task inside a soft card */
