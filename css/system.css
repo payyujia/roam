@@ -1,62 +1,127 @@
 /* =========================================================
-   SYSTEM v3: teal leads, pink accents. Loaded last; mirrors docs/sticker-sheet.html.
-   Teal ladder: T50 EAFBF8 · T100 D3F5EF · T200 A8EBDD · T400 00C6AE · T600 008578 · T800 00574F · T900 00302B
-   Inside one component, state = a different teal shade. Selection = container inversion T100 -> T600, glyph stays solid.
-   Pink = social / soon / rating. Red = errors only. No blue, green or yellow.
+   SYSTEM v5: yellow starts things, ink shows where you are.
+   Mirrors the v5 sticker sheet. Loaded last, so it wins.
+   - Yellow (#FFC21A) = primary actions and brand art only. Text on yellow is ink.
+   - Selection = an ink mark: bar (tabs), dot (icon buttons, votes), ring (pills, radio,
+     checkbox, switch, steps), underline (segmented). The glyph is never filled or swapped.
+   - Meaning colours: green-teal = done, pink = social, red = error.
+   Selectors are #dev-prefixed and the ring states use !important because flat.css
+   forces box-shadow:none!important on most controls.
    ========================================================= */
 :root{
---t50:#EAFBF8;--t100:#D3F5EF;--t200:#A8EBDD;--t400:#00C6AE;--t600:#008578;--t800:#00574F;--t900:#00302B;
+--ink:#18191F;--y:#FFC21A;--y-press:#E8A900;--y-t:#FFF6D6;--line:#8A8F9E;--tx2:#565B6B;
+--ok:#008578;--ok-t:#D3F5EF;--soc-t:#FFE3EF;--soc-d:#5A0F34;--err:#C93A3F;--err-t:#FDEBEC;
 --pk-t:#FFF3F8;--pk-m:#FFC7DE;--pk:#FF89BB;--pk-d:#5A0F34;
-/* retire the old hues by pointing them at the system */
---dusk:var(--t600);--dusk-d:var(--t800);--dusk-m:var(--t200);--dusk-t:var(--t100);--blue:var(--t600);
---teal:var(--t400);--teal-m:var(--t200);--teal-t:var(--t100);--teal-tt:var(--t50);--tink:var(--t600);--ac:var(--t600);
+--gum:0 0 0 0 transparent;
+/* retire the teal/blue ramp by pointing it at the system */
+--ac:var(--y);--teal:var(--y);--teal-m:#FFE48A;--teal-t:var(--y-t);--teal-tt:var(--y-t);--tink:var(--ink);
+--dusk:var(--ink);--dusk-d:var(--ink);--dusk-m:var(--y);--dusk-t:var(--s2);--blue:var(--ink);
+--t50:var(--y-t);--t100:var(--s2);--t200:var(--s3);--t400:var(--y);--t600:var(--ink);--t800:var(--ink);--t900:var(--ink);
 --sun:var(--pk);--sun-m:var(--pk-m);--sun-t:var(--pk-t);--fork:var(--pk);--coral:var(--pk);--coral-m:var(--pk-m);--coral-t:var(--pk-t);
---tag:var(--pk-m);--tag-d:var(--pk);--tag-ink:var(--pk-d);--yellow:var(--pk);
---tier1:var(--pk-m);--tier2:var(--pk-t);--tier3:var(--t50);--font:"Montserrat",-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif}
-:focus-visible{outline-color:var(--t600)}
-/* primary + secondary actions */
-.btn,.btn.y,.gob,#fab,#psave,.vbtn,.tgo,.tpl{background:var(--t600);color:var(--t50)}
-.btn:active,.gob:active,#fab:active,#psave:active,.vbtn:active{background:var(--t800)}
-.btn.sec,.btn.out,.kb,.tgo{background:var(--t100);color:var(--t800)}.btn.sec:active,.kb:active{background:var(--t200)}
-.tgo,.trow.tier .tgo{background:var(--t600);color:var(--t50)}
-.btn:disabled,.gob:disabled,#psave:disabled{background:var(--s2);color:var(--tx3)}
-.btn.dg{background:#FDEBEC;color:#BE2B31}
-.qty button{background:var(--t600);color:var(--t50)}.qty button:active{background:var(--t800)}.qty button:disabled{background:var(--s3);color:var(--tx3)}
-/* selection: container inverts, glyph is always solid */
-.ib.f,.ib.t,.vb{background:var(--t100);color:var(--t800)}
-.ib[aria-pressed=true],.vb[aria-pressed=true],.vb[aria-pressed=true].up,.vb[aria-pressed=true].dn,.rail .ib[aria-pressed=true]{background:var(--t600);color:var(--t50)}
-.ib.f svg,.ib[aria-pressed] svg,.vb svg,.kb svg,.gob svg{fill:currentColor}
-.pill,.seg button{color:var(--t800)}.pill{background:var(--t100)}
-.pill.on,.pill[aria-pressed=true],.seg button[aria-checked=true]{background:var(--t600);color:var(--t50)}
-.rtg .pill{background:rgba(0,0,0,.28);color:#fff}.rtg .pill.on{background:#fff;color:var(--t800)}
-.pc2[aria-pressed=true]{background:var(--t600);color:var(--t50)}.pc2[aria-pressed=true] small{color:var(--t100)}
-.sw.on,.sw2.on,.rd[aria-checked=true] .rdo,.cx[aria-checked=true] .cbx{background:var(--t600)}
-.rg::-webkit-slider-thumb{background:var(--t800)}.rg::-moz-range-thumb{background:var(--t800)}
-/* tags */
-.tag{background:var(--pk-t);color:var(--pk-d)}.tag.ok{background:var(--t200);color:var(--t900)}.tag.alt{background:var(--t100);color:var(--t800)}
-.tag2{background:var(--t200);color:var(--t900)}.tag2 button{background:var(--t50)}
-/* progress: ONE hue, three shades. upcoming T100 · done T400 · current T800 */
-.sd{background:var(--t100);color:var(--t600);border:0}
-.stp::before{background:var(--t100)}.stp.done::before,.stp.on::before{background:var(--t400)}
-.stp.done .sd{background:var(--t400);color:var(--t900)}.stp.on .sd{background:var(--t800);color:var(--t50)}.stp{color:var(--t600)}.stp.on{color:var(--t800)}
-.nd{background:var(--t100);color:var(--t600)}.tn.cur .nd{background:var(--t800);color:var(--t50)}.tn.done .nd,.tn.org .nd{background:var(--t400);color:var(--t900)}
-.tc .ln::after{background:var(--t100);opacity:1}.tc.done .ln::after{background:var(--t400)}
-/* tab bar: same inversion as every other selected control */
-#tb button{color:var(--tx2)}#tb .on{color:var(--t600)}
-#tb .ti{width:52px;height:34px;border-radius:999px;place-items:center;transition:background .15s,color .15s}
-#tb .on .ti{background:var(--t600);color:var(--t50)}#tb .on .ti svg{fill:currentColor;stroke:currentColor}
-#tb .ctr .ti{width:auto;height:auto;background:none}#tb .circ{background:var(--t100);color:var(--t600)}#tb .ctr.on .circ{background:var(--t600);color:var(--t50)}
-#tb .on .av{box-shadow:0 0 0 2px var(--t600)}
-/* fields */
-.in:focus,.fi:focus-within,.fi.sr:focus-within,.in:focus-within{background:var(--t100)}
-/* map */
-.you{background:var(--t600);box-shadow:0 0 0 3px #fff,0 0 0 9px rgba(0,133,120,.2)}
-.pn svg.t path{fill:var(--pc,var(--t400))}
-/* nav sheet helper line (.nvs): a quiet teal note, links in teal */
-.pad:has(>.nvs){margin:0 16px;padding:12px 14px;border-radius:14px;background:var(--t50)}
-.nvs{font-size:13px;line-height:18px;font-weight:600;color:var(--t800)}
-.lk{color:var(--t600);font-weight:700;text-decoration:none}
-/* stars + rating = pink */
-.rate button[aria-pressed=true]{color:var(--pk)}
-.dtile.hot{background:var(--pk-m);color:var(--pk-d)}.dtile.hot span,.task .due.hot{color:var(--pk-d)}
-.youpath{background:var(--pk-t);color:var(--pk-d)}.fic.fk,.fcm .xic{background:var(--pk-m);color:var(--pk-d)}
+--tag:var(--s2);--tag-d:var(--s3);--tag-ink:var(--ink);--yellow:var(--y);--alert:var(--err);
+--tier1:var(--pk-m);--tier2:var(--pk-t);--tier3:var(--y-t)}
+:focus-visible{outline:3px solid var(--ink)!important;outline-offset:2px}
+#dev .lk{color:var(--ink);font-weight:800;text-decoration:underline}
+
+/* ---------- actions: yellow, ink text, no gloss ---------- */
+#dev .btn,#dev .btn.y,#dev .gob,#dev #fab,#dev #psave,#dev .vbtn,#dev .tgo,#dev .tpl,#dev .trow.tier .tgo,#dev .qty button,#dev .play{background:var(--y);color:var(--ink)}
+#dev .btn:active,#dev .gob:active,#dev #fab:active,#dev #psave:active,#dev .vbtn:active,#dev .tpl:active,#dev .qty button:active{background:var(--y-press)}
+#dev #fab{box-shadow:0 8px 24px rgba(24,25,31,.16)!important}
+#dev .btn.sec,#dev .btn.out{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)!important}
+#dev .btn.sec:active,#dev .btn.out:active{background:var(--s2)}
+#dev .kb{background:var(--s2);color:var(--ink)}#dev .kb:active{background:var(--s3)}
+#dev .btn.dg{background:var(--err-t);color:var(--err);box-shadow:none!important}
+#dev .btn:disabled,#dev .gob:disabled,#dev #psave:disabled,#dev .qty button:disabled{background:var(--s2);color:var(--tx2)}
+#dev .btn.sec:disabled{box-shadow:none!important}
+
+/* ---------- selection: icon buttons + votes = ink glyph and a dot ---------- */
+#dev .ib,#dev .vb{position:relative;background:transparent;color:var(--tx2)}
+#dev .ib.f,#dev .ib.t,#dev .vb{background:transparent;color:var(--tx2)}
+#dev .ib::after,#dev .vb::after{content:"";position:absolute;bottom:2px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .15s}
+#dev .ib[aria-pressed=true],#dev .vb[aria-pressed=true],#dev .vb[aria-pressed=true].up,#dev .vb[aria-pressed=true].dn{background:transparent;color:var(--ink)}
+#dev .ib[aria-pressed=true]::after,#dev .vb[aria-pressed=true]::after{transform:scale(1)}
+#dev .ib:active,#dev .vb:active{background:var(--s2)}
+#dev .top .ib{background:rgba(255,255,255,.62);color:var(--ink)}
+#dev .rail .ib{background:rgba(0,0,0,.3);color:#fff}
+#dev .rail .ib[aria-pressed=true]{background:rgba(0,0,0,.3);color:#fff}
+#dev .rail .ib::after{background:#fff}
+#dev .ib svg,#dev .vb svg,#dev .kb svg{fill:none}
+
+/* ---------- pills: grey ring -> ink ring + bold ---------- */
+#dev .pill{background:transparent;color:var(--tx2);font-weight:600;box-shadow:inset 0 0 0 1.5px var(--line)!important}
+#dev .pill.on,#dev .pill[aria-pressed=true]{background:transparent;color:var(--ink);font-weight:800;box-shadow:inset 0 0 0 2.5px var(--ink)!important}
+#dev .rtg .pill{background:rgba(0,0,0,.28);color:#fff;box-shadow:none!important}#dev .rtg .pill.on{background:#fff;color:var(--ink)}
+#dev .rv .pill{background:rgba(0,0,0,.35);color:#fff;box-shadow:none!important}
+#dev .pc2{box-shadow:inset 0 0 0 1.5px var(--line)!important;background:#fff}
+#dev .pc2[aria-pressed=true]{background:#fff;box-shadow:inset 0 0 0 2.5px var(--ink)!important}#dev .pc2[aria-pressed=true] small{color:var(--tx2)}
+
+/* ---------- segmented control: underline ---------- */
+#dev .seg{gap:0;padding:0;border-radius:0;background:none;box-shadow:inset 0 -1.5px 0 var(--s3)!important}
+#dev .seg button{position:relative;height:44px;border-radius:0;background:none;color:var(--tx2);font-weight:600;overflow:visible;box-shadow:none!important}
+#dev .seg button[aria-checked=true]{background:none;color:var(--ink);font-weight:800}
+#dev .seg button[aria-checked=true]::after{content:"";position:absolute;left:20%;right:20%;bottom:0;height:3px;border-radius:2px;background:var(--ink)}
+
+/* ---------- tab bar: ink bar above the icon; Trips = bold label, no overlay ---------- */
+#dev #tb button{color:var(--tx2);font-weight:600}
+#dev #tb .on{color:var(--ink);font-weight:800}
+#dev #tb .ti,#dev #tb .on .ti{background:none;width:auto;height:auto;color:inherit}
+#dev #tb .ti svg,#dev #tb .on .ti svg{fill:none;stroke:currentColor}
+#dev #tb button:not(.ctr).on::before{content:"";position:absolute;top:0;left:50%;width:24px;margin-left:-12px;height:3px;border-radius:2px;background:var(--ink)}
+#dev #tb .ctr .circ,#dev #tb .ctr.on .circ{background:var(--y);color:var(--ink);box-shadow:none!important}
+#dev #tb .ctr svg{fill:currentColor}
+#dev #tb .ctr.on::after{content:"";position:absolute;bottom:-5px;left:50%;width:24px;margin-left:-12px;height:3px;border-radius:2px;background:var(--ink)}
+#dev #tb .on .av{box-shadow:0 0 0 2px var(--ink)!important}
+
+/* ---------- switch, radio, checkbox: ink ring ---------- */
+#dev .sw{background:transparent;box-shadow:inset 0 0 0 2px var(--line)!important}
+#dev .sw::after{top:5px;left:5px;width:20px;height:20px;background:var(--line);box-shadow:none!important}
+#dev .sw.on{background:var(--y);box-shadow:inset 0 0 0 2px var(--ink)!important}
+#dev .sw.on::after{background:var(--ink);transform:translateX(22px)}
+#dev .rdo,#dev .cbx{background:transparent;box-shadow:inset 0 0 0 2px var(--line)!important}
+#dev .rd[aria-checked=true] .rdo,#dev .cx[aria-checked=true] .cbx{background:transparent;box-shadow:inset 0 0 0 3px var(--ink)!important;color:var(--ink)}
+#dev .rd[aria-checked=true] .rdo::after{background:var(--ink)}
+#dev .cbx svg{stroke-width:3.2}
+#dev .rg::-webkit-slider-runnable-track{background:linear-gradient(to right,var(--ink) var(--v,15%),var(--s3) var(--v,15%))}
+#dev .rg::-moz-range-progress{background:var(--ink)}
+#dev .rg::-webkit-slider-thumb{background:var(--y);box-shadow:inset 0 0 0 3px var(--ink)!important}
+#dev .rg::-moz-range-thumb{background:var(--y);box-shadow:inset 0 0 0 3px var(--ink)!important}
+
+/* ---------- steps + timelines: ink check = done, ink ring = current, grey = upcoming ---------- */
+#dev .stp{color:var(--tx2);font-weight:600}#dev .stp.on{color:var(--ink);font-weight:800}
+#dev .stp::before,#dev .stp.lock::before{height:3px;background:var(--s3)}
+#dev .stp.done::before,#dev .stp.on::before{background:var(--ink)}
+#dev .sd{background:#fff;color:var(--tx2);border:0;box-shadow:inset 0 0 0 2.5px var(--s3)!important}
+#dev .stp.done .sd{background:var(--ink);color:#fff;box-shadow:none!important}
+#dev .stp.on .sd{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 3px var(--ink)!important}
+#dev .nd{background:#fff;color:var(--tx2);box-shadow:inset 0 0 0 2.5px var(--s3)!important}
+#dev .tn.org .nd{background:var(--ink);box-shadow:none!important}
+#dev .tn.done .nd{background:var(--ink);color:#fff;box-shadow:none!important}
+#dev .tn.cur .nd,#dev .nv .tn.cur .nd{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 3.5px var(--ink)!important}
+#dev .tn.cur b{font-weight:800}
+#dev .tc .ln::after{background:var(--s3)}#dev .tc.done .ln::after{background:var(--ink)}
+#dev .pin.stn.cur{background:#fff;border-color:var(--ink)}
+#dev .segs i.on{background:var(--ink)}
+
+/* ---------- tags, status, badges ---------- */
+#dev .tag{background:var(--s2);color:var(--ink);box-shadow:none!important}
+#dev .tag.ok{background:var(--ok-t);color:var(--ok)}
+#dev .tag.alt,#dev .tag.d{background:var(--soc-t);color:var(--soc-d)}
+#dev .tag2{background:transparent;color:var(--ink);font-weight:600;box-shadow:inset 0 0 0 1.5px var(--line)!important}
+#dev .tag2 button{background:none;color:var(--tx2)}
+#dev .dtile.hot{background:var(--pk-m);color:var(--pk-d)}
+
+/* ---------- fields: ink ring on focus, red ring on error ---------- */
+#dev .in:focus,#dev .fi:focus-within,#dev .fi.sr:focus-within,#dev .in:focus-within{background:#fff;box-shadow:inset 0 0 0 2px var(--ink)!important}
+#dev .in.bad{background:var(--err-t);box-shadow:inset 0 0 0 2px var(--err)!important}
+#dev .chev{background:var(--s2);color:var(--ink)}
+#dev .tin{color:var(--tx2)}
+
+/* ---------- surfaces + feedback ---------- */
+#dev .ban{background:var(--y-t)}
+.pad:has(>.nvs){margin:0 16px;padding:12px 14px;border-radius:14px;background:var(--y-t)}
+.nvs{font-size:13px;line-height:18px;font-weight:600;color:var(--ink)}
+#dev .you{background:var(--ink);box-shadow:0 0 0 3px #fff,0 0 0 9px rgba(24,25,31,.15)!important}
+#dev .dots i:first-child{background:#fff}
+#dev .me .bub{background:var(--y);color:var(--ink)}
+#dev #toast button{color:var(--y)}
+#dev .rate button[aria-pressed=true]{color:var(--y-press)}
