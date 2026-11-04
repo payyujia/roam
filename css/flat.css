@@ -33,5 +33,7 @@
 .rg::-moz-range-thumb{background:var(--ac)}
 
 /* 5. Press feedback without the 3D drop */
-.btn:active,.gob:active,#fab:active,#psave:active{transform:scale(.97)}
+.btn:active,.gob:active{transform:scale(.97)}
+/* Floating buttons are centred with translateX(-50%); keep that offset on press. */
+#fab:active,#psave:active{transform:translateX(-50%) scale(.97)}
 #tb .ctr:active .circ{transform:scale(.95)}
