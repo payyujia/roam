@@ -1,9 +1,8 @@
 /* =========================================================
    4. APP SHELL: screens, tab bar, FAB, layers, toast
    ========================================================= */
-/* Floating-layer clearance. The Trips button rises to 120px above the screen bottom (84px bar + 36px).
-   --fab-b sits 16px above it; --clear is the floor for any map card or sheet (12px gap). Nothing floats lower. */
-#dev{--tb-h:84px;--circ-top:120px;--fab-b:136px;--clear:132px}
+/* Create trip! sits 16px above the Trips button (which rises 120px). */
+#dev{--fab-b:136px}
 .scr{position:absolute;inset:0;padding-top:50px;overflow-y:auto;background:var(--bg);transform:translateX(100%);visibility:hidden;transition:transform .32s var(--ease),visibility 0s .32s}
 .scr.on{transform:none;visibility:visible;transition:transform .32s var(--ease),visibility 0s}.scr.under{transform:translateX(-20%);visibility:hidden}.nt .scr{transition:none!important}
 .instant .scr,.instant #tb{transition:none!important}
@@ -41,7 +40,7 @@
 .you{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--blue);border:3px solid var(--white);box-shadow:0 0 0 8px rgba(0,57,166,.2);z-index:2}
 .mtop{position:absolute;top:56px;left:16px;right:16px;z-index:4;display:flex;gap:8px}.mtop .fld{padding:0 16px}.mtop input{flex:1;background:none;border:0;outline:none;height:100%}
 .chip{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px 0 12px;border-radius:999px;background:var(--white);box-shadow:0 4px 16px rgba(0,0,0,.2);font-weight:700}
-.msh{--pk:240px;position:absolute;left:0;right:0;bottom:var(--clear);height:calc(var(--pk) - 36px);max-height:calc(100% - var(--clear) - 120px);background:var(--white);border-radius:var(--r3);box-shadow:0 -4px 24px rgba(0,0,0,.14);transition:height .4s var(--ease);overflow:hidden;display:flex;flex-direction:column;z-index:15}.msh.nav{--pk:300px}.msh.x{height:520px}
+.msh{--pk:240px;position:absolute;left:0;right:0;bottom:84px;height:600px;background:var(--white);border-radius:var(--r3) var(--r3) 0 0;box-shadow:0 -4px 24px rgba(0,0,0,.14);transform:translateY(calc(100% - var(--pk)));transition:transform .4s var(--ease);display:flex;flex-direction:column;z-index:15}.msh.nav{--pk:300px}.msh.x{transform:none}
 #mc{flex:1;overflow:auto;padding:0 0 24px;display:flex;flex-direction:column;gap:12px}#mc .pad{display:flex;flex-direction:column;gap:12px}
 /* reels / chat / profile */
 .rfeed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory}.rv{height:100%;scroll-snap-align:start;position:relative;padding:100px 24px 124px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;background:var(--lc);color:var(--lt)}.rv h1{font-size:36px;line-height:40px;max-width:280px}.rv .cap{color:inherit;opacity:.85;max-width:270px}.rv .big{position:absolute;top:120px;left:24px;opacity:.35}.rv .pills{padding:0}.rv .pill{background:rgba(0,0,0,.22);color:inherit}.rv .btn{max-width:200px}
