@@ -42,13 +42,12 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* Long vote-status messages must not get cut off by shared one-line row styles. */
 #s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
 
-/* New trip: keep the primary action at the bottom, above the home indicator.
-   Remove the shared page's 128px bottom spacer, which pushed this button up.
-   On shorter screens the form still scrolls and the action remains sticky. */
+/* New trip: place the primary action midway through the available space above
+   the home indicator. The footer stays sticky as the form scrolls on small screens. */
 #s-form .pg{min-height:100%;padding-bottom:0}
 #s-form .dock.low{
   margin-top:auto;
   bottom:0;
-  padding:16px 24px 38px;
+  padding:16px 24px 62px;
   background:linear-gradient(to bottom,rgba(255,255,255,0),var(--white) 20%);
 }
