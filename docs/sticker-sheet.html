@@ -1,297 +1,408 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Roam · Sticker Sheet v3</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5' fill='%23008578'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#EDF4FC">
+<title>Roam — Liquid Glass Sticker Sheet · Blue Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* =======================================================================
+   ROAM LIQUID GLASS V6 — EDITABLE COMPONENT STICKER SHEET
+   Primary #4792E6. No pink, lilac or rose palette.
+   Shared neutral translucent-white surface for every passive card/state.
+   66px raised buttons: diagonal SPECULAR RIM, not a centre radial shine.
+   ======================================================================= */
 :root{
-/* TEAL = the brand and every interactive state (a 7-step ladder) */
---t50:#EAFBF8;--t100:#D3F5EF;--t200:#A8EBDD;--t400:#00C6AE;--t600:#008578;--t800:#00574F;--t900:#00302B;
-/* PINK = the one accent: social, soon, rating · RED = error only */
---pk-t:#FFF3F8;--pk-m:#FFC7DE;--pk:#FF89BB;--pk-d:#5A0F34;
---red-t:#FDEBEC;--red:#C93A3F;--red-d:#BE2B31;
-/* NEUTRALS */
---ink:#18191F;--tx2:#5B6070;--tx3:#8A8F9E;--s1:#F6F7FA;--s2:#EEF0F5;--s3:#DCE0E9;--bg:#fff;--lc:var(--t400);--lt:var(--ink);
---r1:8px;--r2:12px;--r3:16px;--r4:20px;
---font:"Montserrat",-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
---pg:#F4FDFB;--pgx:#18191F;--pgs:#4A5560;--pn:#E3F7F3;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--pg:#0B1514;--pgx:#F4F6F8;--pgs:#A9B8B6;--pn:#12201E}}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box;margin:0}
-body{font:500 15px/22px var(--font);color:var(--pgx);background:var(--pg);padding:40px 20px 80px}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
-button:focus-visible,input:focus-visible{outline:none}
-.wrap{max-width:1100px;margin:0 auto}
-h1.pt{font:800 34px/40px var(--font);letter-spacing:-.03em}
-.lead{color:var(--pgs);max-width:660px;margin-top:8px}
-section{margin-top:56px}
-.sh{font:800 12px/16px var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--t600)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .sh{color:var(--t400)}}
-.nt{font-size:13px;line-height:18px;color:var(--pgs);margin:4px 0 18px;max-width:700px}
-.g{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));align-items:start}
-.cell{background:var(--pn);border-radius:var(--r4);padding:16px}
-.lb{font:800 12px/16px var(--font);margin-bottom:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.lb code{font:600 11px/16px var(--font);color:var(--pgs)}
-.fr{background:#fff;color:var(--ink);border-radius:var(--r3);padding:12px 0;overflow:hidden;position:relative}
-.pad{padding:0 24px}.col{display:flex;flex-direction:column;gap:12px}.rw{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.cap{font-size:13px;line-height:18px;color:var(--tx2)}.sm{font-size:12px;line-height:16px}.err{color:var(--red-d);font-weight:700}
-b{font-weight:700}
-/* ---------- colour specimens ---------- */
-.sws{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}
-.sw{border-radius:var(--r2);padding:10px;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;font:700 11px/14px var(--font)}
-.sw small{display:block;font-weight:600;opacity:.9}
-.hue{margin-bottom:14px}.hue .lb{margin-bottom:6px}
-/* ---------- tokens → repo components ---------- */
-.l-teal{--lc:#61E4C5}.l-pink{--lc:#FF9EC6}.l-ink{--lc:#DCE0E9}
-h2{font:800 20px/26px var(--font);letter-spacing:-.02em}
-.btn{height:52px;padding:0 26px;border-radius:999px;background:var(--t600);color:var(--t50);font:700 16px/1 var(--font);display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s,transform .1s}
-.btn:active,.btn.p,.btn:focus-visible{background:var(--t800)}.btn:active{transform:scale(.97)}
-.btn.sec{background:var(--t100);color:var(--t800)}.btn.sec:active,.btn.sec.p,.btn.sec:focus-visible{background:#BDEFE5}
-.btn.dg{background:var(--red-t);color:var(--red-d)}
-.btn:disabled{background:var(--s2);color:var(--tx3);transform:none;cursor:not-allowed}
-.btn.sm2{height:36px;padding:0 16px;font-size:13px}.btn.xs{height:28px;padding:0 12px;font-size:12px}
-.gob{height:56px;flex:1;border-radius:999px;background:var(--t600);color:var(--t50);font:700 17px var(--font);display:flex;gap:8px;align-items:center;justify-content:center}
-.kb{width:56px;height:56px;border-radius:50%;background:var(--t100);color:var(--t600);display:grid;place-items:center;flex:none}
-svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
-/* selection = container inversion, glyph never changes */
-.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--ink);transition:background .15s,color .15s}
-.ib.f{background:var(--t100);color:var(--t600)}
-.ib[aria-pressed=true]{background:var(--t600);color:var(--t50)}
-/* glyphs are SOLID in every state, like the Trips button; only the circle inverts */
-.ib.f svg.i,.ib[aria-pressed] svg.i,.vb svg.i,.kb svg.i,.gob svg.i,.ti svg.i{fill:currentColor}
-svg.i .d{fill:none;stroke:var(--cut,transparent)}
-.ti{--cut:var(--bg)}.tb .ctr .ti{--cut:var(--t100)}.tb .on .ti{--cut:var(--t600)}
-.ib.plain{background:none;color:var(--tx2)}.ib.plain svg.i{fill:none}.ib.plain[aria-pressed=true]{background:none;color:var(--t600)}.ib.plain[aria-pressed=true] svg.i{fill:currentColor}
-.vb{width:36px;height:36px;border-radius:50%;background:var(--t100);color:var(--t600);display:grid;place-items:center}
-.vb[aria-pressed=true]{background:var(--t600);color:var(--t50)}
-.vt{display:flex;align-items:center;gap:6px}
-.pill{height:36px;padding:0 16px;border-radius:999px;background:var(--t100);color:var(--t800);font:700 14px/1 var(--font);white-space:nowrap}
-.pill.on,.pill[aria-pressed=true]{background:var(--t600);color:var(--t50)}
-.tag{height:24px;padding:0 10px;border-radius:999px;background:var(--pk-t);color:var(--pk-d);font:700 12px/1 var(--font);display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
-.tag.ok{background:var(--t200);color:var(--t900)}.tag.alt{background:var(--t100);color:var(--t800)}
-.tag2{display:inline-flex;align-items:center;gap:4px;height:34px;padding:0 6px 0 14px;border-radius:999px;background:var(--t200);color:var(--t900);font:700 13px var(--font)}
-.tag2 button{width:22px;height:22px;border-radius:50%;background:var(--t50);display:grid;place-items:center}.tag2 svg.i{width:14px;height:14px}
-.nb{min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--red);color:#fff;font:800 11px/19px var(--font);text-align:center;display:inline-block}
-.stars{display:inline-flex;gap:2px;align-items:center;color:var(--pk)}.stars svg{width:16px;height:16px;fill:currentColor;stroke:none}.stars .c{color:var(--tx2);font:600 13px var(--font);margin-left:6px}
-/* inputs */
-.in{display:flex;align-items:center;gap:10px;height:52px;padding:0 16px;border-radius:var(--r3);background:var(--s2);color:var(--tx2);transition:background .15s}
-.in:focus-within,.in.f{background:var(--t100)}.in.bad{background:var(--red-t)}
-.in input{flex:1;min-width:0;height:100%;background:none;border:0;outline:none;font:600 15px var(--font);color:var(--ink)}.in input::placeholder{color:var(--tx3)}
-.in.sr{border-radius:999px;background:var(--s1)}
-.in .x{width:28px;height:28px;border-radius:50%;background:var(--s3);display:grid;place-items:center}
-.hlp{font:700 12px/16px var(--font);margin-top:6px;color:var(--red-d)}
-.tbx{background:var(--s1);border-radius:var(--r4);padding:4px 14px 12px}.tin{display:flex;align-items:center;gap:8px;height:48px;color:var(--tx2)}
-.tip{flex:1;border:0;background:none;outline:none;font:500 15px var(--font);color:var(--ink);min-width:0}
-.tpl{width:32px;height:32px;border-radius:50%;background:var(--t600);color:var(--t50);display:grid;place-items:center;flex:none}.tpl svg.i{width:18px;height:18px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
-.sw2{width:52px;height:30px;border-radius:999px;background:var(--s3);position:relative;flex:none;transition:background .15s}
-.sw2::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .15s}
-.sw2.on{background:var(--t600)}.sw2.on::after{transform:translateX(22px)}
-.rd,.cx{display:flex;align-items:center;gap:14px;width:100%;padding:12px 24px;min-height:56px;font-weight:700}
-.rdo,.cbx{width:26px;height:26px;flex:none;background:var(--s2);display:grid;place-items:center;color:transparent;transition:background .15s}.rdo{border-radius:50%}.cbx{border-radius:9px}
-.cbx svg.i{width:16px;height:16px;stroke-width:3}
-.rd[aria-checked=true] .rdo{background:var(--t600)}.rd[aria-checked=true] .rdo::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--t50)}
-.cx[aria-checked=true] .cbx{background:var(--t600);color:var(--t50)}
-.seg{display:flex;gap:2px;padding:4px;border-radius:999px;background:var(--s2)}
-.seg button{flex:1;height:40px;border-radius:999px;font:700 14px/1 var(--font);text-align:center;color:var(--tx2);transition:background .15s}
-.seg button[aria-checked=true]{background:var(--t600);color:var(--t50)}
-.qty{display:inline-flex;align-items:center;gap:6px;padding:4px;border-radius:999px;background:var(--s2)}
-.qty button{width:38px;height:38px;border-radius:50%;background:var(--t600);color:var(--t50);display:grid;place-items:center}.qty button:active{background:var(--t800)}
-.qty output{min-width:34px;text-align:center;font:800 17px var(--font)}.qty svg.i{width:18px;height:18px}
-.rg{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:none}
-.rg::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--t600) var(--v,40%),var(--s3) var(--v,40%))}
-.rg::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-11px;border-radius:50%;background:var(--t800)}
-.rg::-moz-range-track{height:6px;border-radius:3px;background:var(--s3)}.rg::-moz-range-progress{height:6px;border-radius:3px;background:var(--t600)}.rg::-moz-range-thumb{width:28px;height:28px;border:0;border-radius:50%;background:var(--t800)}
-.rgl{display:flex;justify-content:space-between;font:600 12px var(--font);color:var(--tx3)}
-/* lists */
-.row{display:flex;align-items:center;gap:12px;width:100%;padding:8px 24px;min-height:64px;text-align:left}
-.row .gr,.gr{flex:1;min-width:0}.row b{display:block}.row.wrap{flex-wrap:wrap}
-.si{width:40px;height:40px;border-radius:10px;background:var(--s3);color:var(--ink);display:grid;place-items:center;flex:none}
-.si.do{background:var(--pk)}.si.eat{background:var(--t200)}.si.shop{background:var(--t400)}
-.cover{--cz:52px;width:var(--cz);height:var(--cz);flex:none;border-radius:8px;background:var(--lc);color:var(--lt);display:grid;place-items:center;font:800 22px var(--font)}
-.cover.z-l{--cz:84px;border-radius:14px;font-size:36px}
-.bl{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--lc);color:var(--lt);font:800 15px/1 var(--font);flex:none}
-.av{width:32px;height:32px;flex:none;border-radius:50%;display:inline-grid;place-items:center;font:700 12px var(--font);background:var(--lc);color:var(--lt)}
-.av.big{width:44px;height:44px;font-size:16px}
-.st{display:inline-flex}.st .av{width:24px;height:24px;font-size:10px;margin-left:-8px;box-shadow:0 0 0 2px #fff}.st .av:first-child{margin-left:0}
-.row.tier{width:calc(100% - 48px);margin:0 24px 8px;padding:10px 14px;border-radius:var(--r4);min-height:72px;background:var(--tier)}
-.tier.t0{--tier:var(--s1)}.tier.t1{--tier:var(--pk-m)}.tier.t2{--tier:var(--pk-t)}.tier.t3{--tier:var(--t50)}
-.tier.t1 .cap{color:var(--pk-d)}.tier.t2 .cap{color:var(--pk-d)}.tier.t3 .cap{color:var(--t800)}
-.dtile{flex:none;width:48px;height:58px;border-radius:14px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--ink)}
-.dtile b{font:800 20px/22px var(--font)}.dtile span{font:700 11px/12px var(--font);text-transform:uppercase;letter-spacing:.06em;color:var(--tx2)}.dtile i{font:800 9px/10px var(--font);letter-spacing:.1em;font-style:normal;color:var(--tx2)}
-.t1 .dtile i,.t1 .dtile span{color:var(--pk-d)}.t2 .dtile i,.t2 .dtile span{color:var(--pk-d)}
-.tgo{height:32px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center;background:var(--t600);color:var(--t50);font:700 13px var(--font);flex:none}
-.empty{margin:0 24px;padding:24px 16px;border-radius:var(--r2);background:var(--s1);text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
-.ban{margin:0 24px;padding:16px;border-radius:var(--r2);background:var(--t50);display:flex;flex-direction:column;gap:12px}
-.rqa{display:flex;gap:8px;width:100%;padding-left:52px;margin-top:4px}.rqa .btn{flex:1;padding:0 12px}
-.sign{display:flex;gap:12px;align-items:center;padding:12px 24px}
-.sec{display:flex;justify-content:space-between;align-items:center;padding:0 24px}
-.top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:4px 12px 0;min-height:50px}.top .tt{text-align:center;font:700 16px var(--font)}
-/* progress: ONE hue, three shades. upcoming T100 · done T400 · current T800 */
-.step{display:flex;padding:8px 24px 4px}.stp{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;font:700 12px/14px var(--font);color:var(--t600)}
-.stp::before{content:"";position:absolute;top:10px;left:-50%;right:50%;height:4px;border-radius:2px;background:var(--t100)}.stp:first-child::before{display:none}
-.stp.done::before,.stp.on::before{background:var(--t400)}
-.sd{width:24px;height:24px;border-radius:50%;background:var(--t100);color:var(--t600);display:grid;place-items:center;font-size:11px;position:relative;z-index:1}.sd svg.i{width:13px;height:13px;stroke-width:3}
-.stp.done .sd{background:var(--t400);color:var(--t900)}.stp.on .sd{background:var(--t800);color:var(--t50)}.stp.on{color:var(--t800)}
-.tl{list-style:none;display:flex;flex-direction:column;padding:0 24px}.tn{display:flex;align-items:center;gap:14px;min-height:44px;padding:4px 0}
-.nd{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--font);background:var(--t100);color:var(--t600);flex:none}
-.tn.cur .nd{background:var(--t800);color:var(--t50);transform:scale(1.2)}.tn.done .nd{background:var(--t400);color:var(--t900)}
-.tc{display:flex;align-items:center;gap:14px;height:28px}.tc .ln{width:28px;display:grid;place-items:center}.tc .ln::after{content:"";width:4px;height:28px;border-radius:2px;background:var(--t100)}.tc.done .ln::after{background:var(--t400)}
-.tc .cap{display:flex;gap:4px;align-items:center}.tc svg.i{width:12px;height:12px}
-/* overlays + nav */
-.toast{margin:0 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r2);background:var(--ink);color:#fff;font:700 14px/20px var(--font)}.toast button{color:var(--t400);font-weight:800}
-.mi{display:flex;align-items:center;gap:16px;width:100%;padding:12px 24px;min-height:56px;font:700 16px var(--font);text-align:left}.mi.dg{color:var(--red-d)}
-.fab{display:inline-flex;height:48px;padding:0 28px;border-radius:999px;background:var(--t600);color:var(--t50);font:800 16px var(--font);align-items:center}
-.tb{position:relative;display:grid;grid-template-columns:repeat(5,1fr);padding:10px 8px 18px;background:var(--bg);margin-top:34px}
-.tb button{display:flex;flex-direction:column;align-items:center;gap:4px;font:700 10px/12px var(--font);color:var(--tx2)}
-.ti{position:relative;width:52px;height:34px;border-radius:999px;display:grid;place-items:center;transition:background .15s,color .15s}
-.tb .on .ti{background:var(--t600);color:var(--t50)}.tb .on{color:var(--t600)}
-.tb .ctr{margin-top:-34px}.tb .ctr .ti{width:64px;height:64px;border-radius:50%;background:var(--t100);color:var(--t600);box-shadow:0 0 0 5px var(--bg)}
-.tb .ctr.on .ti{background:var(--t600);color:var(--t50)}.tb .ctr svg.i{width:30px;height:30px}
-.ti .nb{position:absolute;right:2px;top:-6px;box-shadow:0 0 0 2px var(--bg)}
-/* reels */
-.rv{position:relative;height:340px;border-radius:var(--r3);overflow:hidden;background:linear-gradient(#00574F,#18191F);color:#fff;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
-.rtg{position:absolute;top:12px;left:0;right:0;display:flex;justify-content:center}.rtg button{padding:8px 14px;font:700 15px var(--font);opacity:.65;position:relative}.rtg .on{opacity:1}.rtg .on::after{content:"";position:absolute;left:50%;bottom:0;width:22px;height:3px;margin-left:-11px;border-radius:2px;background:#fff}
-.rv h1{font:800 26px/30px var(--font);letter-spacing:-.02em;max-width:230px}
-.rv .pill{background:rgba(0,0,0,.35);color:#fff;height:28px;padding:0 12px;font-size:12px}
-.rail{position:absolute;right:12px;bottom:70px;display:flex;flex-direction:column;gap:10px}
-.rail .ib{width:48px;height:48px;background:rgba(0,0,0,.3);color:#fff}.rail .ib[aria-pressed=true]{background:var(--t600);color:var(--t50)}
-.rinfo{align-self:flex-start;height:44px;padding:0 18px 0 14px;border-radius:999px;background:#fff;color:var(--ink);font:700 15px var(--font);display:inline-flex;align-items:center;gap:8px}
-/* teal-forward chrome */
-.hero2{background:var(--t800);color:var(--t50);border-radius:var(--r4);padding:28px 28px 24px;position:relative;overflow:hidden}
-.hero2 .sh{color:var(--t200)}.hero2 h1.pt{color:var(--t50)}.hero2 .lead{color:var(--t100)}
-.hero2 .dots{display:flex;gap:8px;margin-top:18px}.hero2 .dots i{height:10px;border-radius:5px;background:var(--t400)}.hero2 .dots i.y{background:var(--pk)}
-.ladder{display:grid;grid-template-columns:110px repeat(3,1fr);gap:8px 10px;align-items:center;font:700 12px/16px var(--font)}.ladder .h{color:var(--tx2);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.lad{display:flex;align-items:center;justify-content:center;gap:6px;min-height:40px}
-.ratio{display:flex;height:44px;border-radius:var(--r2);overflow:hidden;font:800 12px/44px var(--font)}.ratio span{text-align:center;white-space:nowrap}
-/* layout diagram */
-.dev{position:relative;width:390px;max-width:100%;height:420px;margin:0 auto;border-radius:var(--r3);background:#E9EEF0;overflow:hidden}
-.dev .tbr{position:absolute;left:0;right:0;bottom:0;height:84px;background:#fff}
-.dev .cir{position:absolute;left:50%;width:72px;height:72px;margin-left:-36px;bottom:48px;border-radius:50%;background:var(--t600);color:var(--t50);display:grid;place-items:center;font:800 11px var(--font)}
-.dev .fab2{position:absolute;left:50%;transform:translateX(-50%);bottom:136px;height:52px;padding:0 26px;border-radius:999px;background:var(--t600);color:var(--t50);font:800 16px/52px var(--font);white-space:nowrap}
-.dev .shd{position:absolute;left:0;right:0;bottom:132px;height:150px;border-radius:var(--r3);background:#fff;padding:14px 20px;font:700 14px var(--font)}
-.dev .zn{position:absolute;left:50%;margin-left:-56px;width:112px;bottom:0;height:120px;background:repeating-linear-gradient(135deg,rgba(201,58,63,.16) 0 6px,transparent 6px 12px)}
-.dev .ms{position:absolute;left:8px;font:800 10px/12px var(--font);color:var(--t800);background:var(--t200);border-radius:6px;padding:2px 6px}
-/* type table */
-.ty{display:grid;grid-template-columns:120px 1fr;gap:4px 16px;align-items:baseline;padding:10px 0}.ty code{font:700 11px/15px var(--font);color:var(--pgs)}
-.map{width:100%;border-collapse:collapse;font-size:13px;line-height:18px}.map td,.map th{text-align:left;padding:8px;vertical-align:top}.map th{font:800 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--pgs)}.map td:first-child{font-weight:700;white-space:nowrap}.map tr:nth-child(even){background:var(--pn)}
-</style></head><body><div class="wrap">
-<div class="hero2"><div class="sh">Roam design system · v3</div>
-<h1 class="pt">Teal leads. Pink accents.</h1>
-<p class="lead">One brand colour carries the whole app. Selection and progress inside any one component are shades of that same teal, never a second hue. Pink marks the social and the soon: friends, ratings, due-soon. Flat fills, no borders, no highlights. Tap anything: it’s live.</p>
-<div class="dots"><i style="width:140px"></i><i style="width:60px"></i><i class="y" style="width:32px"></i></div></div>
-
-<section><div class="sh">01 · Colour</div>
-<p class="nt">Teal gets seven steps so a single component can show state without borrowing another hue. Pink gets four. Red exists only for errors. Green, yellow and violet are gone.</p>
-<div class="cell" style="margin-bottom:20px"><div class="lb">Usage ratio <code>how much of any screen each colour may take</code></div>
-<div class="ratio"><span style="flex:55;background:var(--s1);color:var(--ink)">Neutral · 55%</span><span style="flex:35;background:var(--t600);color:var(--t50)">Teal · 35%</span><span style="flex:10;background:var(--pk);color:var(--ink)">Pink · 10%</span></div></div>
-<div class="g">
-<div class="cell"><div class="hue"><div class="lb">Teal · Brand, action, selection <code>7-step ladder</code></div><div class="sws">
-<div class="sw" style="background:var(--t50);color:var(--t800)">T50<small>#EAFBF8 surface</small></div><div class="sw" style="background:var(--t100);color:var(--t800)">T100<small>#D3F5EF idle / upcoming</small></div><div class="sw" style="background:var(--t200);color:var(--t900)">T200<small>#A8EBDD chips</small></div><div class="sw" style="background:var(--t400);color:var(--t900)">T400<small>#00C6AE done / brand</small></div><div class="sw" style="background:var(--t600);color:var(--t50)">T600<small>#008578 primary / selected</small></div><div class="sw" style="background:var(--t800);color:var(--t50)">T800<small>#00574F current / pressed</small></div><div class="sw" style="background:var(--t900);color:var(--t50)">T900<small>#00302B text on T400</small></div></div></div>
-<div class="hue"><div class="lb">Neutrals <code>text &amp; fills</code></div><div class="sws"><div class="sw" style="background:var(--ink);color:#fff">Label<small>#18191F</small></div><div class="sw" style="background:var(--tx2);color:#fff">2nd<small>#5B6070</small></div><div class="sw" style="background:var(--s1);color:var(--ink)">F1<small>#F6F7FA</small></div><div class="sw" style="background:var(--s2);color:var(--ink)">F2<small>#EEF0F5</small></div><div class="sw" style="background:var(--s3);color:var(--ink)">F3<small>#DCE0E9</small></div></div></div></div>
-<div class="cell"><div class="hue"><div class="lb">Pink · Social, soon, rating <code>never tappable</code></div><div class="sws"><div class="sw" style="background:var(--pk-t);color:var(--pk-d)">Tint<small>#FFF3F8</small></div><div class="sw" style="background:var(--pk-m);color:var(--pk-d)">Mid<small>#FFC7DE</small></div><div class="sw" style="background:var(--pk);color:var(--ink)">Solid<small>#FF89BB</small></div><div class="sw" style="background:var(--pk-d);color:#fff">Deep<small>#5A0F34</small></div></div></div>
-<div class="hue"><div class="lb">Red · Errors only <code>badges, delete, field errors</code></div><div class="sws"><div class="sw" style="background:var(--red-t);color:var(--red-d)">Tint<small>#FDEBEC</small></div><div class="sw" style="background:var(--red);color:#fff">Solid<small>#C93A3F</small></div><div class="sw" style="background:var(--red-d);color:#fff">Deep<small>#BE2B31</small></div></div></div></div>
-</div></section>
-
-<section><div class="sh">02 · Typography</div><p class="nt">Montserrat, 8 styles (down from ~14 sizes). Weight carries hierarchy.</p>
-<div class="cell" style="max-width:640px">
-<div class="ty"><code>Display 30/36 · 800</code><div style="font:800 30px/36px var(--font);letter-spacing:-.03em">Tokyo in three days</div></div>
-<div class="ty"><code>Title 22/28 · 800</code><div style="font:800 22px/28px var(--font);letter-spacing:-.02em">Your trips</div></div>
-<div class="ty"><code>Heading 18/24 · 700</code><div style="font:700 18px/24px var(--font)">Add a new activity</div></div>
-<div class="ty"><code>Body strong 15/22 · 700</code><div style="font:700 15px/22px var(--font)">Ichiran Ramen</div></div>
-<div class="ty"><code>Body 15/22 · 500</code><div>We’ll suggest activities from everyone’s saved places.</div></div>
-<div class="ty"><code>Caption 13/18 · 500</code><div class="cap">Sat 14 Nov · in 9 days</div></div>
-<div class="ty"><code>Label 12/16 · 700</code><div style="font:700 12px/16px var(--font)">Voting open · Not in itinerary</div></div>
-<div class="ty"><code>Micro 10/12 · 700</code><div style="font:700 10px/12px var(--font)">Profile · Reels · Trips · Map · Chats</div></div></div></section>
-
-<section><div class="sh">03 · Actions &amp; selection</div>
-<p class="nt">Selection is one pattern everywhere: the container inverts from Teal 100 to Teal 600 and the glyph is always solid, like the Trips button. Inside one component the states are only shades of teal, laid out in the ladder below.</p>
-<div class="g">
-<div class="cell"><div class="lb">Btn <code>.btn · .sec · .dg · :disabled</code></div><div class="fr"><div class="pad col"><div class="rw"><button class="btn">Create trip</button><button class="btn p">Pressed</button></div><div class="rw"><button class="btn sec">Decline</button><button class="btn dg">Remove</button><button class="btn" disabled>Disabled</button></div><div class="rw"><button class="btn sm2">Accept</button><button class="btn sm2 sec">Decline</button><button class="btn xs">Add</button></div><div class="rw"><button class="gob"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Start trip</button><button class="kb" aria-label="Share"><i data-i="send"></i></button></div></div></div></div>
-<div class="cell"><div class="lb">A · solid glyph, circle inverts (recommended) <code>.ib[aria-pressed] · .vb</code></div><div class="fr"><div class="pad col"><div class="rw"><button class="ib f" data-t aria-pressed="false" aria-label="Save"><i data-i="bookmark"></i></button><button class="ib f" data-t aria-pressed="true" aria-label="Saved"><i data-i="bookmark"></i></button><button class="ib f" data-t aria-pressed="false" aria-label="Share"><i data-i="send"></i></button><button class="ib" aria-label="More"><i data-i="more"></i></button></div>
-<div class="lb" style="margin:6px 0 0"><span>B · iOS style: no circle, outline fills in</span><code>.ib.plain</code></div><div class="rw"><button class="ib plain" data-t aria-pressed="false" aria-label="Save"><i data-i="bookmark"></i></button><button class="ib plain" data-t aria-pressed="true" aria-label="Saved"><i data-i="bookmark"></i></button><button class="ib plain" data-t aria-pressed="false" aria-label="Like"><i data-i="thumbs-up"></i></button><button class="ib plain" data-t aria-pressed="true" aria-label="Liked"><i data-i="thumbs-up"></i></button></div>
-<div class="vt"><button class="vb" data-t aria-pressed="true" aria-label="Up"><i data-i="thumbs-up" s="18"></i></button><span class="cap sm">3</span><button class="vb" data-t aria-pressed="false" aria-label="Down"><i data-i="thumbs-down" s="18"></i></button><span class="cap sm">1</span></div></div></div></div>
-<div class="cell"><div class="lb">Pill · Seg <code>.pill.on · .seg</code></div><div class="fr"><div class="pad col"><div class="rw"><button class="pill on" data-g="p" aria-pressed="true">All</button><button class="pill" data-g="p" aria-pressed="false">Do</button><button class="pill" data-g="p" aria-pressed="false">Eat</button><button class="pill" data-g="p" aria-pressed="false">Shop</button></div><div class="seg"><button data-g="s" role="radio" aria-checked="true">For you</button><button data-g="s" role="radio" aria-checked="false">Friends</button></div></div></div></div>
-<div class="cell"><div class="lb">Tag · Tag2 · badge · stars <code>.tag · .tag2 · .nb</code></div><div class="fr"><div class="pad col"><div class="rw"><span class="tag">Voting…</span><span class="tag ok">Voted</span><span class="tag alt">Changed</span><span class="nb">3</span></div><div class="rw"><span class="tag2">ramen<button aria-label="Remove"><i data-i="x" s="14"></i></button></span><span class="tag2">cafés<button aria-label="Remove"><i data-i="x" s="14"></i></button></span></div><span class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg><span class="c">4.6 · 212</span></span></div></div></div>
-</div></section>
-
-<section><div class="sh">03b · Selection ladder</div><p class="nt">The rule from the professor’s feedback. Within one component, state is a shade change of teal and nothing else. Read each row left to right.</p>
-<div class="cell"><div class="ladder">
-<span class="h"></span><span class="h">Idle · upcoming</span><span class="h">Done · selected</span><span class="h">Current · pressed</span>
-<span>Stepper</span><span class="lad"><span class="sd" style="position:static"><i data-i="lock" s="12"></i></span>T100</span><span class="lad"><span class="sd" style="position:static;background:var(--t400);color:var(--t900)"><i data-i="check" s="13"></i></span>T400</span><span class="lad"><span class="sd" style="position:static;background:var(--t800);color:var(--t50)">2</span>T800</span>
-<span>Timeline node</span><span class="lad"><span class="nd" style="width:26px;height:26px">3</span>T100</span><span class="lad"><span class="nd" style="background:var(--t400);color:var(--t900);width:26px;height:26px"><i data-i="check" s="13"></i></span>T400</span><span class="lad"><span class="nd" style="background:var(--t800);color:var(--t50);width:26px;height:26px">2</span>T800</span>
-<span>Pill · tab · seg</span><span class="lad"><span class="pill" style="height:30px;display:inline-grid;place-items:center">Eat</span></span><span class="lad"><span class="pill on" style="height:30px;display:inline-grid;place-items:center">All</span></span><span class="lad"><span class="pill on" style="height:30px;background:var(--t800);display:inline-grid;place-items:center">Pressed</span></span>
-<span>Icon button</span><span class="lad"><span class="ib f" style="width:36px;height:36px"><i data-i="bookmark" s="18"></i></span></span><span class="lad"><span class="ib f" style="width:36px;height:36px;background:var(--t600);color:var(--t50)"><i data-i="bookmark" s="18"></i></span></span><span class="lad"><span class="ib f" style="width:36px;height:36px;background:var(--t800);color:var(--t50)"><i data-i="bookmark" s="18"></i></span></span>
-<span>Slider</span><span class="lad" style="justify-content:flex-start"><span style="width:100%;height:6px;border-radius:3px;background:var(--t100)"></span></span><span class="lad" style="justify-content:flex-start"><span style="width:100%;height:6px;border-radius:3px;background:var(--t600)"></span></span><span class="lad"><span style="width:24px;height:24px;border-radius:50%;background:var(--t800)"></span></span>
-</div></div></section>
-
-<section><div class="sh">04 · Inputs &amp; controls</div><p class="nt">Fields are Neutral F2 and tint to Teal 100 on focus. Error is a red tint plus a message and never a ring.</p>
-<div class="g">
-<div class="cell"><div class="lb">Fld / Fi / TagBox <code>.in · .tbx</code></div><div class="fr"><div class="pad col"><label class="in sr"><i data-i="search" s="20"></i><input placeholder="Search your saved places"></label><label class="in f"><input value="Focused field"><span class="x"><i data-i="x" s="14"></i></span></label><div><label class="in bad"><input value="Trip name"></label><div class="hlp">Name is already used.</div></div>
-<div class="tbx"><div class="tin"><i data-i="search" s="18"></i><input class="tip" placeholder="Add a cuisine"><button class="tpl" aria-label="Add"><i data-i="plus" s="18"></i></button></div><div class="tags"><span class="tag2">ramen<button aria-label="Remove"><i data-i="x" s="14"></i></button></span><span class="tag2">dim sum<button aria-label="Remove"><i data-i="x" s="14"></i></button></span></div></div></div></div></div>
-<div class="cell"><div class="lb">Sw · Rd · Cx · Qty · Rg <code>.sw · .rd · .cx · .qty · .rg</code></div><div class="fr"><div class="col"><div class="row" style="min-height:52px"><div class="gr"><b>Recommend activities</b><div class="cap sm">From saved preferences</div></div><button class="sw2 on" data-s role="switch" aria-checked="true" aria-label="Recommend"></button></div>
-<button class="cx" data-c role="checkbox" aria-checked="true"><span class="cbx"><i data-i="check" s="16"></i></span>Dim sum</button><button class="cx" data-c role="checkbox" aria-checked="false"><span class="cbx"><i data-i="check" s="16"></i></span>Ramen</button>
-<button class="rd" data-r role="radio" aria-checked="true"><span class="rdo"></span>Flexible dates</button><button class="rd" data-r role="radio" aria-checked="false"><span class="rdo"></span>Fixed dates</button>
-<div class="pad col"><div class="qty"><button aria-label="Fewer"><i data-i="plus" s="18" class="m"></i></button><output>3</output><button aria-label="More"><i data-i="plus" s="18"></i></button></div><div><input class="rg" type="range" value="40" style="--v:40%" oninput="this.style.setProperty('--v',this.value+'%')"><div class="rgl"><span>$</span><span>$$$$</span></div></div></div></div></div></div>
-</div></section>
-
-<section><div class="sh">05 · Rows, cards &amp; lists</div><p class="nt">Due-date tiers keep their four repo classes (<code>.tier.t0–t3</code>) but now mean something: t1 urgent (pink mid), t2 soon (pink tint), t3 later (teal tint), t0 past (neutral). Red is reserved for errors. Covers and avatars use four colours (teal, pink, neutral) instead of ten. Photos are replaced by colour blocks here because published pages can’t load remote images; once real photos land, <code>.cover</code> shows the photo and the tier tint becomes the only colour on the row. The <code>.l-*</code> colours stay as the loading fallback.</p>
-<div class="g">
-<div class="cell"><div class="lb">Category tiles, iOS Settings style <code>.si.do · .eat · .shop</code></div><div class="fr"><div class="row"><span class="si do"><i data-i="sun" s="20"></i></span><div class="gr"><b>Do</b><div class="cap sm">Pink</div></div></div><div class="row"><span class="si eat"><i data-i="coffee" s="20"></i></span><div class="gr"><b>Eat</b><div class="cap sm">Teal 200</div></div></div><div class="row"><span class="si shop"><i data-i="bag" s="20"></i></span><div class="gr"><b>Shop</b><div class="cap sm">Teal 400</div></div></div><div class="row"><span class="si"><i data-i="calendar" s="20"></i></span><div class="gr"><b>Everything else</b><div class="cap sm">Neutral</div></div></div></div></div>
-<div class="cell"><div class="lb">TripRow <code>.row.tier · .cover · .st</code></div><div class="fr" style="padding-bottom:4px"><button class="row tier t1"><span class="cover l-pink"><span>T</span></span><div class="gr"><b>Tokyo</b><div class="cap sm">Sat 7 Nov · in 2 days</div><div class="cap sm">Voting open</div></div><span class="st"><span class="av l-teal">P</span><span class="av l-teal">R</span></span></button>
-<button class="row tier t2"><span class="cover l-teal"><span>L</span></span><div class="gr"><b>Lisbon</b><div class="cap sm">Sat 14 Nov · in 9 days</div><div class="cap sm">Itinerary ready</div></div><span class="st"><span class="av l-teal">P</span><span class="av l-pink">E</span></span></button>
-<button class="row tier t3"><span class="cover l-teal"><span>H</span></span><div class="gr"><b>Hokkaido</b><div class="cap sm">Mon 30 Nov · in 25 days</div></div><span class="st"><span class="av l-teal">P</span></span></button>
-<button class="row tier t0"><span class="cover l-ink"><span>S</span></span><div class="gr"><b>Seoul</b><div class="cap sm">Past trip · Completed</div></div></button></div></div>
-<div class="cell"><div class="lb">Task row <code>.trow.tier · .dtile · .tgo</code></div><div class="fr" style="padding-bottom:4px"><div class="row tier t1"><span class="dtile"><i>DUE</i><b>07</b><span>Nov</span></span><div class="gr"><b>Book Shinkansen</b><div class="cap sm">Due in 2 days</div></div><span class="tgo">Review</span></div>
-<div class="row tier t2"><span class="dtile"><i>DUE</i><b>14</b><span>Nov</span></span><div class="gr"><b>Confirm hotel</b><div class="cap sm">Due in 9 days</div></div><span class="tgo">Review</span></div>
-<div class="row tier t0"><span class="dtile"><i>DUE</i><b>—</b><span>None</span></span><div class="gr"><b>Pick restaurants</b><div class="cap sm">No due date</div></div><span class="tgo">Review</span></div></div></div>
-<div class="cell"><div class="lb">VoteRow · Members · InviteRow <code>.row · .si · .av.big</code></div><div class="fr"><div class="row"><span class="si eat"><i data-i="coffee" s="20"></i></span><div class="gr"><b>Blue Bottle</b><div class="cap sm">Morning · Shibuya</div><div class="cap sm err">Not in itinerary</div></div><div class="vt"><button class="vb" data-t aria-pressed="true" aria-label="Up"><i data-i="thumbs-up" s="18"></i></button><span class="cap sm">3</span><button class="vb" data-t aria-pressed="false" aria-label="Down"><i data-i="thumbs-down" s="18"></i></button><span class="cap sm">1</span></div></div>
-<div class="row"><span class="av big l-teal">R</span><div class="gr"><b>Raymond</b></div><span class="tag ok">Voted</span></div><div class="row"><span class="av big l-pink">E</span><div class="gr"><b>Eustace</b></div><span class="tag">Voting…</span></div>
-<div class="row wrap"><span class="si"><i data-i="calendar" s="20"></i></span><div class="gr"><b>Raymond wants to move Lisbon</b><div class="cap sm">14 Nov to 21 Nov</div></div><div class="rqa"><button class="btn sm2">Accept</button><button class="btn sm2 sec">Decline</button></div></div></div></div>
-<div class="cell"><div class="lb">Empty · Ban · Sign · Sec <code>.empty · .ban · .sign</code></div><div class="fr"><div class="col"><div class="sec"><h2>Saved places</h2><button class="btn sm2 sec">See all</button></div><div class="empty"><b>No activities yet</b><div class="cap">Add places from your saved list below.</div></div><div class="ban"><div><b>Voting closes Friday</b><div class="cap">Everyone needs to vote to build the itinerary.</div></div><button class="btn sm2" style="align-self:flex-start">Vote now</button></div><div class="sign l-teal"><span class="cover z-l" style="--cz:56px;border-radius:12px;font-size:24px">T</span><div class="gr"><h2>Tokyo</h2><div class="cap">3 days · 4 friends</div></div></div></div></div></div>
-</div></section>
-
-<section><div class="sh">06 · Progress</div><div class="g">
-<div class="cell"><div class="lb">Stepper <code>.step · .stp.done/.on · .sd</code></div><div class="fr"><div class="step"><div class="stp done"><span class="sd"><i data-i="check" s="13"></i></span>Details</div><div class="stp on"><span class="sd">2</span>Vote</div><div class="stp"><span class="sd"><i data-i="lock" s="12"></i></span>Itinerary</div></div></div></div>
-<div class="cell"><div class="lb">Timeline <code>.tl · .tn.cur/.done · .tc</code></div><div class="fr"><ol class="tl"><li class="tn done"><span class="nd"><i data-i="check" s="14"></i></span><div class="gr"><b>Senso-ji Temple</b><div class="cap sm">Morning · Asakusa</div></div></li><li class="tc done"><span class="ln"></span><span class="cap sm"><i data-i="clock" s="12"></i>12 min</span></li><li class="tn cur"><span class="nd">2</span><div class="gr"><b>Ichiran Ramen</b><div class="cap sm">Lunch · Shibuya</div></div><span class="tag alt">Changed</span></li><li class="tc"><span class="ln"></span><span class="cap sm"><i data-i="clock" s="12"></i>8 min</span></li><li class="tn"><span class="nd">3</span><div class="gr"><b>Shibuya Sky</b><div class="cap sm">Evening</div></div></li></ol></div></div>
-</div></section>
-
-<section><div class="sh">07 · Navigation &amp; overlays</div><div class="g">
-<div class="cell"><div class="lb">Tab bar + Create trip <code>#tb · .circ · #fab</code></div><div class="fr" style="padding-bottom:0"><div style="display:flex;justify-content:center"><span class="fab">Create trip!</span></div>
-<nav class="tb" aria-label="Main"><button data-n><span class="ti"><i data-i="user"></i></span>Profile</button><button data-n><span class="ti"><i data-i="film"></i></span>Reels</button><button class="ctr on" data-n><span class="ti"><i data-i="plane" s="30"></i></span>Trips</button><button data-n><span class="ti"><i data-i="map"></i></span>Map</button><button data-n><span class="ti"><i data-i="message-circle"></i><span class="nb">3</span></span>Chats</button></nav></div></div>
-<div class="cell"><div class="lb">Top · Toast · Menu <code>.top · #toast · .mi</code></div><div class="fr"><div class="col"><div class="top"><button class="ib" aria-label="Back"><i data-i="arrow-left"></i></button><b class="tt">Tokyo</b><button class="ib" aria-label="More"><i data-i="more"></i></button></div><div class="toast"><span>Saved to your places</span><button>Undo</button></div><button class="mi"><i data-i="calendar"></i>Edit dates</button><button class="mi dg"><i data-i="trash"></i>Delete trip</button></div></div></div>
-<div class="cell"><div class="lb">Reels <code>.rv · .rtg · .rail · .rinfo</code></div><div class="rv"><div class="rtg"><button class="on">For you</button><button>Friends</button></div><div class="rail"><button class="ib" data-t aria-pressed="true" aria-label="Saved"><i data-i="bookmark"></i></button><button class="ib" data-t aria-pressed="false" aria-label="Send"><i data-i="send"></i></button></div><h1>Dim sum in Mong Kok</h1><div><b>Tim Ho Wan</b> · Hong Kong</div><div class="rw"><span class="pill">★ 4.6</span><span class="pill">$$</span></div><button class="rinfo"><i data-i="info" s="20"></i>Info</button></div></div>
-</div></section>
-
-<section><div class="sh">08 · Layout · floating clearance</div><p class="nt">Fixes two prototype bugs with one rule. The Trips button rises 120px above the screen bottom. <b>Create trip!</b> sits at 136px on Home and on Map, always 16px above it, always 52px tall. Map cards and sheets stop at 132px, so nothing ever overlaps the Trips button. The striped zone is off limits.</p>
-<div class="g"><div class="cell"><div class="lb">Home and Map · Create trip! <code>--fab-b: 136px</code></div><div class="dev"><div class="fab2">Create trip!</div><div class="zn"></div><div class="tbr"></div><div class="cir">Trips</div>
-<span class="ms" style="bottom:84px">84 · tab bar</span><span class="ms" style="bottom:120px">120 · Trips top</span><span class="ms" style="bottom:152px">136 · Create trip!, 16px gap</span></div></div>
-<div class="cell"><div class="lb">Map · cards and sheets <code>--clear: 132px</code></div><div class="dev"><div class="shd">Heading to MacRitchie Reservoir<br><span class="cap sm" style="font-weight:500">Map sheet · bottom 132px · fully rounded</span></div><div class="zn"></div><div class="tbr"></div><div class="cir">Trips</div>
-<span class="ms" style="bottom:84px">84 · tab bar</span><span class="ms" style="bottom:120px">120 · Trips top</span><span class="ms" style="bottom:300px">132 · sheet floor</span></div></div></div>
-</section>
-
-<section><div class="sh">09 · Code migration</div><p class="nt">The class names are unchanged, so the rebuild is a stylesheet swap, not a markup rewrite.</p>
-<div class="cell"><table class="map"><tr><th>Repo today</th><th>Becomes</th></tr>
-<tr><td>--dusk / --blue / #3E63DD / tier blues</td><td>Teal 600 (actions), Teal 100 (secondary), Teal 50 (t3 tier)</td></tr>
-<tr><td>.tag pink, .tag.ok green</td><td>.tag pink (pending), .tag.ok teal T200 (done), .tag.alt teal T100; .tag2 teal T200</td></tr>
-<tr><td>.vb green/red, bookmark fill-swap, #tb fill glyph</td><td>One rule: [aria-pressed=true] → Teal 600 + Teal 50, same glyph</td></tr>
-<tr><td>.l-red … .l-purple (10 line colours)</td><td>.l-teal .l-pink .l-teal .l-ink</td></tr>
-<tr><td>.mini “Next stop” card, <code>#mini</code>, its :has() offsets</td><td>Deleted. Navigation lives in the map sheet only.</td></tr>
-<tr><td>#fab bottom 122 / 140, 48 vs 52 tall; .msh bottom 84</td><td>--fab-b 136 and --clear 132 on #dev; one #fab rule; sheets float above the Trips button</td></tr>
-<tr><td>.stp / .nd mixed ink, blue, lc colours</td><td>T100 upcoming, T400 done, T800 current</td></tr>
-<tr><td>--gum, drop shadows, 1px dividers, focus rings</td><td>Deleted; focus = pressed shade</td></tr>
-<tr><td>8 CSS files with !important overrides</td><td>tokens.css + components.css (this sheet’s &lt;style&gt;)</td></tr></table></div></section>
+  color-scheme:light;
+  --blue:#4792E6;
+  --blue-dark:#2478D2;
+  --blue-pale:#DCEBFD;
+  --blue-faint:#EDF5FF;
+  --ink:#0F1118;
+  --muted:#58677C;
+  --muted-2:#8190A4;
+  --canvas:#EDF4FC;
+  --white:#FFFFFF;
+  --glass:rgba(255,255,255,.45);
+  --glass-thin:rgba(255,255,255,.32);
+  --glass-strong:rgba(255,255,255,.62);
+  --hairline:rgba(255,255,255,.84);
+  --line:rgba(92,119,150,.20);
+  --success:#168365;
+  --warning:#B4751E;
+  --danger:#B33E44;
+  --radius:24px;
+  --font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'SF Pro Text',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-width:320px;background:#EAF1F9;color:var(--ink);font:500 14px/1.48 var(--font)}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.big{width:30px;height:30px}
+.slab{
+  isolation:isolate;position:relative;overflow:hidden;
+  max-width:1512px;margin:0 auto;min-height:100vh;
+  background:
+    radial-gradient(ellipse 42% 28% at 9% 0%,rgba(84,157,239,.31),transparent 92%),
+    radial-gradient(ellipse 40% 36% at 101% 14%,rgba(171,213,255,.42),transparent 88%),
+    radial-gradient(ellipse 46% 36% at 12% 95%,rgba(135,194,249,.25),transparent 90%),
+    radial-gradient(ellipse 35% 28% at 98% 96%,rgba(235,243,252,.76),transparent 95%),
+    linear-gradient(140deg,#E5F0FC 0%,#F7F9FD 42%,#EEF4FB 100%);
+  padding:58px 55px 84px;
+}
+.slab:before{content:"";pointer-events:none;position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.5) .6px,transparent .6px);background-size:8px 8px;opacity:.12;z-index:-1}
+.brandline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}
+.brand{display:inline-flex;align-items:center;gap:11px;font-size:14px;font-weight:800;letter-spacing:.18em}
+.brandlogo{width:37px;height:37px;border-radius:13px;display:grid;place-items:center;background:var(--blue);color:#fff;box-shadow:0 5px 14px rgba(71,146,230,.23)}
+.brandlogo svg{width:22px;height:22px;stroke-width:2.5}
+.kicker{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.19em;color:#57708E}
+.sheet-header{display:flex;align-items:end;justify-content:space-between;gap:36px;margin-bottom:40px}
+.sheet-title{font-weight:800;font-size:clamp(36px,4.1vw,62px);line-height:1.05;letter-spacing:-.065em;margin:8px 0 10px;max-width:720px}
+.sheet-title .accent{color:var(--blue)}
+.sheet-intro{margin:0;color:var(--muted);font-size:14px;max-width:390px;line-height:1.7}
+.version{background:rgba(255,255,255,.52);border:1px solid #fff;border-radius:999px;padding:8px 13px;color:#426588;font:700 11px var(--font)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:start}
+.column{display:grid;gap:20px;align-content:start;min-width:0}
+/* All passive surfaces share the SAME translucent white recipe.
+   They do NOT get diagonal gradients or category-specific fills. */
+.panel,.surface,.task,.tripcard,.menu,.field,.popover-demo,.message,.toast,.modal-preview{
+  background:var(--glass);
+  border:1px solid var(--hairline);
+  -webkit-backdrop-filter:blur(22px) saturate(135%);
+  backdrop-filter:blur(22px) saturate(135%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62),0 8px 26px rgba(48,86,134,.07);
+}
+.panel{border-radius:30px;padding:23px 21px 24px;min-width:0;overflow:hidden}
+.panel-header{display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:21px}
+.panel-title{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin:0}
+.panel-index{font:700 11px var(--font);color:#6C829B}
+.section-note{font-size:11px;color:var(--muted);line-height:1.6;margin:12px 0 0}
+.micro{font-size:10px;color:#6F8299;line-height:1.5;letter-spacing:.015em}
+.label{font-size:11px;font-weight:800;margin-bottom:9px;color:var(--ink)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.column-in{display:flex;flex-direction:column;gap:12px}
+.rule{height:1px;background:var(--line);margin:18px 0}
+/* PALETTE */
+.palette{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.swatch{min-width:0}
+.swatch-color{height:65px;border-radius:15px;border:1px solid rgba(255,255,255,.86);box-shadow:inset 0 1px 0 rgba(255,255,255,.43);margin-bottom:8px}
+.swatch-name{font-weight:800;font-size:11px;line-height:1.3}
+.swatch-hex{font:600 10px/1.6 var(--font);color:#64778B;word-break:break-all}
+.surface-mini{padding:15px;border-radius:17px;display:flex;align-items:center;gap:11px;font-size:12px;color:var(--muted)}
+.surface-mini svg{color:var(--blue)}
+/* TYPE */
+.t-display{font-weight:800;font-size:36px;letter-spacing:-.061em;line-height:1.13}
+.t-heading{font-weight:800;font-size:23px;letter-spacing:-.042em;line-height:1.22}
+.t-subheading{font-weight:700;font-size:17px;line-height:1.3}
+.t-body{font-weight:500;font-size:14px;line-height:1.58}
+.t-caption{font-weight:500;font-size:12px;line-height:1.55;color:var(--muted)}
+.type-item{border-bottom:1px solid var(--line);padding:0 0 13px;margin-bottom:14px}
+.type-item:last-child{border:0;margin:0;padding:0}
+.type-meta{font-size:10px;letter-spacing:.035em;color:#60778F;margin-top:7px}
+/* =======================================================================
+   RAISED DIAGONAL-RIM GLASS BUTTONS
+   Dark recipe faithfully follows the supplied CSS layers/shadow values.
+   Highlight is a MASKED diagonal border ONLY; button face stays dimensional,
+   matte, and readable. No centre radial/circular highlight.
+   ======================================================================= */
+.liquid-btn{
+  --button-face:var(--glass-strong);
+  --button-text:var(--ink);
+  position:relative;isolation:isolate;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:6px 16px;border:0;border-radius:999px;
+  background:var(--button-face);color:var(--button-text);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  box-shadow:
+    0 0 2px rgba(0,0,0,.10),0 1px 8px rgba(0,0,0,.12),
+    inset 1px 1px 0 -0.5px rgba(255,255,255,.88),
+    inset -1px -1px 0 -0.5px rgba(27,46,69,.20),
+    inset 0 0 3px rgba(255,255,255,.26),
+    inset 0 0 16px rgba(255,255,255,.18);
+  font-weight:700;font-size:13px;text-decoration:none;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.liquid-btn:before{
+  content:"";pointer-events:none;position:absolute;z-index:2;inset:0;padding:1.8px;border-radius:inherit;
+  background:linear-gradient(132deg,
+    rgba(255,255,255,.99) 0%,
+    rgba(255,255,255,.88) 17%,
+    rgba(255,255,255,.12) 39%,
+    rgba(18,41,69,.30) 65%,
+    rgba(255,255,255,.23) 81%,
+    rgba(255,255,255,.95) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+/* Localised diagonal edge glints, still constrained to the perimeter. */
+.liquid-btn:after{
+  content:"";pointer-events:none;position:absolute;z-index:2;inset:1px;border-radius:inherit;
+  background:linear-gradient(136deg,rgba(255,255,255,.38) 0%,transparent 36%,transparent 75%,rgba(255,255,255,.13) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  padding:2px;
+}
+.liquid-btn:hover:not(:disabled){transform:translateY(-1px)}
+.liquid-btn:active:not(:disabled){transform:translateY(1px) scale(.99)}
+.liquid-btn:disabled{opacity:.50;cursor:not-allowed;transform:none}
+.liquid-btn.dark{
+  --button-text:#FFFFFF;
+  --button-face:linear-gradient(0deg,#0F0F0F,#0F0F0F),linear-gradient(0deg,rgba(51,51,51,.45),rgba(51,51,51,.45)),rgba(153,153,153,.3);
+  background-blend-mode:plus-lighter,luminosity,darken;
+  box-shadow:
+    0 0 2px rgba(0,0,0,.10),0 1px 8px rgba(0,0,0,.12),
+    inset 1px 1px 0 -.5px #333333,
+    inset -1px -1px 0 -.5px #262626,
+    inset 1px 1px .5px -1px #FFFFFF,
+    inset -1px -1px .5px -1px #FFFFFF,
+    inset 0 0 3px rgba(255,255,255,.5),
+    inset 0 0 16px #F2F2F2;
+}
+.liquid-btn.blue{
+  --button-face:linear-gradient(180deg,#56A0EE 0%,#4792E6 54%,#367FD1 100%);
+  --button-text:#FFFFFF;
+  box-shadow:0 0 2px rgba(17,60,103,.10),0 5px 14px rgba(39,119,212,.23),inset 1px 1px .5px rgba(255,255,255,.43),inset -1px -1px 1px rgba(0,50,104,.23),inset 0 0 12px rgba(255,255,255,.12);
+}
+.liquid-btn.blue:before{background:linear-gradient(132deg,rgba(255,255,255,1),rgba(255,255,255,.75) 20%,rgba(255,255,255,.09) 46%,rgba(15,80,158,.4) 73%,rgba(225,242,255,.88) 100%)}
+.liquid-btn.clear{--button-face:rgba(255,255,255,.40);--button-text:var(--ink)}
+.liquid-btn.pill{min-height:44px;padding:0 23px}
+.liquid-btn.circle{width:66px;height:66px;padding:6px 11.5px;border-radius:34px;flex:0 0 66px}
+.liquid-btn.circle svg{width:31px;height:31px;stroke-width:1.75}
+.liquid-btn.mini{width:44px;height:44px;padding:0;border-radius:50%}
+.liquid-btn.mini svg{width:19px;height:19px}
+.liquid-btn.tiny{height:34px;padding:0 14px;font-size:11px}
+.liquid-btn svg{position:relative;z-index:3}
+.liquid-btn span{position:relative;z-index:3}
+.button-demo{display:flex;flex-direction:column;gap:18px}
+.button-samples{display:flex;align-items:center;flex-wrap:wrap;gap:13px}
+.button-note{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.button-note span{font:700 10px var(--font);color:#596C84;text-align:center}
+/* MISC CONTROLS */
+.chip{border:1px solid rgba(255,255,255,.83);background:var(--glass);padding:0 14px;border-radius:999px;height:35px;font-size:11px;font-weight:700;color:#54657A;display:inline-flex;align-items:center;justify-content:center;gap:7px;box-shadow:inset 0 1px 0 rgba(255,255,255,.69)}
+.chip[aria-pressed="true"]{color:var(--blue-dark);box-shadow:inset 0 0 0 1.5px var(--blue),inset 0 1px 0 rgba(255,255,255,.86)}
+.tag{height:33px;display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid #fff;border-radius:999px;padding:0 7px 0 13px;font-size:11px;font-weight:700}
+.tag button{display:grid;place-items:center;width:18px;height:18px;border:0;border-radius:50%;background:rgba(80,110,145,.10);color:var(--muted)}
+.tag svg{width:12px;height:12px}
+.badge{min-width:20px;height:20px;border-radius:999px;padding:0 6px;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.status{display:inline-flex;align-items:center;gap:6px;color:#506278;font-size:11px;font-weight:700}
+.status i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.status.success i{background:var(--success)}
+.status.warning i{background:var(--warning)}
+.status.error i{background:var(--danger)}
+.field-wrap{display:flex;flex-direction:column;gap:7px;min-width:0}
+.field-label{font-size:11px;font-weight:800}
+.field{display:flex;align-items:center;gap:10px;width:100%;height:49px;padding:0 14px;border-radius:17px;color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 4px 10px rgba(51,91,137,.035)}
+.field input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font-size:12px}
+.field input::placeholder{color:#8492A4}
+.field svg{width:17px;height:17px;color:#63748C}
+.field.is-error{border-color:rgba(179,62,68,.45)}
+.field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.form-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.switch{appearance:none;border:1px solid rgba(255,255,255,.84);background:rgba(121,143,167,.25);border-radius:999px;width:51px;height:30px;position:relative;flex:none;transition:background .15s}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(23,56,91,.17);transition:transform .2s}
+.switch[aria-checked="true"]{background:var(--blue)}
+.switch[aria-checked="true"]:after{transform:translateX(21px)}
+.checkbox{border:1px solid var(--line);background:var(--glass);border-radius:9px;width:25px;height:25px;display:grid;place-items:center;color:var(--blue)}
+.checkbox.selected{border:1.5px solid var(--blue)}
+.checkbox.selected svg{stroke-width:3;width:16px}
+/* STEPPER: the ONLY colour family is primary blue and its pale tints. */
+.stepper{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:7px 0 5px;position:relative}
+.stepper:before{content:"";position:absolute;left:17%;right:17%;top:17px;height:2px;background:#CDE0F8;z-index:0}
+.step{position:relative;z-index:1;display:flex;align-items:center;flex-direction:column;gap:8px;font-size:10px;font-weight:800;color:#7A9DC9;text-align:center}
+.step .node{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #C6DCF8;background:#E7F2FF;color:#6EA9EA;font-size:12px;font-weight:800;box-shadow:0 0 0 5px rgba(255,255,255,.45)}
+.step.current{color:var(--blue-dark)}
+.step.current .node{background:var(--blue);border-color:var(--blue);color:#fff}
+.step.done .node{background:#DCEBFD;border-color:#9BC7F5;color:var(--blue-dark)}
+.step.done{color:#4D91DA}
+.step .node svg{width:17px;height:17px;stroke-width:2.6}
+.segment{display:flex;gap:3px;padding:4px;border:1px solid #fff;border-radius:999px;background:var(--glass);box-shadow:inset 0 1px 0 #fff}
+.segment button{flex:1;border:0;background:transparent;height:39px;border-radius:999px;font-size:12px;font-weight:700;color:var(--muted)}
+.segment button[aria-selected="true"]{background:rgba(71,146,230,.13);color:var(--blue-dark);box-shadow:inset 0 0 0 1px rgba(71,146,230,.2)}
+/* CARDS: SAME WHITE FILL for all conditions (no diagonal highlights). */
+.task{display:flex;align-items:center;gap:10px;border-radius:20px;padding:11px;margin-top:8px;min-width:0}
+.dateblock{border-radius:12px;background:rgba(255,255,255,.56);width:46px;height:51px;flex:none;display:flex;flex-direction:column;justify-content:center;align-items:center;line-height:1.05}
+.dateblock small{font-size:8px;letter-spacing:.12em;font-weight:800;color:var(--muted)}
+.dateblock b{font-size:20px;line-height:24px;letter-spacing:-.05em}
+.dateblock em{font-style:normal;font-size:9px;font-weight:700;color:var(--muted)}
+.task-body,.trip-body{flex:1;min-width:0}
+.task-body strong,.trip-body strong{font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.task-body small,.trip-body small{display:block;color:var(--muted);font-size:10px;line-height:1.5}
+.action-chip{border:0;flex:none;border-radius:999px;height:31px;padding:0 11px;background:var(--glass-strong);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);color:var(--blue-dark);font-size:10px;font-weight:800}
+.tripcard{display:flex;align-items:center;gap:11px;border-radius:20px;padding:11px;margin-top:9px;min-width:0}
+.cover{width:53px;height:56px;border-radius:12px;flex:none;overflow:hidden;display:grid;place-items:center;color:#fff;background:linear-gradient(165deg,#2C4F71,#5E91C3 58%,#A7D2EB)}
+.cover svg{width:27px;height:27px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.1))}
+.avatars{display:flex;align-items:center;padding-left:5px}
+.avatar{display:grid;place-items:center;border:2px solid #fff;border-radius:50%;width:27px;height:27px;background:#D7E9FC;color:#36669C;font-size:9px;font-weight:800;margin-left:-6px}
+.avatar:nth-child(even){background:#BAD8F5}
+/* NAV / OVERLAYS */
+.tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;border-radius:999px;background:rgba(15,17,24,.91);padding:5px;box-shadow:0 8px 24px rgba(15,24,40,.24);margin-bottom:18px}
+.tabbar button{height:52px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.70);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;font-weight:700}
+.tabbar svg{width:19px;height:19px}
+.tabbar button.active{background:var(--blue);color:#fff}
+.message{padding:13px 15px;border-radius:19px 19px 19px 6px;width:fit-content;max-width:86%;font-size:12px}
+.message.mine{align-self:end;border:0;background:var(--blue);color:#fff;border-radius:19px 19px 6px 19px}
+.toast{border-radius:18px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:11px;font-size:11px;font-weight:700}
+.toast .undo{color:var(--blue-dark);background:transparent;border:0;font-size:11px;font-weight:800}
+.menu{border-radius:20px;padding:5px}
+.menu button{display:flex;align-items:center;gap:11px;border:0;width:100%;padding:12px 13px;background:transparent;font-size:12px;font-weight:700;text-align:left}
+.menu button svg{width:18px;height:18px;color:#657B91}
+.menu button.danger{color:var(--danger)}
+.menu button.danger svg{color:var(--danger)}
+.under-note{margin-top:12px;color:#75879D;font-size:10px}
+.footer{margin-top:35px;border-top:1px solid rgba(255,255,255,.8);padding-top:20px;display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:11px;color:#63758A}
+.footer b{color:#326EAE}
+@media(max-width:1120px){.slab{padding:40px 28px 65px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.slab{padding:30px 15px 48px}.sheet-header{display:block}.sheet-intro{margin-top:15px}.grid{grid-template-columns:1fr}.panel{padding:20px}.sheet-title{font-size:42px}.brandline{margin-bottom:21px}.palette{grid-template-columns:repeat(4,minmax(0,1fr))}.footer{display:block}.footer span{display:block;margin-top:6px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<!-- Minimal icon library: clean outline shapes; no raster assets required. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-plane" viewBox="0 0 24 24"><path d="M22 2 9.8 12.2M22 2 15 22l-4.4-8.6L2 9l20-7Z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.8a5.2 5.2 0 0 0-7.4 0L12 6.2l-1.4-1.4a5.2 5.2 0 0 0-7.4 7.4L12 21l8.8-8.8a5.2 5.2 0 0 0 0-7.4Z"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="m21 3-7.7 18-3.1-8.2L2 9.7 21 3ZM10.2 12.8 21 3"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 3v18M16 3v18M3 8h5M3 16h5M16 8h5M16 16h5"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6ZM9 3v15M15 6v15"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.6-4.7A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3 6.5 7 .8-5.2 4.9 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.3l7-.8L12 2Z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3m0 0L7 8m5-5 5 5M5 14v6h14v-6"/></symbol>
+<symbol id="i-location" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+</svg>
+<div class="slab">
+  <div class="brandline"><div class="brand"><span class="brandlogo"><svg><use href="#i-plane"/></svg></span> ROAM <span style="font-weight:500;letter-spacing:.04em;color:#6D87A2">/ DESIGN SYSTEM</span></div><span class="version">COMPONENT LIBRARY · V6</span></div>
+  <header class="sheet-header">
+    <div><span class="kicker">THE BLUE GLASS EDITION</span><h1 class="sheet-title">Soft surfaces.<br><span class="accent">Sharp reflections.</span></h1></div>
+    <p class="sheet-intro">A calm, dimensional system for travelling together. Pearl-white translucent cards, restrained blur, and buttons with a deliberate diagonal gleam along the rim — never a flat centre spotlight.</p>
+  </header>
+  <div class="grid">
+    <div class="column">
+      <section class="panel" aria-labelledby="colour"><div class="panel-header"><h2 class="panel-title" id="colour">01 / Colour tokens</h2><span class="panel-index">8 CORE TOKENS</span></div>
+        <div class="palette">
+          <div class="swatch"><div class="swatch-color" style="background:#4792E6"></div><div class="swatch-name">Primary</div><div class="swatch-hex">#4792E6</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#2478D2"></div><div class="swatch-name">Deep blue</div><div class="swatch-hex">#2478D2</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#DCEBFD"></div><div class="swatch-name">Soft blue</div><div class="swatch-hex">#DCEBFD</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#0F1118"></div><div class="swatch-name">Ink</div><div class="swatch-hex">#0F1118</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#EDF4FC"></div><div class="swatch-name">Canvas</div><div class="swatch-hex">#EDF4FC</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,.45)"></div><div class="swatch-name">Glass</div><div class="swatch-hex">White / 45%</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#168365"></div><div class="swatch-name">Success</div><div class="swatch-hex">#168365</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#B33E44"></div><div class="swatch-name">Error</div><div class="swatch-hex">#B33E44</div></div>
+        </div>
+        <div class="rule"></div>
+        <div class="surface surface-mini"><svg><use href="#i-info"/></svg><span>One neutral translucent-white recipe for cards and all their variants. Status is conveyed with icons and text — not different card fills.</span></div>
+      </section>
+      <section class="panel" aria-labelledby="type"><div class="panel-header"><h2 class="panel-title" id="type">02 / Typography</h2><span class="panel-index">PLUS JAKARTA SANS</span></div>
+        <div class="type-item"><div class="t-display">Go somewhere<br>together.</div><div class="type-meta">DISPLAY / 36 · EXTRA BOLD 800</div></div>
+        <div class="type-item"><div class="t-heading">Your next adventure</div><div class="type-meta">HEADING / 23 · EXTRA BOLD 800</div></div>
+        <div class="type-item"><div class="t-subheading">Malacca 2D1N</div><div class="type-meta">CARD TITLE / 17 · BOLD 700</div></div>
+        <div class="type-item"><div class="t-body">Build the itinerary as a group, and make every stop count.</div><div class="type-meta">BODY / 14 · MEDIUM 500</div></div>
+        <div class="type-item"><div class="t-caption">Voting closes Sat 7 Nov · 3 stops to review</div><div class="type-meta">CAPTION / 12 · MEDIUM 500</div></div>
+        <div class="kicker">EYEBROW / 10 · EXTRA BOLD 800</div>
+      </section>
+      <section class="panel" aria-labelledby="chips"><div class="panel-header"><h2 class="panel-title" id="chips">03 / Filters, tags &amp; status</h2><span class="panel-index">SAME GLASS FILL</span></div>
+        <div class="label">Filter chips — selected indicated by a blue rim</div>
+        <div class="row" data-select-group="filters"><button class="chip" aria-pressed="true">All</button><button class="chip" aria-pressed="false">Do</button><button class="chip" aria-pressed="false">Eat</button><button class="chip" aria-pressed="false">Shop</button></div>
+        <div class="rule"></div>
+        <div class="label">Removable tags</div>
+        <div class="row"><span class="tag">Raymond <button aria-label="Remove Raymond" onclick="this.parentElement.remove()"><svg><use href="#i-x"/></svg></button></span><span class="tag">Eustace <button aria-label="Remove Eustace" onclick="this.parentElement.remove()"><svg><use href="#i-x"/></svg></button></span><span class="tag">Museums <button aria-label="Remove Museums" onclick="this.parentElement.remove()"><svg><use href="#i-x"/></svg></button></span></div>
+        <div class="rule"></div>
+        <div class="row" style="gap:12px"><span class="status"><i></i>Voting open</span><span class="status success"><i></i>Ready</span><span class="status warning"><i></i>Due soon</span><span class="badge">2</span></div>
+      </section>
+    </div>
+    <div class="column">
+      <section class="panel" aria-labelledby="buttons"><div class="panel-header"><h2 class="panel-title" id="buttons">04 / Raised glass buttons</h2><span class="panel-index">DIAGONAL BORDER GLOSS</span></div>
+        <div class="label">66 × 66 / primary, dark, clear</div>
+        <div class="button-samples">
+          <button class="liquid-btn circle dark" aria-label="Explore"><svg class="big"><use href="#i-plane"/></svg></button>
+          <button class="liquid-btn circle blue" aria-label="Add"><svg class="big"><use href="#i-plus"/></svg></button>
+          <button class="liquid-btn circle clear" aria-label="Favourite"><svg class="big"><use href="#i-heart"/></svg></button>
+          <button class="liquid-btn circle dark" aria-label="More options"><svg class="big"><use href="#i-dots"/></svg></button>
+        </div>
+        <div class="section-note">The luminous strip follows the 132° border. It is intentionally absent from the button's centre and from cards.</div>
+        <div class="rule"></div>
+        <div class="label">Pill actions / expressive hierarchy</div>
+        <div class="button-demo"><div class="row"><button class="liquid-btn pill blue"><svg><use href="#i-plus"/></svg><span>Create trip</span></button><button class="liquid-btn pill dark"><span>Continue</span><svg><use href="#i-chevron"/></svg></button></div><div class="row"><button class="liquid-btn pill clear"><svg><use href="#i-map"/></svg><span>Navigate</span></button><button class="liquid-btn pill clear" disabled>Disabled</button></div><div class="row"><button class="liquid-btn mini clear" aria-label="Back"><svg><use href="#i-arrow"/></svg></button><button class="liquid-btn mini dark" aria-label="Share"><svg><use href="#i-share"/></svg></button><button class="liquid-btn mini blue" aria-label="Confirm"><svg><use href="#i-check"/></svg></button><button class="liquid-btn tiny clear">View all 6</button></div></div>
+      </section>
+      <section class="panel" aria-labelledby="fields"><div class="panel-header"><h2 class="panel-title" id="fields">05 / Inputs &amp; controls</h2><span class="panel-index">LOW-OPACITY WHITE</span></div>
+        <div class="column-in">
+          <label class="field-wrap"><span class="field-label">Destination</span><span class="field"><svg><use href="#i-search"/></svg><input aria-label="Destination" value="Malacca" placeholder="Choose a destination"></span></label>
+          <div class="field-row"><label class="field-wrap"><span class="field-label">Start</span><span class="field"><input aria-label="Start date" value="14/11/2026"><svg><use href="#i-calendar"/></svg></span></label><label class="field-wrap"><span class="field-label">End</span><span class="field"><input aria-label="End date" value="15/11/2026"><svg><use href="#i-calendar"/></svg></span></label></div>
+          <label class="field-wrap"><span class="field-label">Budget per person (SGD)</span><span class="field"><input aria-label="Budget" inputmode="numeric" value="300"></span></label>
+          <div class="field-wrap"><span class="field-label">Invite friends</span><div class="surface" style="border-radius:17px;padding:10px"><div class="row" style="flex-wrap:nowrap"><svg style="color:#73859C"><use href="#i-search"/></svg><input id="friendInput" aria-label="Friend's name" placeholder="Type a friend's name" style="border:0;outline:0;background:transparent;flex:1;min-width:0;font-size:12px"><button class="liquid-btn mini blue" style="width:29px;height:29px;flex-basis:29px" onclick="addFriend()" aria-label="Add friend"><svg style="width:15px;height:15px"><use href="#i-plus"/></svg></button></div><div class="form-tags" id="friendTags"><span class="tag">Raymond <button aria-label="Remove Raymond" onclick="this.parentElement.remove()"><svg><use href="#i-x"/></svg></button></span><span class="tag">Eustace <button aria-label="Remove Eustace" onclick="this.parentElement.remove()"><svg><use href="#i-x"/></svg></button></span></div></div></div>
+          <div class="rule" style="margin:4px 0"></div>
+          <div class="switch-row"><div><div class="field-label" style="margin:0">Recommend activities</div><div class="micro">Use everyone's saved travel preferences</div></div><button class="switch" role="switch" aria-label="Recommend activities" aria-checked="true"></button></div>
+          <div class="switch-row"><div><div class="field-label" style="margin:0">Trip reminders</div><div class="micro">Notify me before voting closes</div></div><button class="switch" role="switch" aria-label="Trip reminders" aria-checked="false"></button></div>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="step"><div class="panel-header"><h2 class="panel-title" id="step">06 / Progress &amp; selection</h2><span class="panel-index">BLUE STATES ONLY</span></div>
+        <div class="stepper" aria-label="Step 2 of 3"><div class="step done"><div class="node"><svg><use href="#i-check"/></svg></div>Details</div><div class="step current"><div class="node">2</div>Vote</div><div class="step"><div class="node">3</div>Itinerary</div></div>
+        <div class="rule"></div><div class="label">Segmented control</div>
+        <div class="segment" data-select-group="tabs"><button aria-selected="true">Upcoming</button><button aria-selected="false">Past</button></div>
+        <div class="row" style="justify-content:space-between;margin-top:14px"><div class="row"><span class="checkbox selected"><svg><use href="#i-check"/></svg></span><span class="micro">Selected</span></div><div class="row"><span class="checkbox"></span><span class="micro">Unselected</span></div></div>
+      </section>
+    </div>
+    <div class="column">
+      <section class="panel" aria-labelledby="tasks"><div class="panel-header"><h2 class="panel-title" id="tasks">07 / Task cards</h2><span class="panel-index">ONE SURFACE · 3 STATUSES</span></div>
+        <div class="task"><div class="dateblock"><small>DUE</small><b>09</b><em>NOV</em></div><div class="task-body"><strong>Vote on JB Daytrip</strong><small>4 stops to review</small><span class="status warning"><i></i>Due soon</span></div><button class="action-chip">Review</button></div>
+        <div class="task"><div class="dateblock"><small>DUE</small><b>12</b><em>NOV</em></div><div class="task-body"><strong>Vote on China 3D2N</strong><small>3 stops to review</small><span class="status"><i></i>Waiting for vote</span></div><button class="action-chip">Review</button></div>
+        <div class="task"><div class="dateblock"><svg style="color:var(--success)"><use href="#i-check"/></svg></div><div class="task-body"><strong>Reading Date</strong><small>Itinerary completed</small><span class="status success"><i></i>Ready</span></div><button class="action-chip">View</button></div>
+        <div class="section-note">State variations change status labels/dots, not the card background. No diagonal beam across any card.</div>
+      </section>
+      <section class="panel" aria-labelledby="trips"><div class="panel-header"><h2 class="panel-title" id="trips">08 / Trip cards</h2><span class="panel-index">SAME PEARL GLASS</span></div>
+        <div class="tripcard"><div class="cover"><svg><use href="#i-map"/></svg></div><div class="trip-body"><strong>Reading Date</strong><small>Thu 12 Nov · In 12 days</small><span class="status success"><i></i>Itinerary ready</span></div><div class="avatars"><span class="avatar">R</span><span class="avatar">P</span></div></div>
+        <div class="tripcard"><div class="cover" style="background:linear-gradient(155deg,#204A71,#2D85C5,#75B8DF)"><svg><use href="#i-film"/></svg></div><div class="trip-body"><strong>Gaming Cafe</strong><small>Wed 18 Nov · In 18 days</small><span class="status"><i></i>Voting open</span></div><div class="avatars"><span class="avatar">J</span><span class="avatar">P</span><span class="avatar">R</span></div></div>
+        <div class="tripcard"><div class="cover" style="background:linear-gradient(155deg,#204A71,#4B89BF,#C2DDF1)"><svg><use href="#i-location"/></svg></div><div class="trip-body"><strong>JB Daytrip</strong><small>Sat 19 Dec · In 49 days</small><span class="status"><i></i>Voting open</span></div><div class="avatars"><span class="avatar">P</span><span class="avatar">R</span></div></div>
+      </section>
+      <section class="panel" aria-labelledby="nav"><div class="panel-header"><h2 class="panel-title" id="nav">09 / Navigation</h2><span class="panel-index">DARK GLASS + BLUE</span></div>
+        <div class="tabbar" data-select-group="navbar"><button><svg><use href="#i-user"/></svg>Profile</button><button><svg><use href="#i-film"/></svg>Reels</button><button class="active"><svg><use href="#i-plane"/></svg>Trips</button><button><svg><use href="#i-map"/></svg>Map</button><button><svg><use href="#i-chat"/></svg>Chats</button></div>
+        <div class="row" style="justify-content:space-between"><span class="micro">Large CTA / raised blue rim</span><button class="liquid-btn pill blue"><svg><use href="#i-plus"/></svg><span>Add an activity</span></button></div>
+      </section>
+      <section class="panel" aria-labelledby="feedback"><div class="panel-header"><h2 class="panel-title" id="feedback">10 / Overlays &amp; feedback</h2><span class="panel-index">GLASS SURFACES</span></div>
+        <div class="toast"><span class="row" style="gap:6px"><svg style="color:var(--blue);width:16px"><use href="#i-check"/></svg>Trip created successfully</span><button class="undo">Undo</button></div>
+        <div class="column-in" style="gap:7px;margin:13px 0"><div class="message">Can we move it to Saturday?</div><div class="message mine">Works for me!</div></div>
+        <div class="menu"><button><svg><use href="#i-share"/></svg>Share trip</button><button><svg><use href="#i-calendar"/></svg>Reschedule</button><button class="danger"><svg><use href="#i-x"/></svg>Leave trip</button></div>
+      </section>
+    </div>
+  </div>
+  <footer class="footer"><div><b>ROAM / LIQUID GLASS V6</b> · Review the components, then refine them together.</div><span>Primary #4792E6 · Plus Jakarta Sans · Neutral glass cards · Diagonal button rim</span></footer>
 </div>
 <script>
-const P={bookmark:'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z',send:'M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z','thumbs-up':'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3','thumbs-down':'M10 15v4a3 3 0 0 0 3 3l4-9V2H5.7a2 2 0 0 0-2 1.7l-1.4 9a2 2 0 0 0 2 2.3H10zM17 2h2.7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H17',more:'M5 12h.01M12 12h.01M19 12h.01',x:'M18 6L6 18M6 6l12 12',search:'M21 21l-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',plus:'M12 5v14M5 12h14',check:'M20 6L9 17l-5-5',coffee:'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3',calendar:'M3 4h18v18H3zM16 2v4M8 2v4M3 10h18',lock:'M5 11h14v11H5zM7 11V7a5 5 0 0 1 10 0v4',clock:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2',user:'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',film:['M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z','M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5'],plane:'M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z',map:['M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z','M8 2v16M16 6v16'],'message-circle':'M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z',info:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01','arrow-left':'M19 12H5M12 19l-7-7 7-7',navigation:'M3 11l19-9-9 19-2-8-8-2z','chevron-right':'M9 18l6-6-6-6',trash:'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6',bag:'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0',sun:'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4'};
-document.querySelectorAll('i[data-i]').forEach(e=>{const s=e.getAttribute('s')||24;e.outerHTML=`<svg class="i" viewBox="0 0 24 24" width="${s}" height="${s}"${e.classList.contains('m')?' style="transform:none"':''}>${(v=>Array.isArray(v)?`<path d="${v[0]}"/><path class="d" d="${v[1]}"/>`:`<path d="${v}"/>`)(e.classList.contains('m')?'M5 12h14':P[e.dataset.i])}</svg>`});
-const $$=s=>[...document.querySelectorAll(s)];
-$$('[data-t]').forEach(b=>b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!='true'));
-$$('[data-g]').forEach(b=>b.onclick=()=>$$('[data-g="'+b.dataset.g+'"]').forEach(x=>{const o=x==b;x.hasAttribute('aria-checked')?x.setAttribute('aria-checked',o):x.setAttribute('aria-pressed',o);x.classList.toggle('on',o&&x.classList.contains('pill')||false)}));
-$$('[data-s]').forEach(b=>b.onclick=()=>{const o=!b.classList.contains('on');b.classList.toggle('on',o);b.setAttribute('aria-checked',o)});
-$$('[data-c]').forEach(b=>b.onclick=()=>b.setAttribute('aria-checked',b.getAttribute('aria-checked')!='true'));
-$$('[data-r]').forEach(b=>b.onclick=()=>$$('[data-r]').forEach(x=>x.setAttribute('aria-checked',x==b)));
-$$('[data-n]').forEach(b=>b.onclick=()=>$$('[data-n]').forEach(x=>x.classList.toggle('on',x==b)));
-</script></body></html>
+/* Small demos are intentionally functional for design-system review. */
+document.querySelectorAll('[data-select-group]').forEach(group=>{
+  group.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{
+    group.querySelectorAll('button').forEach(b=>{
+      if(group.dataset.selectGroup==='filters')b.setAttribute('aria-pressed',String(b===button));
+      else if(group.dataset.selectGroup==='tabs')b.setAttribute('aria-selected',String(b===button));
+      else b.classList.toggle('active',b===button);
+    });
+  }));
+});
+document.querySelectorAll('.switch').forEach(button=>button.addEventListener('click',()=>button.setAttribute('aria-checked',String(button.getAttribute('aria-checked')!=='true'))));
+const friendInput=document.getElementById('friendInput');
+function addFriend(){const name=friendInput.value.trim().slice(0,30);if(!name)return;const wrap=document.createElement('span');wrap.className='tag';wrap.append(document.createTextNode(name+' '));const close=document.createElement('button');close.setAttribute('aria-label','Remove '+name);close.textContent='×';close.onclick=()=>wrap.remove();wrap.append(close);document.getElementById('friendTags').append(wrap);friendInput.value='';friendInput.focus()}
+friendInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addFriend()}});
+</script>
+</body>
+</html>

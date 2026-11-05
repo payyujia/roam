@@ -1,35 +1,62 @@
-# Roam Liquid Glass Design System
+# Roam Liquid Glass Design System — Blue Edition (v6)
 
-This is the shared visual system for Roam's existing component library. It is implemented in `css/liquid-glass.css`, loaded after the legacy stylesheets so the same component builders and interaction classes continue to work.
+The editable, standalone component sheet is [docs/sticker-sheet.html](./sticker-sheet.html). It replaces the old pink/teal/yellow specimen as the design-review reference. This **sticker sheet is a design proposal**; app runtime styles are deliberately not changed until the components are approved.
 
-## Palette
+## Palette and typography
 
-| Token | Value | Use |
+| Token | Value | Usage |
 | --- | --- | --- |
-| Primary | `#4792E6` | Active navigation, primary actions, selection, route accents |
-| Secondary | `#FDD8C7` | Warm aura highlights and restrained decorative warmth |
-| Ink | `#171D29` | Main text and dark navigation |
-| Canvas | `#F3F7FD` | Cool, near-white page foundation |
+| Primary | `#4792E6` | The single brand/accent colour, highlighted buttons and active states |
+| Deep blue | `#2478D2` | High-contrast active text and accents |
+| Soft blue | `#DCEBFD` | Blue-only inactive/done stepper tones |
+| Canvas | `#EDF4FC` | Cool, soft near-white surroundings |
+| Ink | `#0F1118` | Strongest text, dark button faces |
+| Glass | `rgba(255,255,255,.45)` | **Shared** low-opacity white across passive card variants |
+| Text secondary | `#58677C` | Captions and supporting copy |
+| Success | `#168365` | Semantic status only |
+| Error | `#B33E44` | Semantic status/error only |
 
-## Surface recipe
+No lilac or rose accent tokens. Type system: **Plus Jakarta Sans** (display 36/800, section 23/800, title 17/700, body 14/500, caption 12/500, eyebrow 10/800).
 
-Use `glass-surface` for new cards and panels, and `glass-control` for compact controls. The surface combines a low-opacity white fill, saturated background blur, a thin diagonal white-to-blue border highlight, and a very soft inset/exterior shadow. Existing components such as `.feat`, `.tile`, `.ban`, `.srow`, `.fcard`, `.pc2`, and map sheets are mapped to the same surface recipe.
+## Glass materials
 
-Do not create a different solid card color for each category. Keep meaning in labels, text, icons, and data rather than card fills. Photos and full-bleed reel media remain media, not card surfaces.
+**Cards, rows, input fields, chat bubbles and panels use the same low-opacity white surface**: `rgba(255,255,255,.45)`, a translucent white border and restrained blur. Status variants should not change the card background. Convey state using status icons, dots, or labels instead.
 
-## Headers
+**Do not place diagonal beams, specular streaks or centre-glow effects across card interiors.**
 
-Top-level `.hd` hero headers share one 208px geometry and a curved lower edge. Their aura blends the primary blue with a small amount of secondary peach. The status bar remains legible above the glass. Trip-detail `.th` uses the same finish while preserving its existing content layout.
+## Button material: diagonal rim, dimensional centre
 
-## Navigation and icons
+Large action/icon button baseline is **66×66px** with **34px radius**. The dark button follows the supplied layered-black blend:
+```css
+background: linear-gradient(0deg,#0F0F0F,#0F0F0F),
+  linear-gradient(0deg,rgba(51,51,51,.45),rgba(51,51,51,.45)),
+  rgba(153,153,153,.3);
+background-blend-mode:plus-lighter,luminosity,darken;
+backdrop-filter:blur(6px);
+border-radius:34px;
+```
+Combine with directional inset/exterior shadows. The **132° specular highlight is constrained to a thin rim** via `::before` and `mask-composite:exclude`, not a radial white highlight in the centre of the button. Blue `#4792E6`, dark `#0F0F0F`, and clear-white glass are button *face* variants; their dimensional rim treatment stays consistent.
 
-The existing five-slot tab layout, raised centre action, hit areas, and placement are preserved. The rail is black; the selected state uses the primary blue. Interface icons are outline-only, including the centre action icon.
+## Interaction and selection
 
-## Component rules
+- Stepper: active step uses solid primary blue, completed/future stages use subtle blue; **no green, pink, grey-black or other accent in the stepper**.
+- Segmented controls: translucent-white track, subtle blue selected pill; no black underline.
+- Filter chips: identical translucent-white fill in every state; a blue edge and label show selection.
+- Toggle: primary-blue track on, muted neutral translucent track off, white sliding thumb.
+- Statuses: semantic dots and copy, not card background variation.
+- Focus: retain visible keyboard focus indicators; do not rely only on hover.
 
-- Primary action: blue, white label, pill geometry.
-- Secondary action: translucent glass with ink label.
-- Selected controls: a subtle primary-blue tint and border.
-- Passive cards and grouped rows: shared neutral glass; no per-category color fills.
-- Keep the existing spacing, content order, breakpoints, and interaction hooks.
-- Do not add presentation state or change JavaScript logic for visual work.
+## Components on the sheet
+
+1. Colour tokens and shared surface sample.
+2. Typography samples at the intended scale.
+3. Filter chips, removable tags, and status indicators.
+4. Raised circular buttons and pill buttons, including disabled and icon-only variations.
+5. Text inputs, dates, budget, friends, and switches.
+6. Blue-only stepper, segmented control, checkboxes.
+7. Task cards, including different states on the same glass background.
+8. Trip cards and member avatars.
+9. Navigation and floating primary action.
+10. Toast, chat messages, and a menu panel.
+
+The HTML contains editable CSS, an inline SVG icon library and small interactive selection demos. It is responsive; view it directly in a browser. The legacy `docs/sticker-sheet-v5.html` remains available for historical comparison.
