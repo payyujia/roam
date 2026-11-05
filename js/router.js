@@ -6,8 +6,24 @@ IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.datase
 const rr=()=>{IDS.forEach(id=>id!='reels'&&render(id));upd()};
 function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','film'],['trips','Trips'],['map','Map','map'],['chat','Chats','message-circle']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
  return id=='trips'?`<button class="ctr${on?' on':''}" data-t="trips" ${al}><span class="circ">${ic('plane',30,'currentColor')}</span>Trips</button>`:`<button class="${on?'on':''}" data-t="${id}" ${al}><span class="ti">${id=='profile'?Av('P','tab'):ic(i)}${id=='reels'&&S.newReel?'<i class="bdg dot"></i>':''}${id=='chat'&&u?`<i class="bdg">${u}</i>`:''}</span>${l}</button>`}).join('')}
-function chrome(){const tp=topId(),fab=(!S.nav&&S.tab=='map'&&tp=='map')||(S.tab=='trips'&&tp=='trips');
- $('#tb').classList.toggle('off',['form'].includes(tp));$('#fab').hidden=!fab;$('#fab').dataset.s=S.tab}
+/* Share one app-level button for both actions so their clearance above the
+   Trips navigation icon is identical, regardless of scroll position. */
+function chrome(){
+ const tp=topId(),create=(!S.nav&&S.tab=='map'&&tp=='map')||(S.tab=='trips'&&tp=='trips'),add=tp=='trip'&&S.step==1;
+ const fab=$('#fab');
+ $('#tb').classList.toggle('off',['form'].includes(tp));
+ fab.hidden=!(create||add);
+ fab.dataset.s=add?'vote':S.tab;
+ fab.dataset.a=add?'addact':'newtrip';
+ if(add){
+  const label=downvoted(trip(S.cur))?'Suggest someplace new':'Add a new activity';
+  fab.innerHTML=`${ic('plus',20)}<span>${label}</span>`;
+  fab.setAttribute('aria-label',label);
+ }else{
+  fab.textContent='Create trip!';
+  fab.setAttribute('aria-label','Create trip!');
+ }
+}
 function upd(){const st=cur(),tp=topId();$$('.scr').forEach(s=>{const id=s.dataset.id,i=st.indexOf(id);s.classList.toggle('on',id==tp);s.classList.toggle('under',i>-1&&id!=tp);s.inert=id!=tp});tabbar();chrome();sbSync();typeof reelsSync=='function'&&reelsSync()}
 /* iPhone-style status bar: blurs once the visible screen has scrolled */
 function sbSync(){const e=$('#s-'+topId());$('#dev').classList.toggle('sbb',!!e&&!e.classList.contains('nos')&&!e.classList.contains('rls')&&e.scrollTop>2)}

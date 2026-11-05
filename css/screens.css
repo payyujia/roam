@@ -75,42 +75,6 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    and provide a clear gap between the arrow and cover photo. */
 #s-trip .th .top{padding-left:24px;padding-right:24px}
 #s-trip .th .thd{padding-top:20px}
-/* Match Create trip!: compact centred floating pill, with the same 16px
-   clearance above the Trips tab. Position it outside the content flow so
-   the activity list never gains an artificial white footer/gap. */
-#s-trip .add-activity-dock{
-  position:fixed;
-  left:50%;
-  bottom:var(--fab-b);
-  transform:translateX(-50%);
-  z-index:22;
-  width:max-content;
-  max-width:calc(100% - 48px);
-  margin:0;
-  padding:0;
-  background:transparent;
-  pointer-events:none;
-}
-#s-trip .add-activity-btn{
-  width:auto;
-  min-height:44px;
-  padding:0 20px;
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  background:var(--teal);
-  color:#062D2A;
-  font:700 15px/20px var(--font);
-  white-space:nowrap;
-  text-align:center;
-  cursor:pointer;
-  pointer-events:auto;
-  transition:transform .12s ease,background .12s ease;
-}
-#s-trip .add-activity-btn svg{flex:none}
-#s-trip .add-activity-btn:active{transform:scale(.98)}
-#s-trip .add-activity-btn:focus-visible{outline:2px solid var(--dusk);outline-offset:3px}
-/* Last activity can scroll clear of the floating pill and navigation. */
+/* The vote action reuses the same app-level #fab as Create trip!.
+   Add only scroll clearance for activity rows beneath that floating button. */
 #s-trip .pg{padding-bottom:calc(var(--fab-b) + 48px)}
