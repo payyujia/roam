@@ -417,3 +417,32 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 @media(prefers-reduced-motion:reduce){
   #dev .hd::before,#dev .th::before{filter:none}
 }
+
+/* Textbox focus: remove the heavy outline/ring while keeping subtle fill feedback.
+   This final stylesheet overrides earlier :focus-visible and focus-within rules.
+   Buttons retain their keyboard focus indicators. */
+#dev :is(input,textarea,select):focus,
+#dev :is(input,textarea,select):focus-visible{
+  outline:none!important;
+  outline-offset:0!important;
+  box-shadow:none!important;
+}
+#dev .in:focus,
+#dev .in:focus-within,
+#dev .fi:focus-within,
+#dev .fi.sr:focus-within,
+#dev .fld:focus-within,
+#dev .tin:focus-within{
+  outline:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  background-color:var(--s2)!important;
+}
+#dev .fi:focus-within :is(input,textarea,select),
+#dev .fld:focus-within input,
+#dev .tin:focus-within input{
+  outline:none!important;
+  box-shadow:none!important;
+}
+/* Invalid text fields still show a gentle error background. */
+#dev .in.bad:focus{background-color:var(--err-t)!important}
