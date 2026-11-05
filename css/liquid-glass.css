@@ -569,3 +569,44 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   content:none!important;
   display:none!important;
 }
+
+/* New trip: fully opaque glass-tinted canvas prevents previously open screens
+   from showing through while form navigation and status bar update. */
+#dev #s-form.scr{
+  background:linear-gradient(155deg,#E8F2FE 0%,#F5F8FE 52%,#FAF5F6 100%)!important;
+}
+/* One coherent iOS-like switch: blue track, centred white thumb, no dark ring.
+   Confine the override to New trip so Profile preference toggles are unchanged. */
+#dev #s-form .sw{
+  position:relative;
+  display:inline-block;
+  flex:0 0 50px;
+  width:50px;
+  height:30px;
+  border:0!important;
+  border-radius:999px;
+  background:rgba(102,119,145,.26)!important;
+  box-shadow:none!important;
+  transition:background .18s ease;
+}
+#dev #s-form .sw.on{
+  background:var(--primary)!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#dev #s-form .sw::after{
+  content:"";
+  position:absolute;
+  top:3px!important;
+  left:3px!important;
+  width:24px!important;
+  height:24px!important;
+  border:0!important;
+  border-radius:50%;
+  background:#fff!important;
+  transform:translateX(0)!important;
+  box-shadow:0 1px 4px rgba(26,55,87,.18)!important;
+  transition:transform .18s ease;
+}
+#dev #s-form .sw.on::after{transform:translateX(20px)!important}
+#dev #s-form .sw:focus-visible{outline:2px solid var(--primary)!important;outline-offset:3px}

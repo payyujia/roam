@@ -2,10 +2,10 @@
 const A={tadd:(k,el)=>{const inp=el.closest('.tin').querySelector('input');let v=inp.value.trim();if(!v)return;v=v[0].toUpperCase()+v.slice(1);
  if(k=='coll'){const f=FR.find(x=>x[0].toLowerCase()==v.toLowerCase());if(!f)return toast(`No friend named ${esc(v)}`);if(!S.f.coll.includes(f[1]))S.f.coll.push(f[1]);render('form')}
  else{const a=S.p[k];if(!a.some(x=>x.toLowerCase()==v.toLowerCase()))a.push(v);pd();render('profile')}
- setTimeout(()=>{const n=$('#s-'+(k=='coll'?'form':'pdet')+' [list=dl-'+k+']');n&&n.focus()},30)},
+ setTimeout(()=>{const n=k==='coll'?$('#s-form .tin .tip'):$('#s-pdet [list=dl-'+k+']');n&&n.focus()},30)},
  trm:(k,v)=>{v=decodeURIComponent(v);if(k=='coll'){const f=FR.find(x=>x[0]==v);S.f.coll=S.f.coll.filter(x=>x!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(x=>x!=v);pd();render('profile')}},
  activity:i=>{const t=trip(S.cur);if(!t||!t.stops[+i])return;lay('sheet',activityHTML(+i),'Activity details');$('#lyc').classList.add('activity-sheet')},
- info:gi=>{S.ci=+gi;lay('sheet',infoHTML(+gi),'Place info')},cmpick:()=>setLy(pickHTML(S.ci)),cmpto:j=>setLy(cmpHTML(S.ci,+j)),cmpback:()=>setLy(infoHTML(S.ci)),tab,toast,back:()=>{const s=cur();if(s.length>1){s.pop();if(S.tab=='profile')render('profile');upd()}},
+ info:gi=>{S.ci=+gi;lay('sheet',infoHTML(+gi),'Place info')},cmpick:()=>setLy(pickHTML(S.ci)),cmpto:j=>setLy(cmpHTML(S.ci,+j)),cmpback:()=>setLy(infoHTML(S.ci)),tab,toast,back:()=>{const s=cur();if(s.length>1){const fromForm=topId()==='form',app=$('#app');if(fromForm)app.classList.add('nt');s.pop();if(S.tab=='profile')render('profile');upd();if(fromForm)requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))}},
  open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;goInstant('trip')},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
  vt:(i,d)=>{const v=trip(S.cur).stops[i];d=+d;if(v.m==d){d==1?v.u--:v.d--;v.m=0}else{v.m==1&&v.u--;v.m==-1&&v.d--;d==1?v.u++:v.d++;v.m=d}rr()},
  submit:()=>{const t=trip(S.cur);if(!t||t.vs.P)return;const missing=t.stops.filter(s=>s.m===0).length;if(!t.stops.length||missing){toast(missing?`Vote on ${missing} more activit${missing==1?'y':'ies'} before submitting`:'Add activities before submitting');return}const id=t.id;t.vs.P=1;rr();toast('Votes submitted');pend(t).forEach((k,j)=>setTimeout(()=>{t.vs[k]=1;if(!pend(t).length){t.st='final';toast('Everyone’s voted. Your itinerary is ready.');if(S.cur==id&&topId()=='trip')S.step=2}rr()},1700*(j+1)))},
@@ -21,7 +21,7 @@ const A={tadd:(k,el)=>{const inp=el.closest('.tin').querySelector('input');let v
  rsel:d=>{S.rs=S.rs.includes(d)?S.rs.filter(x=>x!=d):[...S.rs,d];setLy(reschHTML())},rsend:()=>{A.closeLy();toast(`Reschedule poll sent to ${trip(S.cur).m.length-1} members`)},
  leave:()=>{const t=trip(S.cur);t.left=true;A.closeLy();cur().length>1&&cur().pop();rr();toast(`You left ${t.n}`,()=>{t.left=false;rr()})},
  inv:v=>{S.inv=false;const t=trip('read'),old=t.date;if(v=='y')t.date=REQ;rr();toast(v=='y'?`${t.n} moved to ${fd(REQ)}`:'Reschedule request declined',()=>{S.inv=true;t.date=old;rr()})},
- newtrip:()=>{S.f=newF();S.fe={};if(S.tab=='map'){$('#dev').classList.add('instant');go('form');requestAnimationFrame(()=>requestAnimationFrame(()=>$('#dev').classList.remove('instant')))}else go('form')},
+ newtrip:()=>{S.f=newF();S.fe={};goInstant('form')},
  fcol:(k,el)=>{const c=S.f.coll||[];S.f.coll=c.includes(k)?c.filter(x=>x!=k):[...c,k];el.classList.toggle('on');el.setAttribute('aria-pressed',S.f.coll.includes(k))},fsw:el=>{S.f.auto=S.f.auto?0:1;el.classList.toggle('on');el.setAttribute('aria-checked',!!S.f.auto)},
  formnext:()=>{const f=S.f,e={};if(!f.dest.trim())e.dest='Add a destination';const s=f.start&&p8(f.start),en=f.end&&p8(f.end);if(!s)e.start='Pick a start date';else if(dd(s)<0)e.start='Can’t be in the past';if(s&&en&&en<s)e.end='Must be after the start';if(!(+f.budget>0))e.budget='Enter a budget above 0';
   S.fe=e;if(Object.keys(e).length){render('form');return}
