@@ -68,7 +68,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-detail .gr b,#s-trip .vote-detail .gr .cap{display:block;overflow:hidden;text-overflow:ellipsis}
 #s-trip .vote-detail .gr .cap{white-space:nowrap}
 #s-trip .vote-detail .gr .cap:has(.err){white-space:normal;line-height:16px}
-#s-trip .vote-detail-chevron{display:grid;place-items:center;flex:none;color:var(--tx3)}
+#s-trip .vote-detail-chevron{display:grid;place-items:center;flex:none;color:var(--ink);width:20px;height:24px}
 #s-trip .vote-detail:active{background:var(--s1)}
 #s-trip .vote-row .vt{flex:none}
 /* Activity information sheet */
@@ -86,4 +86,17 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .th .thd{padding-top:20px}
 /* The vote action reuses the same app-level #fab as Create trip!.
    Add only scroll clearance for activity rows beneath that floating button. */
-#s-trip .pg{padding-bottom:calc(var(--fab-b) + 48px)}
+#s-trip .pg{padding-bottom:calc(var(--fab-b) + 88px)}
+
+/* Make the activity detail affordance explicit without crowding individual vote rows. */
+#s-trip .vote-hint{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 24px 8px;
+  color:var(--tx2);
+  font-size:12px;
+  line-height:16px;
+  font-weight:600;
+}
+#s-trip .vote-hint svg{flex:none}
