@@ -61,17 +61,22 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   background:linear-gradient(to bottom,rgba(255,255,255,0),var(--white) 20%);
 }
 
-/* Compact voting rows: only the info icon opens activity details. */
-#s-trip .vote-row{gap:8px}
+/* Compact one-line activity rows: keep the title, ⓘ and votes distinct. */
+#s-trip .vote-row{gap:8px;padding:8px 16px;min-height:64px}
+#s-trip .vote-row>.si{width:36px;height:36px}
 #s-trip .vote-content{min-width:0;flex:1}
-#s-trip .vote-heading{display:flex;align-items:center;gap:3px;min-width:0}
-#s-trip .vote-heading b{min-width:0;flex:0 1 auto}
+#s-trip .vote-heading{display:flex;align-items:center;gap:3px;min-width:0;max-width:100%}
+#s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
 #s-trip .vote-content>.cap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #s-trip .vote-content>.cap:has(.err){white-space:normal;overflow:visible;line-height:16px}
-#s-trip .vote-info-btn{width:28px;height:28px;border-radius:50%;background:var(--s2);color:var(--ink);display:grid;place-items:center;flex:none}
+#s-trip .vote-info-btn{width:26px;height:30px;border-radius:50%;background:var(--s2);color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:var(--s3)}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-#s-trip .vote-row .vt{flex:none}
+/* Counts below each thumb instead of in separate side-by-side columns. */
+#s-trip .vote-row .vt{flex:none;display:flex;align-items:center;gap:2px}
+#s-trip .vote-row .vb{width:42px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#s-trip .vote-row .vote-count{font-size:11px;line-height:12px;font-weight:600;color:var(--tx2);font-variant-numeric:tabular-nums}
+#dev #s-trip .vb[aria-pressed=true]::after{top:4px;right:4px;bottom:auto;left:auto;margin:0}
 /* Activity information sheet */
 .activity-details{padding-top:12px;padding-bottom:28px;display:flex;flex-direction:column;gap:20px}
 .activity-facts{display:flex;flex-direction:column;gap:0}
