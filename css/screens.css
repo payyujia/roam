@@ -61,27 +61,45 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   background:linear-gradient(to bottom,rgba(255,255,255,0),var(--white) 20%);
 }
 
-/* Voting list: three consistent columns (activity icon, text/info, votes).
-   Keep the info action beside the name while allowing long titles to truncate. */
-#s-trip .vote-row{gap:8px;padding:8px 12px;min-height:64px}
+/* Keep a stable three-column layout: place icon | activity + info | two votes.
+   Prevent different title lengths and vote counts from shifting controls. */
+#s-trip .vote-row{
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr) 92px;
+  gap:8px;
+  align-items:center;
+  min-height:64px;
+  padding:8px 12px;
+}
 #s-trip .vote-row>.si{width:36px;height:36px}
-#s-trip .vote-content{min-width:0;flex:1}
-#s-trip .vote-heading{display:flex;align-items:center;gap:4px;min-width:0}
+#s-trip .vote-content{min-width:0;width:100%}
+#s-trip .vote-heading{display:flex;align-items:center;gap:4px;min-width:0;width:100%}
 #s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
 #s-trip .vote-content>.cap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #s-trip .vote-content>.cap:has(.err){white-space:normal;overflow:visible;line-height:16px}
 #s-trip .vote-info-btn{width:24px;height:28px;border-radius:50%;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:transparent}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-/* Put the icon and vote count on one horizontal line, in equal-sized touch targets. */
-#s-trip .vote-row .vt{flex:none;display:flex;align-items:center;gap:4px}
-#dev #s-trip .vote-row .vb{width:46px;height:44px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:3px;border-radius:12px;background:transparent;color:var(--ink)}
-#s-trip .vote-row .vote-count{font-size:11px;line-height:14px;font-weight:600;color:inherit;font-variant-numeric:tabular-nums}
-#dev #s-trip .vote-row .vb[aria-pressed=true]{background:transparent;box-shadow:none!important}
-#dev #s-trip .vote-row .vb[aria-pressed=true]::after{top:3px;right:3px;bottom:auto;left:auto;margin:0}
+/* Transparent, equally sized voting controls with centred icons and numeric counts. */
+#s-trip .vote-row .vt{width:92px;display:grid;grid-template-columns:repeat(2,44px);gap:4px;align-items:center;justify-items:center}
+#dev #s-trip .vote-row .vb{
+  width:44px;height:44px;
+  display:grid;grid-template-columns:18px 12px;
+  place-content:center;align-items:center;justify-items:center;
+  gap:3px;border-radius:12px;
+  background:transparent;color:var(--tx2);
+}
+#s-trip .vote-row .vb svg{display:block;flex:none}
+#s-trip .vote-row .vote-count{width:12px;text-align:center;font-size:11px;line-height:14px;font-weight:600;color:inherit;font-variant-numeric:tabular-nums}
+#dev #s-trip .vote-row .vb[aria-pressed=true]{background:transparent;box-shadow:none!important;color:var(--ink)}
+#dev #s-trip .vote-row .vb[aria-pressed=true] svg{stroke-width:3}
+#dev #s-trip .vote-row .vb[aria-pressed=true] .vote-count{font-weight:800}
+/* Remove the global selected-dot overlay which floated above the vote controls. */
+#dev #s-trip .vote-row .vb::after{content:none!important;display:none!important}
 @media (max-width:360px){
- #s-trip .vote-row{gap:6px;padding-inline:10px}
+ #s-trip .vote-row{grid-template-columns:32px minmax(0,1fr) 88px;gap:6px;padding-inline:10px}
  #s-trip .vote-row>.si{width:32px;height:32px}
+ #s-trip .vote-row .vt{width:88px;grid-template-columns:repeat(2,42px)}
  #dev #s-trip .vote-row .vb{width:42px}
 }
 /* Activity information sheet */
