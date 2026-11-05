@@ -70,14 +70,14 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
 #s-trip .vote-content>.cap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #s-trip .vote-content>.cap:has(.err){white-space:normal;overflow:visible;line-height:16px}
-#s-trip .vote-info-btn{width:24px;height:28px;border-radius:50%;background:var(--s2);color:var(--ink);display:grid;place-items:center;flex:none}
-#s-trip .vote-info-btn:active{background:var(--s3)}
+#s-trip .vote-info-btn{width:24px;height:28px;border-radius:50%;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
+#s-trip .vote-info-btn:active{background:transparent}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* Put the icon and vote count on one horizontal line, in equal-sized touch targets. */
 #s-trip .vote-row .vt{flex:none;display:flex;align-items:center;gap:4px}
-#dev #s-trip .vote-row .vb{width:46px;height:44px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:3px;border-radius:12px;background:var(--s2);color:var(--ink)}
+#dev #s-trip .vote-row .vb{width:46px;height:44px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:3px;border-radius:12px;background:transparent;color:var(--ink)}
 #s-trip .vote-row .vote-count{font-size:11px;line-height:14px;font-weight:600;color:inherit;font-variant-numeric:tabular-nums}
-#dev #s-trip .vote-row .vb[aria-pressed=true]{background:var(--y-t);box-shadow:inset 0 0 0 2px var(--ink)!important}
+#dev #s-trip .vote-row .vb[aria-pressed=true]{background:transparent;box-shadow:none!important}
 #dev #s-trip .vote-row .vb[aria-pressed=true]::after{top:3px;right:3px;bottom:auto;left:auto;margin:0}
 @media (max-width:360px){
  #s-trip .vote-row{gap:6px;padding-inline:10px}
