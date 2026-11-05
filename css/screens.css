@@ -66,31 +66,34 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-row{
   display:grid;
   grid-template-columns:36px minmax(0,1fr) 28px 92px;
-  gap:6px;
+  column-gap:6px;
+  row-gap:0;
   align-items:center;
-  min-height:64px;
+  min-height:72px;
   padding:8px 24px;
 }
-#s-trip .vote-row>.si{width:36px;height:36px}
-#s-trip .vote-content{min-width:0;width:100%}
+#s-trip .vote-row>.si{width:36px;height:36px;grid-column:1;grid-row:1 / span 2;align-self:center}
+#s-trip .vote-content{min-width:0;width:100%;grid-column:2;grid-row:1;align-self:end}
 #s-trip .vote-heading{display:flex;align-items:center;gap:4px;min-width:0;width:100%}
 #s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
-/* Voting subtitles may contain time, category and duration; wrap all details
-   rather than hiding the last field behind an ellipsis in narrow grid columns. */
-#dev #s-trip .vote-row .vote-content>.vote-subtitle{
+/* The subtitle spans the info/vote columns on its own grid row.
+   It now has enough width for "10:00 AM · Sightseeing · 2 hrs" on one line. */
+#dev #s-trip .vote-row>.vote-subtitle{
+  grid-column:2 / -1;
+  grid-row:2;
   display:block;
-  white-space:normal;
-  overflow:visible;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
   text-overflow:clip;
-  overflow-wrap:break-word;
   line-height:16px;
 }
-#s-trip .vote-content>.cap:has(.err){white-space:normal;overflow:visible;line-height:16px}
-#s-trip .vote-info-btn{width:28px;min-height:48px;height:100%;align-self:stretch;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
+#s-trip .vote-row>.vote-warning{grid-column:2 / -1;grid-row:3;line-height:16px}
+#s-trip .vote-info-btn{grid-column:3;grid-row:1;width:28px;height:44px;align-self:center;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:transparent}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* Transparent, equally sized voting controls with centred icons and numeric counts. */
-#s-trip .vote-row .vt{width:92px;display:grid;grid-template-columns:repeat(2,44px);gap:4px;align-items:center;justify-items:center}
+#s-trip .vote-row .vt{grid-column:4;grid-row:1;width:92px;display:grid;grid-template-columns:repeat(2,44px);gap:4px;align-items:center;justify-items:center}
 #dev #s-trip .vote-row .vb{
   width:44px;height:44px;
   display:grid;grid-template-columns:18px 12px;
@@ -106,7 +109,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* Remove the global selected-dot overlay which floated above the vote controls. */
 #dev #s-trip .vote-row .vb::after{content:none!important;display:none!important}
 @media (max-width:360px){
- #s-trip .vote-row{grid-template-columns:32px minmax(0,1fr) 28px 88px;gap:4px;padding-inline:24px}
+ #s-trip .vote-row{grid-template-columns:32px minmax(0,1fr) 28px 88px;column-gap:4px;padding-inline:24px}
  #s-trip .vote-row>.si{width:32px;height:32px}
  #s-trip .vote-row .vt{width:88px;grid-template-columns:repeat(2,42px)}
  #dev #s-trip .vote-row .vb{width:42px}
