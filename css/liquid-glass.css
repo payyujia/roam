@@ -48,7 +48,7 @@
   --r1:12px;
   --r2:18px;
   --r3:26px;
-  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,system-ui,sans-serif;
+  --font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,system-ui,sans-serif;
   --shadow:0 12px 32px rgba(35,63,96,.09);
   --gum:inset 0 1px 0 rgba(255,255,255,.72);
   --glass-blur:blur(22px) saturate(175%);
@@ -513,3 +513,27 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   box-shadow:0 5px 16px rgba(71,146,230,.20)!important;
 }
 #dev #tb .on .av{box-shadow:0 0 0 2px var(--primary)!important}
+
+/* Typography refinement — preserve the blue glass style and hierarchy. */
+#dev{
+  font-family:var(--font);
+  font-optical-sizing:auto;
+}
+#dev #s-trips .hd h1{
+  font-size:26px;
+  line-height:32px;
+  font-weight:700;
+  letter-spacing:-.035em;
+}
+#dev .th .thd{align-items:center}
+#dev .th .thd .gr{min-width:0;flex:1}
+#dev .th .thd h1{
+  font-size:24px;
+  line-height:30px;
+  font-weight:700;
+  letter-spacing:-.035em;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+#dev .th .thd .dt{font-size:13px;line-height:18px}
+#dev :is(.btn,#fab,#psave){font-weight:700}

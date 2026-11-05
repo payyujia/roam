@@ -58,7 +58,7 @@ h1{font-weight:800;font-size:28px;line-height:34px;letter-spacing:-.02em}h2{font
    6. PALETTE "LAGOON": teal (go), sun (rating), coral (social), dusk (info) on black ink
    ========================================================= */
 :root{--teal:#00C6AE;--teal-m:#61E4C5;--teal-t:#D6FCF7;--tink:#007A6A;--sun:#FFBD12;--sun-m:#FFD465;--sun-t:#FFF4CC;--coral:#FF89BB;--coral-m:#FFC7DE;--coral-t:#FFF3F8;--dusk:#1947E6;--dusk-m:#8094FF;--dusk-t:#E9E7FC;--ac:var(--teal);
---font:"Montserrat",-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,system-ui,sans-serif}
+--font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,system-ui,sans-serif}
 .l-red{--lc:#FF89BB}.l-green{--lc:#00C6AE}.l-blue{--lc:#8094FF}.l-orange{--lc:#FFBD12}.l-yellow{--lc:#FFD465}.l-lime{--lc:#61E4C5}.l-brown{--lc:#FFC7DE}.l-purple{--lc:#A9B6FF}.l-grey{--lc:#D6FCF7}.l-teal{--lc:#61E4C5}
 .l-red,.l-green,.l-blue,.l-orange,.l-yellow,.l-lime,.l-brown,.l-purple,.l-grey,.l-teal{--lt:#18191F}
 :focus-visible{outline-color:var(--tink)}.lk{color:var(--tink)}
