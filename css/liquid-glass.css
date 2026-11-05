@@ -446,3 +446,70 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 }
 /* Invalid text fields still show a gentle error background. */
 #dev .in.bad:focus{background-color:var(--err-t)!important}
+
+/* ===== Glass refinement: compact Home, readable cards, unobstructed actions ===== */
+/* Shorter Home greeting, with the same subtle blue/pink frosted gradient. */
+#dev #s-trips .hd{
+  height:152px;
+  min-height:152px;
+  padding:66px 24px 18px;
+  border-radius:0 0 26px 26px;
+}
+#dev #s-trips .hd h1{
+  font-size:27px;
+  line-height:32px;
+  max-width:none;
+}
+#dev #s-trips .hd::before{opacity:.65;filter:blur(12px)}
+#dev #s-trips .sec{padding-top:18px;padding-bottom:10px}
+#dev #s-trips .feat{
+  padding:14px;
+  align-items:center;
+  background:linear-gradient(135deg,rgba(255,255,255,.77),rgba(232,243,255,.68))!important;
+  box-shadow:0 7px 20px rgba(43,77,113,.09)!important;
+}
+#dev #s-trips .tlist{gap:8px}
+#dev #s-trips .trow.tier{
+  padding:10px 12px;
+  background:rgba(255,255,255,.77)!important;
+  border:1px solid rgba(255,255,255,.9)!important;
+  box-shadow:0 5px 16px rgba(43,77,113,.07)!important;
+}
+#dev #s-trips .dtile{
+  background:rgba(244,248,255,.90)!important;
+  box-shadow:none!important;
+}
+#dev #s-trips .trow.tier .tgo{
+  background:rgba(71,146,230,.14)!important;
+  color:#286DAF!important;
+}
+/* The Home feed ends above the shared fixed Create trip! button.
+   Tasks remain scrollable and can never disappear beneath the button/nav. */
+#dev #s-trips.scr{bottom:calc(var(--fab-b) + 56px)}
+#dev #s-trips .pg{padding-bottom:24px}
+/* Match light glass surfaces rather than a high-contrast opaque black footer. */
+#dev #tb{
+  background:rgba(248,251,255,.92)!important;
+  border-top:1px solid rgba(255,255,255,.9)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  box-shadow:0 -8px 24px rgba(33,68,103,.07)!important;
+}
+#dev #tb button{color:#657287!important}
+#dev #tb .on{color:var(--primary-strong)!important}
+#dev #tb button:not(.ctr).on{
+  background:rgba(71,146,230,.10)!important;
+  color:var(--primary-strong)!important;
+}
+#dev #tb .ctr .circ{
+  background:rgba(71,146,230,.13)!important;
+  color:var(--primary-strong)!important;
+  border:4px solid rgba(248,251,255,.97)!important;
+  box-shadow:none!important;
+}
+#dev #tb .ctr.on .circ{
+  background:var(--primary)!important;
+  color:#fff!important;
+  box-shadow:0 5px 16px rgba(71,146,230,.20)!important;
+}
+#dev #tb .on .av{box-shadow:0 0 0 2px var(--primary)!important}
