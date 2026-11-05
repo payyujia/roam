@@ -9,7 +9,7 @@
   --primary:#4792E6;
   --primary-strong:#2F7FD3;
   --primary-soft:rgba(71,146,230,.14);
-  --secondary:#FDD8C7;
+  --secondary:#DCEBFD;
   --ink:#171D29;
   --black:var(--ink);
   --white:#FFFFFF;
@@ -33,11 +33,11 @@
   --dusk-m:#83B8F0;
   --dusk-t:rgba(71,146,230,.12);
   --coral:var(--secondary);
-  --coral-m:#FCE7DD;
-  --coral-t:rgba(253,216,199,.25);
+  --coral-m:#EAF4FF;
+  --coral-t:rgba(174,214,250,.25);
   --sun:var(--secondary);
-  --sun-m:#FCE7DD;
-  --sun-t:rgba(253,216,199,.28);
+  --sun-m:#EAF4FF;
+  --sun-t:rgba(174,214,250,.28);
   --ac:var(--primary);
   --tink:var(--primary-strong);
   --tag:rgba(255,255,255,.32);
@@ -73,7 +73,7 @@ body{
   color:var(--ink);
   background:
     radial-gradient(ellipse at 12% 12%,rgba(71,146,230,.18),transparent 42%),
-    radial-gradient(ellipse at 88% 78%,rgba(253,216,199,.42),transparent 48%),
+    radial-gradient(ellipse at 88% 78%,rgba(174,214,250,.42),transparent 48%),
     #EAF1FA;
   font-family:var(--font);
   letter-spacing:-.01em;
@@ -81,7 +81,7 @@ body{
 #dev{
   background:
     radial-gradient(ellipse at 14% 6%,rgba(71,146,230,.20),transparent 42%),
-    radial-gradient(ellipse at 92% 54%,rgba(253,216,199,.38),transparent 48%),
+    radial-gradient(ellipse at 92% 54%,rgba(174,214,250,.38),transparent 48%),
     linear-gradient(155deg,#F7FAFF 0%,#F0F6FD 55%,#F8F5F3 100%) !important;
   border:1px solid rgba(255,255,255,.92) !important;
   box-shadow:0 28px 82px rgba(34,58,88,.20) !important;
@@ -100,7 +100,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #hi{background:#151A23}
 
 /* Reusable primitive for new component builders:
-   use class="glass-surface" for a quiet glass container with a diagonal edge glint. */
+   use class="glass-surface" for a quiet glass container with a neutral edge reflection. */
 .glass-surface{
   border:1px solid transparent;
   border-radius:var(--glass-radius);
@@ -135,7 +135,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   border-bottom:1px solid rgba(255,255,255,.88);
   border-radius:0 0 30px 30px;
   background:
-    linear-gradient(130deg,rgba(71,146,230,.18),rgba(255,255,255,.22) 56%,rgba(253,216,199,.18));
+    linear-gradient(130deg,rgba(71,146,230,.18),rgba(255,255,255,.22) 56%,rgba(174,214,250,.18));
   -webkit-backdrop-filter:blur(26px) saturate(175%);
   backdrop-filter:blur(26px) saturate(175%);
   box-shadow:inset 0 -1px 0 rgba(255,255,255,.72),0 12px 30px rgba(45,83,124,.045);
@@ -147,7 +147,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   inset:-32px -18px -22px;
   pointer-events:none;
   background:
-    radial-gradient(ellipse at 78% 24%,rgba(253,216,199,.60),transparent 43%),
+    radial-gradient(ellipse at 78% 24%,rgba(174,214,250,.60),transparent 43%),
     radial-gradient(ellipse at 18% 10%,rgba(71,146,230,.34),transparent 48%),
     radial-gradient(ellipse at 52% 100%,rgba(255,255,255,.48),transparent 50%);
   filter:blur(18px);
@@ -168,7 +168,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 }
 #dev .wash{
   background:
-    linear-gradient(135deg,rgba(71,146,230,.16),rgba(255,255,255,.22) 58%,rgba(253,216,199,.18));
+    linear-gradient(135deg,rgba(71,146,230,.16),rgba(255,255,255,.22) 58%,rgba(174,214,250,.18));
   border-radius:0 0 30px 30px;
 }
 
@@ -182,7 +182,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   border:0;
   border-bottom:1px solid rgba(255,255,255,.88);
   border-radius:0 0 30px 30px;
-  background:linear-gradient(135deg,rgba(71,146,230,.18),rgba(255,255,255,.24) 58%,rgba(253,216,199,.20));
+  background:linear-gradient(135deg,rgba(71,146,230,.18),rgba(255,255,255,.24) 58%,rgba(174,214,250,.20));
   -webkit-backdrop-filter:blur(26px) saturate(175%);
   backdrop-filter:blur(26px) saturate(175%);
   box-shadow:inset 0 -1px 0 rgba(255,255,255,.7);
@@ -252,7 +252,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #dev .nvs{color:var(--ink)}
 #dev .empty .cap,#dev .ban .cap{color:var(--tx2)}
 #dev .si{background:rgba(71,146,230,.10)}
-#dev .win{background:rgba(253,216,199,.58);color:var(--ink)}
+#dev .win{background:rgba(174,214,250,.58);color:var(--ink)}
 
 /* Controls: blue is the only action accent; neutral controls stay translucent. */
 #dev .btn,#dev .btn.y,#dev .gob,#dev .vbtn,#dev #fab,#dev #psave,#dev .play,#dev .tpl,#dev .qty button{
@@ -398,7 +398,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #dev .tc .ln::after{background:rgba(71,146,230,.52)}
 #dev .tc.done .ln::after{background:var(--primary)}
 #dev .lk{color:var(--primary-strong)}
-#dev mark{background:rgba(253,216,199,.55);color:var(--ink)}
+#dev mark{background:rgba(174,214,250,.55);color:var(--ink)}
 #dev .ph{color:var(--ink)}
 #dev .rate button[aria-pressed=true]{color:var(--primary)}
 #dev .bdg,#dev .bd2{background:var(--primary);color:#fff}
@@ -411,7 +411,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
   body{background:var(--bg)}
   #dev{background:
     radial-gradient(ellipse at 14% 6%,rgba(71,146,230,.18),transparent 42%),
-    radial-gradient(ellipse at 92% 54%,rgba(253,216,199,.34),transparent 48%),
+    radial-gradient(ellipse at 92% 54%,rgba(174,214,250,.34),transparent 48%),
     linear-gradient(155deg,#F7FAFF 0%,#F0F6FD 55%,#F8F5F3 100%) !important}
 }
 @media(prefers-reduced-motion:reduce){
@@ -448,7 +448,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #dev .in.bad:focus{background-color:var(--err-t)!important}
 
 /* ===== Glass refinement: compact Home, readable cards, unobstructed actions ===== */
-/* Shorter Home greeting, with the same subtle blue/pink frosted gradient. */
+/* Shorter Home greeting, with the same cool blue frosted gradient. */
 #dev #s-trips .hd{
   height:152px;
   min-height:152px;

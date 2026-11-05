@@ -1,6 +1,6 @@
 # Roam Liquid Glass Design System — Blue Edition (v6)
 
-The editable, standalone component sheet is [docs/sticker-sheet.html](./sticker-sheet.html). It replaces the old pink/teal/yellow specimen as the design-review reference. This **sticker sheet is a design proposal**; app runtime styles are deliberately not changed until the components are approved.
+The editable, standalone component sheet is [docs/sticker-sheet.html](./sticker-sheet.html). It replaces the old pink/teal/yellow specimen as the design-review reference. **V6 is now applied to the live app** via `css/liquid-glass-v6.css`, loaded after the legacy stylesheet in `index.html`. The original HTML component sheet remains the editable design reference.
 
 ## Palette and typography
 
@@ -60,3 +60,12 @@ Combine with directional inset/exterior shadows. The **132° specular highlight 
 10. Toast, chat messages, and a menu panel.
 
 The HTML contains editable CSS, an inline SVG icon library and small interactive selection demos. It is responsive; view it directly in a browser. The legacy `docs/sticker-sheet-v5.html` remains available for historical comparison.
+
+## Live app status
+
+- Active stylesheet: `css/liquid-glass-v6.css`, loaded last.
+- Legacy peach colours were retired from the previous Liquid Glass stylesheet.
+- Shared translucent-white card fill remains consistent across task/trip states; diagonal specular highlights are confined to masked button rims.
+- Raised blue/dark/clear controls, blue-only steps, active chips and navigation follow V6.
+- Existing JavaScript, layouts and interactions were not altered by this styling rollout.
+- Review iPhone-sized screens in a browser for any remaining layout-specific adjustments.

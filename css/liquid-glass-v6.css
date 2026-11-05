@@ -1,0 +1,211 @@
+/* ROAM V6 · LIVE LIQUID GLASS MATERIALS
+   Reference: docs/sticker-sheet.html
+   #4792E6 accent. Uniform low-opacity white passive surfaces.
+   Raised controls use a masked 132-degree diagonal RIM shine only.
+*/
+:root{
+  color-scheme:light;
+  --primary:#4792E6;--primary-strong:#2478D2;--primary-soft:#DCEBFD;
+  --secondary:#DCEBFD;--ink:#0F1118;--black:#0F1118;
+  --bg:#EDF4FC;--tx2:#58677C;--tx3:#8190A4;
+  --s1:rgba(255,255,255,.45);--s2:rgba(255,255,255,.45);
+  --s3:rgba(255,255,255,.62);--line:rgba(92,119,150,.20);
+  --glass-surface-bg:rgba(255,255,255,.45);
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.62),
+    0 8px 26px rgba(48,86,134,.07);
+  --glass-blur:blur(22px) saturate(135%);
+  --coral:var(--primary-soft);--coral-m:#EAF4FF;
+  --coral-t:rgba(71,146,230,.10);
+  --sun:var(--primary-soft);--sun-m:#EAF4FF;
+  --sun-t:rgba(71,146,230,.08);
+  --teal:var(--primary);--teal-m:#91C1F4;
+  --teal-t:rgba(71,146,230,.13);--teal-tt:rgba(71,146,230,.08);
+  --tag:rgba(255,255,255,.45);--tag-d:rgba(255,255,255,.45);
+  --tag-ink:var(--ink);--tink:var(--primary-strong);
+  --lc:var(--primary);--lt:#fff;
+}
+html{background:#EAF1F9}
+body{color:var(--ink);background:#EAF1F9}
+#dev{
+  font-family:var(--font);font-optical-sizing:auto;
+  background:
+    radial-gradient(ellipse at 10% 4%,rgba(84,157,239,.25),transparent 43%),
+    radial-gradient(ellipse at 96% 60%,rgba(171,213,255,.28),transparent 46%),
+    linear-gradient(150deg,#E9F3FE,#F7F9FD 55%,#EDF4FC)!important;
+}
+#dev :is(h1,h2,h3){color:var(--ink);letter-spacing:-.035em}
+#dev :is(h1,h2,.lb){font-weight:800}
+#dev :is(.cap,.sm){color:var(--tx2)}
+/* Soft blue header ambience, not a diagonal sheen on card faces. */
+#dev :is(.hd,.th){
+  background:linear-gradient(132deg,rgba(71,146,230,.18),
+   rgba(255,255,255,.26) 55%,rgba(186,221,252,.16))!important;
+}
+#dev :is(.hd,.th)::before{
+  background:
+    radial-gradient(ellipse at 18% 12%,rgba(71,146,230,.3),transparent 48%),
+    radial-gradient(ellipse at 84% 31%,rgba(181,220,255,.34),transparent 50%)!important;
+}
+#dev .wash{background:linear-gradient(135deg,rgba(71,146,230,.13),
+  rgba(255,255,255,.20) 70%)!important}
+#dev #s-form.scr{background:linear-gradient(150deg,#E8F2FE,#F7F9FE 56%,#F2F7FC)!important}
+/* Every passive variant gets the SAME translucent white face.
+   No diagonal light beam, pink card, radial shine or state-specific fill. */
+#dev :is(.glass-surface,.glass-control,.feat,.tile,.empty,.ban,.lockc,
+ .row.tier,.trow.tier,.stat3>div,.srow,.fcm,.fcard,.pop,.msh,
+ #lyc.sheet,#lyc.menu,#lyc.dlg,.pc2,.cp,.nv .cc,.sign,.chip,
+ .fld,.fi,.in,.rinfo,.kb,.si,.sic,.fic,.xic,.dtile,.tag,.tag2,
+ .tbx,.chg,.youpath,.nvs,.win,.avedit,.bub){
+  background:rgba(255,255,255,.45)!important;
+  border-color:rgba(255,255,255,.84)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(135%);
+  backdrop-filter:blur(22px) saturate(135%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62),
+    0 8px 26px rgba(48,86,134,.07)!important;
+}
+#dev :is(.tier,.tier.t0,.tier.t1,.tier.t2,.tier.t3,
+ .dtile.hot,.sign,.win,.srow:active,.tile:active,
+ .trow.tier:active,.row.tier:active){
+  background:rgba(255,255,255,.45)!important;
+}
+#dev #s-trips :is(.feat,.trow.tier){background:rgba(255,255,255,.45)!important}
+#dev .tlist{background:transparent!important;border:0!important;box-shadow:none!important}
+#dev .dtile.hot,#dev .sign,#dev .win{color:var(--ink)!important}
+#dev .dtile.hot span,#dev .sign .cap{color:var(--tx2)!important}
+#dev .tag.ok{color:#168365!important}
+#dev .tag.d{color:#B33E44!important}
+/* Neutral controls across all variants; blue ring/ink signifies selection. */
+#dev :is(.pill,.pill.on,.pill[aria-pressed=true],.tag,.tag2,
+ .seg,.seg button,.seg button[aria-checked=true],.pc2,.pc2[aria-pressed=true]){
+  background:rgba(255,255,255,.45)!important;
+}
+#dev :is(.pill.on,.pill[aria-pressed=true],.pc2[aria-pressed=true]){
+  color:var(--primary-strong)!important;
+  border:1px solid rgba(71,146,230,.65)!important;
+  box-shadow:inset 0 0 0 1px rgba(71,146,230,.45)!important;
+}
+#dev .seg{
+  border:1px solid rgba(255,255,255,.84)!important;
+  border-radius:999px!important;padding:4px!important;gap:3px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important;
+}
+#dev .seg button{border:0!important;border-radius:999px!important;box-shadow:none!important}
+#dev .seg button[aria-checked=true]{
+  color:var(--primary-strong)!important;
+  box-shadow:inset 0 0 0 1px rgba(71,146,230,.42)!important;
+}
+#dev .seg button[aria-checked=true]::after{content:none!important;display:none!important}
+#dev #s-trips .seg button[aria-checked=true]{background:rgba(255,255,255,.45)!important}
+/* Dimensional buttons: face + inset/exterior shadows and rim-only glints. */
+#dev :is(.btn,.gob,.vbtn,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ){
+  position:relative;isolation:isolate;overflow:hidden;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+#dev :is(#fab,#psave){isolation:isolate;overflow:hidden}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ)::before{
+  content:"";position:absolute;inset:0;padding:1.8px;z-index:2;
+  border-radius:inherit;pointer-events:none;
+  background:linear-gradient(132deg,
+    rgba(255,255,255,.99) 0%,rgba(255,255,255,.88) 17%,
+    rgba(255,255,255,.12) 39%,rgba(18,41,69,.3) 65%,
+    rgba(255,255,255,.23) 81%,rgba(255,255,255,.95) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ)::after{
+  content:"";position:absolute;inset:1px;padding:2px;z-index:2;
+  border-radius:inherit;pointer-events:none;
+  background:linear-gradient(136deg,
+    rgba(255,255,255,.38),transparent 36%,transparent 75%,rgba(255,255,255,.13));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+/* Blue face replaces pink, for active and primary actions. */
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,#tb .ctr.on .circ){
+  color:#fff!important;
+  background:linear-gradient(180deg,#56A0EE 0%,#4792E6 54%,#367FD1 100%)!important;
+  border:0!important;
+  box-shadow:0 0 2px rgba(17,60,103,.10),0 5px 14px rgba(39,119,212,.23),
+   inset 1px 1px .5px rgba(255,255,255,.43),
+   inset -1px -1px 1px rgba(0,50,104,.23),
+   inset 0 0 12px rgba(255,255,255,.12)!important;
+}
+/* Clear glass uses the same button rim as blue/dark, not a flat 2D box. */
+#dev :is(.btn.sec,.btn.out,.top .ib){
+  color:var(--ink)!important;
+  background:rgba(255,255,255,.45)!important;
+  border:1px solid rgba(255,255,255,.84)!important;
+  box-shadow:0 0 2px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.12),
+   inset 1px 1px 0 -.5px rgba(255,255,255,.88),
+   inset -1px -1px 0 -.5px rgba(27,46,69,.20),
+   inset 0 0 3px rgba(255,255,255,.26),
+   inset 0 0 16px rgba(255,255,255,.18)!important;
+}
+/* Black recipe matches the sticker's layered Figma background and shadow. */
+#dev :is(.ib.f,#tb .ctr:not(.on) .circ){
+  color:#fff!important;
+  background:linear-gradient(0deg,#0F0F0F,#0F0F0F),
+    linear-gradient(0deg,rgba(51,51,51,.45),rgba(51,51,51,.45)),
+    rgba(153,153,153,.3)!important;
+  background-blend-mode:plus-lighter,luminosity,darken;
+  box-shadow:0 0 2px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.12),
+   inset 1px 1px 0 -.5px #333333,inset -1px -1px 0 -.5px #262626,
+   inset 1px 1px .5px -1px #FFFFFF,inset -1px -1px .5px -1px #FFFFFF,
+   inset 0 0 3px rgba(255,255,255,.5),inset 0 0 16px #F2F2F2!important;
+}
+#dev .btn.dg{color:#B33E44!important;background:rgba(255,255,255,.45)!important;
+  border:1px solid rgba(255,255,255,.84)!important}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled{
+  background:rgba(255,255,255,.45)!important;color:var(--tx3)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62)!important;opacity:.55;
+}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled::before,
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled::after{opacity:.3}
+#dev #tb .ctr .circ{
+  width:66px;height:66px;top:-27px;margin-left:-33px;
+  border-radius:34px;border:3px solid rgba(255,255,255,.78)!important;
+}
+#dev #tb .ctr.on .circ{
+  background:linear-gradient(180deg,#56A0EE,#4792E6 54%,#367FD1)!important;
+  box-shadow:0 0 2px rgba(17,60,103,.1),0 5px 14px rgba(39,119,212,.23),
+   inset 1px 1px .5px rgba(255,255,255,.43),
+   inset -1px -1px 1px rgba(0,50,104,.23)!important;
+}
+#dev #tb{
+  background:rgba(15,17,24,.94)!important;
+  border-top:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 -8px 24px rgba(15,24,40,.18)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  backdrop-filter:blur(18px) saturate(140%);
+}
+#dev #tb button{color:rgba(255,255,255,.70)!important}
+#dev #tb button.on{color:#82BBFA!important}
+#dev #tb button:not(.ctr).on{background:rgba(71,146,230,.16)!important;color:#94C8FF!important}
+#dev #tb .ctr.on{color:#94C8FF!important}
+#dev #tb .ti svg,#dev #tb .ctr svg{fill:none!important;stroke:currentColor!important}
+/* Blue-only stepper: selected solid blue, all other steps in pale blue. */
+#dev .stp{color:#7A9DC9!important}
+#dev .stp.done{color:#4D91DA!important}
+#dev .stp.on{color:var(--primary-strong)!important}
+#dev .stp::before,#dev .stp.lock::before{background:#CDE0F8!important;height:3px}
+#dev .stp.done::before{background:#9BC7F5!important}
+#dev .stp.on::before{background:var(--primary)!important}
+#dev .sd{background:#E7F2FF!important;color:#6EA9EA!important;
+  border:0!important;box-shadow:inset 0 0 0 1.5px #C6DCF8!important}
+#dev .stp.done .sd{background:#DCEBFD!important;color:var(--primary-strong)!important;
+  border:0!important;box-shadow:inset 0 0 0 1.5px #9BC7F5!important}
+#dev .stp.on .sd{background:var(--primary)!important;color:#fff!important;
+  border:0!important;box-shadow:none!important}
+#dev .segs i{background:#CDE0F8!important}
+#dev .segs i.on{background:var(--primary)!important}
+#dev .tc .ln::after{background:#CDE0F8!important}
+#dev .tc.done .ln::after{background:#9BC7F5!important}
+#dev .dotc.wait{background:#9BC7F5!important}
+#dev .dotc.ok{background:var(--primary)!important}
+@media(prefers-reduced-motion:reduce){
+  #dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib){transition:none!important}
+}
