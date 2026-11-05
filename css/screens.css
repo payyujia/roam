@@ -28,9 +28,21 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* titles sit lower, clear of the time / battery */
 .hd{padding-top:30px}
 .top{padding-top:16px}
-/* Plain status bar: preserve the header colour until scrolling, then use solid white.
-   No backdrop blur or translucent mask over content behind the time/battery. */
-#sb::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--white);opacity:0;transition:opacity .12s}
+/* Frosted iOS-style status bar while scrolling: blur the content behind the
+   time and battery rather than covering it with solid white. Fade the lower edge. */
+#sb::before{
+  content:"";
+  position:absolute;
+  inset:0 0 -8px;
+  z-index:-1;
+  background:rgba(255,255,255,.28);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+  opacity:0;
+  transition:opacity .16s ease;
+}
 #dev.sbb #sb::before{opacity:1}
 /* profile: section headers + Save bar fixed at the end of a subpage */
 .ph{padding:28px 30px 0}.ph+.sg{margin-top:10px}
