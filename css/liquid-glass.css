@@ -1,0 +1,419 @@
+/* =========================================================
+   ROAM LIQUID GLASS — shared visual system
+   Presentation-only layer. Loaded after legacy themes so existing
+   component builders and application behavior remain untouched.
+   ========================================================= */
+
+:root{
+  color-scheme:light;
+  --primary:#4792E6;
+  --primary-strong:#2F7FD3;
+  --primary-soft:rgba(71,146,230,.14);
+  --secondary:#FDD8C7;
+  --ink:#171D29;
+  --black:var(--ink);
+  --white:#FFFFFF;
+  --bg:#F3F7FD;
+  --s1:rgba(255,255,255,.52);
+  --s2:rgba(255,255,255,.38);
+  --s3:rgba(255,255,255,.74);
+  --tx2:#596577;
+  --tx3:#8793A4;
+  --red:#D94B57;
+  --green:#268A69;
+  --orange:#C77B42;
+  --yellow:var(--secondary);
+  --blue:var(--primary);
+  --teal:var(--primary);
+  --teal-m:#83B8F0;
+  --teal-t:rgba(71,146,230,.13);
+  --teal-tt:rgba(71,146,230,.08);
+  --dusk:var(--primary);
+  --dusk-d:var(--primary-strong);
+  --dusk-m:#83B8F0;
+  --dusk-t:rgba(71,146,230,.12);
+  --coral:var(--secondary);
+  --coral-m:#FCE7DD;
+  --coral-t:rgba(253,216,199,.25);
+  --sun:var(--secondary);
+  --sun-m:#FCE7DD;
+  --sun-t:rgba(253,216,199,.28);
+  --ac:var(--primary);
+  --tink:var(--primary-strong);
+  --tag:rgba(255,255,255,.32);
+  --tag-d:rgba(255,255,255,.46);
+  --tag-ink:var(--ink);
+  --alert:var(--red);
+  --line:rgba(79,101,127,.25);
+  --r1:12px;
+  --r2:18px;
+  --r3:26px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,system-ui,sans-serif;
+  --shadow:0 12px 32px rgba(35,63,96,.09);
+  --gum:inset 0 1px 0 rgba(255,255,255,.72);
+  --glass-blur:blur(22px) saturate(175%);
+  --glass-surface-bg:
+    linear-gradient(145deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.34) 46%,rgba(255,255,255,.24) 100%) padding-box,
+    linear-gradient(135deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.58) 28%,rgba(71,146,230,.22) 72%,rgba(255,255,255,.86) 100%) border-box;
+  --glass-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    inset 0 -1px 0 rgba(71,146,230,.06),
+    0 10px 28px rgba(42,73,110,.08);
+  --glass-radius:22px;
+}
+
+/* One restrained route/brand color. Trip types no longer recolor surfaces. */
+.l-red,.l-green,.l-blue,.l-orange,.l-yellow,.l-lime,.l-brown,.l-purple,.l-grey,.l-teal{
+  --lc:var(--primary);
+  --lt:#FFFFFF;
+}
+
+html{background:#EAF1FA}
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse at 12% 12%,rgba(71,146,230,.18),transparent 42%),
+    radial-gradient(ellipse at 88% 78%,rgba(253,216,199,.42),transparent 48%),
+    #EAF1FA;
+  font-family:var(--font);
+  letter-spacing:-.01em;
+}
+#dev{
+  background:
+    radial-gradient(ellipse at 14% 6%,rgba(71,146,230,.20),transparent 42%),
+    radial-gradient(ellipse at 92% 54%,rgba(253,216,199,.38),transparent 48%),
+    linear-gradient(155deg,#F7FAFF 0%,#F0F6FD 55%,#F8F5F3 100%) !important;
+  border:1px solid rgba(255,255,255,.92) !important;
+  box-shadow:0 28px 82px rgba(34,58,88,.20) !important;
+}
+#dev .scr,#dev .pg{background:transparent}
+#dev #sb{color:var(--ink)}
+#dev #sb::before{
+  background:rgba(247,250,255,.34);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  backdrop-filter:blur(22px) saturate(170%);
+}
+:focus-visible{outline:3px solid var(--primary)!important;outline-offset:3px}
+h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
+.cap,.sm{color:var(--tx2)}
+.eyebrow{color:var(--tx2)}
+#hi{background:#151A23}
+
+/* Reusable primitive for new component builders:
+   use class="glass-surface" for a quiet glass container with a diagonal edge glint. */
+.glass-surface{
+  border:1px solid transparent;
+  border-radius:var(--glass-radius);
+  background:var(--glass-surface-bg);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow);
+}
+.glass-control{
+  border:1px solid transparent;
+  background:var(--glass-surface-bg);
+  -webkit-backdrop-filter:blur(18px) saturate(170%);
+  backdrop-filter:blur(18px) saturate(170%);
+  box-shadow:var(--glass-shadow);
+}
+
+/* Shared hero header geometry for the three primary content tabs. */
+#dev .hd{
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  box-sizing:border-box;
+  height:208px;
+  min-height:208px;
+  margin:0 0 0;
+  margin-top:-50px;
+  padding:84px 24px 25px;
+  overflow:hidden;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.88);
+  border-radius:0 0 30px 30px;
+  background:
+    linear-gradient(130deg,rgba(71,146,230,.18),rgba(255,255,255,.22) 56%,rgba(253,216,199,.18));
+  -webkit-backdrop-filter:blur(26px) saturate(175%);
+  backdrop-filter:blur(26px) saturate(175%);
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.72),0 12px 30px rgba(45,83,124,.045);
+}
+#dev .hd::before,#dev .th::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:-32px -18px -22px;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 78% 24%,rgba(253,216,199,.60),transparent 43%),
+    radial-gradient(ellipse at 18% 10%,rgba(71,146,230,.34),transparent 48%),
+    radial-gradient(ellipse at 52% 100%,rgba(255,255,255,.48),transparent 50%);
+  filter:blur(18px);
+}
+#dev .hd::after,#dev .th::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:0;right:0;bottom:0;height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 2%,rgba(255,255,255,.96) 24%,rgba(71,146,230,.24) 76%,transparent 100%);
+}
+#dev .hd>*{position:relative;z-index:1}
+#dev .hd h1{font-size:30px;line-height:35px;font-weight:800;letter-spacing:-.045em;max-width:330px}
+#dev #s-trips .hd,#dev #s-chat .hd,#dev #s-profile .hd{
+  height:208px;
+  min-height:208px;
+}
+#dev .wash{
+  background:
+    linear-gradient(135deg,rgba(71,146,230,.16),rgba(255,255,255,.22) 58%,rgba(253,216,199,.18));
+  border-radius:0 0 30px 30px;
+}
+
+/* Trip detail hero: retain its existing content layout, give it the same glass language. */
+#dev .th{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  margin-top:-50px;
+  padding:50px 0 16px;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.88);
+  border-radius:0 0 30px 30px;
+  background:linear-gradient(135deg,rgba(71,146,230,.18),rgba(255,255,255,.24) 58%,rgba(253,216,199,.20));
+  -webkit-backdrop-filter:blur(26px) saturate(175%);
+  backdrop-filter:blur(26px) saturate(175%);
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.7);
+}
+#dev .th>*{position:relative;z-index:1}
+#dev .th .top{padding:7px 24px 0;min-height:54px}
+#dev .th .thd{padding-top:14px}
+#dev .th .tact{padding-top:18px}
+#dev .th .meta{padding-top:14px}
+#dev .th .cover{border-radius:18px;box-shadow:0 8px 22px rgba(33,61,95,.12)!important}
+
+/* Neutral glass replaces per-card color fills across the existing component library. */
+#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.stat3>div,.srow,.fcm,.fcard,.pop,.msh,#lyc.sheet,#lyc.menu,#lyc.dlg,.pc2,.cp,.nv .cc,.sign,.chip,.fld,.fi,.in,.rinfo,.kb,.si,.sic,.fic,.xic,.dtile,.tag,.tag2,.pill,.tbx,.chg,.youpath,.nvs,.avedit,.win){
+  border:1px solid transparent;
+  background:var(--glass-surface-bg);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow)!important;
+}
+#dev .feat{
+  border-radius:24px;
+  padding:16px;
+  color:var(--ink);
+}
+#dev .feat .cap{color:var(--tx2);opacity:1}
+#dev .tile{border-radius:18px;min-height:58px}
+#dev .empty,#dev .ban,#dev .lockc{border-radius:22px}
+#dev .ban{margin-top:14px}
+#dev .sign{border-radius:20px;color:var(--ink)}
+#dev .sign .cap{color:var(--tx2)}
+#dev .sg{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin:16px 16px 0;
+  overflow:visible;
+  border-radius:22px;
+  background:transparent;
+}
+#dev .srow{
+  min-height:58px;
+  border-radius:17px;
+  color:var(--ink);
+}
+#dev .srow:active,#dev .tile:active{background:rgba(255,255,255,.52)}
+#dev .srow>svg:last-child{color:var(--tx3)}
+#dev .sic,#dev .si,#dev .fic,#dev .xic{
+  border-radius:14px;
+  color:var(--primary-strong);
+  background:rgba(71,146,230,.09);
+}
+#dev .fcm{border-radius:18px;color:var(--ink)}
+#dev .fcm .xic{background:rgba(71,146,230,.10);color:var(--primary-strong)}
+#dev .stat3>div{border-radius:20px}
+#dev .stat3 b{color:var(--ink)}
+#dev .stat3 span{color:var(--tx2)}
+#dev .tlist{background:transparent;padding:0}
+#dev .trow.tier,#dev .row.tier{border-radius:20px}
+#dev .trow.tier .tgo{background:rgba(71,146,230,.11)!important;color:var(--primary-strong)!important}
+#dev .tier,#dev .tier.t0,#dev .tier.t1,#dev .tier.t2,#dev .tier.t3{background:var(--glass-surface-bg)!important}
+#dev .dtile{border-radius:15px;color:var(--ink)}
+#dev .dtile span,#dev .dtile i{color:var(--tx2)}
+#dev .nv .cc{border-radius:18px;color:var(--ink)}
+#dev .cp{border-radius:20px}
+#dev .pc2{border-radius:16px;color:var(--ink)}
+#dev .youpath{border-radius:18px;color:var(--ink)}
+#dev .nvs{color:var(--ink)}
+#dev .empty .cap,#dev .ban .cap{color:var(--tx2)}
+#dev .si{background:rgba(71,146,230,.10)}
+#dev .win{background:rgba(253,216,199,.58);color:var(--ink)}
+
+/* Controls: blue is the only action accent; neutral controls stay translucent. */
+#dev .btn,#dev .btn.y,#dev .gob,#dev .vbtn,#dev #fab,#dev #psave,#dev .play,#dev .tpl,#dev .qty button{
+  background:linear-gradient(135deg,var(--primary),var(--primary-strong))!important;
+  color:#FFFFFF!important;
+  border:1px solid rgba(255,255,255,.40)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 8px 20px rgba(49,116,190,.18)!important;
+}
+#dev .btn{height:52px;border-radius:999px;font-weight:700}
+#dev .btn.sec,#dev .btn.out{
+  background:var(--glass-surface-bg)!important;
+  color:var(--ink)!important;
+  border:1px solid transparent!important;
+  box-shadow:var(--glass-shadow)!important;
+}
+#dev .btn.dg{background:rgba(217,75,87,.09)!important;color:var(--red)!important;border:1px solid rgba(217,75,87,.18)!important}
+#dev .btn:disabled,#dev .gob:disabled,#dev #psave:disabled,#dev .qty button:disabled{
+  background:rgba(255,255,255,.38)!important;
+  color:var(--tx3)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65)!important;
+  border-color:rgba(255,255,255,.6)!important;
+  opacity:1;
+}
+#dev .ib{color:var(--ink);border:1px solid transparent}
+#dev .ib.f,#dev .top .ib{background:var(--glass-surface-bg);box-shadow:var(--glass-shadow)!important}
+#dev .ib:active,#dev .kb:active{background:rgba(71,146,230,.16)!important}
+#dev .play{width:54px;height:54px}
+#dev .gob,#dev .vbtn{border-radius:999px}
+#dev .pill{
+  color:var(--ink);
+  font-weight:600;
+  border-radius:999px;
+  box-shadow:var(--glass-shadow)!important;
+}
+#dev .pill.on,#dev .seg button[aria-checked=true],#dev .pc2[aria-pressed=true]{
+  background:rgba(71,146,230,.22)!important;
+  color:var(--primary-strong)!important;
+  border:1px solid rgba(71,146,230,.34)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86)!important;
+}
+#dev .tag,#dev .tag.ok,#dev .tag.d{
+  background:rgba(255,255,255,.34)!important;
+  color:var(--ink)!important;
+  border:1px solid rgba(255,255,255,.78)!important;
+  box-shadow:none!important;
+  font-weight:600;
+}
+#dev .tag2{background:var(--glass-surface-bg)!important;color:var(--ink)!important}
+#dev .tag2 button{background:rgba(255,255,255,.42)!important;color:var(--ink)!important}
+#dev .seg{background:rgba(255,255,255,.24)!important;border:1px solid rgba(255,255,255,.76)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important}
+#dev .seg button{color:var(--tx2)}
+#dev .sw{background:rgba(90,108,130,.18)!important;border:1px solid rgba(255,255,255,.84)!important;box-shadow:inset 0 1px 2px rgba(30,50,76,.06)!important}
+#dev .sw::after{background:#FFFFFF;box-shadow:0 2px 7px rgba(25,48,78,.18)!important}
+#dev .sw.on{background:rgba(71,146,230,.35)!important;border-color:rgba(71,146,230,.45)!important}
+#dev .sw.on::after{background:var(--primary);box-shadow:none!important}
+#dev .rdo,#dev .cbx{background:rgba(255,255,255,.36)!important;border:1px solid rgba(255,255,255,.9)!important;box-shadow:inset 0 1px 2px rgba(25,48,78,.06)!important}
+#dev .rd[aria-checked=true] .rdo,#dev .cx[aria-checked=true] .cbx{background:var(--primary)!important;border-color:var(--primary)!important;color:#fff!important}
+#dev .rg::-webkit-slider-runnable-track{background:linear-gradient(to right,var(--primary) var(--v,15%),rgba(83,111,145,.18) var(--v,15%))}
+#dev .rg::-moz-range-progress{background:var(--primary)}
+#dev .rg::-webkit-slider-thumb,#dev .rg::-moz-range-thumb{background:#fff;box-shadow:0 2px 10px rgba(42,76,116,.16)!important}
+#dev .in,#dev .fld,#dev .fi{color:var(--ink);border-radius:16px}
+#dev .in:focus,#dev .fi:focus-within,#dev .fi.sr:focus-within{
+  background:rgba(255,255,255,.72)!important;
+  box-shadow:inset 0 0 0 1.5px rgba(71,146,230,.75),0 0 0 3px rgba(71,146,230,.10)!important;
+}
+#dev .in.bad{background:rgba(217,75,87,.08)!important;box-shadow:inset 0 0 0 1.5px rgba(217,75,87,.55)!important}
+#dev .fld{font-weight:600}
+#dev .chev{background:rgba(71,146,230,.14)!important;color:var(--primary-strong)}
+#dev .kb{border-radius:50%}
+#dev .btn:active,#dev .gob:active,#dev .play:active,#dev #fab:active,#dev #psave:active{filter:brightness(.97)}
+#dev #fab,#dev #psave{border-radius:999px}
+
+/* Black navigation rail: keep the existing five-column grid and centre-circle geometry. */
+#dev #tb{
+  background:#111721!important;
+  border-top:0!important;
+  box-shadow:0 -12px 32px rgba(22,39,59,.18)!important;
+}
+#dev #tb button{color:rgba(255,255,255,.68)!important}
+#dev #tb .on{color:var(--primary)!important;font-weight:800}
+#dev #tb button:not(.ctr){border-radius:999px;transition:background .18s,color .18s}
+#dev #tb button:not(.ctr).on{
+  background:rgba(71,146,230,.16)!important;
+  color:#8FC2F5!important;
+}
+#dev #tb button:not(.ctr).on::before{content:none!important}
+#dev #tb .ti,#dev #tb .on .ti{background:transparent!important}
+#dev #tb .ti svg,#dev #tb .on .ti svg,#dev #tb .ctr svg{
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+}
+#dev #tb .ctr .circ{
+  background:rgba(255,255,255,.10)!important;
+  color:#FFFFFF!important;
+  border:4px solid #111721!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.12)!important;
+}
+#dev #tb .ctr.on .circ{
+  background:var(--primary)!important;
+  color:#FFFFFF!important;
+  box-shadow:0 5px 18px rgba(71,146,230,.28)!important;
+}
+#dev #tb .ctr.on::after{background:var(--primary)!important}
+#dev #tb .on .av{box-shadow:0 0 0 2px var(--primary)!important}
+
+/* Every interface icon remains a line icon, including the raised centre action. */
+#dev button>svg{
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+#dev .ib svg,#dev .vb svg,#dev .kb svg{fill:none!important;stroke:currentColor!important}
+
+/* Map and media overlays share the same palette without changing map/reel behavior. */
+#dev .mp-fade{
+  background:linear-gradient(rgba(247,250,255,.88),rgba(247,250,255,.48) 55%,rgba(247,250,255,0));
+}
+#dev .pin.b,#dev .pin.stn.cur,#dev .nd,#dev .tn.cur .nd{border-color:var(--primary)}
+#dev .pin.stn.cur,#dev .pb,#dev .nv .arr{background:var(--primary)!important;color:#fff!important}
+#dev .pin.stn.done,#dev .tn.done .nd{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
+#dev .you{background:var(--primary);box-shadow:0 0 0 3px #fff,0 0 0 9px rgba(71,146,230,.19)!important}
+#dev .pl2,#dev .pl{background:rgba(17,23,33,.88);color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:999px;backdrop-filter:blur(12px)}
+#dev .msh{border-radius:28px 28px 0 0}
+#dev .fcard,#dev .pop{border-radius:24px}
+#dev .rtg button.on::after{background:var(--primary)}
+#dev .rtg .pill.on{background:rgba(71,146,230,.8)!important;color:#fff!important}
+#dev .rail .ib{background:rgba(17,23,33,.35)!important;color:#fff!important;border:1px solid rgba(255,255,255,.26)!important;backdrop-filter:blur(16px)}
+#dev .rinfo{color:var(--ink)}
+#dev .me .bub{background:rgba(71,146,230,.92)!important;color:#fff!important;border:1px solid rgba(255,255,255,.24)}
+#dev .bub{background:var(--glass-surface-bg);color:var(--ink)}
+#dev .dock{background:linear-gradient(rgba(243,247,253,0),rgba(243,247,253,.88) 34%,rgba(243,247,253,.96))}
+#dev #toast{background:rgba(17,23,33,.92);color:#fff;border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(18px)}
+#dev #toast button{color:#8FC2F5}
+#dev .dotc.ok{background:var(--primary)}
+#dev .dotc.wait{background:var(--secondary)}
+#dev .stp.done::before,#dev .stp.on::before,#dev .segs i.on{background:var(--primary)}
+#dev .sd,#dev .nd{background:rgba(255,255,255,.5);border-color:rgba(71,146,230,.42)}
+#dev .stp.done .sd{background:var(--primary);border-color:var(--primary);color:#fff}
+#dev .stp.on .sd{background:rgba(71,146,230,.16);border-color:var(--primary);color:var(--primary-strong)}
+#dev .tc .ln::after{background:rgba(71,146,230,.52)}
+#dev .tc.done .ln::after{background:var(--primary)}
+#dev .lk{color:var(--primary-strong)}
+#dev mark{background:rgba(253,216,199,.55);color:var(--ink)}
+#dev .ph{color:var(--ink)}
+#dev .rate button[aria-pressed=true]{color:var(--primary)}
+#dev .bdg,#dev .bd2{background:var(--primary);color:#fff}
+#dev .avedit{background:var(--primary)!important;color:#fff!important}
+#dev .top .tt{color:var(--ink)}
+#dev .top .tt .cap{color:var(--tx2)}
+
+/* Respect small screens and reduced-motion preferences; layout and touch targets stay intact. */
+@media(max-width:480px){
+  body{background:var(--bg)}
+  #dev{background:
+    radial-gradient(ellipse at 14% 6%,rgba(71,146,230,.18),transparent 42%),
+    radial-gradient(ellipse at 92% 54%,rgba(253,216,199,.34),transparent 48%),
+    linear-gradient(155deg,#F7FAFF 0%,#F0F6FD 55%,#F8F5F3 100%) !important}
+}
+@media(prefers-reduced-motion:reduce){
+  #dev .hd::before,#dev .th::before{filter:none}
+}
