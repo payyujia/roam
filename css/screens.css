@@ -66,14 +66,15 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-row{
   display:grid;
   grid-template-columns:36px minmax(0,1fr) 28px 92px;
+  grid-template-rows:36px 16px;
   column-gap:6px;
   row-gap:0;
   align-items:center;
-  min-height:72px;
+  min-height:68px;
   padding:8px 24px;
 }
 #s-trip .vote-row>.si{width:36px;height:36px;grid-column:1;grid-row:1 / span 2;align-self:center}
-#s-trip .vote-content{min-width:0;width:100%;grid-column:2;grid-row:1;align-self:end}
+#s-trip .vote-content{min-width:0;width:100%;grid-column:2;grid-row:1;align-self:center}
 #s-trip .vote-heading{display:flex;align-items:center;gap:4px;min-width:0;width:100%}
 #s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
 /* The subtitle spans the info/vote columns on its own grid row.
@@ -89,13 +90,13 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   line-height:16px;
 }
 #s-trip .vote-row>.vote-warning{grid-column:2 / -1;grid-row:3;line-height:16px}
-#s-trip .vote-info-btn{grid-column:3;grid-row:1;width:28px;height:44px;align-self:center;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
+#s-trip .vote-info-btn{grid-column:3;grid-row:1;width:28px;height:36px;align-self:center;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:transparent}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* Transparent, equally sized voting controls with centred icons and numeric counts. */
 #s-trip .vote-row .vt{grid-column:4;grid-row:1;width:92px;display:grid;grid-template-columns:repeat(2,44px);gap:4px;align-items:center;justify-items:center}
 #dev #s-trip .vote-row .vb{
-  width:44px;height:44px;
+  width:44px;height:36px;
   display:grid;grid-template-columns:18px 12px;
   place-content:center;align-items:center;justify-items:center;
   gap:3px;border-radius:12px;
@@ -130,4 +131,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* The vote action reuses the same app-level #fab as Create trip!.
    Add only scroll clearance for activity rows beneath that floating button. */
 #s-trip .pg{padding-bottom:calc(var(--fab-b) + 88px)}
+/* Reserve scrolling space after the final activity so the shared floating
+   Add button never prevents the last activity from being read. */
+#s-trip .vote-row:last-child{margin-bottom:100px}
 
