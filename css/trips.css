@@ -3,6 +3,12 @@
 #sb{padding-left:24px;padding-right:24px}
 /* Extra space at the end of the Home feed keeps the last trip card well clear of the pinned Create trip! button when scrolled to the bottom. */
 #s-trips .pg{padding-bottom:230px}
+/* Home density: reduce excess vertical padding so the first three task cards
+   sit clear of the floating Create trip action at the prototype viewport height.
+   These changes are scoped to Home, not to task lists on other screens. */
+#s-trips .sec{padding-top:16px;padding-bottom:10px}
+#s-trips .feat{padding:12px 14px;align-items:center}
+#s-trips .trow{padding-top:10px;padding-bottom:10px}
 /* Create trip! pill: pinned above the centre Trips button; page content scrolls underneath it */
 /* Create trip! uses the shared #fab rule (same size, same --fab-b) on Home and Map. */
 /* tasks: one agenda row per task inside a soft card */
