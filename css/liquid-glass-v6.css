@@ -209,3 +209,187 @@ body{color:var(--ink);background:#EAF1F9}
 @media(prefers-reduced-motion:reduce){
   #dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib){transition:none!important}
 }
+
+/* =====================================================================
+   V6.1 HOME AND NAVIGATION REFINEMENT
+   Keep the bright #4792E6 Liquid Glass system but avoid heavy black UI,
+   awkward Home clipping and overpowering action shadows.
+   ===================================================================== */
+
+/* The Home feed should scroll through the whole phone. Its previous
+   shortened viewport left a large empty band and cut off task 3.
+   Bottom padding provides scroll clearance for both fixed controls. */
+#dev #s-trips.scr{
+  bottom:0!important;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+}
+#dev #s-trips .pg{
+  padding-bottom:calc(var(--fab-b) + 112px)!important;
+}
+
+/* Compact Home hierarchy: greeting, upcoming trip, then tasks. */
+#dev #s-trips .hd{
+  height:138px;
+  min-height:138px;
+  padding:62px 24px 15px;
+}
+#dev #s-trips .hd h1{
+  font-size:25px;
+  line-height:31px;
+  font-weight:800;
+}
+#dev #s-trips .sec{
+  padding-top:13px;
+  padding-bottom:8px;
+}
+#dev #s-trips .feat{
+  padding:12px;
+  gap:12px;
+  border:1px solid rgba(255,255,255,.84)!important;
+  background:rgba(255,255,255,.45)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),
+    0 5px 16px rgba(48,86,134,.065)!important;
+}
+#dev #s-trips .feat .cover.z-l{
+  --cz:104px;
+  border-radius:15px;
+}
+#dev #s-trips .feat h2{font-size:18px;line-height:23px}
+#dev #s-trips .tlist{gap:7px}
+#dev #s-trips .trow.tier{
+  min-height:70px;
+  padding:7px 10px;
+  gap:8px;
+  background:rgba(255,255,255,.45)!important;
+  border:1px solid rgba(255,255,255,.84)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),
+    0 4px 12px rgba(48,86,134,.06)!important;
+}
+#dev #s-trips .trow .tmain{gap:10px}
+#dev #s-trips .trow .gr b{
+  font-size:14px;
+  line-height:19px;
+}
+#dev #s-trips .dtile{
+  width:45px;
+  height:52px;
+  border-radius:12px;
+  background:rgba(255,255,255,.45)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65)!important;
+}
+#dev #s-trips .trow .tgo{
+  height:30px;
+  padding:0 12px;
+  background:rgba(255,255,255,.45)!important;
+  color:var(--primary-strong)!important;
+  border:1px solid rgba(71,146,230,.14)!important;
+  box-shadow:none!important;
+}
+
+/* Make reject / accept look like one coherent pair of quiet controls.
+   Never apply the glossy black icon-button variant to a task rejection. */
+#dev #s-trips .trow .tact{gap:5px;align-items:center}
+#dev #s-trips .trow .tact :is(.ib.f,.ib.p){
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:rgba(255,255,255,.45)!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),
+    0 1px 4px rgba(48,86,134,.07)!important;
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+}
+#dev #s-trips .trow .tact .ib.f{color:#64758B!important}
+#dev #s-trips .trow .tact .ib.p{color:var(--primary-strong)!important}
+#dev #s-trips .trow .tact :is(.ib.f,.ib.p)::before,
+#dev #s-trips .trow .tact :is(.ib.f,.ib.p)::after{
+  content:none!important;
+  display:none!important;
+}
+#dev #s-trips .trow .tact .ib:active{
+  background:rgba(71,146,230,.12)!important;
+}
+
+/* Bright frosted navigation, preserving the five-tab layout and the
+   raised Trips action. Keep enough height for labels and home indicator. */
+#dev #tb{
+  height:94px;
+  padding:0 9px 27px;
+  overflow:visible;
+  background:rgba(248,251,255,.85)!important;
+  border-top:1px solid rgba(255,255,255,.86)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%);
+  backdrop-filter:blur(20px) saturate(145%);
+  box-shadow:0 -6px 21px rgba(42,79,122,.065)!important;
+}
+#dev #tb button{
+  color:#69798B!important;
+  font-weight:600;
+}
+#dev #tb :is(button.on,button[aria-current="page"]){
+  color:var(--primary-strong)!important;
+}
+#dev #tb button:not(.ctr).on{
+  background:transparent!important;
+  color:var(--primary-strong)!important;
+}
+#dev #tb button:not(.ctr).on::before,
+#dev #tb .ctr.on::after{
+  content:none!important;
+  display:none!important;
+}
+#dev #tb .ctr{
+  padding-top:46px;
+  overflow:visible;
+  color:var(--primary-strong)!important;
+}
+#dev #tb .ctr .circ{
+  position:absolute;
+  width:66px;
+  height:66px;
+  top:-27px;
+  left:50%;
+  margin-left:-33px;
+  border-radius:34px;
+  border:3px solid rgba(248,251,255,.97)!important;
+  box-shadow:0 4px 13px rgba(39,119,212,.15),
+    inset 1px 1px .5px rgba(255,255,255,.38)!important;
+}
+#dev #tb .ctr.on .circ{
+  color:#fff!important;
+  background:linear-gradient(180deg,#56A0EE 0%,#4792E6 54%,#367FD1 100%)!important;
+  box-shadow:0 4px 13px rgba(39,119,212,.18),
+    inset 1px 1px .5px rgba(255,255,255,.43),
+    inset -1px -1px 1px rgba(0,50,104,.20)!important;
+}
+#dev #tb .ctr:not(.on) .circ{
+  color:var(--primary-strong)!important;
+  background:rgba(255,255,255,.5)!important;
+  background-blend-mode:normal!important;
+  box-shadow:0 3px 10px rgba(48,86,134,.08),
+    inset 0 1px 0 rgba(255,255,255,.7)!important;
+}
+/* Soft restrained gloss is still confined to the button rim. */
+#dev #fab{
+  height:43px;
+  padding:0 21px;
+  border-radius:999px;
+  box-shadow:0 5px 15px rgba(39,119,212,.16),
+    inset 1px 1px .5px rgba(255,255,255,.4),
+    inset -1px -1px 1px rgba(0,50,104,.15)!important;
+}
+
+/* On shorter phones retain full scroll access instead of moving the CTA
+   into the task content. The dock remains fixed but not screen-blocking. */
+@media(max-height:740px){
+  #dev #s-trips .hd{height:124px;min-height:124px;padding-top:56px}
+  #dev #s-trips .feat .cover.z-l{--cz:94px}
+  #dev #s-trips .sec{padding-top:10px;padding-bottom:7px}
+}
+@media(max-width:360px){
+  #dev #s-trips .feat{padding:10px}
+  #dev #s-trips .feat .cover.z-l{--cz:94px}
+  #dev #s-trips .trow.tier{padding-inline:8px}
+}
