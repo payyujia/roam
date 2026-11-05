@@ -75,8 +75,36 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    and provide a clear gap between the arrow and cover photo. */
 #s-trip .th .top{padding-left:24px;padding-right:24px}
 #s-trip .th .thd{padding-top:20px}
-/* Match the clearance of the floating Create trip! button above the Trips tab.
-   The input has 12px of dock padding, so its bottom matches --fab-b exactly. */
-#s-trip .dock{bottom:calc(var(--fab-b) - 12px)}
-/* Keep the last activity accessible after scrolling past the raised sticky action. */
+/* Floating Add activity action: no opaque sticky-footer panel or white gradient
+   covering the vote rows. Its bottom aligns with the Home Create trip! action. */
+#s-trip .add-activity-dock{
+  position:sticky;
+  bottom:var(--fab-b);
+  z-index:6;
+  margin-top:auto;
+  padding:0 24px;
+  background:transparent;
+  pointer-events:none;
+}
+#s-trip .add-activity-btn{
+  width:100%;
+  min-height:48px;
+  padding:12px 18px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  background:var(--teal);
+  color:#062D2A;
+  font:700 15px/20px var(--font);
+  text-align:center;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:transform .12s ease,background .12s ease;
+}
+#s-trip .add-activity-btn svg{flex:none}
+#s-trip .add-activity-btn:active{transform:scale(.98)}
+#s-trip .add-activity-btn:focus-visible{outline:2px solid var(--dusk);outline-offset:3px}
+/* Allow the final activity to scroll fully above the floating action. */
 #s-trip .pg{padding-bottom:calc(var(--fab-b) + 48px)}
