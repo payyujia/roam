@@ -20,6 +20,10 @@
 #ly{position:absolute;inset:0;z-index:40;visibility:hidden;transition:visibility 0s .3s}#ly.open{visibility:visible;transition:none}
 .scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .25s}.open .scrim{opacity:1}
 #lyc{position:absolute;background:var(--white);outline:none}#lyc.sheet{left:0;right:0;bottom:0;max-height:92%;border-radius:var(--r3) var(--r3) 0 0;transform:translateY(105%);transition:transform .36s var(--ease);display:flex;flex-direction:column}.open #lyc.sheet{transform:none}
+/* Open and close activity details immediately; retain normal animation for other sheets. */
+#lyc.sheet.activity-sheet{transform:none;transition:none}
+#ly:has(#lyc.activity-sheet){transition:none}
+#ly:has(#lyc.activity-sheet) .scrim{transition:opacity .1s}
 /* The three-dot trip options menu is a static overlay: no drag handle or swipe-up animation. */
 #lyc.menu{left:0;right:0;bottom:0;max-height:92%;border-radius:var(--r3) var(--r3) 0 0;display:flex;flex-direction:column;opacity:0;transition:opacity .14s ease}
 .open #lyc.menu{opacity:1}
