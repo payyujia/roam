@@ -75,21 +75,26 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    and provide a clear gap between the arrow and cover photo. */
 #s-trip .th .top{padding-left:24px;padding-right:24px}
 #s-trip .th .thd{padding-top:20px}
-/* Floating Add activity action: no opaque sticky-footer panel or white gradient
-   covering the vote rows. Its bottom aligns with the Home Create trip! action. */
+/* Match Create trip!: compact centred floating pill, with the same 16px
+   clearance above the Trips tab. Position it outside the content flow so
+   the activity list never gains an artificial white footer/gap. */
 #s-trip .add-activity-dock{
-  position:sticky;
+  position:fixed;
+  left:50%;
   bottom:var(--fab-b);
-  z-index:6;
-  margin-top:auto;
-  padding:0 24px;
+  transform:translateX(-50%);
+  z-index:22;
+  width:max-content;
+  max-width:calc(100% - 48px);
+  margin:0;
+  padding:0;
   background:transparent;
   pointer-events:none;
 }
 #s-trip .add-activity-btn{
-  width:100%;
-  min-height:48px;
-  padding:12px 18px;
+  width:auto;
+  min-height:44px;
+  padding:0 20px;
   border-radius:999px;
   display:flex;
   align-items:center;
@@ -98,6 +103,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   background:var(--teal);
   color:#062D2A;
   font:700 15px/20px var(--font);
+  white-space:nowrap;
   text-align:center;
   cursor:pointer;
   pointer-events:auto;
@@ -106,5 +112,5 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .add-activity-btn svg{flex:none}
 #s-trip .add-activity-btn:active{transform:scale(.98)}
 #s-trip .add-activity-btn:focus-visible{outline:2px solid var(--dusk);outline-offset:3px}
-/* Allow the final activity to scroll fully above the floating action. */
+/* Last activity can scroll clear of the floating pill and navigation. */
 #s-trip .pg{padding-bottom:calc(var(--fab-b) + 48px)}
