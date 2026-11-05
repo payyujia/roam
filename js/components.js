@@ -28,8 +28,17 @@ const Timeline=(t,o)=>`<ol class="tl l-${t.c}">${o.origin?`<li class="tn org"><s
 const Members=t=>[...t.m].map(k=>Row({lead:Av(k,'big'),title:PE[k][2],trail:t.vs[k]?'<span class="tag ok">Voted</span>':'<span class="tag">Voting…</span>'})).join('');
 /* Details and voting are sibling controls: tapping a vote never opens the details panel. */
 /* Only the small info button opens activity details; voting uses separate controls. */
+/* Summarise only information recorded for a stop: start time, type, duration.
+   Other notes such as price and location stay in the activity details panel. */
+const voteSubtitle=s=>{
+ const parts=String(s.s||'').split(' · ').map(x=>x.trim()).filter(Boolean);
+ const category=parts[0]||s.k||'Activity';
+ const duration=s.duration||parts.slice(1).find(x=>/^\d+(?:\.\d+)?\s*(?:mins?|minutes?|hrs?|hours?)$/i.test(x));
+ const time=s.t?t12(s.t).map((v,i)=>i?v.toUpperCase():v).join(' '):'';
+ return [time,category,duration].filter(Boolean).join(' · ');
+};
 /* Two compact vote controls preserve room for the title and info button. */
-const VoteRow=(s,i)=>`<div class="row wrap vote-row">${StopIc(s)}<div class="gr vote-content"><div class="vote-heading"><b title="${esc(s.n)}">${esc(s.n)}</b></div><div class="cap sm">${esc(tt(s.t))} · ${esc(s.s)}</div>${s.d>s.u?'<div class="cap sm"><span class="err">Not in itinerary</span></div>':''}</div><button type="button" class="vote-info-btn" data-a="activity:${i}" aria-label="View details for ${esc(s.n)}" title="View activity details">${ic('info',16)}</button><div class="vt" role="group" aria-label="Vote on ${esc(s.n)}"><button type="button" class="vb up" aria-pressed="${s.m==1}" aria-label="Thumbs up for ${esc(s.n)}, ${s.u} votes" data-a="vt:${i}:1">${ic('thumbs-up',17)}<span class="vote-count" aria-hidden="true">${s.u}</span></button><button type="button" class="vb dn" aria-pressed="${s.m==-1}" aria-label="Thumbs down for ${esc(s.n)}, ${s.d} votes" data-a="vt:${i}:-1">${ic('thumbs-down',17)}<span class="vote-count" aria-hidden="true">${s.d}</span></button></div></div>`;
+const VoteRow=(s,i)=>`<div class="row wrap vote-row">${StopIc(s)}<div class="gr vote-content"><div class="vote-heading"><b title="${esc(s.n)}">${esc(s.n)}</b></div><div class="cap sm">${esc(voteSubtitle(s))}</div>${s.d>s.u?'<div class="cap sm"><span class="err">Not in itinerary</span></div>':''}</div><button type="button" class="vote-info-btn" data-a="activity:${i}" aria-label="View details for ${esc(s.n)}" title="View activity details">${ic('info',16)}</button><div class="vt" role="group" aria-label="Vote on ${esc(s.n)}"><button type="button" class="vb up" aria-pressed="${s.m==1}" aria-label="Thumbs up for ${esc(s.n)}, ${s.u} votes" data-a="vt:${i}:1">${ic('thumbs-up',17)}<span class="vote-count" aria-hidden="true">${s.u}</span></button><button type="button" class="vb dn" aria-pressed="${s.m==-1}" aria-label="Thumbs down for ${esc(s.n)}, ${s.d} votes" data-a="vt:${i}:-1">${ic('thumbs-down',17)}<span class="vote-count" aria-hidden="true">${s.d}</span></button></div></div>`;
 const TripRow=t=>Row({x:`tier t${dd(t.date)<0?0:tier(t.date)}`,a:`open:${t.id}`,label:`${t.n}, ${fd(t.date)}`,lead:Cover(t,'m'),title:t.n,sub:`${fd(t.date)} · ${rel(t.date)}`,sub2:stxt(t),trail:Stack(t.m)});const REQ=D(11,14);
 const InviteRow=()=>{const t=trip('read');return `<div class="row wrap rq"><div class="si">${ic('calendar',20)}</div><div class="gr"><b>Raymond wants to move ${t.n}</b><div class="cap sm">${fd(t.date)} to ${fd(REQ)}</div></div><div class="rqa"><button class="btn sm2" data-a="inv:y">Accept</button><button class="btn sm2 sec" data-a="inv:n">Decline</button></div></div>`};
 /* tag component */
