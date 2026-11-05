@@ -75,7 +75,16 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-content{min-width:0;width:100%}
 #s-trip .vote-heading{display:flex;align-items:center;gap:4px;min-width:0;width:100%}
 #s-trip .vote-heading b{display:block;min-width:0;flex:0 1 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:18px}
-#s-trip .vote-content>.cap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Voting subtitles may contain time, category and duration; wrap all details
+   rather than hiding the last field behind an ellipsis in narrow grid columns. */
+#dev #s-trip .vote-row .vote-content>.vote-subtitle{
+  display:block;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  overflow-wrap:break-word;
+  line-height:16px;
+}
 #s-trip .vote-content>.cap:has(.err){white-space:normal;overflow:visible;line-height:16px}
 #s-trip .vote-info-btn{width:28px;min-height:48px;height:100%;align-self:stretch;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:transparent}
