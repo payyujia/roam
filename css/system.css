@@ -125,3 +125,31 @@
 #dev .me .bub{background:var(--y);color:var(--ink)}
 #dev #toast button{color:var(--y)}
 #dev .rate button[aria-pressed=true]{color:var(--y-press)}
+
+/* Inputs keep their soft field fill without an intrusive black focus box.
+   Put this after the system theme's earlier focus rules; retain a focus
+   indicator on buttons and other keyboard-operated controls. */
+#dev :is(input,textarea,select):focus,
+#dev :is(input,textarea,select):focus-visible{
+  outline:none!important;
+  outline-offset:0!important;
+  box-shadow:none!important;
+}
+#dev .in:focus,
+#dev .in:focus-within,
+#dev .fi:focus-within,
+#dev .fi.sr:focus-within,
+#dev .fld:focus-within,
+#dev .tin:focus-within{
+  outline:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  background:var(--s2)!important;
+}
+#dev .fi:focus-within :is(input,textarea,select),
+#dev .fld:focus-within input,
+#dev .tin:focus-within input{
+  outline:none!important;
+  box-shadow:none!important;
+}
+#dev .in.bad:focus{background:var(--err-t)!important}
