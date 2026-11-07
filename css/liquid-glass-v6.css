@@ -1221,6 +1221,9 @@ body{font-weight:500}
 #dev .rv .rail .ib.reel-icon-action[aria-pressed="true"] svg{
   fill:currentColor;stroke:currentColor;
 }
+#dev .rv .rail .ib.reel-icon-action[aria-pressed="true"] svg :is(path,circle,rect,polygon,polyline,ellipse){
+  fill:currentColor;
+}
 
 /* Navbar selection is outline-to-fill only: do not recolour active outlines. */
 #dev #tb>button,
@@ -1228,6 +1231,7 @@ body{font-weight:500}
 #dev #tb>button:not(.ctr).on{color:var(--muted)!important}
 #dev #tb>button .ti svg{fill:none}
 #dev #tb>button.on .ti svg{fill:currentColor}
+#dev #tb>button.on .ti svg :is(path,circle,rect,polygon,polyline,ellipse){fill:currentColor}
 #dev #tb .ctr,#dev #tb .ctr:is(.on){color:var(--sky-500)!important}
 #dev #tb .ctr .circ,#dev #tb .ctr.on .circ{
   background:#fff!important;color:var(--sky-500)!important;
