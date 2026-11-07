@@ -832,25 +832,45 @@ body{font-weight:500}
   letter-spacing:-.02em;
 }
 
-/* Battery icon rendered as a single vector: no inherited text sizing or battery fill overlays. */
+/* iOS-inspired battery: native system numerals, precisely centred by CSS.
+   Unlike SVG text, the percentage doesn't shift with browser baseline handling. */
 #dev #sb .ios-battery{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  flex:0 0 27px;
+  width:27px;
+  height:13px;
+  margin-right:3px;
+  border-radius:3.5px;
+  background:#fff;
+  box-shadow:none;
+}
+#dev #sb .ios-battery::after{
+  content:"";
+  position:absolute;
+  top:4.5px;
+  right:-3px;
+  width:2px;
+  height:4px;
+  border-radius:0 1px 1px 0;
+  background:inherit;
+}
+#dev #sb .ios-battery-level{
   display:block;
-  flex:0 0 30px;
-  width:30px;
-  height:16px;
-  min-width:30px;
-  overflow:visible;
-  align-self:center;
-  color:#FFFFFF;
-  fill:none;
+  margin:0;
+  padding:0;
+  color:#252525;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  font-size:10px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-.025em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:none;
 }
-#dev #sb .ios-battery text{
-  fill:#30343B;
-  stroke:none;
-  paint-order:normal;
-}
-#dev #sb .ios-battery rect,
-#dev #sb .ios-battery path{fill:#fff;stroke:none!important}
 
 
 /* Adaptive iOS status-bar foreground; never change the background or blur layer. */
@@ -862,15 +882,8 @@ body{font-weight:500}
   color:#0E1116!important;
   fill:#0E1116!important;
 }
-#dev.sb-dark-ink #sb .ios-battery rect,
-#dev.sb-dark-ink #sb .ios-battery path{
-  fill:#0E1116!important;
-  stroke:none!important;
-}
-#dev.sb-dark-ink #sb .ios-battery text{
-  fill:#fff!important;
-  stroke:none!important;
-}
+#dev.sb-dark-ink #sb .ios-battery{background:#0E1116}
+#dev.sb-dark-ink #sb .ios-battery-level{color:#fff}
 /* Respect the user's native contrast preference while retaining the app's
    explicit light and blue screen surfaces. No solid status-bar background. */
 
