@@ -59,7 +59,8 @@
 #dev .demo-keyboard.theme-dark{--dk-bg:#202020}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
-  flex:0 0 38px;
+  flex:0 0 44px;
+  margin-bottom:8px;
   min-height:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -108,7 +109,7 @@
   min-height:0;
   display:flex;
   flex-direction:column;
-  gap:9px;
+  gap:11px;
   padding:0 0 2px;
 }
 #dev .dk-row{
@@ -118,7 +119,7 @@
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:4px;
+  gap:7px;
   box-sizing:border-box;
 }
 /* Keep first/last keycaps about 6px from the phone edge (as in the reference),
@@ -194,7 +195,7 @@
 #dev .dk-numbers-third .dk-shift,
 #dev .dk-numbers-third .dk-delete{flex:1.3 1 0}
 #dev .dk-numbers-third .dk-char{font-size:19px}
-#dev .dk-bottom{margin-top:0;gap:5px}
+#dev .dk-bottom{margin-top:0;gap:7px}
 #dev .dk-bottom .dk-mode{
   flex:0 0 12%;
   background:var(--dk-control);
@@ -553,9 +554,9 @@
 
 @media(max-height:700px){
   #dev{--demo-keyboard-height:272px}
-  #dev .dk-predict{flex-basis:34px;font-size:15px}
-  #dev .dk-rows{gap:5px}
-  #dev .dk-row{gap:4px}
+  #dev .dk-predict{flex-basis:38px;margin-bottom:5px;font-size:15px}
+  #dev .dk-rows{gap:7px}
+  #dev .dk-row{gap:5px}
   #dev .dk-offset{padding-inline:6%}
   #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
