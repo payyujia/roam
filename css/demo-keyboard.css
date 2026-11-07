@@ -567,3 +567,46 @@
   #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
 }
+
+
+/* Optional local Apple emoji images (assets/apple-emojis/).
+   Keep the Unicode character as an accessible, copyable text fallback.
+   An image is only shown when it loads successfully from the local folder. */
+#dev .roam-local-emoji{
+  display:inline-block;
+  position:relative;
+  box-sizing:content-box;
+  width:1em;
+  height:1em;
+  line-height:1;
+  vertical-align:-.12em;
+  white-space:nowrap;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+#dev .roam-local-emoji .roam-emoji-fallback{
+  display:block;
+  width:100%;
+  height:100%;
+  line-height:1;
+}
+#dev .roam-local-emoji .roam-emoji-art{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  object-fit:contain;
+  opacity:0;
+  pointer-events:none;
+}
+#dev .roam-local-emoji.has-art .roam-emoji-fallback{opacity:0}
+#dev .roam-local-emoji.has-art .roam-emoji-art{opacity:1}
+#dev .dk-emoji-choice .roam-local-emoji{font-size:30px}
+#dev .dk-emoji-category .roam-local-emoji{font-size:20px}
+#dev #s-thread .bub .roam-local-emoji{font-size:1.03em}
+@media(max-height:700px){
+  #dev .dk-emoji-choice .roam-local-emoji{font-size:26px}
+}
