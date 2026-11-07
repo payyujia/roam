@@ -1,7 +1,8 @@
 /* ROAM / CARD STYLING LIBRARY — Sunrise Frost
-   Single shared sizing/spacing source for the 4 live HTML variants:
+   Shared layout and typography source for six live card variants:
    .trow.task.tier (Voting), .trow.reschedule-row (Rescheduling),
-   .row.tier (Trip), .chat-row (Chat).
+   .row.tier (Trip), .chat-row (Chat),
+   .srow.acct (AccountCard), .settings-card (SettingsCard).
    Markup/behavior still lives in existing JS.
    The same rules power docs/card-components.html.
    Load this file AFTER liquid-glass-v6.css. */
@@ -15,6 +16,12 @@
   --roam-card-media-width:56px;
   --roam-card-media-height:60px;
   --roam-card-media-radius:14px;
+  /* Canonical typography for every standard card title. */
+  --roam-card-title-family:var(--font);
+  --roam-card-title-size:16px;
+  --roam-card-title-weight:700;
+  --roam-card-title-line-height:22px;
+  --roam-card-title-letter-spacing:0;
   /* Same spacing from blue header to Home's first heading and Chat search. */
   --roam-first-section-gap:16px;
 }
@@ -127,9 +134,6 @@
 /* Name and supporting information are easier to scan at different weights. */
 #dev #s-profile .srow.acct .gr > b{
   display:block;
-  font-size:16px;
-  font-weight:700;
-  line-height:22px;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -140,7 +144,6 @@
   line-height:18px;
   color:var(--tx2);
 }
-#dev #s-profile .stt{font-size:15px;line-height:20px}
 #dev #s-profile .sval{
   max-width:40%;
   font-size:13px;
@@ -153,7 +156,6 @@
 }
 @media(max-width:360px){
   #dev #s-profile .sg .srow{padding-inline:var(--roam-card-padding-x-compact)}
-  #dev #s-profile .stt{font-size:14px}
   #dev #s-profile .sval{max-width:38%}
 }
 
@@ -221,4 +223,19 @@
     column-gap:7px;
     padding-inline:var(--roam-card-padding-x-compact);
   }
+}
+
+/* CARD TYPOGRAPHY — single source of truth for all six regular variants.
+   Change the --roam-card-title-* tokens above to update every title together.
+   Deliberately excludes the featured 18px trip card and page headings. */
+#dev .trow.tier .tmain .gr > b,
+#dev .row.tier > .gr > b,
+#dev #s-chat .chat-row > .gr > b,
+#dev #s-profile .srow.acct .gr > b,
+#dev #s-profile .settings-card .stt{
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-title-size);
+  font-weight:var(--roam-card-title-weight);
+  line-height:var(--roam-card-title-line-height);
+  letter-spacing:var(--roam-card-title-letter-spacing);
 }
