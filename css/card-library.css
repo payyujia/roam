@@ -62,14 +62,14 @@
 #dev #s-trips .hd + .sec{padding-top:var(--roam-first-section-gap)}
 #dev #s-chat .hd + .cs{margin-top:var(--roam-first-section-gap)!important}
 
-/* Chat cards are a fourth visual variant of the same family. The grid keeps
-   its timestamp and unread-badge column; only shared styling is consolidated. */
+/* Chat cards share the same foundation. Keep the timestamp/unread column
+   just wide enough for a 24-hour time so the preview can show more text. */
 #dev #s-chat .chat-row{
   min-height:var(--roam-card-min-height);
   padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
   border-radius:var(--roam-card-radius);
-  column-gap:var(--roam-card-gap);
-  grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 44px;
+  column-gap:8px;
+  grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 38px;
 }
 #dev #s-chat .chat-row .cover.z-m{
   --cz:var(--roam-card-media-width);
@@ -122,8 +122,8 @@
 /* Keep image sizes consistent on narrow screens as well. */
 @media(max-width:360px){
   #dev #s-chat .chat-row{
-    grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 40px;
-    column-gap:8px;
+    grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 38px;
+    column-gap:7px;
     padding-inline:var(--roam-card-padding-x-compact);
   }
 }
