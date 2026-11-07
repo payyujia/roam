@@ -1150,7 +1150,8 @@ body{font-weight:500}
   width:100%;
   min-width:0;
 }
-#dev #s-pdet .travel-pace-dropdown .dd-trigger{min-height:52px}
+/* Exact 50px single-select field height from docs/card-components.html. */
+#dev #s-pdet .travel-pace-dropdown .dd-trigger{min-height:50px;height:50px}
 #dev #s-pdet .travel-transport-options{
   display:flex;
   flex-direction:column;
