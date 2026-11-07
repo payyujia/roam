@@ -142,7 +142,6 @@ body{font-weight:500}
 #dev :is(.feat,.row.tier,.trow.tier,.vote-row,.chat-row){border-radius:22px}
 #dev #s-trips .feat{padding:12px;gap:12px;align-items:center}
 #dev #s-trips .feat .cover.z-l{--cz:104px;border-radius:15px}
-#dev #s-trips .feat h2{font-size:18px;line-height:23px}
 #dev :is(.row.tier,.chat-row) .cover{width:56px;height:60px;border-radius:14px}
 #dev .cover{background:linear-gradient(160deg,var(--coral-200),var(--sky-400))}
 #dev .st .av{color:var(--ink)}
