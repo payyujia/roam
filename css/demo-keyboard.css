@@ -147,7 +147,37 @@
   outline-offset:-2px;
 }
 #dev .dk-special{background:var(--dk-control);font-size:16px}
-#dev .dk-special svg{display:block;width:23px;height:23px}
+/* Give the backspace, emoji and Return controls identical icon alignment.
+   The SVG viewboxes and wrappers keep the glyph centered across Windows fonts. */
+#dev .dk-key-icon{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  line-height:0;
+  pointer-events:none;
+}
+#dev .dk-delete,
+#dev .dk-emoji,
+#dev .dk-return{
+  display:grid;
+  place-items:center;
+  align-items:center;
+  justify-items:center;
+}
+#dev .dk-key-icon svg{
+  display:block;
+  flex:none;
+  width:24px;
+  height:24px;
+  margin:0 auto;
+  overflow:visible;
+  vertical-align:middle;
+}
+#dev .dk-shift svg{display:block;width:23px;height:23px}
 #dev .dk-shift,
 #dev .dk-delete{flex:1.45 1 0}
 #dev .dk-shift.is-on{background:#E3E3E6;color:#252528}
@@ -165,7 +195,10 @@
   flex:0 0 12%;
   background:var(--dk-control);
 }
-#dev .dk-bottom .dk-emoji svg{display:block;width:24px;height:24px}
+#dev .dk-bottom .dk-emoji .dk-key-icon svg{
+  width:26px;
+  height:26px;
+}
 #dev .dk-bottom .dk-space{
   flex:1 1 auto;
   position:relative;
@@ -185,7 +218,8 @@
   color:#89898D;
 }
 #dev .dk-return-icon{display:grid;place-items:center}
-#dev .dk-return svg{display:block;width:27px;height:27px}
+#dev .dk-return .dk-key-icon svg,
+#dev .dk-delete .dk-key-icon svg{width:24px;height:24px}
 #dev .dk-bottom .dk-return.has-text{
   background:var(--dk-control);
   color:#F7F7FA;
@@ -510,8 +544,9 @@
   #dev .dk-offset{padding-inline:4.5%}
   #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
-  #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
-  #dev .dk-return svg{width:24px;height:24px}
+  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:23px;height:23px}
+  #dev .dk-return .dk-key-icon svg,
+  #dev .dk-delete .dk-key-icon svg{width:22px;height:22px}
   #dev .dk-accessories{flex-basis:48px}
   #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
