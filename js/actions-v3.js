@@ -36,6 +36,11 @@ Object.assign(A,{
  /* chat */
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
+
+ prefSearch:q=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;S.prefSearch=q;const el=$('#preference-suggestions');if(el)el.innerHTML=profilePreferenceOptionsHTML(S.pd)},
+ prefFirst:()=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k];if(!config)return;const q=(S.prefSearch||'').trim().toLocaleLowerCase();const options=q?config.catalog.filter(x=>x.toLocaleLowerCase().includes(q)):(S.prefSuggestions||profilePreferenceSuggestions(k));const name=options.find(x=>!profilePreferenceDraft(k).includes(x));if(name)A.prefAdd(encodeURIComponent(name))},
+ prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft))return;const name=decodeURIComponent(value);if(!config.catalog.includes(name)||draft.includes(name))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input)input.value='';refreshProfilePreferencePicker(k)},
+ prefRemove:value=>{const k=S.pd;if(!PROFILE_PREFERENCE_PICKERS[k]||!Array.isArray(S.p[k+'Draft']))return;const name=decodeURIComponent(value);S.p[k+'Draft']=S.p[k+'Draft'].filter(x=>x!==name);refreshProfilePreferencePicker(k)},
  pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
  pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions());const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';refreshInterestPicker()},
@@ -63,7 +68,7 @@ Object.assign(A,{
   S.p.dietDraft=S.p.dietDraft.filter(x=>x!==name);
   refreshDietaryPicker();
  },
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}go('pdet')},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}if(PROFILE_PREFERENCE_PICKERS[k]){S.prefSearch='';S.p[k+'Draft']=[...S.p[k]];S.prefSuggestions=profilePreferenceSuggestions(k)}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -96,6 +101,12 @@ Object.assign(A,{
    S.p.likes=[...S.p.likesDraft];
    S.p.likesDraft=null;
   }
+  if(PROFILE_PREFERENCE_PICKERS[S.pd]){
+   const k=S.pd,draft=S.p[k+'Draft'];
+   if(!Array.isArray(draft)||!profilePreferenceChanged(k))return;
+   S.p[k]=[...draft];
+   S.p[k+'Draft']=null;
+  }
   S.p.dirty=0;A.back();toast('Changes saved')
  },
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{
@@ -114,20 +125,25 @@ let SW=null;
 document.addEventListener('pointerdown',e=>{if(e.pointerType=='mouse'&&e.button)return;const d=$('#dev').getBoundingClientRect();if(e.clientX-d.left<24&&cur().length>1&&!$('#ly').classList.contains('open'))SW={x:e.clientX,y:e.clientY}});
 document.addEventListener('pointerup',e=>{if(SW&&e.clientX-SW.x>70&&Math.abs(e.clientY-SW.y)<60)A.back();SW=null});
 document.addEventListener('pointercancel',()=>SW=null);
-/* Leaving Interests via Back (including edge swipe) or tab navigation
-   discards unsaved choices without changing the saved profile. */
-const discardInterestDraft=()=>{S.p.likesDraft=null;S.interestQuery='';S.interestSuggestions=null;S.p.dirty=0};
-const interestBack=A.back;
-A.back=(...args)=>{
- if(S.tab==='profile'&&topId()==='pdet'&&S.pd==='likes'&&cur().length>1
-    &&!$('#app').classList.contains('back-pending'))discardInterestDraft();
- return interestBack(...args);
+/* All fixed-choice Profile editors stage selections locally. Back, edge swipe
+   and tab changes discard unsaved drafts; Save commits before navigating back. */
+const profileTagEditorActive=()=>S.pd==='likes'||!!PROFILE_PREFERENCE_PICKERS[S.pd];
+const discardProfileTagDraft=()=>{
+ S.p.likesDraft=null;S.interestQuery='';S.interestSuggestions=null;
+ for(const k of Object.keys(PROFILE_PREFERENCE_PICKERS))S.p[k+'Draft']=null;
+ S.prefSearch='';S.prefSuggestions=null;S.p.dirty=0;
 };
-const interestTab=A.tab;
+const tagEditorBack=A.back;
+A.back=(...args)=>{
+ if(S.tab==='profile'&&topId()==='pdet'&&profileTagEditorActive()&&cur().length>1
+    &&!$('#app').classList.contains('back-pending'))discardProfileTagDraft();
+ return tagEditorBack(...args);
+};
+const tagEditorTab=A.tab;
 A.tab=t=>{
- if(S.tab==='profile'&&topId()==='pdet'&&S.pd==='likes'){
-  discardInterestDraft();
+ if(S.tab==='profile'&&topId()==='pdet'&&profileTagEditorActive()){
+  discardProfileTagDraft();
   S.stack.profile=['profile'];
  }
- return interestTab(t);
+ return tagEditorTab(t);
 };
