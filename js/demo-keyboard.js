@@ -17,7 +17,9 @@
  keyboard.hidden=true;
  dev.appendChild(keyboard);
 
- let opened=false,shifted=false,numbers=false;
+ let opened=false,shifted=true,numbers=false,capsLock=false,lastShiftTap=0;
+ let emojiMode=false,emojiCategory='recent',emojiQuery='';
+ const emojiHistory=[];
  /* Inverse-contrast themes are chosen from the actual chat background.
     ?keyboard-theme=dark|light can force a skin when previewing either design. */
  function brightness(el){
@@ -46,55 +48,187 @@
     differs by skin; both bottom action icons still send the chat message. */
  const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.7" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><circle cx="15.3" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><path d="M6.5 13.2c.7 3.1 3.1 5 5.5 5s4.8-1.9 5.5-5" fill="none" stroke="var(--dk-emoji-cutout)" stroke-width="1.7" stroke-linecap="round"/></svg>';
  const returnIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 6v11a4 4 0 0 1-4 4H6m0 0 6-6m-6 6 6 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- const searchIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12.4" cy="12.4" r="7.8" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="m18.3 18.3 6.3 6.3" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>';
+ /* Use the same Return glyph in both themes: this field sends chat messages,
+    so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
  const key=(value,label='',cls='')=>'<button type="button" class="dk-key '+cls+
   '" data-kb-key="'+escapeText(value)+'" aria-label="'+escapeText(label||value)+'">'+
   escapeText(label||value)+'</button>';
- function draw(){
-  /* The 123 mode uses the circular HTML/CSS/JS phone pad from the example,
-     while the regular alphabetic keyboard remains available for chat. */
-  if(numbers){
-   const rows=[['1','2','3'],['4','5','6'],['7','8','9'],['clear','0','delete']];
-   keyboard.innerHTML='<div class="dk-phonepad" aria-label="Numeric phone pad">'+
-    '<div class="dk-phonepad-head"><span>Phone pad</span>'+
-    '<button type="button" class="dk-phonepad-switch" data-kb-action="mode" aria-label="Switch to letters">ABC</button></div>'+
-    '<div class="dk-phonepad-rows">'+
-    rows.map(row=>'<div class="dk-phonepad-row">'+row.map(value=>{
-     if(value==='clear')return '<button type="button" class="dk-phone-key dk-phone-action" data-kb-action="clear" aria-label="Clear input">CLR</button>';
-     if(value==='delete')return '<button type="button" class="dk-phone-key dk-phone-action" data-kb-action="delete" aria-label="Backspace">⌫</button>';
-     return '<button type="button" class="dk-phone-key" data-kb-key="'+value+'" aria-label="'+value+'">'+value+'</button>';
-    }).join('')+'</div>').join('')+'</div></div>';
-   return;
+ /* System-like emoji picker: categories, search and recently used.
+    Labels support accessible buttons and searchable emoji names. */
+ const EMOJI_SETS=[
+  {id:'smileys',icon:'☺',label:'Smileys & people',items:[
+   ['😀','grinning smile'],['😃','happy face'],['😄','grinning happy'],['😁','big grin'],
+   ['😆','laughing'],['😅','sweat smile'],['🤣','rolling laugh'],['😂','tears of joy'],
+   ['🙂','slight smile'],['🙃','upside down'],['😉','wink'],['😊','blush smiling'],
+   ['😇','angel'],['🥰','smiling hearts'],['😍','heart eyes'],['🤩','starstruck'],
+   ['😘','kiss'],['😗','kissing'],['😋','delicious yummy'],['😛','tongue'],
+   ['🤪','silly'],['😜','winking tongue'],['😎','cool sunglasses'],['🥳','party face'],
+   ['😏','smirk'],['🥺','pleading'],['🥹','holding back tears'],['😢','crying'],
+   ['😭','sobbing'],['😱','shocked scream'],['😡','angry'],['😴','sleeping'],
+   ['🤔','thinking'],['🫠','melting'],['🫶','heart hands'],['👍','thumbs up'],
+   ['👎','thumbs down'],['👏','clapping'],['🙏','folded hands'],['👋','waving']
+  ]},
+  {id:'animals',icon:'♧',label:'Animals & nature',items:[
+   ['🐶','dog'],['🐱','cat'],['🐭','mouse'],['🐹','hamster'],['🐰','rabbit'],
+   ['🦊','fox'],['🐻','bear'],['🐼','panda'],['🐨','koala'],['🐯','tiger'],
+   ['🦁','lion'],['🐮','cow'],['🐸','frog'],['🐵','monkey'],['🐧','penguin'],
+   ['🐦','bird'],['🦄','unicorn'],['🦋','butterfly'],['🐢','turtle'],['🐙','octopus'],
+   ['🐬','dolphin'],['🦈','shark'],['🌷','tulip'],['🌹','rose'],['🌸','blossom'],
+   ['🌻','sunflower'],['🌲','tree'],['🌴','palm tree'],['🍀','clover'],['🌈','rainbow'],
+   ['☀️','sun'],['🌙','moon']
+  ]},
+  {id:'food',icon:'♨',label:'Food & drink',items:[
+   ['🍎','apple'],['🍓','strawberry'],['🍉','watermelon'],['🍌','banana'],
+   ['🥑','avocado'],['🍞','bread'],['🥐','croissant'],['🥨','pretzel'],
+   ['🍔','burger'],['🍟','fries'],['🍕','pizza'],['🌮','taco'],
+   ['🍣','sushi'],['🍜','noodles ramen'],['🍝','pasta'],['🍱','bento'],
+   ['🍚','rice'],['🥟','dumpling'],['🍦','ice cream'],['🍩','donut'],
+   ['🍪','cookie'],['🎂','cake'],['🍫','chocolate'],['☕','coffee'],
+   ['🧋','bubble tea'],['🍵','tea'],['🥤','drink'],['🍹','cocktail']
+  ]},
+  {id:'activity',icon:'⚽',label:'Activities',items:[
+   ['⚽','soccer'],['🏀','basketball'],['🏈','football'],['⚾','baseball'],
+   ['🎾','tennis'],['🏸','badminton'],['🎳','bowling'],['🎮','gaming'],
+   ['🎲','dice'],['🎯','target'],['🎨','painting art'],['🎭','theatre'],
+   ['🎤','microphone singing'],['🎧','headphones'],['🎵','music'],['🎸','guitar'],
+   ['🏆','trophy'],['🥇','gold medal'],['🎉','celebration'],['🎊','confetti'],
+   ['🎁','gift'],['🎈','balloon'],['🎬','movie'],['📸','photography'],
+   ['🏊','swimming'],['🚴','cycling'],['🥾','hiking'],['🧘','yoga']
+  ]},
+  {id:'travel',icon:'✈',label:'Travel & places',items:[
+   ['✈️','plane flight'],['🛫','departing plane'],['🚆','train'],
+   ['🚇','metro subway'],['🚌','bus'],['🚗','car'],['🚕','taxi'],
+   ['🚲','bicycle'],['🛳️','ship cruise'],['🗺️','map'],['📍','location pin'],
+   ['🧭','compass'],['🏖️','beach'],['🏝️','island'],['🏔️','mountain'],
+   ['🏕️','camping'],['🏙️','city skyline'],['🌇','sunset city'],
+   ['🏠','house'],['🏨','hotel'],['🎡','ferris wheel'],['🌉','bridge'],
+   ['🗼','tower'],['🛍️','shopping bags'],['🧳','suitcase'],['🛂','passport'],
+   ['📅','calendar'],['⏰','clock']
+  ]},
+  {id:'objects',icon:'◈',label:'Objects',items:[
+   ['💡','lightbulb'],['📱','phone'],['💻','laptop'],['⌚','watch'],
+   ['📷','camera'],['🔋','battery'],['🔑','key'],['🔒','lock'],
+   ['💰','money'],['💳','credit card'],['📦','package'],['🛒','shopping cart'],
+   ['📚','books'],['✏️','pencil'],['📝','memo'],['📣','megaphone'],
+   ['💌','love letter'],['💬','speech bubble'],['🔔','bell'],
+   ['🔎','search'],['🩹','bandage'],['🧸','teddy bear']
+  ]},
+  {id:'symbols',icon:'♥',label:'Symbols',items:[
+   ['❤️','red heart'],['🧡','orange heart'],['💛','yellow heart'],
+   ['💚','green heart'],['💙','blue heart'],['💜','purple heart'],
+   ['🩷','pink heart'],['🤍','white heart'],['🖤','black heart'],
+   ['💕','two hearts'],['💖','sparkling heart'],['💘','heart arrow'],
+   ['💯','hundred'],['✅','check mark'],['❌','cross'],['⚠️','warning'],
+   ['❗','exclamation'],['❓','question'],['💤','sleep'],['♻️','recycle'],
+   ['⭐','star'],['✨','sparkles'],['🔥','fire'],['💦','water'],
+   ['🆗','ok'],['🆕','new']
+  ]},
+  {id:'flags',icon:'⚑',label:'Flags',items:[
+   ['🇸🇬','Singapore flag'],['🇲🇾','Malaysia flag'],['🇯🇵','Japan flag'],
+   ['🇰🇷','Korea flag'],['🇨🇳','China flag'],['🇹🇭','Thailand flag'],
+   ['🇦🇺','Australia flag'],['🇺🇸','USA flag'],['🇬🇧','UK flag'],
+   ['🇫🇷','France flag'],['🇩🇪','Germany flag'],['🇮🇹','Italy flag'],
+   ['🇪🇸','Spain flag'],['🇨🇦','Canada flag'],['🇳🇿','New Zealand flag'],
+   ['🇮🇳','India flag'],['🇻🇳','Vietnam flag'],['🇮🇩','Indonesia flag'],
+   ['🏳️‍🌈','rainbow flag'],['🏁','checkered flag']
+  ]}
+ ];
+ const FALLBACK_RECENT=['😂','❤️','🥰','😊','😍','🤣','😭','😘','👍','🙏','✨','🔥','😅','🎉','🩷','👀','🥳','🤔','💯','😎','💀','💕','🎈','🫶'];
+ function allEmojiItems(){
+  return EMOJI_SETS.flatMap(group=>group.items);
+ }
+ function emojiItems(){
+  if(emojiQuery.trim()){
+   const q=emojiQuery.trim().toLowerCase();
+   return allEmojiItems().filter(([glyph,label])=>label.includes(q)||glyph.includes(q));
   }
-  const a=numbers?
+  if(emojiCategory==='recent'){
+   const lookup=new Map(allEmojiItems());
+   return [...new Set([...emojiHistory,...FALLBACK_RECENT])].map(glyph=>[
+     glyph,lookup.get(glyph)||'Recently used emoji'
+   ]);
+  }
+  return EMOJI_SETS.find(group=>group.id===emojiCategory)?.items||[];
+ }
+ function updateEmojiGrid(){
+  const grid=keyboard.querySelector('.dk-emoji-grid');
+  if(!grid)return;
+  const options=emojiItems();
+  grid.innerHTML=options.length?options.map(([emoji,label])=>
+   '<button type="button" class="dk-emoji-choice" data-kb-key="'+escapeText(emoji)+
+   '" aria-label="'+escapeText(label)+'" title="'+escapeText(label)+'">'+emoji+'</button>'
+  ).join(''):'<div class="dk-emoji-empty">No emoji found</div>';
+ }
+ function drawEmoji(){
+  keyboard.innerHTML=
+   '<div class="dk-emoji-search-row"><label class="dk-emoji-search-wrap">'+
+     '<span class="dk-emoji-search-icon" aria-hidden="true">⌕</span>'+
+     '<input type="search" class="dk-emoji-search" placeholder="Search Emoji" aria-label="Search Emoji" autocomplete="off" spellcheck="false" inputmode="none" value="'+escapeText(emojiQuery)+'">'+
+   '</label></div>'+
+   '<div class="dk-emoji-grid" role="group" aria-label="Emoji choices"></div>'+
+   '<div class="dk-emoji-categories" role="group" aria-label="Emoji categories">'+
+    '<button type="button" class="dk-emoji-abc" data-kb-action="abc" aria-label="Back to letters">ABC</button>'+
+    '<button type="button" class="dk-emoji-category'+(emojiCategory==='recent'?' active':'')+
+     '" data-kb-action="category" data-kb-category="recent" aria-label="Frequently Used" aria-pressed="'+(emojiCategory==='recent')+'">◷</button>'+
+    EMOJI_SETS.map(group=>
+     '<button type="button" class="dk-emoji-category'+(emojiCategory===group.id?' active':'')+
+      '" data-kb-action="category" data-kb-category="'+group.id+'" aria-label="'+group.label+
+      '" aria-pressed="'+(emojiCategory===group.id)+'">'+group.icon+'</button>'
+    ).join('')+
+   '</div>'+
+   '<div class="dk-emoji-footer"><span aria-hidden="true">☺</span><span class="dk-emoji-title">Emoji</span>'+ 
+   '<button type="button" class="dk-emoji-backspace" data-kb-action="delete" aria-label="Delete last character">'+deleteIcon+'</button></div>';
+  updateEmojiGrid();
+ }
+
+ /* Render the same four-row iPhone-style typing keyboard for letters,
+    numbers and symbols. Keep the chat input editable by real keyboard too. */
+ function draw(){
+  if(emojiMode){drawEmoji();return}
+  const layout=numbers?
    (shifted?
-    [['[',']','{','}','#','%','^','*','+','='],
-     ['~','<','>','€','£','¥','•','_','|'],
-     ['.',',','?',':',';','!','/','@',"'"]]:
-    [['1','2','3','4','5','6','7','8','9','0'],
-     ['@','#','$','%','&','-','+','(',')','/'],
-     ['*','"',"'",':',';','!','?',',','.']]):
-   ['qwertyuiop'.split(''),'asdfghjkl'.split(''),'zxcvbnm'.split('')];
-  const letters=arr=>arr.map(x=>key(shifted&&!numbers?x.toUpperCase():x,numbers?x:x.toUpperCase())).join('');
-  keyboard.innerHTML='<div class="dk-predict" aria-label="Predictive text suggestions">'+
-   '<span>I</span><span>The</span><span>Is</span></div>'+
-   '<div class="dk-rows" role="group" aria-label="Keyboard keys">'+
-    '<div class="dk-row">'+letters(a[0])+'</div>'+
-    '<div class="dk-row dk-offset">'+letters(a[1])+'</div>'+
-    '<div class="dk-row">'+
-     '<button type="button" class="dk-key dk-special" data-kb-action="shift" aria-label="Shift">'+(numbers?(shifted?'123':'#+='):shiftIcon)+'</button>'+
-     letters(a[2])+
-     '<button type="button" class="dk-key dk-special" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
-    '</div>'+
-    '<div class="dk-row dk-bottom">'+
-     '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode">'+(numbers?'ABC':'123')+'</button>'+
-     '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">'+emojiIcon+'</button>'+
-     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
-     '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message"><span class="dk-return-dark">'+returnIcon+'</span><span class="dk-return-light">'+searchIcon+'</span></button>'+
-    '</div>'+
+    [
+     ['[',']','{','}','#','%','^','*','+','='],
+     ['_','\\','|','~','<','>','€','£','¥','•'],
+     ['.',',','?','!','\'']
+    ]:
+    [
+     ['1','2','3','4','5','6','7','8','9','0'],
+     ['-','/',':',';','(',')','$','&','@','"'],
+     ['.',',','?','!','\'']
+    ]):
+   [['q','w','e','r','t','y','u','i','o','p'],
+    ['a','s','d','f','g','h','j','k','l'],
+    ['z','x','c','v','b','n','m']];
+  /* Like iOS "Show Lowercase Keys" turned off: uppercase keycap labels
+     stay visually stable; Shift still controls the actual typed character. */
+  const chars=row=>row.map(ch=>key(!numbers&&shifted?ch.toUpperCase():ch,
+    numbers?ch:ch.toUpperCase(),'dk-char')).join('');
+  const shiftLabel=numbers?(shifted?'123':'#+='):'Shift';
+  const shiftContent=numbers?(shifted?'123':'#+='):shiftIcon;
+  const bottomLabel=numbers?'ABC':'123';
+  keyboard.innerHTML=
+   '<div class="dk-predict" aria-label="Predictive text suggestions">'+
+     '<span>I</span><span>The</span><span>Is</span></div>'+
+   '<div class="dk-rows" role="group" aria-label="'+(numbers?'Numbers and symbols':'Letters')+'">'+
+     '<div class="dk-row">'+chars(layout[0])+'</div>'+
+     '<div class="dk-row'+(numbers?'':' dk-offset')+'">'+chars(layout[1])+'</div>'+
+     '<div class="dk-row'+(numbers?' dk-numbers-third':'')+'">'+
+       '<button type="button" class="dk-key dk-special dk-shift'+(shifted?' is-on':'')+
+        '" data-kb-action="shift" aria-label="'+shiftLabel+'" aria-pressed="'+shifted+'">'+shiftContent+'</button>'+
+       chars(layout[2])+
+       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
+     '</div>'+
+     '<div class="dk-row dk-bottom">'+
+       '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers and symbols')+'">'+bottomLabel+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-action="emoji" aria-label="Open emoji keyboard">'+emojiIcon+'</button>'+
+       '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
+       '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message">'+
+         '<span class="dk-return-icon">'+returnIcon+'</span></button>'+
+     '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
   updateSend();
@@ -119,7 +253,7 @@
    opened=true;
    keyboard.hidden=false;
    dev.classList.add('demo-keyboard-open');
-   shifted=false;numbers=false;
+   shifted=true;numbers=false;emojiMode=false;capsLock=false;lastShiftTap=0;
    selectSkin();draw();
   }
   scrollEnd();
@@ -138,7 +272,11 @@
   const end=input.selectionEnd??start;
   input.setRangeText(value,start,end,'end');
   input.dispatchEvent(new Event('input',{bubbles:true}));
-  if(shifted&&!numbers){shifted=false;draw()}
+  if(!numbers&&!emojiMode&&shifted&&!capsLock&&/^[a-z]$/i.test(value)){
+   shifted=false;draw();
+  } else if(!numbers&&!emojiMode&&/[.!?]\s$/.test(input.value)&&!capsLock){
+   shifted=true;draw();
+  }
  }
  function erase(){
   const input=currentInput();if(!input)return;
@@ -159,31 +297,68 @@
   const control=e.target.closest('button');if(!control)return;
   const action=control.dataset.kbAction;
   if(action==='done'){hide(true);return}
-  if(action==='clear'){
-   const input=currentInput();
-   if(input){
-    input.focus({preventScroll:true});
-    input.value='';
-    input.setSelectionRange(0,0);
-    input.dispatchEvent(new Event('input',{bubbles:true}));
-   }
-   return;
-  }
   if(action==='delete'){erase();return}
-  if(action==='shift'){shifted=!shifted;draw();return}
-  if(action==='mode'){numbers=!numbers;shifted=false;draw();return}
+  if(action==='emoji'){
+   emojiMode=true;emojiCategory='recent';emojiQuery='';draw();return;
+  }
+  if(action==='abc'){
+   emojiMode=false;numbers=false;capsLock=false;
+   const value=currentInput()?.value||'';
+   shifted=!value||/[.!?]\s$/.test(value);
+   draw();return;
+  }
+  if(action==='category'){
+   emojiCategory=control.dataset.kbCategory;
+   emojiQuery='';draw();return;
+  }
+  if(action==='shift'){
+   if(numbers){shifted=!shifted;}
+   else{
+    const now=Date.now();
+    if(now-lastShiftTap<360){capsLock=true;shifted=true;}
+    else{capsLock=false;shifted=!shifted;}
+    lastShiftTap=now;
+   }
+   draw();return;
+  }
+  if(action==='mode'){
+   numbers=!numbers;
+   capsLock=false;
+   // Returning from 123 should restore iOS-style auto-capitalisation.
+   const value=currentInput()?.value||'';
+   shifted=!numbers&&(!value||/[.!?]\s$/.test(value));
+   draw();return;
+  }
   if(action==='send'){
    const input=currentInput();
    if(input?.value.trim())A.send();
    return;
   }
-  if(control.hasAttribute('data-kb-key'))insert(control.dataset.kbKey);
+  if(control.hasAttribute('data-kb-key')){
+   const value=control.dataset.kbKey;
+   insert(value);
+   if(emojiMode){
+    emojiHistory.unshift(value);
+    if(emojiHistory.length>24)emojiHistory.pop();
+    updateEmojiGrid();
+   }
+  }
  });
  document.addEventListener('focusin',e=>{
   if(e.target.id==='cin')show();
  });
  document.addEventListener('input',e=>{
-  if(e.target.id==='cin'&&opened)updateSend();
+  if(opened&&e.target.matches?.('#demo-keyboard .dk-emoji-search')){
+   emojiQuery=e.target.value;
+   updateEmojiGrid();return;
+  }
+  if(e.target.id!=='cin'||!opened)return;
+  updateSend();
+  // Match native keyboard case when typing with a physical desktop keyboard.
+  if(!numbers&&!capsLock&&!emojiMode){
+   const sentenceStart=!e.target.value||/[.!?]\s$/.test(e.target.value);
+   if(shifted!==sentenceStart){shifted=sentenceStart;draw();}
+  }
  });
  window.addEventListener('resize',()=>{if(opened)selectSkin()});
  document.addEventListener('keydown',e=>{

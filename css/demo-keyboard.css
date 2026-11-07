@@ -1,162 +1,184 @@
-/* iPhone keyboard reference sheet, scaled to Roam's 390px device frame.
-   Inverse contrast is deliberate: light chat = dark keyboard; dark chat =
-   translucent white keyboard. Native keyboards still handle real phones. */
+/* Roam iPhone-style demo keyboard. Sizes are tuned for a 390–402px phone
+   frame and the user's iOS screenshots: shallow rounded keycaps, uppercase
+   labels, staggered rows, full-width space bar and lower globe/mic toolbar.
+   This HTML keyboard is not the native iOS keyboard.
+   Inverse contrast requested: light page -> dark keys, dark page -> light. */
 #dev{--demo-keyboard-height:315px}
 #dev .demo-keyboard{
-  --dk-bg:#202020;
-  --dk-key:#444444;
-  --dk-special:#444444;
-  --dk-ink:#F7F7F7;
-  --dk-sub:#A2A2A2;
-  --dk-divider:rgba(210,210,210,.18);
-  --dk-key-shadow:none;
-  --dk-pressed:#535355;
-  --dk-emoji-cutout:#444444;
+  --dk-bg:#1C1C1E;
+  --dk-key:#454547;
+  --dk-control:#3B3B3E;
+  --dk-ink:#FAFAFC;
+  --dk-sub:#ACACB0;
+  --dk-divider:rgba(220,220,226,.15);
+  --dk-shadow:0 1px 0 rgba(0,0,0,.24);
+  --dk-pressed:#646468;
+  --dk-radius:8px;
+  --dk-emoji-cutout:#454547;
   position:absolute;
-  inset:auto 0 0;
+  left:0;
+  right:0;
+  bottom:0;
   z-index:48;
+  box-sizing:border-box;
   display:flex;
   flex-direction:column;
-  box-sizing:border-box;
-  height:var(--demo-keyboard-height);
   width:100%;
-  padding:6px 3px 5px;
+  height:var(--demo-keyboard-height);
+  padding:7px 5px 4px;
   border:0;
-  border-radius:16px 16px 0 0;
+  border-radius:28px 28px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
-  box-shadow:0 -5px 20px rgba(0,0,0,.14);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  box-shadow:0 -5px 18px rgba(20,26,40,.10);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
   font-weight:400;
   -webkit-user-select:none;
   user-select:none;
   touch-action:manipulation;
-  -webkit-backdrop-filter:blur(28px);
-  backdrop-filter:blur(28px);
 }
 #dev .demo-keyboard.theme-light{
-  --dk-bg:rgba(226,227,231,.84);
-  --dk-key:rgba(255,255,255,.98);
-  --dk-special:rgba(255,255,255,.97);
-  --dk-ink:#080808;
-  --dk-sub:#606065;
-  --dk-divider:rgba(112,112,122,.22);
-  --dk-key-shadow:0 1px 1px rgba(88,91,106,.1);
-  --dk-pressed:#EAECF0;
-  --dk-emoji-cutout:white;
+  --dk-bg:rgba(217,219,226,.89);
+  --dk-key:rgba(255,255,255,.99);
+  --dk-control:rgba(174,182,194,.80);
+  --dk-ink:#121316;
+  --dk-sub:#6B6E77;
+  --dk-divider:rgba(90,100,115,.17);
+  --dk-shadow:0 1px 1px rgba(70,80,100,.14);
+  --dk-pressed:#EDF0F3;
+  --dk-radius:9px;
+  --dk-emoji-cutout:#FFFFFF;
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  backdrop-filter:blur(24px) saturate(140%);
 }
-#dev .demo-keyboard.theme-dark{--dk-bg:#202020}
+#dev .demo-keyboard.theme-dark{--dk-bg:#1C1C1E}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
   flex:0 0 38px;
+  min-height:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   align-items:center;
-  text-align:center;
   color:var(--dk-sub);
   font-size:17px;
-  line-height:22px;
-  padding:0;
+  font-weight:400;
+  line-height:1.2;
+  text-align:center;
+  padding:0 8px 3px;
 }
 #dev .dk-predict span{
   display:grid;
   place-items:center;
-  height:23px;
   min-width:0;
-  white-space:nowrap;
+  min-height:24px;
   overflow:hidden;
+  white-space:nowrap;
   text-overflow:ellipsis;
 }
 #dev .dk-predict span+span{border-left:1px solid var(--dk-divider)}
 #dev .dk-rows{
   flex:1 1 auto;
+  min-height:0;
   display:flex;
   flex-direction:column;
-  gap:6px;
-  padding:0;
-  min-height:0;
+  gap:8px;
+  padding:0 0 2px;
 }
 #dev .dk-row{
   flex:1 1 0;
+  min-height:0;
+  width:100%;
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:3px;
-  min-height:0;
+  gap:5px;
+  box-sizing:border-box;
 }
-#dev .dk-offset{padding-inline:14px}
+#dev .dk-offset{padding-inline:5.5%}
 #dev .dk-key{
   flex:1 1 0;
+  min-width:0;
+  min-height:0;
+  height:100%;
   display:grid;
   place-items:center;
   box-sizing:border-box;
-  min-width:0;
-  height:100%;
-  padding:0;
   margin:0;
+  padding:0;
   border:0;
-  border-radius:7px;
+  border-radius:var(--dk-radius);
   background:var(--dk-key);
   color:var(--dk-ink);
-  font-family:inherit;
-  font-size:23px;
-  font-weight:400;
-  line-height:1;
+  box-shadow:var(--dk-shadow);
+  font:400 21px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
   text-align:center;
-  box-shadow:var(--dk-key-shadow);
   cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
 #dev .dk-key:active{background:var(--dk-pressed)}
-#dev .dk-key:focus-visible{outline:2px solid #82BCFC;outline-offset:-2px}
-#dev .dk-special{
-  flex:1.35 1 0;
-  background:var(--dk-special);
-  font-size:17px;
+#dev .dk-key:focus-visible{
+  outline:2px solid #76B9FF;
+  outline-offset:-2px;
 }
-#dev .dk-special svg{width:24px;height:24px;display:block}
-#dev .dk-bottom{margin-top:0}
-#dev .dk-bottom .dk-mode,
+#dev .dk-special{background:var(--dk-control);font-size:16px}
+#dev .dk-special svg{display:block;width:23px;height:23px}
+#dev .dk-shift,
+#dev .dk-delete{flex:1.45 1 0}
+#dev .dk-shift.is-on{background:#E3E3E6;color:#252528}
+#dev .theme-light .dk-shift.is-on{background:white;color:#16171A}
+#dev .dk-numbers-third .dk-shift,
+#dev .dk-numbers-third .dk-delete{flex:1.3 1 0}
+#dev .dk-numbers-third .dk-char{font-size:19px}
+#dev .dk-bottom{margin-top:0;gap:6px}
+#dev .dk-bottom .dk-mode{
+  flex:0 0 12%;
+  background:var(--dk-control);
+  font-size:16px;
+}
 #dev .dk-bottom .dk-emoji{
-  flex:0 0 12.5%;
-  font-size:18px;
-  font-weight:400;
+  flex:0 0 12%;
+  background:var(--dk-control);
 }
-#dev .dk-bottom .dk-emoji svg{
-  width:25px;
-  height:25px;
-  display:block;
-}
+#dev .dk-bottom .dk-emoji svg{display:block;width:24px;height:24px}
 #dev .dk-bottom .dk-space{
-  flex:1 1 0;
+  flex:1 1 auto;
   position:relative;
 }
 #dev .dk-bottom .dk-en{
   position:absolute;
-  right:6px;
-  bottom:5px;
+  right:8px;
+  bottom:6px;
   color:var(--dk-sub);
   font-size:9px;
   font-weight:500;
+  line-height:1;
 }
 #dev .dk-bottom .dk-return{
-  flex:0 0 23%;
-  background:var(--dk-key);
+  flex:0 0 25%;
+  background:var(--dk-control);
+  color:#89898D;
 }
-#dev .dk-return svg{width:27px;height:27px;display:block}
-#dev .dk-return-dark{color:#929296}
-#dev .theme-dark .dk-return.has-text{background:#327FFC}
-#dev .dk-return.has-text .dk-return-dark{color:#FFFFFF}
-#dev .dk-return-light{display:none}
-#dev .theme-light .dk-return{background:#3076F6;color:white}
-#dev .theme-light .dk-return-dark{display:none}
-#dev .theme-light .dk-return-light{display:block;color:white}
+#dev .dk-return-icon{display:grid;place-items:center}
+#dev .dk-return svg{display:block;width:27px;height:27px}
+#dev .dk-bottom .dk-return.has-text{
+  background:var(--dk-control);
+  color:#F7F7FA;
+}
+#dev .theme-light .dk-bottom .dk-return.has-text{
+  background:#3478F6;
+  color:#FFFFFF;
+}
+#dev .theme-light .dk-bottom .dk-return:not(.has-text){
+  background:#AEB6C2;
+  color:#5F6977;
+}
 #dev .dk-accessories{
-  flex:0 0 43px;
+  flex:0 0 62px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:0 23px 0;
+  padding:0 23px 1px;
   color:var(--dk-ink);
 }
 #dev .dk-accessories svg{
@@ -169,105 +191,193 @@
   stroke-linejoin:round;
   stroke-width:1.8;
 }
-#dev .dk-accessories .dk-globe svg{width:27px;height:27px}
+#dev .dk-accessories .dk-globe svg{width:26px;height:26px}
 
-/* Circular numeric dial pad: HTML buttons driven by js/demo-keyboard.js.
-   Available from the chat keyboard's 123 key; ABC switches back to letters. */
-#dev .dk-phonepad{
+/* iOS-inspired Emoji keyboard. Uses the same desktop keyboard surface and
+   colour tokens as the letter/number modes; emoji glyphs render using the
+   user's operating-system colour-emoji font. */
+#dev .dk-emoji-search-row{
+  flex:0 0 49px;
+  display:flex;
+  align-items:center;
+  padding:7px 11px 5px;
+}
+#dev .dk-emoji-search-wrap{
+  display:flex;
+  align-items:center;
   box-sizing:border-box;
+  width:100%;
+  height:37px;
+  padding:0 11px;
+  gap:7px;
+  border-radius:11px;
+  background:rgba(138,138,145,.21);
+  color:var(--dk-sub);
+}
+#dev .theme-light .dk-emoji-search-wrap{
+  background:rgba(100,111,130,.15);
+}
+#dev .dk-emoji-search-icon{
+  flex:0 0 auto;
+  font-size:24px;
+  line-height:1;
+  transform:rotate(-20deg);
+}
+#dev .dk-emoji-search{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--dk-ink);
+  font:400 15px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  box-shadow:none;
+}
+#dev .dk-emoji-search::placeholder{
+  color:var(--dk-sub);
+  opacity:1;
+}
+#dev .dk-emoji-search::-webkit-search-cancel-button{
+  -webkit-appearance:searchfield-cancel-button;
+}
+#dev .dk-emoji-grid{
   flex:1 1 auto;
   min-height:0;
-  width:100%;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  grid-auto-rows:43px;
+  align-content:start;
+  gap:5px 1px;
+  padding:5px 9px 7px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+#dev .dk-emoji-grid::-webkit-scrollbar{display:none}
+#dev .dk-emoji-choice{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  min-width:0;
+  height:43px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:var(--dk-ink);
+  font:normal 29px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+#dev .dk-emoji-choice:active{background:rgba(150,155,167,.21)}
+#dev .dk-emoji-choice:focus-visible,
+#dev .dk-emoji-category:focus-visible,
+#dev .dk-emoji-abc:focus-visible{
+  outline:2px solid #75B7FF;
+  outline-offset:-2px;
+}
+#dev .dk-emoji-empty{
+  grid-column:1/-1;
+  display:grid;
+  place-items:center;
+  padding:16px;
+  color:var(--dk-sub);
+  font-size:13px;
+}
+#dev .dk-emoji-categories{
+  flex:0 0 46px;
   display:flex;
-  flex-direction:column;
-  padding:7px 13px 12px;
+  justify-content:space-between;
+  align-items:center;
+  min-width:0;
+  box-sizing:border-box;
+  gap:2px;
+  padding:3px 5px 2px;
+  border-top:1px solid var(--dk-divider);
+}
+#dev .dk-emoji-category,
+#dev .dk-emoji-abc{
+  flex:1 1 0;
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  min-width:0;
+  height:33px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--dk-sub);
+  font:500 20px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  cursor:pointer;
+}
+#dev .dk-emoji-abc{
+  flex:1.35 1 0;
+  font-size:12px;
+  color:var(--dk-ink);
+  background:var(--dk-control);
+}
+#dev .dk-emoji-category.active{
+  background:rgba(155,158,170,.20);
   color:var(--dk-ink);
 }
-#dev .dk-phonepad-head{
+#dev .dk-emoji-footer{
+  flex:0 0 29px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  flex:0 0 35px;
-  padding:0 14px;
+  box-sizing:border-box;
+  padding:0 26px 4px;
   color:var(--dk-sub);
-  font-size:13px;
-  font-weight:600;
+  font-size:16px;
 }
-#dev .dk-phonepad-switch{
-  color:#0A84FF;
-  background:transparent;
-  border:0;
-  padding:7px 9px;
-  font-size:14px;
-  font-weight:700;
-  cursor:pointer;
+#dev .dk-emoji-title{
+  font-size:11px;
+  font-weight:500;
 }
-#dev .dk-phonepad-rows{
-  display:flex;
-  flex:1 1 auto;
-  flex-direction:column;
-  min-height:0;
-  gap:5px;
-}
-#dev .dk-phonepad-row{
-  display:flex;
-  flex:1 1 0;
-  min-height:0;
-  justify-content:space-evenly;
-  align-items:center;
-  gap:12px;
-}
-#dev .dk-phone-key{
+#dev .dk-emoji-backspace{
   display:grid;
-  flex:0 0 auto;
   place-items:center;
-  width:clamp(44px,15vw,62px);
-  height:clamp(44px,15vw,62px);
-  max-width:100%;
-  max-height:100%;
+  box-sizing:border-box;
+  width:27px;
+  height:25px;
+  margin:0;
   padding:0;
   border:0;
-  border-radius:50%;
-  background:#2C2C2E;
-  color:#fff;
-  font-family:inherit;
-  font-weight:400;
-  font-size:25px;
-  line-height:1;
+  border-radius:5px;
+  background:transparent;
+  color:var(--dk-ink);
   cursor:pointer;
-  transition:background-color .15s ease;
 }
-#dev .theme-light .dk-phone-key{
-  background:rgba(255,255,255,.96);
-  color:#101116;
+#dev .dk-emoji-backspace svg{
+  display:block;
+  width:22px;
+  height:22px;
 }
-#dev .dk-phone-key:active{background:#48484A}
-#dev .theme-light .dk-phone-key:active{background:#D8DBE1}
-#dev .dk-phone-action{
-  background:#3A3A3C;
-  color:#0A84FF;
-  font-size:17px;
-  font-weight:600;
-}
-#dev .theme-light .dk-phone-action{
-  background:rgba(250,250,252,.82);
-  color:#2877D5;
-}
-#dev .dk-phone-key:focus-visible,
-#dev .dk-phonepad-switch:focus-visible{
-  outline:2px solid #6DB6FF;
-  outline-offset:2px;
+#dev .dk-emoji-backspace:active{background:rgba(150,155,167,.21)}
+#dev .dk-emoji-backspace:focus-visible{
+  outline:2px solid #75B7FF;
+  outline-offset:0;
 }
 @media(max-height:700px){
-  #dev .dk-phonepad{padding:3px 10px 9px}
-  #dev .dk-phonepad-head{flex-basis:30px}
-  #dev .dk-phonepad-rows{gap:3px}
-  #dev .dk-phone-key{
-    width:clamp(40px,13.5vw,55px);
-    height:clamp(40px,13.5vw,55px);
-    font-size:22px;
+  #dev .dk-emoji-search-row{flex-basis:42px;padding-top:3px}
+  #dev .dk-emoji-search-wrap{height:33px}
+  #dev .dk-emoji-grid{
+    grid-auto-rows:38px;
+    gap:3px 1px;
   }
-  #dev .dk-phone-action{font-size:15px}
+  #dev .dk-emoji-choice{height:38px;font-size:26px}
+  #dev .dk-emoji-categories{flex-basis:40px}
+  #dev .dk-emoji-footer{flex-basis:24px}
 }
 
 /* Soften only the active chat composer ring during desktop keyboard use.
@@ -317,15 +427,15 @@
 
 @media(max-height:700px){
   #dev{--demo-keyboard-height:272px}
-  #dev .dk-predict{font-size:15px}
-  #dev .dk-predict{flex-basis:34px}
+  #dev .dk-predict{flex-basis:34px;font-size:15px}
   #dev .dk-rows{gap:5px}
-  #dev .dk-offset{padding-inline:12px}
-  #dev .dk-key{font-size:21px}
-  #dev .dk-accessories{flex-basis:38px}
-  #dev .dk-bottom .dk-mode{font-size:15px}
+  #dev .dk-row{gap:4px}
+  #dev .dk-offset{padding-inline:5.5%}
+  #dev .dk-key{font-size:19px;border-radius:8px}
+  #dev .dk-bottom .dk-mode{font-size:14px}
   #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
   #dev .dk-return svg{width:24px;height:24px}
-  #dev .dk-accessories svg{width:23px;height:23px}
+  #dev .dk-accessories{flex-basis:48px}
+  #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
 }

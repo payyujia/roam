@@ -1,14 +1,14 @@
 /* ===== COLLECTIONS ===== */
 
-/* Reel rail: bookmark (collections) above heart (likes). White outline; filled states below. */
-#dev .rv .rail .ib:is(.heart,.coll){color:#fff!important}
-#dev .rv .rail .ib:is(.heart,.coll) svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 3px rgba(14,17,22,.35))}
-/* Collected: white fill */
-#dev .rv .rail .ib.coll[aria-pressed="true"] svg,
-#dev .rv .rail .ib.coll[aria-pressed="true"] svg path{fill:#fff!important;stroke:#fff}
-/* Liked: rose -> coral-500 diagonal gradient (#heart-g in index.html), same white outline */
-#dev .rv .rail .ib.heart[aria-pressed="true"] svg,
-#dev .rv .rail .ib.heart[aria-pressed="true"] svg path{fill:url(#heart-g)!important;stroke:#fff}
+/* Reel rail: keep every action the same size in both selection states. */
+#dev .rv .rail .ib{width:44px;height:44px;min-width:44px;min-height:44px;flex:0 0 44px;padding:0}
+#dev .rv .rail .ib svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 3px rgba(14,17,22,.35))}
+#dev .rv .rail .ib.heart svg{width:36px;height:36px}
+#dev .rv .rail .ib.heart svg path{vector-effect:non-scaling-stroke}
+/* Collected: white outline -> white fill. */
+#dev .rv .rail .ib.coll[aria-pressed="true"] svg path{fill:#fff!important;stroke:#fff;stroke-width:2}
+/* Liked: rose-to-coral gradient fill without the unselected white outline. */
+#dev .rv .rail .ib.heart[aria-pressed="true"] svg path{fill:url(#heart-g)!important;stroke:transparent;stroke-width:2;scale:1.1;transform-origin:center center;transform:translateZ(0)}
 
 /* .fi.sel: liquid-glass dropdown. The select fills the whole field so the whole control opens it. */
 #dev .fi.sel{padding:0 9px 0 16px;cursor:pointer}
@@ -36,7 +36,8 @@
 #dev .fi.sel:focus-within .chev{transform:rotate(180deg)}
 #dev .fi.sel select:focus-visible{outline:none}
 
-/* Create-trip collection picker */
-#dev #s-form .pills{display:flex;flex-wrap:wrap;gap:8px}
-#dev #s-form .pills .pill svg{width:14px;height:14px}
-#dev #s-form .pills{margin:0;padding:0}
+/* Create-trip form: one header style (matches home card titles: 15/22 bold ink) */
+#dev #s-form .lb{font-size:15px;line-height:22px;font-weight:700;color:var(--ink);margin-bottom:6px}
+#dev #s-form .lb .opt{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
+/* Collections use the .cx checkbox rows from the alternatives tray; cancel the form's side padding so rows align with the fields */
+#dev #s-form .cxg{margin:0 -24px}

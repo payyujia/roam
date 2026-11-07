@@ -1,7 +1,8 @@
 /* ROAM / CARD STYLING LIBRARY — Sunrise Frost
-   Single shared sizing/spacing source for the 4 live HTML variants:
+   Shared layout and typography source for six live card variants:
    .trow.task.tier (Voting), .trow.reschedule-row (Rescheduling),
-   .row.tier (Trip), .chat-row (Chat).
+   .row.tier (Trip), .chat-row (Chat),
+   .srow.acct (AccountCard), .settings-card (SettingsCard).
    Markup/behavior still lives in existing JS.
    The same rules power docs/card-components.html.
    Load this file AFTER liquid-glass-v6.css. */
@@ -15,13 +16,27 @@
   --roam-card-media-width:56px;
   --roam-card-media-height:60px;
   --roam-card-media-radius:14px;
+  /* Canonical typography for every standard card title. */
+  --roam-card-title-family:var(--font);
+  --roam-card-title-size:16px;
+  --roam-card-title-weight:700;
+  --roam-card-title-line-height:22px;
+  --roam-card-title-letter-spacing:0;
+  /* Three-level type hierarchy shared by Voting, Rescheduling, Trip,
+     Chat, Account and Settings cards. */
+  --roam-card-detail-size:12px;
+  --roam-card-detail-weight:500;
+  --roam-card-detail-line-height:16px;
+  --roam-card-status-size:12px;
+  --roam-card-status-weight:600;
+  --roam-card-status-line-height:16px;
   /* Same spacing from blue header to Home's first heading and Chat search. */
   --roam-first-section-gap:16px;
 }
 
 /* The shared card family keeps common sizing while permitting each variant
    to have its own content/actions and to grow if text needs more room. */
-#dev :is(.trow.tier,.row.tier,.chat-row),
+#dev :is(.trow.tier,.row.tier,.chat-row,.srow.acct),
 #dev #s-trips :is(.trow.tier,.row.tier){
   box-sizing:border-box;
   width:100%;
@@ -61,6 +76,96 @@
 /* Share the exact blue-header-to-first-content spacing with Home's Up next. */
 #dev #s-trips .hd + .sec{padding-top:var(--roam-first-section-gap)}
 #dev #s-chat .hd + .cs{margin-top:var(--roam-first-section-gap)!important}
+
+/* Match the visible space above the first Profile card to Home's Up next text.
+   The heading's font line box adds a small optical inset; card edges don't. */
+#dev #s-profile .hd + .sg{
+  margin-top:calc(var(--roam-first-section-gap) + 4px);
+}
+
+/* Account card uses the shared card sizing, surface and 24px page gutters.
+   Only its avatar differs: preserve the circular profile photograph. */
+#dev #s-profile .hd + .sg{margin-inline:24px}
+#dev #s-profile .srow.acct .av.profile{
+  width:var(--roam-card-media-width);
+  height:var(--roam-card-media-width);
+  flex:0 0 var(--roam-card-media-width);
+  border-radius:50%;
+}
+#dev #s-profile .srow.acct .av.profile img{border-radius:50%}
+
+/* PROFILE — share the same spacing and card recipe as the Trips feed. */
+#dev #s-profile .sg{
+  margin-inline:24px;
+  gap:12px;
+}
+#dev #s-profile .sg .srow{
+  box-sizing:border-box;
+  width:100%;
+  min-height:var(--roam-card-min-height);
+  padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
+  border-radius:var(--roam-card-radius);
+  gap:var(--roam-card-gap);
+}
+/* Keep the Home Heading 800 hierarchy, with matching 24px gutters. */
+#dev #s-profile .ph{padding:28px 24px 0}
+#dev #s-profile .ph + .sg{margin-top:12px}
+/* Profile account and settings use identical outer dimensions while keeping
+   independently styled card variants. Both are 24px from each page edge. */
+#dev #s-profile :is(.profile-card-group,.profile-settings-group){
+  box-sizing:border-box;
+  width:calc(100% - 48px);
+  margin-left:24px;
+  margin-right:24px;
+}
+/* SettingsCard: compact, softer than the 84px AccountCard.
+   All settings rows remain full-width buttons with their existing actions. */
+#dev #s-profile .profile-settings-group .settings-card{
+  box-sizing:border-box;
+  width:100%;
+  min-height:60px;
+  padding:10px 12px;
+  gap:10px;
+  border-radius:18px;
+  --surface-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 6px 17px rgba(46,100,171,.10);
+}
+/* The variant uses round frosted icon discs rather than the profile photo. */
+#dev #s-profile .profile-settings-group .settings-card .sic{
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  border-radius:50%;
+  background:rgba(255,255,255,.70)!important;
+  color:var(--sky-600)!important;
+  box-shadow:0 1px 5px rgba(46,100,171,.10)!important;
+}
+/* Name and supporting information are easier to scan at different weights. */
+#dev #s-profile .srow.acct .gr > b{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#dev #s-profile .srow.acct .gr > .cap{
+  display:block;
+  font-size:12px;
+  line-height:18px;
+  color:var(--tx2);
+}
+#dev #s-profile .sval{
+  max-width:40%;
+  font-size:13px;
+  line-height:18px;
+  text-align:right;
+}
+/* The final profile row must be fully scrollable above the raised tab bar. */
+#dev #s-profile .pg{
+  padding-bottom:calc(160px + env(safe-area-inset-bottom,0px));
+}
+@media(max-width:360px){
+  #dev #s-profile .sg .srow{padding-inline:var(--roam-card-padding-x-compact)}
+  #dev #s-profile .sval{max-width:38%}
+}
 
 /* Chat cards share the same foundation. Keep the timestamp/unread column
    just wide enough for a 24-hour time so the preview can show more text. */
@@ -126,4 +231,42 @@
     column-gap:7px;
     padding-inline:var(--roam-card-padding-x-compact);
   }
+}
+
+/* CARD TYPOGRAPHY — single source of truth for all six regular variants.
+   Change the --roam-card-title-* tokens above to update every title together.
+   Deliberately excludes the featured 18px trip card and page headings. */
+#dev .trow.tier .tmain .gr > b,
+#dev .row.tier > .gr > b,
+#dev #s-chat .chat-row > .gr > b,
+#dev #s-profile .srow.acct .gr > b,
+#dev #s-profile .settings-card .stt{
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-title-size);
+  font-weight:var(--roam-card-title-weight);
+  line-height:var(--roam-card-title-line-height);
+  letter-spacing:var(--roam-card-title-letter-spacing);
+}
+
+/* CARD SECONDARY TYPOGRAPHY — middle detail and bottom status.
+   Class/markup variants share tokens rather than maintaining divergent sizes.
+   Status dots, alignment, truncation, badges and action controls stay intact. */
+#dev .trow.task.tier .tmain .gr > .cap.sm,
+#dev .row.tier > .gr > .cap.sm:first-of-type,
+#dev #s-chat .chat-row > .gr > .cap.sm,
+#dev #s-profile .srow.acct .gr > .cap,
+#dev #s-profile .settings-card .sval{
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-detail-size);
+  font-weight:var(--roam-card-detail-weight);
+  line-height:var(--roam-card-detail-line-height);
+  letter-spacing:0;
+}
+#dev .trow.task.tier .tmain .gr > .due,
+#dev .row.tier > .gr > .cap.sm:nth-of-type(2){
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-status-size);
+  font-weight:var(--roam-card-status-weight);
+  line-height:var(--roam-card-status-line-height);
+  letter-spacing:0;
 }
