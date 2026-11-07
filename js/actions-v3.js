@@ -36,8 +36,31 @@ Object.assign(A,{
  /* chat */
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
- pdet:k=>{S.pd=k;S.p.dirty=0;go('pdet')},
- psave:()=>{S.p.dirty=0;A.back();toast('Changes saved')},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);go('pdet')},
+ pbudgetInput:el=>{
+  const digits=el.value.replace(/[^0-9]/g,'');
+  if(el.value!==digits)el.value=digits;
+  S.p.budgetDraft=digits;
+  const amount=Number(digits);
+  const valid=digits!==''&&Number.isSafeInteger(amount)&&amount>0;
+  const changed=valid&&amount!==Number(S.p.budget);
+  S.p.dirty=changed?1:0;
+  const save=$('#s-pdet .sv .btn');
+  if(save)save.disabled=!changed;
+  const error=$('#budget-input-error');
+  if(error)error.hidden=digits===''||valid;
+  el.setAttribute('aria-invalid',String(digits!==''&&!valid));
+ },
+ psave:()=>{
+  if(S.pd==='budget'){
+   const raw=S.p.budgetDraft??'';
+   const amount=Number(raw);
+   if(!raw||!Number.isSafeInteger(amount)||amount<=0||amount===Number(S.p.budget))return;
+   S.p.budget=amount;
+   S.p.budgetDraft=null;
+  }
+  S.p.dirty=0;A.back();toast('Changes saved')
+ },
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{
   k=decodeURIComponent(k);
   if(!['Walk','MRT & bus','Car'].includes(k))return;
