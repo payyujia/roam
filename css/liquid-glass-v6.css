@@ -1202,17 +1202,19 @@ body{font-weight:500}
   gap:8px;
   min-width:0;
 }
-#dev .reschedule-row .reschedule-tile{
-  display:grid;
-  place-items:center;
+/* Reuse the very same trip cover shown in Your trips. */
+#dev .reschedule-row .cover{
+  --cz:52px;
   width:52px;
   height:56px;
   flex:0 0 52px;
+  border-radius:15px;
+  overflow:hidden;
 }
-#dev .reschedule-row .reschedule-tile svg{
-  width:20px;
-  height:20px;
-  stroke-width:1.8;
+#dev .reschedule-row .cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 #dev .reschedule-row .gr{
   display:flex;
