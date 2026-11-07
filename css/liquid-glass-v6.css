@@ -1328,3 +1328,46 @@ body{font-weight:500}
 #dev #tb .ctr .trip-plane{width:28px;height:28px}
 #dev #tb .ctr .trip-plane path{fill:none;stroke:var(--sky-500)}
 #dev #tb .ctr.on .trip-plane path{fill:var(--sky-300)!important;stroke:var(--sky-300)!important}
+
+
+/* Profile notifications: keep the entire 50px control above the header content
+   so the full face of the button receives pointer input, not just its rim. */
+#dev #s-profile .hd{
+  position:relative;
+  z-index:5;
+}
+#dev #s-profile .profile-notif{
+  z-index:10!important;
+  display:grid!important;
+  place-items:center;
+  pointer-events:auto!important;
+  touch-action:manipulation;
+}
+#dev #s-profile .profile-notif svg{pointer-events:none}
+
+/* Checkbox: match the shared component library's 26px frosted square,
+   9px radius, 1.5px inset outline and bold centred checkmark. */
+#dev .cbx{
+  box-sizing:border-box;
+  width:26px!important;
+  height:26px!important;
+  min-width:26px;
+  flex:0 0 26px;
+  display:grid;
+  place-items:center;
+  border-radius:9px!important;
+  background:rgba(255,255,255,.6)!important;
+  box-shadow:inset 0 0 0 1.5px rgba(14,17,22,.35)!important;
+  color:transparent!important;
+}
+#dev .cbx.on,
+#dev .cx[aria-checked=true] .cbx{
+  background:var(--sky-600)!important;
+  box-shadow:none!important;
+  color:#fff!important;
+}
+#dev .cbx svg{
+  width:16px!important;
+  height:16px!important;
+  stroke-width:3.2!important;
+}
