@@ -1099,13 +1099,13 @@ body{font-weight:500}
 #dev #s-chat .chat-row{
   box-sizing:border-box;
   display:grid;
-  grid-template-columns:56px minmax(0,1fr) 38px;
+  grid-template-columns:56px minmax(0,1fr) 48px;
   align-items:center;
   column-gap:12px;
   width:calc(100% - 48px);
-  min-height:80px;
+  min-height:84px;
   margin:0 24px 12px;
-  padding:10px 12px;
+  padding:12px 14px;
   text-align:left;
 }
 #dev #s-chat .chat-row .cover{
@@ -1113,21 +1113,51 @@ body{font-weight:500}
   height:56px;
   border-radius:14px;
 }
-#dev #s-chat .chat-row > .gr{min-width:0}
-#dev #s-chat .chat-row > :last-child{
-  justify-self:end;
-  align-self:center;
+#dev #s-chat .chat-row > .gr{
   min-width:0;
+  overflow:hidden;
+}
+#dev #s-chat .chat-row .chat-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  justify-self:stretch;
+  align-self:center;
+  gap:7px;
+  min-width:0;
+  width:100%;
   text-align:right;
 }
-#dev #s-chat .chat-row > :last-child .cap{white-space:nowrap}
+#dev #s-chat .chat-row .chat-time{
+  display:block;
+  width:100%;
+  white-space:nowrap;
+  font-size:12px;
+  line-height:16px;
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+#dev #s-chat .chat-row .chat-unread{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  flex:none;
+  width:22px;
+  height:22px;
+  min-width:22px;
+  padding:0!important;
+  border-radius:50%;
+  line-height:1;
+  text-align:center;
+}
 @media(max-width:360px){
   #dev #s-chat .chat-row{
-    grid-template-columns:52px minmax(0,1fr) 34px;
+    grid-template-columns:48px minmax(0,1fr) 44px;
     column-gap:10px;
-    padding-inline:10px;
+    padding-inline:12px;
   }
-  #dev #s-chat .chat-row .cover{width:52px;height:52px}
+  #dev #s-chat .chat-row .cover{width:48px;height:52px}
 }
 
 
