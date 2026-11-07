@@ -17,7 +17,7 @@
   --dk-divider:rgba(220,220,226,.15);
   --dk-shadow:0 1px 0 rgba(0,0,0,.24);
   --dk-pressed:#646468;
-  --dk-radius:7px;
+  --dk-radius:9px;
   --dk-emoji-cutout:#454547;
   position:absolute;
   left:0;
@@ -51,7 +51,7 @@
   --dk-divider:rgba(90,100,115,.17);
   --dk-shadow:0 1px 1px rgba(70,80,100,.14);
   --dk-pressed:#EDF0F3;
-  --dk-radius:8px;
+  --dk-radius:10px;
   --dk-emoji-cutout:#FFFFFF;
   -webkit-backdrop-filter:blur(24px) saturate(140%);
   backdrop-filter:blur(24px) saturate(140%);
@@ -197,18 +197,18 @@
 #dev .dk-numbers-third .dk-char{font-size:19px}
 #dev .dk-bottom{margin-top:0;gap:7px}
 #dev .dk-bottom .dk-mode{
-  flex:0 0 12%;
+  flex:0 0 11%;
   background:var(--dk-control);
   font-size:16px;
 }
 #dev .dk-bottom .dk-emoji{
-  flex:0 0 11%;
+  flex:0 0 10%;
   background:var(--dk-control);
 }
-/* iPhone-inspired filled smiley, proportioned to the smaller native icon. */
+/* Restore fuller smiley proportions while retaining the functional emoji picker. */
 #dev .dk-bottom .dk-emoji .dk-key-icon svg{
-  width:19px;
-  height:19px;
+  width:23px;
+  height:23px;
 }
 #dev .dk-bottom .dk-space{
   flex:1 1 auto;
@@ -226,14 +226,14 @@
 /* The idle Return glyph is deliberately subdued, like the supplied
    iOS dark-keyboard reference, rather than bright grey. */
 #dev .dk-bottom .dk-return{
-  flex:0 0 24%;
+  flex:0 0 25%;
   background:var(--dk-control);
-  color:#56565A;
+  color:#69696D;
 }
 #dev .dk-return-icon{display:grid;place-items:center}
 #dev .dk-return .dk-key-icon svg{
-  width:21px;
-  height:21px;
+  width:25px;
+  height:25px;
 }
 #dev .dk-delete .dk-key-icon svg{width:24px;height:24px}
 #dev .dk-bottom .dk-return.has-text{
@@ -249,7 +249,7 @@
   color:#5F6977;
 }
 #dev .dk-accessories{
-  flex:0 0 62px;
+  flex:0 0 54px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -558,12 +558,12 @@
   #dev .dk-rows{gap:7px}
   #dev .dk-row{gap:5px}
   #dev .dk-offset{padding-inline:6%}
-  #dev .dk-key{font-size:18px;border-radius:8px}
+  #dev .dk-key{font-size:18px;border-radius:9px}
   #dev .dk-bottom .dk-mode{font-size:14px}
-  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:18px;height:18px}
-  #dev .dk-return .dk-key-icon svg{width:20px;height:20px}
+  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:21px;height:21px}
+  #dev .dk-return .dk-key-icon svg{width:23px;height:23px}
   #dev .dk-delete .dk-key-icon svg{width:22px;height:22px}
-  #dev .dk-accessories{flex-basis:48px}
+  #dev .dk-accessories{flex-basis:44px}
   #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
 }
