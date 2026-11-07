@@ -178,7 +178,6 @@ const PROFILE_PREFERENCE_PICKERS={
  health:{
   your:'Your health conditions',results:'Matching health conditions',
   search:'Search health conditions...',empty:'No health conditions selected yet',
-  note:'Used when plans change.',
   catalog:['Asthma','Bad knees','Motion sickness','Heat sensitivity','Migraine','Chronic eye stye','Food allergies','Back pain','Joint pain','Chronic pain','Fatigue','Respiratory sensitivity','Sun sensitivity','Dizziness','Low stamina','Diabetes','Epilepsy','Vertigo','Anxiety']
  }
 };
