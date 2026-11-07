@@ -694,3 +694,39 @@ body{font-weight:500}
 #dev #s-thread .msgs{
   margin-top:24px;
 }
+
+
+/* Apple-reference status bar: clean white SF-style indicators on a dark strip. */
+/* The reference uses a solid charcoal status area, not glowing text or a gradient.
+   A dark backing keeps the white indicators readable on the chat's pale canvas. */
+#dev #sb{
+  height:50px;
+  background:#39393B;
+  color:#fff!important;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-shadow:none!important;
+}
+#dev #sb::before{display:none!important}
+#dev #sb svg{fill:currentColor;color:#fff!important;filter:none!important}
+#dev #sb .sbb{
+  width:27px;
+  height:13px;
+  border-radius:4px;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+#dev #sb .sbb::after{background:#fff!important}
+#dev #sb .sbb i{
+  width:90%;
+  background:#fff!important;
+}
+#dev #sb .sbb b{
+  color:#252525!important;
+  font-family:inherit;
+  font-size:10px;
+  font-weight:700;
+  text-shadow:none!important;
+}
