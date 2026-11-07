@@ -11,7 +11,7 @@ function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['r
 /* Share one app-level button for both actions so their clearance above the
    Trips navigation icon is identical, regardless of scroll position. */
 function chrome(){
- const tp=topId(),create=(!S.nav&&S.tab=='map'&&tp=='map')||(S.tab=='trips'&&tp=='trips'),add=tp=='trip'&&S.step==1;
+ const tp=topId(),create=(!S.nav&&S.tab=='map'&&tp=='map'),add=tp=='trip'&&S.step==1;
  const fab=$('#fab');
  $('#tb').classList.toggle('off',['form'].includes(tp));
  fab.hidden=!(create||add);
