@@ -1,5 +1,10 @@
 /* ===== BOOT: render once, then keep only the live UI clock in sync. ===== */
+/* Initial page load is not navigation: show the first screen without the
+   horizontal slide, then restore transitions for subsequent page changes. */
+const bootApp=$('#app');
+bootApp.classList.add('nt');
 rr();
+requestAnimationFrame(()=>requestAnimationFrame(()=>bootApp.classList.remove('nt')));
 
 /* Keep the seeded CLOCK/NOW for prototype trip scheduling and due-date examples.
    The status-bar time and greeting instead use the device's actual local time.
