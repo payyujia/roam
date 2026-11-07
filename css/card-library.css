@@ -79,6 +79,55 @@
 }
 #dev #s-profile .srow.acct .av.profile img{border-radius:50%}
 
+/* PROFILE — share the same spacing and card recipe as the Trips feed. */
+#dev #s-profile .sg{
+  margin-inline:24px;
+  gap:12px;
+}
+#dev #s-profile .sg .srow{
+  box-sizing:border-box;
+  width:100%;
+  min-height:var(--roam-card-min-height);
+  padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
+  border-radius:var(--roam-card-radius);
+  gap:var(--roam-card-gap);
+}
+/* Keep the Home Heading 800 hierarchy, with matching 24px gutters. */
+#dev #s-profile .ph{padding:28px 24px 0}
+#dev #s-profile .ph + .sg{margin-top:12px}
+/* Name and supporting information are easier to scan at different weights. */
+#dev #s-profile .srow.acct .gr > b{
+  display:block;
+  font-size:16px;
+  font-weight:700;
+  line-height:22px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#dev #s-profile .srow.acct .gr > .cap{
+  display:block;
+  font-size:12px;
+  line-height:18px;
+  color:var(--tx2);
+}
+#dev #s-profile .stt{font-size:15px;line-height:20px}
+#dev #s-profile .sval{
+  max-width:40%;
+  font-size:13px;
+  line-height:18px;
+  text-align:right;
+}
+/* The final profile row must be fully scrollable above the raised tab bar. */
+#dev #s-profile .pg{
+  padding-bottom:calc(160px + env(safe-area-inset-bottom,0px));
+}
+@media(max-width:360px){
+  #dev #s-profile .sg .srow{padding-inline:var(--roam-card-padding-x-compact)}
+  #dev #s-profile .stt{font-size:14px}
+  #dev #s-profile .sval{max-width:38%}
+}
+
 /* Chat cards share the same foundation. Keep the timestamp/unread column
    just wide enough for a 24-hour time so the preview can show more text. */
 #dev #s-chat .chat-row{
