@@ -812,4 +812,4 @@ body{font-weight:500}
   paint-order:normal;
 }
 #dev #sb .ios-battery rect,
-#dev #sb .ios-battery path{fill:#fff}
+#dev #sb .ios-battery path{fill:#fff;stroke:none!important}
