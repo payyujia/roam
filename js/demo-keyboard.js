@@ -57,10 +57,12 @@
  }
  const currentInput=()=>document.querySelector('#s-thread.on #cin');
  function scrollEnd(){
-  requestAnimationFrame(()=>{
+  // Scroll after the keyboard/composer layout has finished recalculating.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   if(!opened)return;
    const el=document.querySelector('#s-thread.on #msgs');
    if(el)el.scrollTop=el.scrollHeight;
-  });
+  }));
  }
  function show(){
   if(typeof topId==='function'&&topId()!=='thread')return;
