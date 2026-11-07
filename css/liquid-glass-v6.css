@@ -1488,3 +1488,74 @@ body{font-weight:500}
   transform:none;
 }
 #dev #s-trip .vote-info-btn::before{content:none!important;display:none!important}
+
+/* ============================================================
+   Live navigation guidance (.nvs) - Sunrise Frost
+   Unboxed hint line instead of a yellow/glass card.
+   Library parts reused:
+   - status dot (.status i: 7px dot; ok/warn/default colours)
+   - live-location dot pulse (.here::after, @keyframes pulse)
+   - tiny sky pill (.btn.tiny.sky) for the inline .lk action
+   - hairline divider (.rule)
+   ============================================================ */
+@keyframes nvs-pulse{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.4);opacity:0}}
+#dev #mc .pad:has(>.nvs){
+  margin:0 24px;
+  padding:2px 0 14px;
+  border-radius:0;
+  background:none!important;
+  position:relative;
+}
+/* .rule: 1px sky hairline fading at both ends */
+#dev #mc .pad:has(>.nvs)::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(31,99,181,.18),transparent);
+}
+#dev #mc .pad>.nvs{
+  position:relative;
+  margin:0;
+  padding:0 0 0 22px;
+  border-radius:0;
+  background:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  font-size:13px;line-height:20px;font-weight:600;
+  color:var(--ink);
+}
+/* status dot: live = sky 500 + pulse ring (same as the live-location dot) */
+#dev #mc .pad>.nvs::before{
+  content:"";position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;
+  padding:0;background:var(--sky-500);
+  -webkit-mask:none;mask:none;pointer-events:none;
+  box-shadow:0 1px 3px rgba(20,60,140,.35);
+}
+#dev #mc .pad>.nvs::after{
+  content:"";position:absolute;left:-6px;top:0;width:20px;height:20px;border-radius:50%;
+  background:rgba(47,140,255,.28);pointer-events:none;
+  animation:nvs-pulse 2s ease-out infinite;
+}
+/* preview (not live yet): static sky dot; locked: coral warn dot, no pulse */
+#dev #mc .pad:has(>.nvs .lk[data-a="opentrip"])>.nvs::after,
+#dev #mc .pad:has(>.nvs .lk[data-a="mvote"])>.nvs::after{display:none}
+#dev #mc .pad:has(>.nvs .lk[data-a="mvote"])>.nvs::before{background:var(--coral-300)}
+/* inline action: tiny sky pill (.btn.tiny.sky) */
+#dev #mc .nvs .lk{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  height:28px;padding:0 12px;margin-left:6px;vertical-align:middle;text-decoration:none;
+  border:0;border-radius:999px;
+  background:rgba(109,182,255,.62);color:var(--ink);
+  font-size:11px;line-height:1;font-weight:700;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25);
+  transition:transform .15s;
+}
+#dev #mc .nvs .lk::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
+}
+#dev #mc .nvs .lk:hover{transform:translateY(-1px)}
+#dev #mc .nvs .lk:active{transform:scale(.98)}
+@media(prefers-reduced-motion:reduce){#dev #mc .pad>.nvs::after{animation:none;opacity:0}}
