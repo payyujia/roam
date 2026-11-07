@@ -593,6 +593,31 @@ body{font-weight:500}
 #dev #app.nt .scr.on,
 #dev #app.instant .scr.on{transition:none!important}
 
+/* iOS-style back navigation for Chat threads and Profile detail pages.
+   Keep the departing page visible while it slides out to the right, revealing
+   the parent underneath. Other inactive screens remain instantly hidden. */
+@keyframes roam-back-slide-right{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(100%,0,0)}
+}
+#dev #app .scr.back-exit{
+  visibility:visible!important;
+  z-index:3;
+  pointer-events:none;
+  animation:roam-back-slide-right .3s cubic-bezier(.22,.72,.26,1) both!important;
+}
+#dev #app .scr.back-reveal.on{
+  z-index:2;
+  transition:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #dev #app .scr.back-exit{
+    animation:none!important;
+    visibility:hidden!important;
+  }
+}
+
+
 /* Small, nested translucent controls don't need a costly second blur pass.
    Keep the Sunrise Frost translucent fills, rim highlights and shadows. */
 #dev :is(.srow,.vote-row,.chat-row,.row.tier,.trow.tier,.fi,.fld,.seg){
