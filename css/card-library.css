@@ -686,8 +686,25 @@
 #dev #s-pdet .profile-multi-card .tq-row{display:flex;align-items:center;gap:10px;min-height:34px}
 #dev #s-pdet .profile-multi-card .tq-ic{width:17px;height:17px;flex:none}
 #dev #s-pdet .profile-multi-card .tq-row input{height:34px;min-width:0;flex:1;font:500 14px/21px var(--font)}
-#dev #s-pdet .profile-multi-card .profile-multi-add{width:34px;height:34px;padding:0;flex:none}
-#dev #s-pdet .profile-multi-card .profile-multi-add:disabled{opacity:.45;cursor:not-allowed}
+/* Keep the library's frosted Sky blue + button visible even before a query.
+   The empty-input state remains functionally disabled, but is not washed grey. */
+#dev #s-pdet .profile-multi-card .profile-multi-add{
+  width:34px;height:34px;padding:0;flex:none;
+  --action-fill:rgba(109,182,255,.62)!important;
+  --action-ink:var(--ink)!important;
+  background:rgba(109,182,255,.62)!important;
+  color:var(--ink)!important;
+  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25)!important;
+  opacity:1!important;
+}
+#dev #s-pdet .profile-multi-card .profile-multi-add:disabled{
+  --action-fill:rgba(109,182,255,.62)!important;
+  --action-ink:var(--ink)!important;
+  background:rgba(109,182,255,.62)!important;
+  color:var(--ink)!important;
+  opacity:1!important;
+  cursor:not-allowed;
+}
 #dev #s-pdet .profile-multi-card .profile-multi-tags{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px;padding-top:0}
 #dev #s-pdet .profile-multi-card:focus-within{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
 #dev #s-pdet .interest-picker{display:flex;flex-direction:column;gap:18px;margin-top:12px}
