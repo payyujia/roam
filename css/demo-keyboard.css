@@ -212,13 +212,18 @@
   font-weight:500;
   line-height:1;
 }
+/* The idle Return glyph is deliberately subdued, like the supplied
+   iOS dark-keyboard reference, rather than bright grey. */
 #dev .dk-bottom .dk-return{
   flex:0 0 25%;
   background:var(--dk-control);
-  color:#89898D;
+  color:#69696D;
 }
 #dev .dk-return-icon{display:grid;place-items:center}
-#dev .dk-return .dk-key-icon svg,
+#dev .dk-return .dk-key-icon svg{
+  width:25px;
+  height:25px;
+}
 #dev .dk-delete .dk-key-icon svg{width:24px;height:24px}
 #dev .dk-bottom .dk-return.has-text{
   background:var(--dk-control);
@@ -545,7 +550,7 @@
   #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
   #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:23px;height:23px}
-  #dev .dk-return .dk-key-icon svg,
+  #dev .dk-return .dk-key-icon svg{width:23px;height:23px}
   #dev .dk-delete .dk-key-icon svg{width:22px;height:22px}
   #dev .dk-accessories{flex-basis:48px}
   #dev .dk-accessories svg{width:22px;height:22px}
