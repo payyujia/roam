@@ -1475,3 +1475,16 @@ body{font-weight:500}
 
 /* Reels screen: keep every h1 heading white, including nested reel states. */
 #dev #s-reels h1{color:#fff!important}
+
+/* Vote-row info: icon only. Strip the glass button surface (fill, blur, shadow, rim);
+   size and position stay as set in screens.css. */
+#dev #s-trip .vote-info-btn,
+#dev #s-trip .vote-info-btn:hover:not(:disabled),
+#dev #s-trip .vote-info-btn:active:not(:disabled){
+  background:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  transform:none;
+}
+#dev #s-trip .vote-info-btn::before{content:none!important;display:none!important}
