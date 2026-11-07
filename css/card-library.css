@@ -80,6 +80,36 @@
   overflow:hidden;
 }
 
+/* WhatsApp-inspired Chat metadata: sent time stays in the top-right;
+   unread count is centred vertically in the card, not under the preview.
+   This is deliberately limited to Chat and doesn't alter other variants. */
+#dev #s-chat .chat-row .chat-meta{
+  position:relative;
+  display:block;
+  align-self:stretch;
+  width:100%;
+  height:auto;
+  min-height:var(--roam-card-media-height);
+  text-align:right;
+}
+#dev #s-chat .chat-row .chat-time{
+  position:absolute;
+  top:0;
+  right:0;
+  width:auto;
+  line-height:16px;
+  font-variant-numeric:tabular-nums;
+}
+#dev #s-chat .chat-row .chat-unread{
+  position:absolute;
+  inset:auto 0 auto auto;
+  top:50%;
+  right:0;
+  grid-row:auto;
+  transform:translateY(-50%);
+  margin:0;
+}
+
 /* Keep image sizes consistent on narrow screens as well. */
 @media(max-width:360px){
   #dev #s-chat .chat-row{
