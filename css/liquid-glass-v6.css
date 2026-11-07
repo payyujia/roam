@@ -699,31 +699,37 @@ body{font-weight:500}
 }
 
 
-/* Chat header: Sunrise Frost sheet round back button, with breathing room for messages. */
+/* Chat header: the 34×34 Frost mini back button from the component sheet.
+   Only the back control changes; keep the centered title and message spacing. */
 #dev #s-thread .top{
   display:grid;
-  grid-template-columns:50px minmax(0,1fr) 50px;
+  grid-template-columns:34px minmax(0,1fr) 34px;
   align-items:center;
   padding:16px 20px 0;
   min-height:66px;
 }
 #dev #s-thread .top .thread-back{
-  --action-fill:var(--glass-control-bg);
+  --action-fill:rgba(255,255,255,.40);
   --action-ink:var(--ink);
-  --action-shadow:var(--control-shadow);
+  --action-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25);
+  --rim:var(--glass-rim);
   position:relative;
   display:grid;
   place-items:center;
-  width:50px;
-  height:50px;
+  width:34px;
+  height:34px;
+  min-width:34px;
+  min-height:34px;
   padding:0;
   border:0;
   border-radius:50%;
 }
 #dev #s-thread .top .thread-back svg{
-  width:20px;
-  height:20px;
+  display:block;
+  width:15px;
+  height:15px;
   margin:0;
+  stroke-width:1.9;
 }
 #dev #s-thread .top .tt{
   min-width:0;
