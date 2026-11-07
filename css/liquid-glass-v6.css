@@ -1044,3 +1044,30 @@ body{font-weight:500}
 @media(prefers-reduced-motion:reduce){
   #dev #s-trips .seg button{transition:none}
 }
+
+
+/* Home-only section rhythm: Heading 800 breathing room without moving Create trip. */
+/* The headings are 23px/800; give them clear separation from the cards.
+   All card dimensions, the Home FAB, navigation and segmented control remain intact. */
+#dev #s-trips .sec{
+  padding-top:16px;
+  padding-bottom:15px;
+}
+#dev #s-trips .feat + .sec,
+#dev #s-trips .tlist + .sec{
+  padding-top:24px;
+}
+#dev #s-trips .tlist{
+  gap:12px;
+}
+/* Keep the same hierarchy on shorter iPhones without excessive scroll length. */
+@media(max-height:740px){
+  #dev #s-trips .sec{
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+  #dev #s-trips .feat + .sec,
+  #dev #s-trips .tlist + .sec{
+    padding-top:20px;
+  }
+}
