@@ -48,11 +48,11 @@ function scene(){
  const t=trip(S.mapTrip),me=myPath(t),fk=t.fork,mine=mstops(t),tone=mapTone(t),
   mp=pathPts(t,baseStops(t)),fp=fk?pathPts(t,fk.stops):null,cur=me=='fork'?fp:mp,
   lv=mine.length>0&&live(t),cu=Math.min(S.leg,mine.length-1);
+ const remaining=lv&&cu>0&&!S.fk?cur.slice(cu):null;
  if(fk){
-  routes.push({pts:mp,tone:me=='main'?tone:'inactive',muted:me!='main',dash:me!='main'||!fin(t),a:`pathpick:main:${t.id}`});
-  routes.push({pts:fp,tone:forkTone(t),muted:me!='fork',dash:me!='fork',a:`pathpick:fork:${t.id}`});
- }else routes.push({pts:mp,tone,dash:!fin(t)});
- if(lv&&cu>0&&!S.fk)routes.push({pts:cur.slice(0,cu+1),tone:'done'});
+  routes.push({pts:me=='main'&&remaining?remaining:mp,tone:me=='main'?tone:'inactive',muted:me!='main',dash:me!='main'||!fin(t),a:`pathpick:main:${t.id}`});
+  routes.push({pts:me=='fork'&&remaining?remaining:fp,tone:forkTone(t),muted:me!='fork',dash:me!='fork',a:`pathpick:fork:${t.id}`});
+ }else routes.push({pts:remaining||mp,tone,dash:!fin(t)});
  const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{const ll=cur[i+1],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
@@ -109,7 +109,8 @@ function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clien
  for(const k in C)if(!want.has(k)){C[k].remove();delete C[k]}
  const sc2=scene(),[mx,my]=MERC(M.lat,M.lng,M.z),pr=ll=>{const q=MERC(ll[0],ll[1],M.z);return[q[0]-mx+W/2,q[1]-my+H/2]};
  $('#mpr .routes').innerHTML=sc2.routes.map(r=>routeH(r,pr)).join('');
- $('#mpp').innerHTML=sc2.pins.map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('')}
+ $('#mpp').innerHTML=sc2.pins.filter(p=>!p.lab).map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('');
+ $('#mplabel').innerHTML=sc2.pins.filter(p=>p.lab).map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('')}
 function flyTo(tg){cancelAnimationFrame(M.raf);const a={lat:M.lat,lng:M.lng,z:M.z},t0=performance.now(),ez=x=>x<.5?4*x*x*x:1-(-2*x+2)**3/2;
  const f=now=>{const k=Math.min(1,(now-t0)/700),e=ez(k);M.lat=a.lat+(tg.lat-a.lat)*e;M.lng=a.lng+(tg.lng-a.lng)*e;M.z=a.z+(tg.z-a.z)*e;mapDraw();if(k<1)M.raf=requestAnimationFrame(f)};M.raf=requestAnimationFrame(f)}
 function mapAfter(){const h=$('#mp');if(!h)return;const l=$('#mpl');if(TILEBOX.parentNode!==l)l.prepend(TILEBOX);
