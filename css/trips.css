@@ -18,11 +18,11 @@ button.trow:active{background:rgba(0,0,0,.03)}
 .dtile.hot{background:#FFE9DC;color:#D9480F}.dtile.hot span{color:#D9480F}
 .tgo{flex:none;height:32px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center;background:var(--dusk-t);color:var(--dusk);font-size:13px;font-weight:700}
 .tact{flex:none;display:flex;gap:8px}
-.tact .ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.tact .ib{width:34px;height:34px;border-radius:50%;display:grid;place-items:center}
 .task .due{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:12px;line-height:16px;font-weight:600;color:var(--tx2)}
 .task .due.hot{color:#D9480F;font-weight:700}
 .tmain .cap,.task .due{white-space:nowrap}
-.tact{gap:6px}.tact .ib{width:36px;height:36px}
+.tact{gap:6px}.tact .ib{width:34px;height:34px}
 /* task buttons: sit on the same centre line (and right edge) as the Review pill */
 .trow .tact{padding:0;margin:0;align-items:center}
 /* status bar: iOS style - time + location arrow, signal, wifi, battery with level inside */
