@@ -576,7 +576,11 @@
   background:transparent;
   justify-content:center;
 }
-#dev #s-pdet .pdb{padding-bottom:24px}
+/* Consistent breathing room between the back/title row and the first
+   control on EVERY Profile detail page (Travel preferences, Account,
+   Budget, Interests, Health/accessibility, Notifications and Ratings).
+   Internal field spacing and the Save changes gap remain unchanged. */
+#dev #s-pdet .pdb{padding-top:16px;padding-bottom:24px}
 
 /* ---------- PROFILE SUBPAGES ----------
    Field labels are the library Subheader (16px / 700 / 22px / -.01em) on
