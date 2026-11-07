@@ -175,7 +175,14 @@
    }
    draw();return;
   }
-  if(action==='mode'){numbers=!numbers;shifted=false;capsLock=false;draw();return}
+  if(action==='mode'){
+   numbers=!numbers;
+   capsLock=false;
+   // Returning from 123 should restore iOS-style auto-capitalisation.
+   const value=currentInput()?.value||'';
+   shifted=!numbers&&(!value||/[.!?]\s$/.test(value));
+   draw();return;
+  }
   if(action==='send'){
    const input=currentInput();
    if(input?.value.trim())A.send();
