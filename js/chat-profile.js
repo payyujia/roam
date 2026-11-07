@@ -63,8 +63,13 @@ const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:8px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
- style:{t:'Travel pace',i:'compass',c:'orange',v:()=>S.p.pace,b:()=>{const p=S.p;return `<div class="fl travel-style-form" style="margin-top:8px"><div class="travel-pace-dropdown">${Dropdown({id:'travel-pace',aria:'Travel pace',value:p.pace,opts:[{v:'Chill',t:'Chill'},{v:'Balanced',t:'Balanced'},{v:'Packed',t:'Packed'}],pick:v=>{S.p.pace=v;pd();render('profile')}})}</div></div>`}},
- move:{t:'Transport preferences',i:'navigation',c:'teal',v:()=>S.p.move==='MRT & bus'?'Public transport':S.p.move,b:()=>`<div role="radiogroup" aria-label="Getting around" style="margin-top:8px">${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([k,l,s])=>Radio(k,l,s,S.p.move,'pmove')).join('')}</div>`},
+ style:{t:'Travel preferences',i:'sliders-horizontal',c:'orange',v:()=> '2 preferences set',b:()=>{const p=S.p;return `<div class="fl travel-preferences-form" style="margin-top:12px">
+<div class="travel-setting-group"><div class="travel-setting-label">Travel pace</div>
+<div class="travel-pace-dropdown">${Dropdown({id:'travel-pace',aria:'Travel pace',value:p.pace,opts:[{v:'Chill',t:'Chill'},{v:'Balanced',t:'Balanced'},{v:'Packed',t:'Packed'}],pick:v=>{S.p.pace=v;pd();render('profile')}})}</div></div>
+<div class="travel-setting-group"><div class="travel-setting-label" id="travel-transport-label">Getting around</div>
+<div class="travel-transport-options" role="radiogroup" aria-labelledby="travel-transport-label">
+${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([k,l,s])=>Radio(k,l,s,p.move,'pmove')).join('')}
+</div></div></div>`}},
  budget:{t:'Trip budget',i:'bag',c:'green',v:()=>'S$'+Number(S.p.budget).toLocaleString('en-SG'),b:()=>{const pc=S.p.budget;return `<div class="pad" style="margin-top:12px"><h2 id="bv" style="margin-bottom:12px">SGD ${pc}</h2><input type="range" class="rg" min="50" max="2000" step="50" value="${pc}" style="--v:${(pc-50)/1950*100}%" aria-label="Trip budget in SGD" oninput="S.p.budget=+this.value;this.style.setProperty('--v',((this.value-50)/1950*100)+'%');$('#bv').textContent='SGD '+this.value;pd()"><div class="rgl"><span>SGD 50</span><span>SGD 2,000</span></div></div>`}},
  diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>pTags('diet','Add a dietary need…',['Halal','Vegetarian','Kosher','Vegan','Gluten-free'])},
  access:{nv:1,t:'Accessibility',i:'user',c:'purple',v:()=>pSum(S.p.access),b:()=>pTags('access','Add an accessibility need…',['Step-free routes','Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support'])},
@@ -76,7 +81,7 @@ const PD={
 };
 /* Profile layout: section headers, each holding one or more filled groups */
 const PG=[
- {h:'Preferences',g:[['style','move','budget','likes']]},
+ {h:'Preferences',g:[['style','budget','likes']]},
  {h:'Health & accessibility',g:[['diet','access','health']]},
  {h:'Your activity',g:[['saved','rate']]}
 ];
