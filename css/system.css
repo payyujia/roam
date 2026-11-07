@@ -92,7 +92,7 @@
 #dev .stp.done::before,#dev .stp.on::before{background:var(--ink)}
 #dev .sd{background:#fff;color:var(--tx2);border:0;box-shadow:inset 0 0 0 2.5px var(--s3)!important}
 #dev .stp.done .sd{background:var(--ink);color:#fff;box-shadow:none!important}
-#dev .stp.on .sd{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 3px var(--ink)!important}
+#dev .stp.on .sd{background:#fff;color:var(--ink);}
 #dev .nd{background:#fff;color:var(--tx2);box-shadow:inset 0 0 0 2.5px var(--s3)!important}
 #dev .tn.org .nd{background:var(--ink);box-shadow:none!important}
 #dev .tn.done .nd{background:var(--ink);color:#fff;box-shadow:none!important}

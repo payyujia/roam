@@ -382,8 +382,8 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #dev .fcard,#dev .pop{border-radius:24px}
 #dev .rtg button.on::after{background:var(--primary)}
 #dev .rtg .pill.on{background:rgba(71,146,230,.8)!important;color:#fff!important}
-#dev .rail .ib{background:rgba(17,23,33,.35)!important;color:#fff!important;border:1px solid rgba(255,255,255,.26)!important;backdrop-filter:blur(16px)}
-#dev .rinfo{color:var(--ink)}
+#dev .rail .ib{top:-100px;background:rgba(17,23,33,.35)!important;color:#fff!important;border:1px solid rgba(255,255,255,.26)!important;backdrop-filter:blur(16px)}
+#dev .rinfo{color:var(--white)}
 #dev .me .bub{background:rgba(71,146,230,.92)!important;color:#fff!important;border:1px solid rgba(255,255,255,.24)}
 #dev .bub{background:var(--glass-surface-bg);color:var(--ink)}
 #dev .dock{background:linear-gradient(rgba(243,247,253,0),rgba(243,247,253,.88) 34%,rgba(243,247,253,.96))}
