@@ -1193,22 +1193,24 @@ body{font-weight:500}
    enough text width for TWO actions. Do not change the other task rows. */
 #dev .reschedule-row{
   align-items:center;
-  min-height:76px;
+  min-height:84px;
 }
+/* This Home-only rule overrides the shared 80px minimum, leaving other task cards untouched. */
+#dev #s-trips .trow.tier.reschedule-row{min-height:84px}
 #dev .reschedule-row .tmain{
   display:flex;
   align-items:center;
   flex:1 1 auto;
-  gap:8px;
+  gap:10px;
   min-width:0;
 }
 /* Reuse the very same trip cover shown in Your trips. */
 #dev .reschedule-row .cover{
-  --cz:52px;
-  width:52px;
-  height:56px;
-  flex:0 0 52px;
-  border-radius:15px;
+  --cz:48px;
+  width:48px;
+  height:52px;
+  flex:0 0 48px;
+  border-radius:14px;
   overflow:hidden;
 }
 #dev .reschedule-row .cover img{
@@ -1224,8 +1226,8 @@ body{font-weight:500}
 }
 #dev .reschedule-row .gr > b{
   display:block;
-  font-size:15px;
-  line-height:20px;
+  font-size:14px;
+  line-height:19px;
   font-weight:700;
   white-space:nowrap;
   overflow:hidden;
@@ -1259,14 +1261,14 @@ body{font-weight:500}
   display:flex;
   flex:none;
   align-items:center;
-  gap:4px;
+  gap:6px;
   margin:0;
   padding:0;
 }
 #dev .reschedule-row .tact .ib{
-  width:34px;
-  height:34px;
-  flex:0 0 34px;
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
 }
 
 
@@ -1400,9 +1402,9 @@ body{font-weight:500}
   display:grid;
   place-items:center;
   box-sizing:border-box;
-  width:34px;
-  height:34px;
-  flex:0 0 34px;
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
   padding:0;
   border:0!important;
   border-radius:50%!important;
