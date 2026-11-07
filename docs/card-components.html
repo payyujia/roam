@@ -320,6 +320,10 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
 .invite-box{border-radius:20px;padding:10px}
 .invite-box .row{flex-wrap:nowrap}
 .invite-box input{border:0;outline:0;background:transparent;flex:1;min-width:0;font-size:14px}
+/* Multiselect query rows: icon and text share one vertical centre. Retain both original SVGs. */
+.invite-box .query-inline{min-height:34px;align-items:center}
+.invite-box .query-inline>svg:first-child{display:block;width:17px;height:17px;align-self:center;transform:translateY(-1px)}
+.invite-box .query-inline>input{height:34px;margin:0;padding-block:0;line-height:21px}
 .spec-tokens{width:100%;border-collapse:collapse;font-size:12px}
 .spec-tokens td{padding:9px 0;border-bottom:1px solid rgba(91,104,120,.14)}
 .spec-tokens tr:last-child td{border-bottom:0}
@@ -503,7 +507,7 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
       <div class="stack">
         <span class="lbl" style="margin-bottom:0">Multiselect · with query input</span>
         <div class="glass invite-box">
-          <div class="row">
+          <div class="row query-inline">
             <svg viewBox="0 0 24 24" style="color:var(--muted);width:17px"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-4 3.5-6 7-6s6.2 2 7 6M17 5a3.5 3.5 0 0 1 0 7"/></svg>
             <input id="fi" aria-label="Friend's name" placeholder="Type a friend's name">
             <button class="btn mini sky" onclick="addF('ft','fi')" aria-label="Add friend"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -513,7 +517,7 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
           </div>
         </div>
         <div class="glass invite-box">
-          <div class="row">
+          <div class="row query-inline">
             <svg viewBox="0 0 24 24" style="color:var(--muted);width:17px"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg>
             <input id="hi" aria-label="Health and accessibility need" placeholder="Add dietary or access need">
             <button class="btn mini sky" onclick="addF('ht','hi')" aria-label="Add need"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
