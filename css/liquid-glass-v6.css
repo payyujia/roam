@@ -448,3 +448,35 @@ body{font-weight:500}
   #dev :is(.trow.tier,.row.tier){padding-inline:8px}
   #dev #s-trip .vote-row{margin-inline:12px}
 }
+
+
+/* Navigation performance: opaque, independently painted screens.
+   The old sliding panels were transparent, so the previous page remained
+   visible through the incoming one; delaying visibility also caused ghosting.
+   Hide inactive screens immediately and animate only the entering surface. */
+#dev #app .scr{
+  background:var(--sunrise-canvas)!important;
+  contain:paint;
+  backface-visibility:hidden;
+}
+#dev #app .scr:not(.on){
+  visibility:hidden;
+  transform:translate3d(12px,0,0);
+  transition:none!important;
+}
+#dev #app .scr.on{
+  visibility:visible;
+  transform:translate3d(0,0,0);
+  transition:transform .18s cubic-bezier(.2,.8,.25,1)!important;
+  will-change:transform;
+}
+/* Tabs and instant actions must remain instant, without late animations. */
+#dev #app.nt .scr.on,
+#dev #app.instant .scr.on{transition:none!important}
+
+/* Small, nested translucent controls don't need a costly second blur pass.
+   Keep the Sunrise Frost translucent fills, rim highlights and shadows. */
+#dev :is(.srow,.vote-row,.chat-row,.row.tier,.trow.tier,.fi,.fld,.seg){
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
