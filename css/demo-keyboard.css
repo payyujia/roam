@@ -93,25 +93,34 @@
   font-size:16px;
   font-weight:700;
 }
-/* The keyboard takes the tab bar's place. Reserve the height below the
-   chat list and pin the functional input directly above the simulated keys. */
+/* Let the thread's existing flex layout resize naturally when the
+   keyboard opens. An earlier absolute composer + .msgs margin could overlap
+   the final message. The reserved bottom padding now represents ONLY the
+   keyboard; the composer stays in normal flex flow directly above it. */
 #dev.demo-keyboard-open #tb{
   visibility:hidden;
   pointer-events:none;
 }
 #dev.demo-keyboard-open #s-thread.flex{
-  padding-bottom:0!important;
+  box-sizing:border-box;
+  overflow:hidden;
+  padding-bottom:var(--demo-keyboard-height)!important;
 }
 #dev.demo-keyboard-open #s-thread .msgs{
-  margin-bottom:calc(var(--demo-keyboard-height) + 68px)!important;
+  flex:1 1 auto;
   min-height:0;
+  margin-bottom:0!important;
+  overflow-y:auto;
+  padding-bottom:12px;
+  scroll-padding-bottom:12px;
 }
 #dev.demo-keyboard-open #s-thread .comp{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:var(--demo-keyboard-height);
+  position:relative;
+  left:auto;
+  right:auto;
+  bottom:auto;
   z-index:3;
+  flex:0 0 auto;
   margin:0;
   padding:8px 16px 10px;
   background:rgba(243,248,255,.94);
