@@ -37,7 +37,7 @@ Object.assign(A,{
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
  pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
- pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const name=INTEREST_CATALOG.find(v=>!S.p.likes.includes(v)&&(!q||v.toLocaleLowerCase().includes(q)));if(name)A.pinterest(encodeURIComponent(name))},
+ pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS;const name=options.find(v=>!S.p.likes.includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!INTEREST_CATALOG.includes(name)||S.p.likes.includes(name))return;S.p.likes.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';const tags=$('#interest-tags');if(tags)tags.innerHTML=S.p.likes.map(v=>Tag('likes',v)).join('');pd();const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
  pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes')S.interestQuery='';go('pdet')},
  pbudgetInput:el=>{
