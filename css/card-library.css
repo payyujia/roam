@@ -551,6 +551,20 @@
 #dev :is(#fab,#psave,.btn[data-a="psave"]) svg{width:20px;height:20px;flex:none}
 #dev #fab span{font-size:14px;font-weight:700;line-height:1}
 
+/* PROFILE DETAIL SAVE POSITION — align the Save changes pill with the
+   end of the form instead of pinning it near the bottom of the screen.
+   Keep the existing 46px component-library button and disabled/save actions.
+   The parent page remains scrollable on shorter phones. */
+#dev #s-pdet .pg > .dock.sv{
+  position:static;
+  bottom:auto;
+  margin-top:0;
+  padding:0 24px 24px;
+  background:transparent;
+  justify-content:center;
+}
+#dev #s-pdet .pdb{padding-bottom:24px}
+
 /* ---------- PROFILE SUBPAGES ----------
    Field labels are the library Subheader (16px / 700 / 22px / -.01em) on
    every nested page; field values are Regular 14; helper text is Subtitle 12. */
