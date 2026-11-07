@@ -684,8 +684,9 @@
 #dev #s-pdet .profile-query-heading .cap{white-space:nowrap;color:var(--muted)}
 #dev #s-pdet .profile-multi-card{padding:10px;border-radius:20px;min-width:0}
 #dev #s-pdet .profile-multi-card .tq-row{display:flex;align-items:center;gap:10px;min-height:34px}
-#dev #s-pdet .profile-multi-card .tq-ic{width:17px;height:17px;flex:none}
-#dev #s-pdet .profile-multi-card .tq-row input{height:34px;min-width:0;flex:1;font:500 14px/21px var(--font)}
+/* Optically centre the existing pin icon with the query placeholder. */
+#dev #s-pdet .profile-multi-card .tq-ic{width:17px;height:17px;flex:none;display:block;align-self:center;transform:translateY(-1px)}
+#dev #s-pdet .profile-multi-card .tq-row input{height:34px;min-width:0;flex:1;margin:0;padding-block:0;font:500 14px/21px var(--font)}
 /* Keep the library's frosted Sky blue + button visible even before a query.
    The empty-input state remains functionally disabled, but is not washed grey. */
 #dev #s-pdet .profile-multi-card .profile-multi-add{
