@@ -49,11 +49,16 @@ $aliases = @{
 function Find-EmojiKey([string]$fileStem) {
   $normal = ($fileStem.ToLowerInvariant() -replace '[^a-z0-9]+', '-').Trim('-')
   # Full descriptive names first (avoids interpreting "face" as hex).
-  foreach ($key in $aliases.Keys) {
-    foreach ($name in $aliases[$key]) {
-      if ($normal -match ('(^|-)' + [regex]::Escape($name) + '(-|$)')) {
-        return $key
+  $names = @(
+    foreach ($key in $aliases.Keys) {
+      foreach ($name in $aliases[$key]) {
+        [pscustomobject]@{ Key = $key; Name = $name }
       }
+    }
+  ) | Sort-Object { $_.Name.Length } -Descending
+  foreach ($entry in $names) {
+    if ($normal -match ('(^|-)' + [regex]::Escape($entry.Name) + '(-|$)')) {
+      return $entry.Key
     }
   }
   # Existing Unicode-based filenames, e.g. apple-1f44d-1f3fd.png.
