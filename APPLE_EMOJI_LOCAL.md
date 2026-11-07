@@ -30,3 +30,36 @@ WebP images are also supported (e.g. 1f600.webp). Do not simply rename a JPG to 
 No manual code edits are required when you add more images. Roam first tries the matching PNG, then WebP. If neither exists, it displays the original Unicode emoji instead. Emojis are still sent and copied as Unicode.
 
 The folder is ignored by .gitignore, so these images are not uploaded by normal Git commits. Do not force-add or distribute copyrighted images without appropriate permission. Each computer must have its own local artwork files.
+
+## Emojis shown in the reference screenshot
+
+The Frequently Used grid initially contains these 24 emojis. Save the **Apple** artwork corresponding to each glyph from https://emojipedia.org/apple (not the site's Unicode **Copy** text button), using these exact names in `assets/apple-emojis/`:
+
+| Emoji | Filename |
+|---|---|
+| 😂 | `1f602.png` |
+| ❤️ | `2764.png` |
+| 🥰 | `1f970.png` |
+| 😊 | `1f60a.png` |
+| 😍 | `1f60d.png` |
+| 🤣 | `1f923.png` |
+| 😭 | `1f62d.png` |
+| 😘 | `1f618.png` |
+| 👍 | `1f44d.png` |
+| 🙏 | `1f64f.png` |
+| ✨ | `2728.png` |
+| 🔥 | `1f525.png` |
+| 😅 | `1f605.png` |
+| 🎉 | `1f389.png` |
+| 🩷 | `1fa77.png` |
+| 👀 | `1f440.png` |
+| 🥳 | `1f973.png` |
+| 🤔 | `1f914.png` |
+| 💯 | `1f4af.png` |
+| 😎 | `1f60e.png` |
+| 💀 | `1f480.png` |
+| 💕 | `1f495.png` |
+| 🎈 | `1f388.png` |
+| 🫶 | `1faf6.png` |
+
+Use the same Apple emoji version for consistent visuals. If an image is downloaded as WebP, use `.webp` instead of `.png`. These image files are **not** supplied with ROAM, and must be used only where you have appropriate rights. The same local artwork is displayed in the grid, category icons, the skin-tone popup, and chat bubbles when present. When a file is absent, the browser still renders the Unicode emoji (Windows style on Windows).
