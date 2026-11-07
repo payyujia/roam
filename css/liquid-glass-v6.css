@@ -942,7 +942,8 @@ body{font-weight:500}
   #dev #s-profile .profile-notif{bottom:18px}
 }
 
-/* Live navigation: keep every timeline marker on one fixed vertical axis. */
+/* Live navigation timeline: match the itinerary's Sunrise Frost sky treatment.
+   Keep the wider node column so 32px nodes and the 44px current node stay centred. */
 #dev .tl.nv .tn{align-items:center}
 #dev .tl.nv .nd{
   box-sizing:border-box;
@@ -957,43 +958,42 @@ body{font-weight:500}
   width:44px;
   height:44px;
   transform:none;
-  background:var(--coral-200)!important;
+  background:var(--sky-400)!important;
   color:var(--ink)!important;
-  border-color:var(--coral-200)!important;
+  border-color:transparent!important;
 }
 #dev .tl.nv .tn.done .nd{
-  background:var(--coral-200)!important;
-  color:var(--ink)!important;
-  border-color:var(--coral-200)!important;
+  background:var(--sky-300)!important;
+  color:var(--sky-600)!important;
+  border-color:transparent!important;
 }
 #dev .tl.nv .tc .ln{width:44px;flex:0 0 44px}
 #dev .tl.nv .tc .ln::after{
   left:19px;
-  background:var(--coral-200)!important;
+  background:rgba(109,182,255,.35)!important;
 }
-#dev .tl.nv .tc.done .ln::after{background:var(--coral-200)!important}
-#dev .tl.nv .tdone{color:var(--ink)!important}
-#dev .tl.nv .tdone svg{color:var(--coral-200)!important}
+#dev .tl.nv .tc.done .ln::after{background:var(--sky-400)!important}
+#dev .tl.nv .tdone{color:var(--sky-600)!important}
+#dev .tl.nv .tdone svg{color:var(--sky-600)!important}
 #dev .tl.nv .cc{color:var(--ink)!important}
 #dev .tl.nv .arr{
-  background:var(--coral-200)!important;
+  background:var(--sky-400)!important;
   color:var(--ink)!important;
 }
 
-/* Live destination label is rendered in a top-level map layer. */
+/* The destination label stays coral, below its pin, but behind navigation overlays. */
 #dev .mp-label-layer{
   position:absolute;
   inset:0;
-  z-index:100000;
+  z-index:4;
   pointer-events:none;
 }
 #dev .mp-label-layer .pl2{
-  z-index:100001!important;
+  z-index:5!important;
+  transform:translate(-50%,12px);
   background:var(--coral-200)!important;
   color:var(--ink)!important;
 }
-
-
 /* Home Upcoming/Past: Sunrise Frost segmented control from component sheet. */
 /* Scope to the Home tab: other segmented controls and Reels are unchanged. */
 #dev #s-trips .seg{
