@@ -1103,9 +1103,9 @@ body{font-weight:500}
   align-items:center;
   column-gap:10px;
   width:calc(100% - 48px);
-  min-height:92px;
+  min-height:76px;
   margin:0 24px 12px;
-  padding:14px 16px;
+  padding:10px 12px;
   text-align:left;
 }
 #dev #s-chat .chat-row .cover{
@@ -1116,7 +1116,7 @@ body{font-weight:500}
 /* Match title/time on row one and message preview/unread badge on row two. */
 #dev #s-chat .chat-row > .gr{
   display:grid;
-  grid-template-rows:28px 28px;
+  grid-template-rows:22px 22px;
   align-self:center;
   min-width:0;
   overflow:hidden;
@@ -1128,12 +1128,12 @@ body{font-weight:500}
 }
 #dev #s-chat .chat-row .chat-meta{
   display:grid;
-  grid-template-rows:28px 28px;
+  grid-template-rows:22px 22px;
   justify-items:end;
   align-self:center;
   min-width:0;
   width:100%;
-  height:56px;
+  height:44px;
   text-align:right;
 }
 #dev #s-chat .chat-row .chat-time{
@@ -1153,6 +1153,8 @@ body{font-weight:500}
   align-self:center;
   justify-self:end;
   place-items:center;
+  position:relative;
+  top:-2px;
   box-sizing:border-box;
   flex:none;
   width:22px;
@@ -1167,8 +1169,8 @@ body{font-weight:500}
   #dev #s-chat .chat-row{
     grid-template-columns:48px minmax(0,1fr) 46px;
     column-gap:8px;
-    min-height:88px;
-    padding:12px 14px;
+    min-height:76px;
+    padding:10px 12px;
   }
   #dev #s-chat .chat-row .cover{width:48px;height:52px}
 }
