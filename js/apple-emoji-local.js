@@ -11,7 +11,7 @@
   ?new Intl.Segmenter('en',{granularity:'grapheme'}):null;
  const emojiLike=/[\p{Extended_Pictographic}\p{Regional_Indicator}\u20E3]/u;
  const escapeHtml=value=>String(value).replace(/[&<>"']/g,ch=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
  function filename(glyph){
   return [...String(glyph)].map(c=>c.codePointAt(0))
