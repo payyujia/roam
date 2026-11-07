@@ -1068,32 +1068,15 @@ body{font-weight:500}
   letter-spacing:-.02em;
   min-width:0;
 }
-#dev #s-pdet .travel-style-form .lb{
-  font-family:var(--roam-card-title-family,var(--font));
-  font-size:var(--roam-card-title-size,16px);
-  font-weight:var(--roam-card-title-weight,700);
-  line-height:var(--roam-card-title-line-height,22px);
-  letter-spacing:var(--roam-card-title-letter-spacing,0);
-}
-/* Pace label and the three-option selector share one horizontal row. */
-#dev #s-pdet .travel-pace-field{
-  display:grid;
-  grid-template-columns:max-content minmax(0,1fr);
-  align-items:center;
-  column-gap:12px;
-  min-width:0;
-}
-#dev #s-pdet .travel-pace-field .seg{
+/* Profile > Travel pace uses the same frosted single-select dropdown as
+   the component library. No redundant Pace label or segmented-control styles. */
+#dev #s-pdet .travel-pace-dropdown,
+#dev #s-pdet .travel-pace-dropdown .dd{
   width:100%;
   min-width:0;
-  box-sizing:border-box;
 }
-#dev #s-pdet .travel-style-form .seg button:not([aria-checked="true"]){
-  color:#506178!important;
-}
-@media(max-width:360px){
-  #dev #s-pdet .travel-pace-field{column-gap:8px}
-  #dev #s-pdet .travel-pace-field .seg button{padding-inline:3px}
+#dev #s-pdet .travel-pace-dropdown .dd-trigger{
+  min-height:52px;
 }
 /* The Save action stays unmistakably disabled, but no longer fades to
    near-invisibility. Enabled actions retain the regular Sky 400 styling. */
