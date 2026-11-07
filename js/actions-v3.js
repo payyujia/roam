@@ -45,22 +45,26 @@ Object.assign(A,{
  pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions());const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';refreshInterestPicker()},
  pinterestRemove:value=>{if(!Array.isArray(S.p.likesDraft))return;const name=decodeURIComponent(value);S.p.likesDraft=S.p.likesDraft.filter(v=>v!==name);refreshInterestPicker()},
- pdietInput:el=>{
-  const add=$('#dietary-add');
-  if(add)add.disabled=!el.value.trim();
+ pdietSearch:q=>{
+  S.dietaryQuery=q;
+  const options=$('#dietary-suggestions');
+  if(options)options.innerHTML=dietaryOptionsHTML();
  },
- pdietAdd:()=>{
-  const input=$('#dietary-input');
-  if(!input||!Array.isArray(S.p.dietDraft))return;
-  const name=input.value.trim().replace(/\s+/g,' ').slice(0,30);
-  if(!name)return;
-  if(!S.p.dietDraft.some(x=>x.toLocaleLowerCase()===name.toLocaleLowerCase())){
-   S.p.dietDraft.push(name);
-   refreshDietaryPicker();
-  }
-  input.value='';
-  A.pdietInput(input);
-  input.focus();
+ pdietFirst:()=>{
+  const name=dietaryMatches()[0]||dietaryQuery();
+  if(name)A.pdietAdd(encodeURIComponent(name));
+ },
+ pdietAdd:value=>{
+  if(!Array.isArray(S.p.dietDraft)||!value)return;
+  const entered=decodeURIComponent(value).trim().replace(/\s+/g,' ').slice(0,30);
+  if(!entered)return;
+  const name=dietarySuggestions.find(x=>x.toLocaleLowerCase()===entered.toLocaleLowerCase())||entered;
+  if(S.p.dietDraft.some(x=>x.toLocaleLowerCase()===name.toLocaleLowerCase()))return;
+  S.p.dietDraft.push(name);
+  S.dietaryQuery='';
+  const input=$('#dietary-search');
+  if(input)input.value='';
+  refreshDietaryPicker();
  },
  pdietRemove:value=>{
   if(!Array.isArray(S.p.dietDraft))return;
@@ -68,7 +72,7 @@ Object.assign(A,{
   S.p.dietDraft=S.p.dietDraft.filter(x=>x!==name);
   refreshDietaryPicker();
  },
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}if(PROFILE_PREFERENCE_PICKERS[k]){S.prefSearch='';S.p[k+'Draft']=[...S.p[k]];S.prefSuggestions=profilePreferenceSuggestions(k)}go('pdet')},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];S.dietaryQuery='';if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}if(PROFILE_PREFERENCE_PICKERS[k]){S.prefSearch='';S.p[k+'Draft']=[...S.p[k]];S.prefSuggestions=profilePreferenceSuggestions(k)}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -127,9 +131,10 @@ document.addEventListener('pointerup',e=>{if(SW&&e.clientX-SW.x>70&&Math.abs(e.c
 document.addEventListener('pointercancel',()=>SW=null);
 /* All fixed-choice Profile editors stage selections locally. Back, edge swipe
    and tab changes discard unsaved drafts; Save commits before navigating back. */
-const profileTagEditorActive=()=>S.pd==='likes'||!!PROFILE_PREFERENCE_PICKERS[S.pd];
+const profileTagEditorActive=()=>S.pd==='likes'||S.pd==='diet'||!!PROFILE_PREFERENCE_PICKERS[S.pd];
 const discardProfileTagDraft=()=>{
  S.p.likesDraft=null;S.interestQuery='';S.interestSuggestions=null;
+ S.p.dietDraft=null;S.dietaryQuery='';
  for(const k of Object.keys(PROFILE_PREFERENCE_PICKERS))S.p[k+'Draft']=null;
  S.prefSearch='';S.prefSuggestions=null;S.p.dirty=0;
 };

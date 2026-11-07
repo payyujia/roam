@@ -69,37 +69,52 @@ const TransportCheck=(key,label,subtitle,values)=>{
  </button>`;
 };
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
-/* Dietary needs: keep edits local until the user explicitly saves. */
+/* Dietary needs share the exact Interests screen components and layout.
+   Unlike the fixed Interests catalogue, dietary needs also allow custom entries. */
 const dietarySuggestions=Object.freeze(['Halal','Vegetarian','Kosher','Vegan','Gluten-free']);
 const dietDraft=()=>Array.isArray(S.p.dietDraft)?S.p.dietDraft:S.p.diet;
 const dietDraftChanged=()=>{
  const draft=dietDraft(),saved=S.p.diet;
- return draft.length!==saved.length||draft.some(x=>!saved.some(y=>y.toLocaleLowerCase()===x.toLocaleLowerCase()));
+ return draft.length!==saved.length||draft.some(name=>!saved.some(v=>v.toLocaleLowerCase()===name.toLocaleLowerCase()));
+};
+const dietaryAvailable=()=>dietarySuggestions.filter(name=>!dietDraft().some(v=>v.toLocaleLowerCase()===name.toLocaleLowerCase()));
+const dietaryQuery=()=>(S.dietaryQuery||'').trim().replace(/\s+/g,' ').slice(0,30);
+const dietaryMatches=()=>{
+ const q=dietaryQuery().toLocaleLowerCase();
+ return (q?dietaryAvailable().filter(name=>name.toLocaleLowerCase().includes(q)):dietaryAvailable()).slice(0,5);
 };
 const DietaryTag=name=>`<span class="tag2">${esc(name)}<button type="button" aria-label="Remove ${esc(name)}" data-a="pdietRemove:${encodeURIComponent(name)}">${ic('x',14)}</button></span>`;
-const dietaryOptionsHTML=()=>dietarySuggestions.filter(x=>!dietDraft().some(v=>v.toLocaleLowerCase()===x.toLocaleLowerCase())).map(x=>`<option value="${esc(x)}"></option>`).join('');
-const dietaryTagsHTML=()=>dietDraft().length?dietDraft().map(DietaryTag).join(''):'<p class="cap sm dietary-empty">No dietary needs added.</p>';
+const dietaryTagsHTML=()=>dietDraft().length?dietDraft().map(DietaryTag).join(''):'<span class="cap sm interest-empty">No dietary needs added yet</span>';
+const dietaryOptionsHTML=()=>{
+ const query=dietaryQuery(),nameKey=query.toLocaleLowerCase();
+ const shown=dietaryMatches();
+ const canAddCustom=!!query&&!dietDraft().some(name=>name.toLocaleLowerCase()===nameKey)
+   &&!dietarySuggestions.some(name=>name.toLocaleLowerCase()===nameKey);
+ const choices=shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('');
+ const custom=canAddCustom?`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(query)}" aria-label="Add custom dietary need ${esc(query)}"><span class="t">Add “${esc(query)}”</span>${ic('plus',16)}</button>`:'';
+ return `<div class="interest-option-heading"><span class="lb">${query?'Matching dietary needs':'Suggested dietary needs'}</span></div>${choices||custom?`<div class="dd-list glass"><div class="dd-opts">${choices}${custom}</div></div>`:`<p class="cap interest-no-matches">${query?'No other dietary needs match your search.':'All suggested dietary needs added.'}</p>`}`;
+};
 const refreshDietaryPicker=()=>{
  const tags=$('#dietary-tags');
  if(tags)tags.innerHTML=dietaryTagsHTML();
- const options=$('#dietary-options');
+ const count=$('#dietary-count');
+ if(count)count.textContent=dietDraft().length+' selected';
+ const options=$('#dietary-suggestions');
  if(options)options.innerHTML=dietaryOptionsHTML();
  const changed=dietDraftChanged();
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
  if(save)save.disabled=!changed;
 };
-const DietaryPicker=()=>`<div class="pad dietary-picker" style="margin-top:12px">
-<label class="lb" for="dietary-input">Add dietary need</label>
-<div class="dietary-entry-row">
-<div class="fi dietary-input-field"><input id="dietary-input" type="text" list="dietary-options" placeholder="Enter a dietary need..." maxlength="30" autocomplete="off" aria-label="Add dietary need" oninput="A.pdietInput(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pdietAdd()}"></div>
-<datalist id="dietary-options">${dietaryOptionsHTML()}</datalist>
-<button type="button" class="btn mini sky dietary-add" id="dietary-add" data-a="pdietAdd" aria-label="Add dietary need" disabled>${ic('plus',15)}</button>
-</div>
-<section class="dietary-selected" aria-label="Your dietary needs">
-<h3 class="lb">Your dietary needs</h3>
-<div class="tags dietary-tags" id="dietary-tags" aria-live="polite">${dietaryTagsHTML()}</div>
-</section>
+const DietaryPicker=()=>`<div class="pad interest-picker dietary-picker">
+ <div class="glass invite-box tag-query interest-search-card">
+  <div class="tq-row">${ic('search',18)}<input id="dietary-search" type="search" placeholder="Search dietary needs..." aria-label="Search dietary needs" aria-controls="dietary-suggestions" value="${esc(S.dietaryQuery||'')}" maxlength="30" autocomplete="off" oninput="A.pdietSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pdietFirst()}"></div>
+ </div>
+ <section class="interest-selected-section" aria-labelledby="dietary-selected-title">
+  <div class="interest-section-head"><span class="lb" id="dietary-selected-title">Your dietary needs</span><span class="cap sm" id="dietary-count" aria-live="polite">${dietDraft().length} selected</span></div>
+  <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="dietary-tags" aria-live="polite">${dietaryTagsHTML()}</div></div>
+ </section>
+ <section class="interest-suggestions" id="dietary-suggestions" aria-label="Suggested dietary needs">${dietaryOptionsHTML()}</section>
 </div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);

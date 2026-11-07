@@ -548,61 +548,6 @@
 #dev .tag-query .tag2 button{width:20px;height:20px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;position:relative;z-index:3}
 #dev .tag-query .tag2 button svg{width:11px;height:11px}
 
-/* Profile > Dietary needs: Card Component Library field and removable tags. */
-#dev #s-pdet .dietary-entry-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  width:100%;
-}
-#dev #s-pdet .dietary-input-field{
-  flex:1;
-  min-width:0;
-  min-height:50px;
-  height:50px;
-  border-radius:18px;
-  padding:0 16px;
-}
-#dev #s-pdet .dietary-input-field input{
-  width:100%;
-  min-width:0;
-  font-family:var(--font);
-  font-size:14px;
-  font-weight:500;
-  line-height:21px;
-}
-#dev #s-pdet .dietary-entry-row .dietary-add{
-  flex:0 0 34px;
-  width:34px;
-  height:34px;
-  padding:0;
-}
-#dev #s-pdet .dietary-entry-row .dietary-add svg{width:15px;height:15px}
-#dev #s-pdet .dietary-selected{margin-top:24px}
-#dev #s-pdet .dietary-tags{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:10px;
-  padding-top:0;
-}
-#dev #s-pdet .dietary-tags .tag2{gap:6px;padding:0 6px 0 13px}
-#dev #s-pdet .dietary-tags .tag2 button{
-  width:20px;
-  height:20px;
-  padding:0;
-  border:0;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-}
-#dev #s-pdet .dietary-tags .tag2 button svg{width:11px;height:11px}
-#dev #s-pdet .dietary-empty{
-  color:var(--muted);
-  font-size:12px;
-  font-weight:500;
-  line-height:16px;
-}
 /* ---------- PILL ACTIONS · REGULAR 14 ----------
    Create trip (#fab), Add a new activity (#fab on the vote step) and
    Profile > Save changes (#psave / .btn[data-a="psave"]) follow the
@@ -738,7 +683,7 @@
 #dev #s-pdet .interest-selected-section{display:flex;flex-direction:column;gap:10px;min-width:0}
 #dev #s-pdet .interest-section-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 #dev #s-pdet .interest-section-head .lb{margin:0}
-#dev #s-pdet .interest-section-head #interest-count{color:var(--muted);white-space:nowrap}
+#dev #s-pdet .interest-section-head :is(#interest-count,#dietary-count){color:var(--muted);white-space:nowrap}
 #dev #s-pdet .interest-selected-card{min-height:56px;padding:14px}
 #dev #s-pdet .interest-selected-card .tq-tags{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 #dev #s-pdet .interest-selected-card .interest-empty{color:var(--muted)}
