@@ -71,8 +71,14 @@ const TransportCheck=(key,label,subtitle,values)=>{
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
-/* Five fixed suggestions; selecting one removes it without adding a replacement. */
+/* Keep five suggestions for each visit. Saved choices are replaced with the
+   next unselected catalogue entries when Interests is opened again. */
 const INTEREST_SUGGESTIONS=Object.freeze(["Shopping","Beaches","Night markets","Art galleries","Nature"]);
+const INTEREST_SUGGESTION_ORDER=Object.freeze([
+ ...INTEREST_SUGGESTIONS,
+ ...INTEREST_CATALOG.filter(name=>!INTEREST_SUGGESTIONS.includes(name))
+]);
+const nextInterestSuggestions=()=>INTEREST_SUGGESTION_ORDER.filter(name=>!S.p.likes.includes(name)).slice(0,5);
 /* Edit the interest selection in a draft; only Save changes commits to S.p.likes. */
 const interestDraft=()=>Array.isArray(S.p.likesDraft)?S.p.likesDraft:S.p.likes;
 const interestDraftChanged=()=>{
@@ -93,8 +99,8 @@ const refreshInterestPicker=()=>{
 const interestOptionsHTML=()=>{
  const q=(S.interestQuery||"").trim().toLocaleLowerCase();
  const available=INTEREST_CATALOG.filter(name=>!interestDraft().includes(name));
- const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS.filter(name=>available.includes(name))).slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"All five suggested interests have been selected."}</p>`}`;
+ const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name))).slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"No more suggestions available."}</p>`}`;
 };
 const InterestPicker=()=>`<div class="pad interest-picker"><div class="glass invite-box tag-query interest-search-card"><div class="tq-row">${ic("search",18)}<input id="interest-search" type="search" placeholder="Search interests..." aria-label="Search interests" aria-controls="interest-suggestions" value="${esc(S.interestQuery||"")}" autocomplete="off" oninput="A.pinterestSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pinterestFirst()}"></div><div class="tags tq-tags" id="interest-tags">${interestDraft().map(InterestTag).join("")}</div></div><div class="interest-suggestions" id="interest-suggestions">${interestOptionsHTML()}</div></div>`;
 const PD={
