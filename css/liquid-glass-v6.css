@@ -1093,19 +1093,45 @@ body{font-weight:500}
   letter-spacing:-.02em;
   min-width:0;
 }
-/* Profile > Travel pace uses the same frosted single-select dropdown as
-   the component library. No redundant Pace label or segmented-control styles. */
+/* Profile > Travel preferences: two settings use the existing components,
+   the card-library type scale and identical outer gutters. */
+#dev #s-pdet .travel-preferences-form{gap:24px}
+#dev #s-pdet .travel-preferences-form .travel-setting-group{min-width:0}
+#dev #s-pdet .travel-preferences-form .travel-setting-label{
+  font-family:var(--roam-card-title-family,var(--font));
+  font-size:var(--roam-card-title-size,16px);
+  font-weight:var(--roam-card-title-weight,700);
+  line-height:var(--roam-card-title-line-height,22px);
+  letter-spacing:var(--roam-card-title-letter-spacing,0);
+  margin-bottom:10px;
+}
 #dev #s-pdet .travel-pace-dropdown,
 #dev #s-pdet .travel-pace-dropdown .dd{
   width:100%;
   min-width:0;
 }
-#dev #s-pdet .travel-pace-dropdown .dd-trigger{
-  min-height:52px;
+#dev #s-pdet .travel-pace-dropdown .dd-trigger{min-height:52px}
+#dev #s-pdet .travel-transport-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#dev #s-pdet .travel-transport-options .rd{
+  box-sizing:border-box;
+  width:100%;
+  min-height:60px;
+  border-radius:18px;
+  padding:12px 14px;
+  background:var(--glass-surface-bg);
+  box-shadow:var(--control-shadow);
+}
+#dev #s-pdet .travel-transport-options .rd[aria-checked=true]{
+  background:rgba(109,182,255,.24);
+  box-shadow:inset 0 0 0 1px rgba(47,140,255,.3),var(--control-shadow);
 }
 /* The Save action stays unmistakably disabled, but no longer fades to
    near-invisibility. Enabled actions retain the regular Sky 400 styling. */
-#dev #s-pdet:has(.travel-style-form) .dock.sv .btn[data-a="psave"]:disabled{
+#dev #s-pdet:has(.travel-preferences-form) .dock.sv .btn[data-a="psave"]:disabled{
   --action-fill:rgba(231,242,253,.85);
   --action-ink:#61738A;
   --action-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 3px 12px rgba(48,88,135,.07);
