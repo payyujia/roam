@@ -1432,10 +1432,10 @@ body{font-weight:500}
 }
 
 
-/* Primary CTAs: replace the former dark fill with Coral 200 while preserving
-   the existing liquid-glass blur, highlight rim, and elevation. */
+/* Primary CTAs: use Sky 400 with black text, preserving the existing
+   liquid-glass blur, highlight rim, and elevation. */
 #dev :is(.btn[data-a="formnext"],.btn[data-a="submit"],.btn[data-a="psave"],#fab,#psave):not(:disabled){
-  --action-fill:var(--coral-200)!important;
+  --action-fill:var(--sky-400)!important;
   --action-ink:var(--ink)!important;
   --action-shadow:0 6px 16px rgba(40,55,75,.14),inset 0 1px 0 rgba(255,255,255,.72)!important;
   --rim:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.18) 48%,rgba(255,255,255,.55))!important;
