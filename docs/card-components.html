@@ -107,15 +107,15 @@ body.spec-page{
   </header>
   <div class="spec-heading">
     <div class="spec-kicker">Sunrise Frost · Design System · Cards</div>
-    <h1>One card foundation. Four useful variants.</h1>
-    <p>These static specimens use Roam’s <strong>actual app stylesheets</strong>, including the shared card tokens. Only the styling is centralised for now; your live pages and actions keep their existing JavaScript.</p>
+    <h1>One card foundation. Six useful variants.</h1>
+    <p>These static specimens use Roam’s <strong>actual app stylesheets</strong>, including the shared card tokens. The cards share live styling tokens while each variant keeps its own content and actions.</p>
   </div>
   <div class="spec-grid">
     <div class="spec-notes">
       <section class="spec-panel">
         <span class="spec-flag">BaseCard</span>
         <h2 style="margin-top:12px">Shared foundation</h2>
-        <p>Change a value in the central CSS to update the base dimensions of all three Home card variants, the Chat list, and this specimen sheet.</p>
+        <p>Change a value in the central CSS to update the Home and Chat card dimensions. Profile variants use matching horizontal gutters with distinct heights and media shapes.</p>
         <table class="spec-tokens">
           <tr><td>Minimum height</td><td>84px</td></tr>
           <tr><td>Width</td><td>100%</td></tr>
@@ -129,21 +129,23 @@ body.spec-page{
         </table>
       </section>
       <section class="spec-panel">
-        <h2>Four variants</h2>
+        <h2>Six variants</h2>
         <div class="spec-variants">
           <div class="spec-variant">Voting<small>DUE tile, title, deadline, Review pill</small></div>
           <div class="spec-variant">Rescheduling<small>Trip photo, context, decline and accept</small></div>
           <div class="spec-variant">Trip<small>Trip photo, date, status, members</small></div>
           <div class="spec-variant">Chat<small>Trip photo, latest sender, sent time above the unread badge on the preview row</small></div>
+           <div class="spec-variant">AccountCard<small>84px tall, 22px radius, round 56px profile photo</small></div>
+           <div class="spec-variant">SettingsCard<small>60px tall, 18px radius, circular icon and preference summary</small></div>
         </div>
-        <p style="margin-top:13px">Only the inner content and actions differ. All four variants share the 84px minimum height and 56 × 60px image or DUE tile; cards grow if text needs room.</p>
+        <p style="margin-top:13px">Voting, rescheduling, trip and chat cards use an 84px minimum height. AccountCard uses the same 84px foundation with a circular profile photo; SettingsCard is compact at 60px. Profile variants share the same outer width (24px page gutters).</p>
       </section>
       <section class="spec-panel">
         <h2>Where to edit</h2>
-        <p><span class="spec-key spec-path">css/card-library.css</span> — shared dimensions, spacing, and media sizing for all four live variants.</p>
+        <p><span class="spec-key spec-path">css/card-library.css</span> — shared dimensions, spacing, and media sizing for all six live variants.</p>
         <p><span class="spec-key spec-path">css/liquid-glass-v6.css</span> — existing glass material, title styles, status dots, and button treatments.</p>
         <p><span class="spec-key spec-path">docs/card-components.html</span> — this read-only preview. It imports the same CSS as the live app.</p>
-        <p>The live HTML/JavaScript builders are intentionally unchanged.</p>
+        <p>The specimens are static; live Profile cards keep their existing click handlers and stored preferences.</p>
       </section>
     </div>
     <div class="spec-preview">
@@ -213,6 +215,35 @@ body.spec-page{
               <div class="gr"><b>MacRitchie Hike</b><div class="cap sm">You: Bringing snacks</div></div>
               <div class="chat-meta"><span class="cap sm chat-time">Mon</span></div>
             </button>
+          </section>
+          <section class="spec-group" id="s-profile">
+            <h3>05 · AccountCard</h3>
+            <p class="spec-description">Same shared card width · 84px height · circular profile avatar</p>
+            <div class="sg profile-card-group">
+              <button type="button" class="srow acct" aria-label="Profile account card preview">
+                <span class="av profile l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+                <span class="gr"><b>Plaise</b><span class="cap">Singapore · Joined 2025</span></span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+              </button>
+            </div>
+          </section>
+          <section class="spec-group" id="s-profile-settings">
+            <h3>06 · SettingsCard</h3>
+            <p class="spec-description">Same width as AccountCard · compact glass surface · circular frosted icons</p>
+            <div class="spec-profile-variants">
+              <div class="sg profile-settings-group">
+                <button type="button" class="srow settings-card" aria-label="Travel style setting card preview">
+                  <span class="sic l-orange"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m14.8 9.2-2 5.6-3.6-3.6 5.6-2Z"/></svg></span>
+                  <span class="stt">Travel style</span><span class="sval">Balanced</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                </button>
+                <button type="button" class="srow settings-card" aria-label="Getting around setting card preview">
+                  <span class="sic l-teal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m21 3-7 18-3-8-8-3 18-7Z"/></svg></span>
+                  <span class="stt">Getting around</span><span class="sval">Public transport</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                </button>
+              </div>
+            </div>
           </section>
           <p class="spec-footnote">Design preview only (illustrative sample times). Buttons do not navigate. Live Roam chats use stored send timestamps where available.</p>
         </div>
