@@ -74,7 +74,10 @@ body{font-weight:500}
   overflow-wrap:anywhere;
 }
 #dev #s-trips.scr{bottom:0;overflow-y:auto;overscroll-behavior-y:contain}
-#dev #s-trips .pg{padding-bottom:calc(var(--fab-b) + 112px)}
+/* At the bottom of Home, clear the fixed 46px Create trip pill by ~22px;
+   the last trip row's existing 8px bottom margin provides ~30px visual gap.
+   The pill itself remains pinned at --fab-b while the feed scrolls beneath it. */
+#dev #s-trips .pg{padding-bottom:calc(var(--fab-b) + 68px)}
 #dev #s-trips .hd{height:auto;min-height:138px;padding:62px 24px 18px}
 /* Use the shared Display 800 type scale (Plus Jakarta Sans, 800, 40–56px). */
 /* Home greeting: compact responsive Display-800 variant; the component-sheet type scale is unchanged. */
