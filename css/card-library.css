@@ -548,6 +548,19 @@
   --action-fill:var(--sky-fill)!important;
   --action-shadow:var(--control-shadow)!important;
 }
+/* Match docs/card-components.html .btn.sky:disabled: keep the
+   frosted Sky button's normal surface, then apply 45% opacity.
+   This is shared by Travel preferences and every profile subpage. */
+#dev #s-pdet .dock.sv .btn[data-a="psave"]:disabled{
+  --action-fill:var(--sky-fill)!important;
+  --action-ink:var(--ink)!important;
+  --action-shadow:var(--control-shadow)!important;
+  --rim:var(--glass-rim)!important;
+  color:var(--ink)!important;
+  opacity:.45!important;
+  cursor:not-allowed;
+  transform:none!important;
+}
 #dev :is(#fab,#psave,.btn[data-a="psave"]) svg{width:20px;height:20px;flex:none}
 #dev #fab span{font-size:14px;font-weight:700;line-height:1}
 
