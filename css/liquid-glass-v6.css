@@ -1571,6 +1571,8 @@ body{font-weight:500}
    recipe (38% white, blur, diagonal rim), .btn.coral, .micro.
    ============================================================ */
 #dev .msh.nav{--pk:396px}
+/* collapsed: make the scroll area only as tall as the visible part of the sheet */
+#dev .msh.nav:not(.x) #mc{max-height:calc(var(--pk) - 20px);overscroll-behavior:contain}
 #dev #mc .kick{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-600)}
 #dev #mc .status{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:700}
 #dev #mc .status i{width:7px;height:7px;border-radius:50%;background:var(--sky-500)}
@@ -1580,7 +1582,9 @@ body{font-weight:500}
 /* header: ETA */
 #dev #mc .nvh{padding:4px 24px 0}
 #dev #mc .nvh-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-#dev #mc .nvh-big{display:flex;align-items:baseline;gap:6px;margin:2px 0 4px;color:var(--ink)}
+#dev #mc .nvh-big{display:flex;align-items:center;gap:10px;margin:2px 0 4px;color:var(--ink)}
+#dev #mc .nvh-big svg{flex:none;width:32px;height:32px;color:var(--ink)}
+#dev #mc .nvh-big span{align-self:flex-end;padding-bottom:6px}
 #dev #mc .nvh-big b{font-size:52px;line-height:.95;font-weight:800;letter-spacing:-.06em}
 #dev #mc .nvh-big span{font-size:18px;font-weight:800;letter-spacing:-.02em}
 #dev #mc .nvh-meta{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted)}
