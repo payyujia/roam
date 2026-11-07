@@ -160,35 +160,30 @@ body.spec-page{
       <section class="spec-panel" id="typography">
         <span class="spec-flag">Typography · live card variants</span>
         <h2 style="margin-top:12px">Every card font size and style</h2>
-        <p>All six regular card titles share the same <strong>Plus Jakarta Sans · 16px · Bold 700 · 22px line height</strong>. Their type is controlled by <span class="spec-key spec-path">--roam-card-title-*</span> variables in <span class="spec-key spec-path">css/card-library.css</span>.</p>
-        <div class="spec-type-sample"><strong>Travel style · JB Daytrip · Plaise</strong><small>Supporting text remains smaller than the shared card title.</small></div>
+        <p>Voting, Rescheduling and Trip cards now use the <strong>same three-level text hierarchy</strong>. It also applies to the corresponding text roles in Chat, AccountCard and SettingsCard. All sizes and weights come from <span class="spec-key spec-path">css/card-library.css</span> (<span class="spec-key spec-path">--roam-card-title-*</span>, <span class="spec-key spec-path">--roam-card-detail-*</span> and <span class="spec-key spec-path">--roam-card-status-*</span>).</p>
+        <div class="spec-type-sample"><strong>Reading Date</strong><small style="font-family:var(--font);font-size:var(--roam-card-detail-size);font-weight:var(--roam-card-detail-weight);line-height:var(--roam-card-detail-line-height)">Thu 12 Nov · In 12 days</small><small style="font-family:var(--font);font-size:var(--roam-card-status-size);font-weight:var(--roam-card-status-weight);line-height:var(--roam-card-status-line-height)"><span style="color:#2E9C7A">●</span> Itinerary ready</small></div>
         <div class="spec-type-scroll">
           <table class="spec-type-table">
-            <thead><tr><th>Text role</th><th>Font size</th><th>Weight / style</th><th>Line height / where used</th></tr></thead>
+            <thead><tr><th>Text role</th><th>Font size</th><th>Weight / style</th><th>Line height / examples</th></tr></thead>
             <tbody>
-              <tr><td>Standard card title</td><td>16px</td><td>700 · Bold</td><td>22px · All six variants</td></tr>
-              <tr><td>Trip, Voting &amp; Chat subtitle</td><td>12px</td><td>500 · Medium</td><td>16px · Secondary details / message preview</td></tr>
-              <tr><td>Voting status</td><td>12px</td><td>600 · Semi Bold</td><td>16px · Due / waiting status</td></tr>
-              <tr><td>Rescheduling context</td><td>11px</td><td>500 · Medium</td><td>15px · Sender / proposed date</td></tr>
-              <tr><td>Rescheduling status</td><td>11px</td><td>500 · Medium</td><td>15px · Awaiting response</td></tr>
-              <tr><td>Review action</td><td>11px</td><td>700 · Bold</td><td>28px-high button · Voting cards</td></tr>
-              <tr><td>Chat timestamp</td><td>12px</td><td>500 · Medium</td><td>16px · Chat metadata</td></tr>
-              <tr><td>Chat unread count</td><td>10px</td><td>800 · Extra Bold</td><td>20px badge · Unread indicator</td></tr>
-              <tr><td>Profile city / joined date</td><td>12px</td><td>500 · Medium</td><td>18px · AccountCard</td></tr>
-              <tr><td>Settings summary value</td><td>13px</td><td>500 · Medium</td><td>18px · SettingsCard</td></tr>
-              <tr><td>Profile avatar fallback initial</td><td>22px</td><td>700 · Bold</td><td>Circular avatar · Only when image is unavailable</td></tr>
-              <tr><td>DUE label</td><td>8px</td><td>800 · Extra Bold</td><td>10px · Voting date tile</td></tr>
-              <tr><td>DUE day number</td><td>20px</td><td>800 · Extra Bold</td><td>22px · Voting date tile</td></tr>
-              <tr><td>DUE month</td><td>9px</td><td>800 · Extra Bold</td><td>12px · Voting date tile</td></tr>
+              <tr><td>Card title (shared)</td><td>16px</td><td>700 · Bold</td><td>22px · Reading Date, Move Reading Date?, Plaise, Travel style, JB Daytrip</td></tr>
+              <tr><td>Middle detail (shared)</td><td>12px</td><td>500 · Medium</td><td>16px · Trip dates, Raymond's proposed date, voting details, chat previews, Singapore · Joined 2025, Balanced; chat timestamps match this size</td></tr>
+              <tr><td>Bottom status (shared)</td><td>12px</td><td>600 · Semi Bold</td><td>16px · Awaiting your response, Waiting for your vote, Itinerary ready</td></tr>
+              <tr><td>Review action</td><td>11px</td><td>700 · Bold</td><td>28px-high button · Review / Submit on Voting cards</td></tr>
+              <tr><td>Chat unread count</td><td>10px</td><td>700 · Bold</td><td>20px badge · Number of unread messages</td></tr>
+              <tr><td>Profile avatar fallback initial</td><td>22px</td><td>700 · Bold</td><td>Circular avatar · Initial shown when photo is unavailable</td></tr>
+              <tr><td>DUE label</td><td>8px</td><td>800 · Extra Bold</td><td>10px · Top of Voting date tile</td></tr>
+              <tr><td>DUE day number</td><td>20px</td><td>800 · Extra Bold</td><td>22px · Middle of Voting date tile</td></tr>
+              <tr><td>DUE month</td><td>9px</td><td>800 · Extra Bold</td><td>12px · Bottom of Voting date tile</td></tr>
             </tbody>
           </table>
         </div>
         <p><strong>Outside the regular card system:</strong> Featured trip titles remain 18px / 800, and Trips/Profile section headings remain 23px / 800. They are intentionally not controlled by the shared 16px card-title token.</p>
-        <p><strong>Style guidance:</strong> Bold 700 for card titles, Medium 500 for descriptions and values, Semi Bold 600 for voting status, Extra Bold 800 for tiny badges and date-tile text. Typography is normal (not italic); regular card titles have zero letter spacing.</p>
+        <p><strong>How to read this table:</strong> Each shared typography role appears once. For example, Rescheduling context, Profile city and Settings summary values all follow the Middle detail style. Rescheduling status and Trip status share Bottom status. Chat timestamps have matching middle-detail measurements but retain separate metadata positioning. Action buttons, unread badges, avatars and date-tile figures intentionally have their own sizes.</p>
       </section>
       <section class="spec-panel">
         <h2>Where to edit</h2>
-        <p><span class="spec-key spec-path">css/card-library.css</span> — central card dimensions, spacing, and all standard 16px / 700 title typography.</p>
+        <p><span class="spec-key spec-path">css/card-library.css</span> — central card dimensions and all shared title, middle detail, and bottom status typography.</p>
         <p><span class="spec-key spec-path">css/liquid-glass-v6.css</span> — existing glass material, title styles, status dots, and button treatments.</p>
         <p><span class="spec-key spec-path">docs/card-components.html</span> — this read-only preview. It imports the same CSS as the live app.</p>
         <p>The specimens are static; live Profile cards keep their existing click handlers and stored preferences.</p>
