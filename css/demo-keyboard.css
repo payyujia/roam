@@ -171,6 +171,105 @@
 }
 #dev .dk-accessories .dk-globe svg{width:27px;height:27px}
 
+/* Circular numeric dial pad: HTML buttons driven by js/demo-keyboard.js.
+   Available from the chat keyboard's 123 key; ABC switches back to letters. */
+#dev .dk-phonepad{
+  box-sizing:border-box;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  padding:7px 13px 12px;
+  color:var(--dk-ink);
+}
+#dev .dk-phonepad-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex:0 0 35px;
+  padding:0 14px;
+  color:var(--dk-sub);
+  font-size:13px;
+  font-weight:600;
+}
+#dev .dk-phonepad-switch{
+  color:#0A84FF;
+  background:transparent;
+  border:0;
+  padding:7px 9px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+#dev .dk-phonepad-rows{
+  display:flex;
+  flex:1 1 auto;
+  flex-direction:column;
+  min-height:0;
+  gap:5px;
+}
+#dev .dk-phonepad-row{
+  display:flex;
+  flex:1 1 0;
+  min-height:0;
+  justify-content:space-evenly;
+  align-items:center;
+  gap:12px;
+}
+#dev .dk-phone-key{
+  display:grid;
+  flex:0 0 auto;
+  place-items:center;
+  width:clamp(44px,15vw,62px);
+  height:clamp(44px,15vw,62px);
+  max-width:100%;
+  max-height:100%;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:#2C2C2E;
+  color:#fff;
+  font-family:inherit;
+  font-weight:400;
+  font-size:25px;
+  line-height:1;
+  cursor:pointer;
+  transition:background-color .15s ease;
+}
+#dev .theme-light .dk-phone-key{
+  background:rgba(255,255,255,.96);
+  color:#101116;
+}
+#dev .dk-phone-key:active{background:#48484A}
+#dev .theme-light .dk-phone-key:active{background:#D8DBE1}
+#dev .dk-phone-action{
+  background:#3A3A3C;
+  color:#0A84FF;
+  font-size:17px;
+  font-weight:600;
+}
+#dev .theme-light .dk-phone-action{
+  background:rgba(250,250,252,.82);
+  color:#2877D5;
+}
+#dev .dk-phone-key:focus-visible,
+#dev .dk-phonepad-switch:focus-visible{
+  outline:2px solid #6DB6FF;
+  outline-offset:2px;
+}
+@media(max-height:700px){
+  #dev .dk-phonepad{padding:3px 10px 9px}
+  #dev .dk-phonepad-head{flex-basis:30px}
+  #dev .dk-phonepad-rows{gap:3px}
+  #dev .dk-phone-key{
+    width:clamp(40px,13.5vw,55px);
+    height:clamp(40px,13.5vw,55px);
+    font-size:22px;
+  }
+  #dev .dk-phone-action{font-size:15px}
+}
+
 /* Soften only the active chat composer ring during desktop keyboard use.
    Keep a subtle visible focus indicator for keyboard accessibility. */
 #dev.demo-keyboard-open #s-thread .comp #cin:focus,
