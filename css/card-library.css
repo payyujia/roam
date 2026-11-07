@@ -703,7 +703,7 @@
   --action-ink:var(--ink)!important;
   background:rgba(109,182,255,.62)!important;
   color:var(--ink)!important;
-  opacity:1!important;
+  opacity:.45!important;
   cursor:not-allowed;
 }
 #dev #s-pdet .profile-multi-card .profile-multi-tags{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px;padding-top:0}
