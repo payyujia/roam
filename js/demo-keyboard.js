@@ -125,7 +125,7 @@
  // Clicking outside the composer dismisses the demonstration keyboard.
  document.addEventListener('pointerdown',e=>{
   if(!opened||e.target.closest('#demo-keyboard,#s-thread .comp'))return;
-  hide(false);
+  hide(true); // blur so clicking Message again always reopens the keyboard
  },true);
  // Rerendering the thread after sending/receiving a message replaces #cin.
  // Keep the keyboard visible and restore focus to that new editable field.
