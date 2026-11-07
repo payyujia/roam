@@ -1057,13 +1057,16 @@ body{font-weight:500}
 }
 
 
-/* Profile > Travel style: the Pace label and three-option control share a row. */
-#dev #s-pdet .pg:has(.travel-style-form) .top .tt{
+/* Profile settings detail pages: one shared 20px / Bold 700 heading,
+   including Budget, Travel style, Getting around, Accessibility and Activity.
+   This intentionally affects only the subpage title, not its field labels. */
+#dev #s-pdet .top .tt{
   font-family:var(--font);
   font-size:20px;
   font-weight:700;
   line-height:26px;
   letter-spacing:-.02em;
+  min-width:0;
 }
 #dev #s-pdet .travel-style-form .lb{
   font-family:var(--roam-card-title-family,var(--font));
