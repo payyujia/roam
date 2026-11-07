@@ -1177,35 +1177,82 @@ body{font-weight:500}
 }
 
 
-/* Reschedule task follows the same compact 3-line rhythm as voting cards.
-   Keep the exact same tile/button sizes and card geometry. */
-#dev .reschedule-row{align-items:center}
-#dev .reschedule-row .tmain,
-#dev .reschedule-row .gr{min-width:0}
-#dev .reschedule-row .gr > b,
-#dev .reschedule-row .gr > .cap.sm,
-#dev .reschedule-row .due.awaiting{
+/* Reschedule row: match the voting cards' visual rhythm while leaving
+   enough text width for TWO actions. Do not change the other task rows. */
+#dev .reschedule-row{
+  align-items:center;
+  min-height:76px;
+}
+#dev .reschedule-row .tmain{
+  display:flex;
+  align-items:center;
+  flex:1 1 auto;
+  gap:8px;
+  min-width:0;
+}
+#dev .reschedule-row .reschedule-tile{
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:56px;
+  flex:0 0 52px;
+}
+#dev .reschedule-row .reschedule-tile svg{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+}
+#dev .reschedule-row .gr{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+}
+#dev .reschedule-row .gr > b{
   display:block;
-  max-width:100%;
+  font-size:15px;
+  line-height:20px;
+  font-weight:700;
+  white-space:nowrap;
   overflow:hidden;
-  white-space:nowrap!important;
+  text-overflow:ellipsis;
+}
+#dev .reschedule-row .gr > .cap.sm{
+  display:block;
+  font-size:11px;
+  line-height:15px;
+  white-space:nowrap;
+  overflow:hidden;
   text-overflow:ellipsis;
 }
 #dev .reschedule-row .due.awaiting{
   display:flex;
   align-items:center;
-  color:var(--muted);
   gap:4px;
+  margin-top:2px;
+  font-size:11px;
+  line-height:15px;
+  color:var(--muted);
+  white-space:nowrap!important;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 #dev .reschedule-row .due.awaiting::before{
   background:var(--sky-500);
   flex:0 0 7px;
 }
-#dev .reschedule-row .tact{flex:none}
-#dev .reschedule-row .reschedule-tile{
+#dev .reschedule-row .tact{
   display:flex;
+  flex:none;
   align-items:center;
-  justify-content:center;
+  gap:4px;
+  margin:0;
+  padding:0;
+}
+#dev .reschedule-row .tact .ib{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
 }
 
 
