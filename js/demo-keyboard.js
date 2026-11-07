@@ -211,7 +211,7 @@
     EMOJI_SETS.map(group=>
      '<button type="button" class="dk-emoji-category'+(emojiCategory===group.id?' active':'')+
       '" data-kb-action="category" data-kb-category="'+group.id+'" aria-label="'+group.label+
-      '" aria-pressed="'+(emojiCategory===group.id)+'"><span class="dk-emoji-cat-glyph" aria-hidden="true">'+group.icon+'</span></button>'
+      '" aria-pressed="'+(emojiCategory===group.id)+'"><span class="dk-emoji-cat-glyph" aria-hidden="true">'+(window.RoamAppleEmoji?.renderEmoji(group.icon)||group.icon)+'</span></button>'
     ).join('')+
    '</div>'+
    '<div class="dk-emoji-footer"><span aria-hidden="true">☺</span><span class="dk-emoji-title">Emoji</span>'+ 
