@@ -4,7 +4,22 @@ Roam's emoji picker and chat messages can display emoji images that you save loc
 
 No Apple artwork is included. Apple emoji images displayed on Emojipedia are owned by their respective rights holders; a private repository does not automatically grant permission to redistribute them. Check applicable rights before reusing artwork.
 
-## Setup
+
+## Windows one-click importer (recommended)
+
+After pulling the latest ROAM \`main\` branch, save the permitted Apple emoji image files from Emojipedia into your **Downloads** folder (or another folder you control). Then double-click **\`Install-Apple-Emojis.cmd\`** in the ROAM project root.
+
+The helper searches Downloads for PNG/WebP images with recognizable emoji names (e.g. \`face-with-tears-of-joy.png\`) or Unicode code points (e.g. \`1f602.png\`), and copies them into \`assets/apple-emojis/\` with the correct names. You don't have to manually create that directory or rename recognized files. It does not download artwork, modify originals, upload images, or bypass licensing restrictions. It also doesn't overwrite installed files by default.
+
+If your images are saved elsewhere, open a PowerShell terminal in the ROAM project folder and run:
+
+\`\`\`powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-apple-emojis.ps1 -SourceDir "C:\path\to\your\emoji-images"
+\`\`\`
+
+**Limitations:** Images with generic filenames, screenshots, or JPG files cannot be reliably identified by this tool. Save actual PNG/WebP images and give any unrecognized file a code-point filename using the table below. You still need the right to use any Apple artwork. Without local images, Windows will show its own native emoji designs.
+
+## Manual setup
 
 1. Pull the latest Roam files to your Windows computer.
 2. Next to index.html, create a folder called assets/apple-emojis/.
