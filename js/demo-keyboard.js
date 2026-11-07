@@ -46,7 +46,7 @@
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
- const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5" fill="currentColor"/><ellipse cx="8.5" cy="9.1" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><ellipse cx="15.5" cy="9.1" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><path d="M6.1 13.1c1.05 4.15 3.05 6.2 5.9 6.2s4.85-2.05 5.9-6.2c-3.4 1.55-8.4 1.55-11.8 0Z" fill="var(--dk-emoji-cutout)"/><path d="M7.5 14.65Q12 15.75 16.5 14.65L16 15.9Q12 17.2 8 15.9Z" fill="currentColor"/></svg>';
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><ellipse cx="8.5" cy="9.6" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><ellipse cx="15.5" cy="9.6" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><path d="M6.4 13.2Q12 14.7 17.6 13.2Q16.5 18.55 12 18.55Q7.5 18.55 6.4 13.2Z" fill="var(--dk-emoji-cutout)"/><path d="M7.55 14.35Q12 15.45 16.45 14.35L16 15.3Q12 16.25 8 15.3Z" fill="currentColor"/></svg>';
  /* The reference's iOS Return glyph hooks from a short top bar into a
     left-pointing arrow. The previous glyph had an overly tall vertical stem. */
  const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
