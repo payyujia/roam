@@ -1068,10 +1068,11 @@ body{font-weight:500}
   letter-spacing:-.02em;
 }
 #dev #s-pdet .travel-style-form .lb{
-  font-family:var(--font);
-  font-size:12px;
-  font-weight:700;
-  line-height:16px;
+  font-family:var(--roam-card-title-family,var(--font));
+  font-size:var(--roam-card-title-size,16px);
+  font-weight:var(--roam-card-title-weight,700);
+  line-height:var(--roam-card-title-line-height,22px);
+  letter-spacing:var(--roam-card-title-letter-spacing,0);
 }
 #dev #s-pdet .travel-style-form .seg button:not([aria-checked="true"]){
   color:#506178!important;
