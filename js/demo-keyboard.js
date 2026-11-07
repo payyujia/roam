@@ -47,7 +47,9 @@
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
  const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.6" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><circle cx="15.4" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><path d="M7.3 13.2c.65 3.05 2.3 4.65 4.7 4.65s4.05-1.6 4.7-4.65c-2.4 1.05-7 1.05-9.4 0Z" fill="var(--dk-emoji-cutout)"/><path d="M8.5 14.4c2.3.5 4.8.5 7 0" fill="none" stroke="currentColor" stroke-width=".85" stroke-linecap="round"/></svg>';
- const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5.5v8.6a4 4 0 0 1-4 4H4.5"/><path d="M9.8 13.2 4.5 18.1l5.3 4.4"/></svg>';
+ /* The reference's iOS Return glyph hooks from a short top bar into a
+    left-pointing arrow. The previous glyph had an overly tall vertical stem. */
+ const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
  /* Use the same Return glyph in both themes: this field sends chat messages,
     so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
