@@ -1559,3 +1559,80 @@ body{font-weight:500}
 #dev #mc .nvs .lk:hover{transform:translateY(-1px)}
 #dev #mc .nvs .lk:active{transform:scale(.98)}
 @media(prefers-reduced-motion:reduce){#dev #mc .pad>.nvs::after{animation:none;opacity:0}}
+
+/* ============================================================
+   Live navigation tray - Sunrise Frost
+   Header (ETA) + next-move card + timeline + stats + note + End.
+   Library parts: Display type (800, -.06em), .kick, .status,
+   progress-node colours (done sky-300 / now sky-400), glass card
+   recipe (38% white, blur, diagonal rim), .btn.coral, .micro.
+   ============================================================ */
+#dev .msh.nav{--pk:396px}
+#dev #mc .kick{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-600)}
+#dev #mc .status{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:700}
+#dev #mc .status i{width:7px;height:7px;border-radius:50%;background:var(--sky-500)}
+#dev #mc .status.ok{color:#1E7D5F}#dev #mc .status.ok i{background:#2E9C7A}
+#dev #mc .micro{font-size:11px;font-weight:600;color:var(--muted)}
+
+/* header: ETA */
+#dev #mc .nvh{padding:4px 24px 0}
+#dev #mc .nvh-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+#dev #mc .nvh-big{display:flex;align-items:baseline;gap:6px;margin:2px 0 4px;color:var(--ink)}
+#dev #mc .nvh-big b{font-size:52px;line-height:.95;font-weight:800;letter-spacing:-.06em}
+#dev #mc .nvh-big span{font-size:18px;font-weight:800;letter-spacing:-.02em}
+#dev #mc .nvh-meta{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted)}
+#dev #mc .nvh-meta svg{width:15px;height:15px;color:var(--sky-600)}
+#dev #mc .nvh-meta i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.5}
+#dev #mc .nvh-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-bottom:3px}
+/* segmented progress: done sky-300, now sky-400 + halo, rest 35% sky */
+#dev #mc .nvh-bar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;margin:16px 0 2px}
+#dev #mc .nvh-bar i{height:6px;border-radius:3px;background:rgba(109,182,255,.35)}
+#dev #mc .nvh-bar i.d{background:var(--sky-300)}
+#dev #mc .nvh-bar i.n{background:var(--sky-400);box-shadow:0 0 0 3px rgba(109,182,255,.28)}
+
+/* shared glass card recipe for new tray cards */
+#dev #mc :is(.nvt,.nvx>div,.nvn){
+  position:relative;
+  background:var(--glass-surface-bg);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow);
+}
+#dev #mc :is(.nvt,.nvx>div,.nvn)::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
+}
+/* next move */
+#dev #mc .nvt{display:flex;align-items:center;gap:12px;margin:0 24px;padding:12px;border-radius:22px}
+#dev #mc .nvt-ic{width:48px;height:48px;border-radius:15px;flex:none;display:grid;place-items:center;background:rgba(109,182,255,.28);color:var(--sky-600)}
+#dev #mc .nvt .gr{min-width:0}
+#dev #mc .nvt b{display:block;font-size:14px;line-height:19px;font-weight:800;letter-spacing:-.01em}
+#dev #mc .nvt .cap{color:var(--muted)}
+
+/* timeline additions */
+#dev #mc .tl.nv .cc{align-items:center;justify-content:space-between;gap:12px;padding:12px 16px 12px 16px;min-height:0;text-align:left}
+#dev #mc .tl.nv .cc .gr{min-width:0;flex:1}
+#dev #mc .tl.nv .cc .kick{display:block;margin-bottom:2px}
+#dev #mc .tl.nv .cc b{font-size:17px;line-height:22px;font-weight:800;letter-spacing:-.02em}
+#dev #mc .cc-eta{display:flex;flex-direction:column;align-items:center;flex:none;min-width:46px;padding-left:12px;border-left:1px solid rgba(31,99,181,.16);color:var(--ink)}
+#dev #mc .cc-eta b{font-size:24px;line-height:26px;font-weight:800;letter-spacing:-.05em}
+#dev #mc .cc-eta small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+#dev #mc .tn-t{margin-left:auto;flex:none;font-size:12px;font-weight:700;color:var(--muted)}
+#dev #mc .tc .cap svg{color:var(--sky-600)}
+
+/* stats */
+#dev #mc .nvx{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 24px 0}
+#dev #mc .nvx>div{border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+#dev #mc .nvx small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+#dev #mc .nvx b{font-size:17px;line-height:20px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+/* trip note */
+#dev #mc .nvn{display:flex;gap:10px;align-items:flex-start;margin:0 24px;padding:12px 14px;border-radius:20px}
+#dev #mc .nvn svg{color:var(--sky-600);margin-top:1px}
+#dev #mc .nvn p{margin:0;font-size:12px;line-height:18px;font-weight:600;color:var(--muted)}
+#dev #mc .nvf{padding:4px 24px 0}
+#dev #mc .tl.nv{padding-top:0}
+#dev #mc .tl.nv .cc .cap{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* End navigation: library coral pill, hugs its label (not full width) */
+#dev #mc .nvf{display:flex;justify-content:center}
+#dev #mc .nvf .btn{width:auto;--action-fill:var(--coral-fill,rgba(255,201,188,.6))!important}

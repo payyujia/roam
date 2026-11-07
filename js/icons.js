@@ -17,3 +17,10 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 
 /* Reels tab: a clear play-triangle silhouette. */
 Object.assign(I,{play:'<path d="M8 5v14l11-7z"/>'});
+
+/* Travel-mode icons for live navigation (same 24px / 1.9 stroke family as the set above). */
+Object.assign(I,{
+ walk:'<circle cx="13" cy="4.5" r="1.7"/><path d="M12.5 8.5L10 12l-3 .8M12.5 8.5l2.4 2.3 3.1.6M11.2 12.5l.8 3.5-2.4 5.5M12 16l3 1.8.4 3.7"/>',
+ car:'<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+ train:'<path d="M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1M15 15l1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5z"/><path d="M8 19l-2 3M16 19l2 3"/>'
+});
