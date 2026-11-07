@@ -204,6 +204,8 @@ body{font-weight:500}
     transparent 54%,rgba(255,255,255,.5));
 }
 #dev :is(.btn,.gob,.vbtn,#fab,#psave){height:46px;border-radius:999px;font-size:13px;font-weight:700}
+/* Home Trips Create trip button: Body 700 at 14px, without altering Map or other actions. */
+#dev #fab[data-s="trips"]{font-size:14px;font-weight:700}
 #dev .btn{padding:0 22px}
 #dev .btn.sm2{height:34px;padding:0 14px;font-size:11px}
 #dev .tgo{height:28px;padding:0 12px;font-size:11px}
