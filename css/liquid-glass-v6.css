@@ -1177,32 +1177,35 @@ body{font-weight:500}
 }
 
 
-/* Rescheduling task: readable proposed date, clear pending state, unclipped actions. */
-#dev .reschedule-row{
-  align-items:center;
-}
-#dev .reschedule-row .tmain{
-  min-width:0;
-}
-#dev .reschedule-row .gr{
-  min-width:0;
-}
+/* Reschedule task follows the same compact 3-line rhythm as voting cards.
+   Keep the exact same tile/button sizes and card geometry. */
+#dev .reschedule-row{align-items:center}
+#dev .reschedule-row .tmain,
+#dev .reschedule-row .gr{min-width:0}
+#dev .reschedule-row .gr > b,
 #dev .reschedule-row .gr > .cap.sm,
 #dev .reschedule-row .due.awaiting{
-  white-space:normal;
-  overflow-wrap:break-word;
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  white-space:nowrap!important;
+  text-overflow:ellipsis;
 }
 #dev .reschedule-row .due.awaiting{
+  display:flex;
+  align-items:center;
   color:var(--muted);
+  gap:4px;
 }
 #dev .reschedule-row .due.awaiting::before{
   background:var(--sky-500);
+  flex:0 0 7px;
 }
-#dev .reschedule-row .tact{
-  flex:none;
-}
+#dev .reschedule-row .tact{flex:none}
 #dev .reschedule-row .reschedule-tile{
-  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 
