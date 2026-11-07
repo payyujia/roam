@@ -18,7 +18,30 @@
  dev.appendChild(keyboard);
 
  let opened=false,shifted=false,numbers=false;
- const alpha=[...'qwertyuiop',...'asdfghjkl',...'zxcvbnm'];
+ /* Inverse-contrast themes are chosen from the actual chat background.
+    ?keyboard-theme=dark|light can force a skin when previewing either design. */
+ function brightness(el){
+  if(!el)return null;
+  const color=getComputedStyle(el).backgroundColor;
+  const match=color&&color.match(/^rgba?\(([^)]+)\)/i);
+  if(!match)return null;
+  const values=match[1].trim().split(/[,\s/]+/).map(Number);
+  if(values.length<3||values.slice(0,3).some(n=>!Number.isFinite(n))||
+     (values.length>3&&values[3]<.2))return null;
+  const [r,g,b]=values;
+  return (.2126*r+.7152*g+.0722*b)/255;
+ }
+ function selectSkin(){
+  const forced=params.get('keyboard-theme');
+  const lightSurface=(brightness(thread)??brightness(dev)??1)>.57;
+  const darkKeys=forced==='dark'||(forced!=='light'&&lightSurface);
+  keyboard.classList.toggle('theme-dark',darkKeys);
+  keyboard.classList.toggle('theme-light',!darkKeys);
+ }
+ const shiftIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 13h5v8h8v-8h5L12 3Z" fill="currentColor" stroke="none"/></svg>';
+ const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H21v16H9L2 12l7-8Z"/><path d="m12 9 6 6m0-6-6 6"/></svg>';
+ const globeIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/></svg>';
+ const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
@@ -35,25 +58,31 @@
      ['@','#','$','%','&','-','+','(',')','/'],
      ['*','"',"'",':',';','!','?',',','.']]):
    ['qwertyuiop'.split(''),'asdfghjkl'.split(''),'zxcvbnm'.split('')];
-  const letters=arr=>arr.map(x=>key(shifted&&!numbers?x.toUpperCase():x)).join('');
-  keyboard.innerHTML='<div class="dk-toolbar">'+
-   '<span class="dk-language">English (US)</span>'+
-   '<button type="button" class="dk-done" data-kb-action="done">Done</button></div>'+
+  const letters=arr=>arr.map(x=>key(shifted&&!numbers?x.toUpperCase():x,numbers?x:x.toUpperCase())).join('');
+  keyboard.innerHTML='<div class="dk-predict" aria-label="Predictive text suggestions">'+
+   '<span>I</span><span>The</span><span>Is</span>'+
+   '<button type="button" class="dk-hide" data-kb-action="done" aria-label="Hide keyboard">⌄</button></div>'+
    '<div class="dk-rows" role="group" aria-label="Keyboard keys">'+
     '<div class="dk-row">'+letters(a[0])+'</div>'+
     '<div class="dk-row dk-offset">'+letters(a[1])+'</div>'+
     '<div class="dk-row">'+
-     '<button type="button" class="dk-key dk-special" data-kb-action="shift" aria-label="Shift">'+(numbers?(shifted?'123':'#+='):'⇧')+'</button>'+
+     '<button type="button" class="dk-key dk-special" data-kb-action="shift" aria-label="Shift">'+(numbers?(shifted?'123':'#+='):shiftIcon)+'</button>'+
      letters(a[2])+
-     '<button type="button" class="dk-key dk-special" data-kb-action="delete" aria-label="Delete">⌫</button>'+
+     '<button type="button" class="dk-key dk-special" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
     '</div>'+
     '<div class="dk-row dk-bottom">'+
      '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode">'+(numbers?'ABC':'?123')+'</button>'+
      '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">☺</button>'+
-     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space">space</button>'+
+     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-space-label">space</span><span class="dk-en">EN</span></button>'+
      '<button type="button" class="dk-key dk-send" data-kb-action="send">send</button>'+
     '</div>'+
-   '</div>';
+   '</div>'+
+   '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
+  updateSend();
+ }
+ function updateSend(){
+  const button=keyboard.querySelector('.dk-send');
+  if(button)button.classList.toggle('has-text',!!currentInput()?.value.trim());
  }
  const currentInput=()=>document.querySelector('#s-thread.on #cin');
  function scrollEnd(){
@@ -71,7 +100,8 @@
    opened=true;
    keyboard.hidden=false;
    dev.classList.add('demo-keyboard-open');
-   shifted=false;numbers=false;draw();
+   shifted=false;numbers=false;
+   selectSkin();draw();
   }
   scrollEnd();
  }
@@ -123,6 +153,10 @@
  document.addEventListener('focusin',e=>{
   if(e.target.id==='cin')show();
  });
+ document.addEventListener('input',e=>{
+  if(e.target.id==='cin'&&opened)updateSend();
+ });
+ window.addEventListener('resize',()=>{if(opened)selectSkin()});
  document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&opened){
    e.preventDefault();e.stopPropagation();hide(true);
@@ -138,6 +172,8 @@
  const observer=new MutationObserver(()=>{
   if(!opened)return;
   if(typeof topId==='function'&&topId()!=='thread'){hide(false);return}
+  selectSkin();
+  updateSend();
   const field=currentInput();
   if(field&&document.activeElement!==field){
    requestAnimationFrame(()=>{
