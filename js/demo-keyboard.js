@@ -193,7 +193,7 @@
   const options=emojiItems();
   grid.innerHTML=options.length?options.map(([emoji,label])=>
    '<button type="button" class="dk-emoji-choice" data-kb-key="'+escapeText(emoji)+
-   '" aria-label="'+escapeText(label)+'" title="'+escapeText(label)+'">'+emoji+'</button>'
+   '" aria-label="'+escapeText(label)+'" title="'+escapeText(label)+'">'+(window.RoamAppleEmoji?.renderEmoji(emoji)||emoji)+'</button>'
   ).join(''):'<div class="dk-emoji-empty">No emoji found</div>';
  }
  function drawEmoji(){
