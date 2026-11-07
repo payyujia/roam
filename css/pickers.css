@@ -1,0 +1,64 @@
+/* ===== PICKERS · Dropdown + Calendar (Components Library · Sunrise Frost v11) ===== */
+#dev{--sky-wash:rgba(109,182,255,.35);--t-ring:var(--sky-500)}
+
+/* frosted surface shared by the list and calendar panel (the library's .glass recipe) */
+#dev :is(.dd-list,.cal){position:relative;background:var(--glass-control-bg);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-shadow)}
+#dev :is(.dd-list,.cal)::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:2;background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+#dev :is(.dd-list,.cal)>*{position:relative;z-index:3}
+
+/* ---------- DROPDOWN ---------- */
+#dev .dd{display:block;min-width:0}
+#dev .dd-trigger{display:flex;align-items:center;gap:10px;width:100%;padding:0 16px;border:0;text-align:left;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+#dev .dd-trigger>svg{flex:none;color:var(--muted)}
+#dev .dd-trigger>.dd-val{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#dev .dd-trigger>.dd-val.ph{color:var(--muted);font-weight:500}
+#dev .dd-trigger>svg:last-child:not(:first-child){margin-left:auto}
+#dev .dd-trigger>svg:last-child{transition:transform .2s}
+#dev .dd-trigger.open{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
+#dev .dd[class] .dd-trigger.open>svg:last-child{transform:rotate(180deg)}
+#dev .dd-trigger:focus-visible{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
+#dev .dd-dot{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55);flex:none}
+#dev .dd-list{margin-top:8px;padding:6px;border-radius:22px}
+#dev .dd-opts{display:flex;flex-direction:column;gap:2px;max-height:280px;overflow-y:auto}
+#dev .dd-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:0 12px;border:0;border-radius:16px;background:none;text-align:left;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;transition:background .15s}
+#dev .dd-opt:hover,#dev .dd-opt:focus-visible{background:rgba(255,255,255,.45)}
+#dev .dd-opt[aria-selected=true]{background:var(--sky-wash);box-shadow:inset 0 0 0 1px rgba(47,140,255,.3)}
+#dev .dd-opt .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+#dev .dd-opt small{font-size:11px;font-weight:600;color:var(--muted)}
+#dev .dd-opt .tick{width:16px;height:16px;flex:none;color:var(--sky-600);stroke-width:2.6}
+
+/* ---------- CALENDAR ---------- */
+#dev .form-dates+.cal{margin-top:10px}
+#dev .cal{padding:16px;border-radius:26px}
+#dev .cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+#dev .cal-h b{font-size:17px;font-weight:800;letter-spacing:-.04em}
+#dev .cal-nav{display:flex;gap:6px}
+#dev .cal-wd,#dev .cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+#dev .cal-wd span{height:28px;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--muted)}
+#dev .cal-g{row-gap:2px}
+#dev .day{position:relative;height:40px;padding:0;border:0;border-radius:0;background:none;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer}
+#dev .day>span{position:relative;z-index:1;width:min(36px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;transition:background .15s}
+#dev .day:hover>span{background:rgba(255,255,255,.55)}
+#dev .day:focus-visible{outline:none!important}
+#dev .day:focus-visible>span{box-shadow:0 0 0 2px var(--sky-600)}
+#dev .day.today>span{box-shadow:inset 0 0 0 1.5px var(--sky-500);color:var(--sky-600);font-weight:800}
+#dev .day.mid::before,#dev .day.start::before,#dev .day.end::before{content:"";position:absolute;top:2px;bottom:2px;left:0;right:0;background:rgba(109,182,255,.28)}
+#dev .day.start::before{left:50%}#dev .day.end::before{right:50%}
+#dev .day.sel>span,#dev .day.sel:hover>span{background:var(--sky-400);color:var(--ink);font-weight:800;box-shadow:0 4px 12px rgba(40,100,180,.28),inset 0 1px 1px rgba(255,255,255,.5)}
+#dev .day:disabled{cursor:not-allowed}
+#dev .day:disabled>span{background:none;color:var(--muted);opacity:.55}
+#dev .day.out:disabled>span{opacity:.3}
+#dev .day .dot{position:absolute;left:50%;bottom:4px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--g)}
+#dev .cal .rule{height:1px;margin:14px 0;background:linear-gradient(90deg,transparent,rgba(31,99,181,.18),transparent)}
+#dev .cal-f{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#dev .cal-f .s{font-size:13px;font-weight:700}
+#dev .cal-f .micro{font-size:11px;color:var(--muted);min-height:16px}
+#dev .cal .btn.mini{width:34px;height:34px;padding:0}
+@media(prefers-reduced-motion:reduce){#dev :is(.dd-trigger svg,.dd-opt,.day>span){transition:none}}
+#dev .cal-act{display:flex;gap:8px;flex:none}
+#dev .cal-f .btn{width:auto;flex:none;min-width:0;height:34px;padding:0 14px;font-size:11px}
+#dev .cal-f .btn.sec{--action-fill:var(--glass-control-bg)}
+#dev .cal-act .btn.sec{background:rgba(255,255,255,.55)!important}
