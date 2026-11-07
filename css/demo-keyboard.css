@@ -5,9 +5,9 @@
    Inverse contrast requested: light page -> dark keys, dark page -> light. */
 #dev{--demo-keyboard-height:315px}
 #dev .demo-keyboard{
-  --dk-bg:#1C1C1E;
-  --dk-key:#454547;
-  --dk-control:#3B3B3E;
+  --dk-bg:#202020;
+  --dk-key:#444444;
+  --dk-control:#454547;
   --dk-ink:#FAFAFC;
   --dk-sub:#ACACB0;
   --dk-divider:rgba(220,220,226,.15);
@@ -27,7 +27,7 @@
   height:var(--demo-keyboard-height);
   padding:7px 5px 4px;
   border:0;
-  border-radius:28px 28px 0 0;
+  border-radius:18px 18px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
@@ -52,7 +52,7 @@
   -webkit-backdrop-filter:blur(24px) saturate(140%);
   backdrop-filter:blur(24px) saturate(140%);
 }
-#dev .demo-keyboard.theme-dark{--dk-bg:#1C1C1E}
+#dev .demo-keyboard.theme-dark{--dk-bg:#202020}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
   flex:0 0 38px;
@@ -82,7 +82,7 @@
   min-height:0;
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:10px;
   padding:0 0 2px;
 }
 #dev .dk-row{
