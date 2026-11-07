@@ -46,10 +46,11 @@
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
- const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><ellipse cx="8.5" cy="9.6" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><ellipse cx="15.5" cy="9.6" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><path d="M6.4 13.2Q12 14.7 17.6 13.2Q16.5 18.55 12 18.55Q7.5 18.55 6.4 13.2Z" fill="var(--dk-emoji-cutout)"/><path d="M7.55 14.35Q12 15.45 16.45 14.35L16 15.3Q12 16.25 8 15.3Z" fill="currentColor"/></svg>';
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.25" fill="currentColor"/><circle cx="8.6" cy="9.5" r="1.1" fill="var(--dk-emoji-cutout)"/><circle cx="15.4" cy="9.5" r="1.1" fill="var(--dk-emoji-cutout)"/><path d="M6.6 13.15c.65 3.9 2.8 5.95 5.4 5.95s4.75-2.05 5.4-5.95c-3.2 1.1-7.6 1.1-10.8 0Z" fill="var(--dk-emoji-cutout)"/><path d="M7.45 14.2c3.05.85 6.05.85 9.1 0" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" fill="none"/></svg>';
  /* The reference's iOS Return glyph hooks from a short top bar into a
     left-pointing arrow. The previous glyph had an overly tall vertical stem. */
- const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
+ /* Minimal bent Return arrow, proportioned to the subdued iOS key glyph. */
+ const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19.7 5.7v7.5a3.3 3.3 0 0 1-3.3 3.3H5.1"/><path d="m9.7 11.9-4.6 4.6 4.6 4.4"/></svg>';
  /* Use the same Return glyph in both themes: this field sends chat messages,
     so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
