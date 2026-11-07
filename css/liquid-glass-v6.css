@@ -1370,3 +1370,22 @@ body{font-weight:500}
   height:16px!important;
   stroke-width:3.2!important;
 }
+
+
+/* Home card parity: Tasks and Your trips share the same outer dimensions. */
+/* Trips use 60px thumbnails; Tasks use 56px date tiles. Shared 80px
+   minimum accommodates both while allowing text to grow if required. */
+#dev #s-trips :is(.trow.tier,.row.tier){
+  box-sizing:border-box;
+  width:100%;
+  min-height:80px;
+  padding:10px 12px;
+  border-radius:22px;
+  gap:10px;
+}
+/* Preserve compact tap targets on narrower phones without cutting off text. */
+@media(max-width:360px){
+  #dev #s-trips :is(.trow.tier,.row.tier){
+    padding-inline:8px;
+  }
+}
