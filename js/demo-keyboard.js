@@ -50,7 +50,7 @@
  /* The reference's iOS Return glyph hooks from a short top bar into a
     left-pointing arrow. The previous glyph had an overly tall vertical stem. */
  /* Minimal bent Return arrow, proportioned to the subdued iOS key glyph. */
- const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19.7 5.7v7.5a3.3 3.3 0 0 1-3.3 3.3H5.1"/><path d="m9.7 11.9-4.6 4.6 4.6 4.4"/></svg>';
+ const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
  /* Use the same Return glyph in both themes: this field sends chat messages,
     so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
@@ -225,6 +225,7 @@
     update from the real chat input (including physical keyboard typing).
     This does not claim to reproduce Apple's proprietary prediction model. */
  const PREDICTION_LEXICON=(
+  "edit education editing edited editor educate educational edition " +
   "the to and a i you it is in of for on with we are was be have has had do did " +
   "can could would should will shall may might not no yes yeah okay ok hi hey hello " +
   "thanks thank please sorry sure great good nice awesome amazing perfect wonderful " +
