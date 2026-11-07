@@ -1,3 +1,7 @@
+/* Font priority: use locally installed Apple SF Pro Text first on Windows;
+   never embed Apple's licensed font files in the public repository.
+   Falls back to platform system UI fonts when SF Pro isn't installed. */
+
 /* Roam iPhone-style demo keyboard. Sizes are tuned for a 390–402px phone
    frame and the user's iOS screenshots: shallow rounded keycaps, uppercase
    labels, staggered rows, full-width space bar and lower globe/mic toolbar.
@@ -32,7 +36,7 @@
   background:var(--dk-bg);
   color:var(--dk-ink);
   box-shadow:0 -5px 18px rgba(20,26,40,.10);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
+  font-family:"SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   font-weight:400;
   -webkit-user-select:none;
   user-select:none;
@@ -111,7 +115,7 @@
   background:var(--dk-key);
   color:var(--dk-ink);
   box-shadow:var(--dk-shadow);
-  font:400 21px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
+  font:400 21px/1 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   text-align:center;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
@@ -235,7 +239,7 @@
   outline:0;
   background:transparent;
   color:var(--dk-ink);
-  font:400 15px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font:400 15px/1.2 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   box-shadow:none;
 }
 #dev .dk-emoji-search::placeholder{
@@ -253,7 +257,7 @@
   padding:1px 15px 0;
   box-sizing:border-box;
   color:var(--dk-sub);
-  font:600 12px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font:600 12px/1.2 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 #dev .dk-emoji-cat-glyph{
   display:grid;
@@ -369,7 +373,7 @@
   border-radius:8px;
   background:transparent;
   color:var(--dk-sub);
-  font:500 20px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font:500 20px/1 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   cursor:pointer;
 }
 #dev .dk-emoji-abc{
