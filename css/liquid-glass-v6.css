@@ -1872,8 +1872,12 @@ body{font-weight:500}
   color:var(--ink)!important;
 }
 
-/* Toast contrast: keep all toast copy white on the opaque glass surface. */
-#dev #toast,
-#dev #toast > span,
-#dev #toast > span > span,
-#dev #toast button{color:#fff!important}
+/* Toast copy follows the luminance of its rendered surface. */
+#dev #toast.toast-contrast-dark,
+#dev #toast.toast-contrast-dark > span,
+#dev #toast.toast-contrast-dark > span > span,
+#dev #toast.toast-contrast-dark button{color:#0E1116!important}
+#dev #toast.toast-contrast-light,
+#dev #toast.toast-contrast-light > span,
+#dev #toast.toast-contrast-light > span > span,
+#dev #toast.toast-contrast-light button{color:#fff!important}
