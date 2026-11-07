@@ -875,30 +875,47 @@ body{font-weight:500}
    explicit light and blue screen surfaces. No solid status-bar background. */
 
 
-/* Standardized main-tab blue header height (Home / Chat / Profile). */
-/* Home uses a minimum so long greetings may wrap without clipping. The other
-   primary-tab headers use the same height exactly. */
-#dev{--main-tab-header-height:138px}
-#dev #s-trips .hd{min-height:var(--main-tab-header-height)}
+/* Unified blue hero headers: Home, Chat and Profile.
+   Use Plus Jakarta Sans 800 at a compact display scale on every blue hero.
+   Keep the Home hero flexible if the greeting wraps to another line. */
+#dev{
+  --main-tab-header-height:180px;
+  --blue-hero-title-size:clamp(34px,9.3vw,36px);
+}
+#dev #s-trips .hd,
 #dev #s-chat .hd,
 #dev #s-profile .hd{
   box-sizing:border-box;
-  height:var(--main-tab-header-height);
   min-height:var(--main-tab-header-height);
-  padding:62px 24px 18px;
+  padding:62px 24px 22px;
 }
-/* The old bell-above-title layout needed 208px. Place the existing 50px
-   component next to the title instead, without changing its action or style. */
+#dev #s-trips .hd{height:auto}
+#dev #s-chat .hd,
+#dev #s-profile .hd{height:var(--main-tab-header-height)}
+/* The same type token applies to trip-detail blue headings, too. */
+#dev #s-trips .hd h1,
+#dev #s-chat .hd h1,
+#dev #s-profile .hd h1,
+#dev .th .thd h1{
+  font-family:var(--font);
+  font-size:var(--blue-hero-title-size);
+  font-weight:800;
+  line-height:1.06;
+  letter-spacing:-.05em;
+  color:var(--ink);
+}
+/* Keep the existing notification action beside the Profile heading. */
 #dev #s-profile .profile-notif{
   top:auto;
   left:auto;
   right:24px;
-  bottom:18px;
+  bottom:22px;
 }
 #dev #s-profile .hd h1{padding-right:64px}
 @media(max-height:740px){
-  #dev{--main-tab-header-height:124px}
+  #dev{--main-tab-header-height:168px}
+  #dev #s-trips .hd,
   #dev #s-chat .hd,
   #dev #s-profile .hd{padding-top:56px}
-  #dev #s-profile .profile-notif{bottom:14px}
+  #dev #s-profile .profile-notif{bottom:18px}
 }
