@@ -121,7 +121,7 @@ Object.assign(A,{
   pd();
   render('pdet');
 },pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
- pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:n=>{S.p.rate=+n;pd();render('profile')}});
+ pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:(id,n)=>{const t=trip(id);if(!t||!t.m.includes('P')||!PAST().some(p=>p.id===id))return;S.p.ratings={...(S.p.ratings||{}),[id]:+n};if(id==='sun')S.p.rate=+n;pd();render('pdet')}});
 /* send keeps working with the new message shape */
 A.send=()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v,null,null,null,Date.now()]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length],null,null,null,Date.now()]);if(S.th==th)S.typing=0;render('thread');bottom();tabbar()},1500)};
 /* swipe in from the left edge = back (pushed screens only) */
