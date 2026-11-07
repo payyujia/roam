@@ -62,6 +62,12 @@
 #dev #s-trips .hd + .sec{padding-top:var(--roam-first-section-gap)}
 #dev #s-chat .hd + .cs{margin-top:var(--roam-first-section-gap)!important}
 
+/* Match the visible space above the first Profile card to Home's Up next text.
+   The heading's font line box adds a small optical inset; card edges don't. */
+#dev #s-profile .hd + .sg{
+  margin-top:calc(var(--roam-first-section-gap) + 4px);
+}
+
 /* Chat cards share the same foundation. Keep the timestamp/unread column
    just wide enough for a 24-hour time so the preview can show more text. */
 #dev #s-chat .chat-row{
