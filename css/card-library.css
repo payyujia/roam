@@ -89,6 +89,7 @@
 @media(max-width:360px){
   #dev #s-trips :is(.trow.tier,.row.tier){
     padding-inline:var(--roam-card-padding-x-compact);
+    padding-right:var(--roam-card-action-inset)!important;
   }
 }
 
