@@ -1,41 +1,57 @@
 /* ===== CHAT + PROFILE (v3 views, override the legacy ones in views.js) ===== */
-/* Real send times are stored at m[5], leaving the existing fork-message fields intact.
-   Seeded prototype conversations only have demo labels; their exact historical
-   send times are unknown, so don't manufacture real timestamps for them. */
+/* Each message's real sent time lives at m[5]. Older demo conversations
+   had only relative labels ("2m"/"1h"/"Mon"), not recorded timestamps.
+   Estimate recent demo times once per page session for the sample UI; keep
+   the older weekday label rather than inventing its unknown clock time. */
+const chatDemoStartedAt=Date.now();
+const chatDemoSentAt=new WeakMap(CH.map(c=>{
+ const match=/^(\d+)([mh])$/.exec(c.t||'');
+ const demoTime=match?chatDemoStartedAt-Number(match[1])*(match[2]==='h'?3600000:60000):null;
+ return [c,demoTime];
+}));
+const chatLastMessage=c=>c.m.slice().reverse().find(m=>m[1]||m[3]==='fork')||null;
 const chatLatestSentAt=c=>{
- const m=c.m[c.m.length-1],ts=m&&m[5];
- return typeof ts==='number'&&Number.isFinite(ts)&&ts>0?ts:null;
+ const m=chatLastMessage(c),ts=m&&m[5];
+ return typeof ts==='number'&&Number.isFinite(ts)&&ts>0?ts:chatDemoSentAt.get(c)||null;
 };
-const chatTimeAgo=(ts,now=Date.now())=>{
- const ms=Math.max(0,now-ts),min=Math.floor(ms/60000);
- if(min<1)return 'now';
- if(min<60)return min+'m';
- const hours=Math.floor(ms/3600000);
- if(hours<24)return hours+'h';
- const days=Math.floor(ms/86400000);
- if(days<7)return days+'d';
- if(days<30)return Math.floor(days/7)+'w';
- const dt=new Date(ts),sameYear=dt.getFullYear()===new Date(now).getFullYear();
- return dt.toLocaleDateString(undefined,sameYear?{month:'short',day:'numeric'}:{month:'short',day:'numeric',year:'numeric'});
-};
+/* Use a local 24-hour clock time instead of a relative age for today/recent
+   conversations, matching the 24-hour status-bar style. */
+const chatTimeOfDay=ts=>new Intl.DateTimeFormat('en-GB',{
+ hour:'2-digit',minute:'2-digit',hourCycle:'h23'
+}).format(new Date(ts));
+/* Retain the existing sync hook from main.js without rebuilding the list. */
 const syncChatAges=()=>{
  const list=$('#clist');
  if(!list)return;
- const now=Date.now();
  list.querySelectorAll('.chat-time[data-chat-index]').forEach(el=>{
   const c=CH[Number(el.dataset.chatIndex)],ts=c&&chatLatestSentAt(c);
   if(!ts)return;
-  el.textContent=chatTimeAgo(ts,now);
-  el.title=new Date(ts).toLocaleString();
+  el.textContent=chatTimeOfDay(ts);
+  const recorded=chatLastMessage(c)?.[5];
+  el.title=recorded?'Sent '+new Date(ts).toLocaleString():'Demo time estimated from sample label';
  });
 };
-const chatList=()=>{const q=(S.cq||'').trim().toLowerCase(),has=m=>(m[1]||'').toLowerCase().includes(q),L=CH.map((c,i)=>[c,i]).filter(([c])=>!q||c.n.toLowerCase().includes(q)||c.m.some(has));
+const chatList=()=>{
+ const q=(S.cq||'').trim().toLowerCase();
+ const has=m=>(m[1]||'').toLowerCase().includes(q);
+ const L=CH.map((c,i)=>[c,i]).filter(([c])=>!q||c.n.toLowerCase().includes(q)||c.m.some(has));
  return L.length?L.map(([c,i])=>{
-  const hit=q&&c.m.slice().reverse().find(has),last=(c.m.filter(m=>m[1]).slice(-1)[0]||[0,''])[1];
-  const ts=chatLatestSentAt(c),timeLabel=ts?chatTimeAgo(ts):c.t;
-  const fullTime=ts?new Date(ts).toLocaleString():'Sample conversation: actual send time not recorded';
-  return Row({x:'chat-row',a:'thread:'+i,label:c.n+(c.u?`, ${c.u} unread`:''),lead:Cover(trip(c.tid),'m'),title:hl(c.n,q),sub:hit?`${hit[0]=='P'?'You':PE[hit[0]][2]}: ${hl(hit[1],q)}`:esc(last),trail:`<div class="chat-meta"><span class="cap sm chat-time" data-chat-index="${i}" title="${esc(fullTime)}">${esc(timeLabel)}</span>${c.u?`<span class="bd2 chat-unread">${c.u}</span>`:''}</div>`});
- }).join(''):`<div style="padding-top:8px">${Empty('No chats found',`Nothing matches “${esc(S.cq)}”.`)}</div>`};
+  const hit=q&&c.m.slice().reverse().find(has);
+  const latest=chatLastMessage(c),preview=hit||latest;
+  const speaker=preview?(preview[0]==='P'?'You':PE[preview[0]]?.[2]||'Member'):'';
+  const body=preview?(preview[1]||'Shared a path'):'No messages yet';
+  const ts=chatLatestSentAt(c),timeLabel=ts?chatTimeOfDay(ts):c.t||'';
+  const recorded=latest&&typeof latest[5]==='number';
+  const fullTime=recorded?'Sent '+new Date(ts).toLocaleString():ts?'Demo time estimated from sample label':'Demo conversation: send time not recorded';
+  return Row({
+   x:'chat-row',a:'thread:'+i,
+   label:c.n+(c.u?`, ${c.u} unread`:''),
+   lead:Cover(trip(c.tid),'m'),title:hl(c.n,q),
+   sub:`${speaker?esc(speaker)+': ':''}${hl(body,q)}`,
+   trail:`<div class="chat-meta"><span class="cap sm chat-time" data-chat-index="${i}" title="${esc(fullTime)}">${esc(timeLabel)}</span>${c.u?`<span class="bd2 chat-unread">${c.u}</span>`:''}</div>`
+  });
+ }).join(''):`<div style="padding-top:8px">${Empty('No chats found',`Nothing matches “${esc(S.cq)}”.`)}</div>`;
+};
 V.chat=()=>`<div class="hd"><h1>Chat</h1></div><div class="cs" style="margin-top:12px"><label class="fi sr">${ic('search',20)}<input id="cq" type="search" placeholder="Search chats and messages" aria-label="Search chats and messages" value="${esc(S.cq)}" oninput="A.cq(this.value)" autocomplete="off"><button class="x" data-a="cqclear" aria-label="Clear search" ${S.cq?'':'hidden'}>${ic('x',16)}</button></label></div><div id="clist" class="cl">${chatList()}</div>`;
 const forkMsg=tid=>{const t=trip(tid),fk=t.fork,i=Object.keys(fk.ch)[0];return `<button class="fcm" data-a="fview:${tid}"><span class="xic">${ic('git-branch',22)}</span><span class="gr"><b>${esc(pn(fk.owner))}’s path</b><span class="cap sm" style="display:block">${i!=null?`Replaces ${esc(fk.stops[i].from)} with ${esc(fk.stops[i].n)}`:'An extra path'} · tap to view</span></span>${ic('chevron-right',18)}</button>`};
 const msg=(m,i,a)=>{const me=m[0]=='P',f=!a[i-1]||a[i-1][0]!=m[0];return `<div class="m ${me?'me':''}">${f&&!me?`<span class="cap sm">${PE[m[0]][2]}</span>`:''}<div class="bub">${m[3]=='fork'?forkMsg(m[4]):esc(m[1])}</div></div>`};
