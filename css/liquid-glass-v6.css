@@ -1145,3 +1145,32 @@ body{font-weight:500}
   --action-fill:var(--coral-300)!important;
   --action-ink:var(--ink)!important;
 }
+
+
+/* Rescheduling task: readable proposed date, clear pending state, unclipped actions. */
+#dev .reschedule-row{
+  align-items:center;
+}
+#dev .reschedule-row .tmain{
+  min-width:0;
+}
+#dev .reschedule-row .gr{
+  min-width:0;
+}
+#dev .reschedule-row .gr > .cap.sm,
+#dev .reschedule-row .due.awaiting{
+  white-space:normal;
+  overflow-wrap:break-word;
+}
+#dev .reschedule-row .due.awaiting{
+  color:var(--muted);
+}
+#dev .reschedule-row .due.awaiting::before{
+  background:var(--sky-500);
+}
+#dev .reschedule-row .tact{
+  flex:none;
+}
+#dev .reschedule-row .reschedule-tile{
+  position:relative;
+}
