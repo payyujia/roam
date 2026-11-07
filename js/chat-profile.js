@@ -168,12 +168,12 @@ const InterestPicker=()=>`<div class="pad interest-picker">
    until the user taps Save changes; other Profile tag editors are unchanged. */
 const PROFILE_PREFERENCE_PICKERS={
  access:{
-  your:'Your accessibility needs',suggested:'Suggested accessibility needs',
+  your:'Your accessibility needs',results:'Matching accessibility needs',
   search:'Search accessibility needs...',empty:'No accessibility needs selected yet',
   catalog:['Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support','Step-free routes','Accessible toilets','Elevator access','Rest stops','Seating availability','Accessible transport','Avoid stairs','Low-sensory areas','Clear signage','Assistance with navigation','Wide pathways','Accessible entrances','Short walking distances','Wheelchair-friendly seating']
  },
  health:{
-  your:'Your health conditions',suggested:'Suggested health conditions',
+  your:'Your health conditions',results:'Matching health conditions',
   search:'Search health conditions...',empty:'No health conditions selected yet',
   note:'Used when plans change.',
   catalog:['Asthma','Bad knees','Motion sickness','Heat sensitivity','Migraine','Chronic eye stye','Food allergies','Back pain','Joint pain','Chronic pain','Fatigue','Respiratory sensitivity','Sun sensitivity','Dizziness','Low stamina','Diabetes','Epilepsy','Vertigo','Anxiety']
@@ -184,14 +184,13 @@ const profilePreferenceChanged=k=>{
  const draft=profilePreferenceDraft(k),saved=S.p[k];
  return draft.length!==saved.length||draft.some(name=>!saved.includes(name));
 };
-const profilePreferenceSuggestions=k=>PROFILE_PREFERENCE_PICKERS[k].catalog.filter(name=>!S.p[k].includes(name)).slice(0,5);
 const ProfilePreferenceTag=(k,x)=>`<span class="tag2">${esc(x)}<button type="button" aria-label="Remove ${esc(x)}" data-a="prefRemove:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
 const profilePreferenceTagsHTML=k=>profilePreferenceDraft(k).length?profilePreferenceDraft(k).map(x=>ProfilePreferenceTag(k,x)).join(''):`<span class="cap sm interest-empty">${PROFILE_PREFERENCE_PICKERS[k].empty}</span>`;
 const profilePreferenceOptionsHTML=k=>{
  const config=PROFILE_PREFERENCE_PICKERS[k],q=(S.prefSearch||'').trim().toLocaleLowerCase();
- const available=config.catalog.filter(name=>!profilePreferenceDraft(k).includes(name));
- const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.prefSuggestions||profilePreferenceSuggestions(k)).filter(name=>available.includes(name))).slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">${q?'Matching '+(k==='access'?'accessibility needs':'health conditions'):config.suggested}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="prefAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">${q?'No other options match your search.':'No more suggestions available.'}</p>`}`;
+ if(!q)return '';
+ const shown=config.catalog.filter(name=>!profilePreferenceDraft(k).includes(name)&&name.toLocaleLowerCase().includes(q)).slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">${config.results}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="prefAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">No other options match your search.</p>`}`;
 };
 const refreshProfilePreferencePicker=k=>{
  const tags=$('#preference-tags');
@@ -199,7 +198,7 @@ const refreshProfilePreferencePicker=k=>{
  const count=$('#preference-count');
  if(count)count.textContent=profilePreferenceDraft(k).length+' selected';
  const options=$('#preference-suggestions');
- if(options)options.innerHTML=profilePreferenceOptionsHTML(k);
+ if(options){options.innerHTML=profilePreferenceOptionsHTML(k);options.hidden=!(S.prefSearch||'').trim();}
  const changed=profilePreferenceChanged(k);
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
@@ -216,7 +215,7 @@ const ProfilePreferencePicker=k=>{
    <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="preference-tags">${profilePreferenceTagsHTML(k)}</div></div>
    ${config.note?`<p class="cap sm preference-helper">${config.note}</p>`:''}
   </section>
-  <section class="interest-suggestions" id="preference-suggestions" aria-label="${config.suggested}">${profilePreferenceOptionsHTML(k)}</section>
+  <section class="interest-suggestions" id="preference-suggestions" aria-label="${config.results}"${(S.prefSearch||'').trim()?'':' hidden'}>${profilePreferenceOptionsHTML(k)}</section>
  </div>`;
 };
 const PD={
