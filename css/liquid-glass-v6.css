@@ -873,3 +873,32 @@ body{font-weight:500}
 }
 /* Respect the user's native contrast preference while retaining the app's
    explicit light and blue screen surfaces. No solid status-bar background. */
+
+
+/* Standardized main-tab blue header height (Home / Chat / Profile). */
+/* Home uses a minimum so long greetings may wrap without clipping. The other
+   primary-tab headers use the same height exactly. */
+#dev{--main-tab-header-height:138px}
+#dev #s-trips .hd{min-height:var(--main-tab-header-height)}
+#dev #s-chat .hd,
+#dev #s-profile .hd{
+  box-sizing:border-box;
+  height:var(--main-tab-header-height);
+  min-height:var(--main-tab-header-height);
+  padding:62px 24px 18px;
+}
+/* The old bell-above-title layout needed 208px. Place the existing 50px
+   component next to the title instead, without changing its action or style. */
+#dev #s-profile .profile-notif{
+  top:auto;
+  left:auto;
+  right:24px;
+  bottom:18px;
+}
+#dev #s-profile .hd h1{padding-right:64px}
+@media(max-height:740px){
+  #dev{--main-tab-header-height:124px}
+  #dev #s-chat .hd,
+  #dev #s-profile .hd{padding-top:56px}
+  #dev #s-profile .profile-notif{bottom:14px}
+}
