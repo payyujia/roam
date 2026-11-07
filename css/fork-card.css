@@ -1,0 +1,68 @@
+/* FORK SWAP CARD (.fcard.fswap) · Sunrise Frost
+   One glass card for both fork steps (Affected -> Choose a replacement).
+   Parts from docs/card-components.html: frost recipe, .kick, .chip, .btn.mini/.sky,
+   progress-node language (done / now), amber star, status tint. Type: H3 20 · Subheader 16
+   · Regular 14 · Subtitle 12 · Kicker 10. */
+#dev .fcard.fswap{
+  left:12px;right:12px;bottom:128px;padding:16px 16px 16px;gap:14px;border-radius:28px;
+  background:rgba(243,248,255,.88)!important;
+}
+#dev .fcard.fswap>*{position:relative;z-index:3}
+#dev .fswap .fs-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:34px}
+#dev .fswap .fs-nav{display:flex;gap:6px}
+#dev .fswap .fs-head .kick{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-600)}
+#dev .fswap .btn.mini{width:34px;height:34px;min-width:34px;padding:0}
+#dev .fswap .btn.mini svg{width:15px;height:15px;stroke:currentColor}
+
+/* rail */
+#dev .fswap .fs-rail{display:flex;flex-direction:column}
+#dev .fswap .fs-row{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+#dev .fswap .fs-body{min-width:0}
+#dev .fswap .fs-body>b{display:block;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;color:var(--ink)}
+#dev .fswap .fs-body .cap{color:var(--muted);font-size:12px;font-weight:500;line-height:16px}
+#dev .fswap .fs-node{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--ink);
+  box-shadow:0 4px 12px rgba(40,100,180,.14),inset 0 1px 1px rgba(255,255,255,.6)}
+#dev .fswap .fs-node.bad{background:var(--coral-200)}
+#dev .fswap .fs-node.open{background:rgba(255,255,255,.55);color:var(--muted);box-shadow:inset 0 0 0 1.5px rgba(47,140,255,.45)}
+#dev .fswap .fs-node.pick{background:var(--sky-400);box-shadow:var(--shadow,0 8px 22px rgba(40,100,180,.2)),0 0 0 5px rgba(109,182,255,.28)}
+#dev .fswap .fs-row.from{position:relative}
+#dev .fswap .fs-row.from::after{content:"";position:absolute;left:17px;top:42px;bottom:-22px;width:2px;border-radius:2px;
+  background:repeating-linear-gradient(180deg,rgba(47,140,255,.45) 0 4px,transparent 4px 8px)}
+#dev .fswap .fs-rail:has(.fs-link.on) .fs-row.from::after{background:linear-gradient(180deg,var(--coral-300),var(--sky-400))}
+#dev .fswap .fs-link{display:block;height:24px}
+
+/* affected stop */
+#dev .fswap .fs-row.from .fs-body>b{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:rgba(255,111,97,.7)}
+#dev .fswap .fs-why{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#dev .fswap .fs-why span{height:24px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
+  font-size:12px;font-weight:700;color:var(--ink);background:rgba(255,201,188,.6)}
+
+/* replacement */
+#dev .fswap .fs-top2{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+#dev .fswap .fs-top2>div{min-width:0}
+#dev .fswap .fs-src{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-600)}
+#dev .fswap .fs-top2 h2{margin:2px 0 0;font-size:20px;line-height:1.25;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+/* info = icon only, no surface (still a 44px hit area) */
+#dev .fswap .fs-info{flex:none;width:44px;height:44px;margin:-8px -10px 0 0;display:grid;place-items:center;border:0;padding:0;
+  background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--sky-600)}
+#dev .fswap .fs-info::before,#dev .fswap .fs-info::after{display:none!important;content:none!important}
+#dev .fswap .fs-info svg{width:22px;height:22px}
+#dev .fswap .fs-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:12px 0 0;padding:10px 0 0;border-top:1px solid rgba(31,99,181,.14)}
+#dev .fswap .fs-stats>div{min-width:0;padding-right:8px}
+#dev .fswap .fs-stats>div+div{padding-left:12px;border-left:1px solid rgba(31,99,181,.14)}
+#dev .fswap .fs-stats dt{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dev .fswap .fs-stats dd{margin:2px 0 0;font-size:14px;font-weight:700;line-height:1.5;color:var(--ink);display:flex;align-items:center;gap:4px;white-space:nowrap}
+#dev .fswap .fs-stats dd small{font-size:12px;font-weight:500;color:var(--muted)}
+#dev .fswap .fs-star{display:inline-flex;color:var(--amber)}
+#dev .fswap .fs-star svg{width:14px;height:14px;fill:currentColor;stroke:currentColor}
+
+/* alternative chips (mirror the map pins A-D) */
+#dev .fswap .fs-chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:2px 16px 4px;scrollbar-width:none}
+#dev .fswap .fs-chips::-webkit-scrollbar{display:none}
+#dev .fswap .fs-chips .chip{flex:none;max-width:190px;white-space:nowrap}
+#dev .fswap .fs-ltr{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:10px;font-weight:800;color:var(--ink);background:rgba(109,182,255,.45)}
+#dev .fswap .fs-chips .chip[aria-pressed=true] .fs-ltr{background:var(--sky-400)}
+#dev .fswap>.btn{width:100%}
+/* chips scroll inside the card: skip backdrop blur (avoids a visible band) */
+#dev .fswap .fs-chips .chip{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.72)}
+#dev .fswap .fs-chips .chip[aria-pressed=true]{background:var(--sky-wash)}
