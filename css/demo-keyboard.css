@@ -96,7 +96,8 @@
 #dev .dk-prediction + .dk-prediction{
   border-left:1px solid var(--dk-divider);
 }
-#dev .dk-prediction-primary{font-weight:500;color:var(--dk-ink)}
+/* All QuickType suggestions are regular-weight, including the centre. */
+#dev .dk-prediction-primary{font-weight:400;color:var(--dk-sub)}
 #dev .dk-prediction:active{background:rgba(135,139,148,.19)}
 #dev .dk-prediction:focus-visible{
   outline:2px solid #75B7FF;
@@ -119,6 +120,14 @@
   align-items:stretch;
   gap:4px;
   box-sizing:border-box;
+}
+/* Match the supplied iOS reference: the first and last full-width keys
+   reach the keyboard frame's outer edges. Keep the middle letter row inset
+   for standard iPhone QWERTY staggering. */
+#dev .dk-row:not(.dk-offset){
+  width:calc(100% + 6px);
+  margin-left:-3px;
+  margin-right:-3px;
 }
 #dev .dk-offset{padding-inline:4.5%}
 #dev .dk-key{
@@ -195,6 +204,7 @@
   flex:0 0 12%;
   background:var(--dk-control);
 }
+/* iOS-style complete smiley, with visible eyes, open grin and teeth. */
 #dev .dk-bottom .dk-emoji .dk-key-icon svg{
   width:26px;
   height:26px;
