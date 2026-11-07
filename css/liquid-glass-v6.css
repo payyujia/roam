@@ -1871,3 +1871,9 @@ body{font-weight:500}
   --action-ink:var(--ink)!important;
   color:var(--ink)!important;
 }
+
+/* Toast contrast: keep all toast copy white on the opaque glass surface. */
+#dev #toast,
+#dev #toast > span,
+#dev #toast > span > span,
+#dev #toast button{color:#fff!important}
