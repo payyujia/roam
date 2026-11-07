@@ -271,6 +271,43 @@
   letter-spacing:0;
 }
 
+/* TASK CARDS — match docs/card-components.html, Sunrise Frost v12.
+   Retain existing task markup, data-a actions and responsive card dimensions. */
+#dev .trow.task.tier{font:inherit;color:var(--ink);text-align:left}
+#dev .trow.task.tier .tmain{align-items:center;min-width:0}
+#dev .trow.task.tier .tmain .gr{display:flex;flex-direction:column;gap:1px;min-width:0}
+#dev .trow.task.tier .tmain .gr > b{
+  display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.02em;
+}
+#dev .trow.task.tier .tmain .gr > .cap.sm{
+  display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#dev .trow.task.tier .tmain .gr > .due{
+  display:inline-flex;align-items:center;gap:6px;margin-top:1px;color:var(--sky-600);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#dev .trow.task.tier .tmain .gr > .due.awaiting{color:#B25E2A}
+#dev .trow.task.tier .tmain .gr > .due.hot{color:#99472F}
+/* The reference card has plain status text, not the app's additional dot. */
+#dev .trow.task.tier .due::before{content:none}
+#dev .trow.task.tier .dtile{line-height:1}
+#dev .trow.task.tier .dtile i{
+  font-size:8px;font-weight:800;letter-spacing:.12em;line-height:10px;
+}
+#dev .trow.task.tier .dtile b{
+  font-size:20px;font-weight:800;letter-spacing:-.04em;line-height:22px;
+}
+#dev .trow.task.tier .dtile span{
+  font-size:9px;font-weight:800;letter-spacing:.08em;line-height:12px;
+}
+#dev .trow.task.tier .tgo{
+  height:28px;padding:0 12px;border-radius:999px;
+  font-family:var(--font);font-size:12px;font-weight:700;line-height:1;
+  --action-fill:rgba(109,182,255,.62);
+  --action-ink:var(--ink);
+  --action-shadow:0 3px 10px rgba(40,100,180,.12);
+}
+
 /* ---------- MULTISELECT · WITH QUERY INPUT ----------
    Copied from docs/card-components.html (.invite-box + mini sky button + tags).
    Used by Profile > Health & accessibility (Dietary needs, Accessibility,
