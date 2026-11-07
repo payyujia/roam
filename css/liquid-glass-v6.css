@@ -747,42 +747,49 @@ body{font-weight:500}
 }
 
 
-/* Apple-reference status glyph proportions; preserve screen backgrounds and scroll blur. */
-/* On iOS the system family resolves to San Francisco. On other platforms,
-   use the native UI font; never load or ship Apple font assets. */
+/* Match Apple's status typography and symbol proportions without altering
+   the background or the scroll-triggered frosted glass layer. */
 #dev #sb{
-  font-family:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;
-  font-size:15px;
-  line-height:1;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:20px;
   font-weight:600;
-  letter-spacing:-.02em;
+  letter-spacing:-.035em;
   font-variant-numeric:tabular-nums;
   -webkit-font-smoothing:antialiased;
+  padding-left:32px;
+  padding-right:32px;
   text-shadow:none!important;
 }
-#dev #sb .sbt{gap:0}
-#dev #sb .sbloc{display:none} /* Apple reference shows time without location arrow. */
-#dev #sb .sbr{gap:6px;align-items:center}
-#dev #sb .sbr > svg{display:block;flex:none}
-#dev #sb .sbr > svg:first-child{width:17px;height:12px}
-#dev #sb .sbr > svg:nth-child(2){width:17px;height:12px}
-#dev #sb .sbr > svg:first-child rect:last-child{opacity:1}
+#dev #sb .sbt{display:flex;align-items:center;gap:0}
+#dev #sb .sbr{display:flex;align-items:center;gap:5px}
+#dev #sb .status-cellular{display:block;width:19px;height:13px;flex:none}
+#dev #sb .status-wifi{display:block;width:18px;height:13px;flex:none}
+#dev #sb .status-cellular rect,#dev #sb .status-wifi path{fill:currentColor}
 #dev #sb .sbb{
-  width:25px;
-  height:12px;
-  border-radius:3.5px;
+  position:relative;
+  width:28px;
+  height:14px;
   margin-right:3px;
+  flex:none;
+  background:#fff!important;
+  border-radius:4px;
+  box-shadow:none!important;
 }
 #dev #sb .sbb::after{
+  top:4.5px;
   right:-3px;
-  top:4px;
-  width:1.5px;
-  height:4px;
+  width:2px;
+  height:5px;
+  border-radius:0 1px 1px 0;
+  background:#fff!important;
 }
+#dev #sb .sbb i{background:#fff!important}
 #dev #sb .sbb b{
   font-family:inherit;
-  font-size:9px;
+  font-size:10px;
+  line-height:14px;
   font-weight:700;
-  letter-spacing:0;
-  line-height:1;
+  color:#252525!important;
+  letter-spacing:-.02em;
 }
