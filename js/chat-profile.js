@@ -69,6 +69,38 @@ const TransportCheck=(key,label,subtitle,values)=>{
  </button>`;
 };
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
+/* Dietary needs: keep edits local until the user explicitly saves. */
+const dietarySuggestions=Object.freeze(['Halal','Vegetarian','Kosher','Vegan','Gluten-free']);
+const dietDraft=()=>Array.isArray(S.p.dietDraft)?S.p.dietDraft:S.p.diet;
+const dietDraftChanged=()=>{
+ const draft=dietDraft(),saved=S.p.diet;
+ return draft.length!==saved.length||draft.some(x=>!saved.some(y=>y.toLocaleLowerCase()===x.toLocaleLowerCase()));
+};
+const DietaryTag=name=>`<span class="tag2">${esc(name)}<button type="button" aria-label="Remove ${esc(name)}" data-a="pdietRemove:${encodeURIComponent(name)}">${ic('x',14)}</button></span>`;
+const dietaryOptionsHTML=()=>dietarySuggestions.filter(x=>!dietDraft().some(v=>v.toLocaleLowerCase()===x.toLocaleLowerCase())).map(x=>`<option value="${esc(x)}"></option>`).join('');
+const dietaryTagsHTML=()=>dietDraft().length?dietDraft().map(DietaryTag).join(''):'<p class="cap sm dietary-empty">No dietary needs added.</p>';
+const refreshDietaryPicker=()=>{
+ const tags=$('#dietary-tags');
+ if(tags)tags.innerHTML=dietaryTagsHTML();
+ const options=$('#dietary-options');
+ if(options)options.innerHTML=dietaryOptionsHTML();
+ const changed=dietDraftChanged();
+ S.p.dirty=changed?1:0;
+ const save=$('#s-pdet .sv .btn');
+ if(save)save.disabled=!changed;
+};
+const DietaryPicker=()=>`<div class="pad dietary-picker" style="margin-top:12px">
+<label class="lb" for="dietary-input">Add dietary need</label>
+<div class="dietary-entry-row">
+<div class="fi dietary-input-field"><input id="dietary-input" type="text" list="dietary-options" placeholder="Enter a dietary need..." maxlength="30" autocomplete="off" aria-label="Add dietary need" oninput="A.pdietInput(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pdietAdd()}"></div>
+<datalist id="dietary-options">${dietaryOptionsHTML()}</datalist>
+<button type="button" class="btn mini sky dietary-add" id="dietary-add" data-a="pdietAdd" aria-label="Add dietary need" disabled>${ic('plus',15)}</button>
+</div>
+<section class="dietary-selected" aria-label="Your dietary needs">
+<h3 class="lb">Your dietary needs</h3>
+<div class="tags dietary-tags" id="dietary-tags" aria-live="polite">${dietaryTagsHTML()}</div>
+</section>
+</div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
 /* Keep five suggestions for each visit. Saved choices are replaced with the
@@ -126,7 +158,7 @@ const PD={
 ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([key,label,sub])=>TransportCheck(key,label,sub,selected)).join('')}
 </div></div></div>`}},
  budget:{t:'Trip budget',i:'bag',c:'green',v:()=>'S$'+Number(S.p.budget).toLocaleString('en-SG'),b:()=>{const pc=S.p.budgetDraft ?? String(S.p.budget);return `<div class="pad budget-preference" style="margin-top:12px"><label class="lb" for="budget-input">Trip budget (SGD)</label><div class="fi budget-input-field"><input id="budget-input" type="text" inputmode="numeric" pattern="[0-9]*" value="${esc(pc)}" placeholder="Enter amount" aria-label="Trip budget in SGD" aria-describedby="budget-input-error" oninput="A.pbudgetInput(this)" autocomplete="off"></div><p id="budget-input-error" class="cap sm budget-input-error" role="alert" hidden>Enter a positive whole-dollar amount.</p></div>`}},
- diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>pTags('diet','Add a dietary need…',['Halal','Vegetarian','Kosher','Vegan','Gluten-free'])},
+ diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>DietaryPicker()},
  access:{nv:1,t:'Accessibility',i:'user',c:'purple',v:()=>pSum(S.p.access),b:()=>pTags('access','Add an accessibility need…',['Step-free routes','Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support'])},
  health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>pTags('health','Add something we should know…',['Chronic eye stye','Asthma','Bad knees','Motion sickness','Heat sensitivity'],'Used when plans change.')},
  likes:{t:'Interests',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>InterestPicker()},

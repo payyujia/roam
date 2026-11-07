@@ -40,7 +40,30 @@ Object.assign(A,{
  pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions());const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';refreshInterestPicker()},
  pinterestRemove:value=>{if(!Array.isArray(S.p.likesDraft))return;const name=decodeURIComponent(value);S.p.likesDraft=S.p.likesDraft.filter(v=>v!==name);refreshInterestPicker()},
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}go('pdet')},
+ pdietInput:el=>{
+  const add=$('#dietary-add');
+  if(add)add.disabled=!el.value.trim();
+ },
+ pdietAdd:()=>{
+  const input=$('#dietary-input');
+  if(!input||!Array.isArray(S.p.dietDraft))return;
+  const name=input.value.trim().replace(/\s+/g,' ').slice(0,30);
+  if(!name)return;
+  if(!S.p.dietDraft.some(x=>x.toLocaleLowerCase()===name.toLocaleLowerCase())){
+   S.p.dietDraft.push(name);
+   refreshDietaryPicker();
+  }
+  input.value='';
+  A.pdietInput(input);
+  input.focus();
+ },
+ pdietRemove:value=>{
+  if(!Array.isArray(S.p.dietDraft))return;
+  const name=decodeURIComponent(value);
+  S.p.dietDraft=S.p.dietDraft.filter(x=>x!==name);
+  refreshDietaryPicker();
+ },
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -62,6 +85,11 @@ Object.assign(A,{
    if(!raw||!Number.isSafeInteger(amount)||amount<=0||amount===Number(S.p.budget))return;
    S.p.budget=amount;
    S.p.budgetDraft=null;
+  }
+  if(S.pd==='diet'){
+   if(!Array.isArray(S.p.dietDraft)||!dietDraftChanged())return;
+   S.p.diet=[...S.p.dietDraft];
+   S.p.dietDraft=null;
   }
   if(S.pd==='likes'){
    if(!Array.isArray(S.p.likesDraft)||!interestDraftChanged())return;
