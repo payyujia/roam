@@ -22,6 +22,14 @@
   --roam-card-title-weight:700;
   --roam-card-title-line-height:22px;
   --roam-card-title-letter-spacing:0;
+  /* Three-level type hierarchy shared by Voting, Rescheduling, Trip,
+     Chat, Account and Settings cards. */
+  --roam-card-detail-size:12px;
+  --roam-card-detail-weight:500;
+  --roam-card-detail-line-height:16px;
+  --roam-card-status-size:12px;
+  --roam-card-status-weight:600;
+  --roam-card-status-line-height:16px;
   /* Same spacing from blue header to Home's first heading and Chat search. */
   --roam-first-section-gap:16px;
 }
@@ -238,4 +246,27 @@
   font-weight:var(--roam-card-title-weight);
   line-height:var(--roam-card-title-line-height);
   letter-spacing:var(--roam-card-title-letter-spacing);
+}
+
+/* CARD SECONDARY TYPOGRAPHY — middle detail and bottom status.
+   Class/markup variants share tokens rather than maintaining divergent sizes.
+   Status dots, alignment, truncation, badges and action controls stay intact. */
+#dev .trow.task.tier .tmain .gr > .cap.sm,
+#dev .row.tier > .gr > .cap.sm:first-of-type,
+#dev #s-chat .chat-row > .gr > .cap.sm,
+#dev #s-profile .srow.acct .gr > .cap,
+#dev #s-profile .settings-card .sval{
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-detail-size);
+  font-weight:var(--roam-card-detail-weight);
+  line-height:var(--roam-card-detail-line-height);
+  letter-spacing:0;
+}
+#dev .trow.task.tier .tmain .gr > .due,
+#dev .row.tier > .gr > .cap.sm:nth-of-type(2){
+  font-family:var(--roam-card-title-family);
+  font-size:var(--roam-card-status-size);
+  font-weight:var(--roam-card-status-weight);
+  line-height:var(--roam-card-status-line-height);
+  letter-spacing:0;
 }
