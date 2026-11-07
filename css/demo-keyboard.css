@@ -1,8 +1,8 @@
-/* Roam's native-iPhone-inspired keyboard. Visual proportions follow
-   Apple's iOS 26 onscreen keyboard: QuickType row, staggered letter rows,
-   rounded separate keys, large Space/Return, and emoji/dictation footer.
-   Desktop HTML emulation only; actual mobile devices use OS keyboard.
-   Roam's requested inverse contrast remains: light page -> dark keyboard. */
+/* Roam iPhone-style demo keyboard. Sizes are tuned for a 390–402px phone
+   frame and the user's iOS screenshots: shallow rounded keycaps, uppercase
+   labels, staggered rows, full-width space bar and lower globe/mic toolbar.
+   This HTML keyboard is not the native iOS keyboard.
+   Inverse contrast requested: light page -> dark keys, dark page -> light. */
 #dev{--demo-keyboard-height:315px}
 #dev .demo-keyboard{
   --dk-bg:#1C1C1E;
@@ -13,7 +13,7 @@
   --dk-divider:rgba(220,220,226,.15);
   --dk-shadow:0 1px 0 rgba(0,0,0,.24);
   --dk-pressed:#646468;
-  --dk-radius:12px;
+  --dk-radius:8px;
   --dk-emoji-cutout:#454547;
   position:absolute;
   left:0;
@@ -25,9 +25,9 @@
   flex-direction:column;
   width:100%;
   height:var(--demo-keyboard-height);
-  padding:6px 4px 3px;
+  padding:7px 5px 4px;
   border:0;
-  border-radius:9px 9px 0 0;
+  border-radius:16px 16px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
@@ -47,7 +47,7 @@
   --dk-divider:rgba(90,100,115,.17);
   --dk-shadow:0 1px 1px rgba(70,80,100,.14);
   --dk-pressed:#EDF0F3;
-  --dk-radius:11px;
+  --dk-radius:9px;
   --dk-emoji-cutout:#FFFFFF;
   -webkit-backdrop-filter:blur(24px) saturate(140%);
   backdrop-filter:blur(24px) saturate(140%);
@@ -55,7 +55,7 @@
 #dev .demo-keyboard.theme-dark{--dk-bg:#1C1C1E}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
-  flex:0 0 42px;
+  flex:0 0 38px;
   min-height:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -82,7 +82,7 @@
   min-height:0;
   display:flex;
   flex-direction:column;
-  gap:7px;
+  gap:8px;
   padding:0 0 2px;
 }
 #dev .dk-row{
@@ -95,7 +95,7 @@
   gap:5px;
   box-sizing:border-box;
 }
-#dev .dk-offset{padding-inline:4.5%}
+#dev .dk-offset{padding-inline:5.5%}
 #dev .dk-key{
   flex:1 1 0;
   min-width:0;
@@ -111,7 +111,7 @@
   background:var(--dk-key);
   color:var(--dk-ink);
   box-shadow:var(--dk-shadow);
-  font:400 22px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
+  font:400 21px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Arial,sans-serif;
   text-align:center;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
@@ -132,12 +132,12 @@
 #dev .dk-numbers-third .dk-char{font-size:19px}
 #dev .dk-bottom{margin-top:0;gap:6px}
 #dev .dk-bottom .dk-mode{
-  flex:0 0 15%;
+  flex:0 0 12%;
   background:var(--dk-control);
   font-size:16px;
 }
 #dev .dk-bottom .dk-emoji{
-  flex:0 0 13%;
+  flex:0 0 12%;
   background:var(--dk-control);
 }
 #dev .dk-bottom .dk-emoji svg{display:block;width:24px;height:24px}
@@ -155,14 +155,18 @@
   line-height:1;
 }
 #dev .dk-bottom .dk-return{
-  flex:0 0 22%;
+  flex:0 0 25%;
   background:var(--dk-control);
   color:#89898D;
 }
 #dev .dk-return-icon{display:grid;place-items:center}
 #dev .dk-return svg{display:block;width:27px;height:27px}
 #dev .dk-bottom .dk-return.has-text{
-  background:#0A84FF;
+  background:var(--dk-control);
+  color:#F7F7FA;
+}
+#dev .theme-light .dk-bottom .dk-return.has-text{
+  background:#3478F6;
   color:#FFFFFF;
 }
 #dev .theme-light .dk-bottom .dk-return:not(.has-text){
@@ -170,7 +174,7 @@
   color:#5F6977;
 }
 #dev .dk-accessories{
-  flex:0 0 43px;
+  flex:0 0 62px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -239,12 +243,12 @@
   #dev .dk-predict{flex-basis:34px;font-size:15px}
   #dev .dk-rows{gap:5px}
   #dev .dk-row{gap:4px}
-  #dev .dk-offset{padding-inline:4.5%}
-  #dev .dk-key{font-size:19px;border-radius:10px}
+  #dev .dk-offset{padding-inline:5.5%}
+  #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
   #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
   #dev .dk-return svg{width:24px;height:24px}
-  #dev .dk-accessories{flex-basis:37px}
+  #dev .dk-accessories{flex-basis:48px}
   #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
 }
