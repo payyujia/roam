@@ -14,3 +14,6 @@ Object.assign(I,{'git-branch':'<line x1="6" y1="3" x2="6" y2="15"/><circle cx="1
 
 const ic=(n,s=24,f='none')=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${f}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]||''}</svg>`;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+/* Reels tab: a clear play-triangle silhouette. */
+Object.assign(I,{play:'<path d="M8 5v14l11-7z"/>'});
