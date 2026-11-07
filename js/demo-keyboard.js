@@ -71,7 +71,7 @@
    ['🤔','thinking'],['🫠','melting'],['🫶','heart hands'],['👍','thumbs up'],
    ['👎','thumbs down'],['👏','clapping'],['🙏','folded hands'],['👋','waving']
   ]},
-  {id:'animals',icon:'♧',label:'Animals & nature',items:[
+  {id:'animals',icon:'🐾',label:'Animals & nature',items:[
    ['🐶','dog'],['🐱','cat'],['🐭','mouse'],['🐹','hamster'],['🐰','rabbit'],
    ['🦊','fox'],['🐻','bear'],['🐼','panda'],['🐨','koala'],['🐯','tiger'],
    ['🦁','lion'],['🐮','cow'],['🐸','frog'],['🐵','monkey'],['🐧','penguin'],
@@ -80,7 +80,7 @@
    ['🌻','sunflower'],['🌲','tree'],['🌴','palm tree'],['🍀','clover'],['🌈','rainbow'],
    ['☀️','sun'],['🌙','moon']
   ]},
-  {id:'food',icon:'♨',label:'Food & drink',items:[
+  {id:'food',icon:'🍔',label:'Food & drink',items:[
    ['🍎','apple'],['🍓','strawberry'],['🍉','watermelon'],['🍌','banana'],
    ['🥑','avocado'],['🍞','bread'],['🥐','croissant'],['🥨','pretzel'],
    ['🍔','burger'],['🍟','fries'],['🍕','pizza'],['🌮','taco'],
@@ -89,7 +89,7 @@
    ['🍪','cookie'],['🎂','cake'],['🍫','chocolate'],['☕','coffee'],
    ['🧋','bubble tea'],['🍵','tea'],['🥤','drink'],['🍹','cocktail']
   ]},
-  {id:'activity',icon:'⚽',label:'Activities',items:[
+  {id:'activity',icon:'🏀',label:'Activities',items:[
    ['⚽','soccer'],['🏀','basketball'],['🏈','football'],['⚾','baseball'],
    ['🎾','tennis'],['🏸','badminton'],['🎳','bowling'],['🎮','gaming'],
    ['🎲','dice'],['🎯','target'],['🎨','painting art'],['🎭','theatre'],
@@ -98,7 +98,7 @@
    ['🎁','gift'],['🎈','balloon'],['🎬','movie'],['📸','photography'],
    ['🏊','swimming'],['🚴','cycling'],['🥾','hiking'],['🧘','yoga']
   ]},
-  {id:'travel',icon:'✈',label:'Travel & places',items:[
+  {id:'travel',icon:'🚗',label:'Travel & places',items:[
    ['✈️','plane flight'],['🛫','departing plane'],['🚆','train'],
    ['🚇','metro subway'],['🚌','bus'],['🚗','car'],['🚕','taxi'],
    ['🚲','bicycle'],['🛳️','ship cruise'],['🗺️','map'],['📍','location pin'],
@@ -108,7 +108,7 @@
    ['🗼','tower'],['🛍️','shopping bags'],['🧳','suitcase'],['🛂','passport'],
    ['📅','calendar'],['⏰','clock']
   ]},
-  {id:'objects',icon:'◈',label:'Objects',items:[
+  {id:'objects',icon:'💡',label:'Objects',items:[
    ['💡','lightbulb'],['📱','phone'],['💻','laptop'],['⌚','watch'],
    ['📷','camera'],['🔋','battery'],['🔑','key'],['🔒','lock'],
    ['💰','money'],['💳','credit card'],['📦','package'],['🛒','shopping cart'],
@@ -116,7 +116,7 @@
    ['💌','love letter'],['💬','speech bubble'],['🔔','bell'],
    ['🔎','search'],['🩹','bandage'],['🧸','teddy bear']
   ]},
-  {id:'symbols',icon:'♥',label:'Symbols',items:[
+  {id:'symbols',icon:'❤️',label:'Symbols',items:[
    ['❤️','red heart'],['🧡','orange heart'],['💛','yellow heart'],
    ['💚','green heart'],['💙','blue heart'],['💜','purple heart'],
    ['🩷','pink heart'],['🤍','white heart'],['🖤','black heart'],
@@ -126,7 +126,7 @@
    ['⭐','star'],['✨','sparkles'],['🔥','fire'],['💦','water'],
    ['🆗','ok'],['🆕','new']
   ]},
-  {id:'flags',icon:'⚑',label:'Flags',items:[
+  {id:'flags',icon:'🏳️',label:'Flags',items:[
    ['🇸🇬','Singapore flag'],['🇲🇾','Malaysia flag'],['🇯🇵','Japan flag'],
    ['🇰🇷','Korea flag'],['🇨🇳','China flag'],['🇹🇭','Thailand flag'],
    ['🇦🇺','Australia flag'],['🇺🇸','USA flag'],['🇬🇧','UK flag'],
@@ -137,6 +137,33 @@
   ]}
  ];
  const FALLBACK_RECENT=['😂','❤️','🥰','😊','😍','🤣','😭','😘','👍','🙏','✨','🔥','😅','🎉','🩷','👀','🥳','🤔','💯','😎','💀','💕','🎈','🫶'];
+ const SKIN_TONES={
+  '👍':['👍🏻','👍🏼','👍🏽','👍🏾','👍🏿'],
+  '👎':['👎🏻','👎🏼','👎🏽','👎🏾','👎🏿'],
+  '👏':['👏🏻','👏🏼','👏🏽','👏🏾','👏🏿'],
+  '🙏':['🙏🏻','🙏🏼','🙏🏽','🙏🏾','🙏🏿'],
+  '👋':['👋🏻','👋🏼','👋🏽','👋🏾','👋🏿'],
+  '🫶':['🫶🏻','🫶🏼','🫶🏽','🫶🏾','🫶🏿']
+ };
+ let skinTimer=null,suppressEmojiTap=false;
+ function showSkinTones(button){
+  const emoji=button.dataset.kbKey,tones=SKIN_TONES[emoji];
+  if(!tones||!keyboard.getBoundingClientRect)return;
+  keyboard.querySelector('.dk-skin-choices')?.remove();
+  const popup=document.createElement('div');
+  popup.className='dk-skin-choices';
+  popup.setAttribute('role','group');
+  popup.setAttribute('aria-label','Choose skin tone');
+  popup.innerHTML=[emoji,...tones].map((variant,i)=>
+   '<button type="button" class="dk-skin-option" data-kb-key="'+escapeText(variant)+
+   '" aria-label="'+(i?'Skin tone '+i:'Default skin tone')+'">'+variant+'</button>'
+  ).join('');
+  const rect=button.getBoundingClientRect(),outer=keyboard.getBoundingClientRect();
+  const x=Math.max(8,Math.min(outer.width-236,rect.left-outer.left-100));
+  keyboard.style.setProperty('--dk-tone-x',x+'px');
+  keyboard.appendChild(popup);
+ }
+
  function allEmojiItems(){
   return EMOJI_SETS.flatMap(group=>group.items);
  }
@@ -154,6 +181,10 @@
   return EMOJI_SETS.find(group=>group.id===emojiCategory)?.items||[];
  }
  function updateEmojiGrid(){
+  const title=keyboard.querySelector('.dk-emoji-section-title');
+  if(title)title.textContent=emojiQuery.trim()?'Search Results':
+   emojiCategory==='recent'?'Frequently Used':
+   EMOJI_SETS.find(group=>group.id===emojiCategory)?.label||'Emoji';
   const grid=keyboard.querySelector('.dk-emoji-grid');
   if(!grid)return;
   const options=emojiItems();
@@ -168,6 +199,7 @@
      '<span class="dk-emoji-search-icon" aria-hidden="true">⌕</span>'+
      '<input type="search" class="dk-emoji-search" placeholder="Search Emoji" aria-label="Search Emoji" autocomplete="off" spellcheck="false" inputmode="none" value="'+escapeText(emojiQuery)+'">'+
    '</label></div>'+
+   '<div class="dk-emoji-section-title">Frequently Used</div>'+
    '<div class="dk-emoji-grid" role="group" aria-label="Emoji choices"></div>'+
    '<div class="dk-emoji-categories" role="group" aria-label="Emoji categories">'+
     '<button type="button" class="dk-emoji-abc" data-kb-action="abc" aria-label="Back to letters">ABC</button>'+
@@ -176,7 +208,7 @@
     EMOJI_SETS.map(group=>
      '<button type="button" class="dk-emoji-category'+(emojiCategory===group.id?' active':'')+
       '" data-kb-action="category" data-kb-category="'+group.id+'" aria-label="'+group.label+
-      '" aria-pressed="'+(emojiCategory===group.id)+'">'+group.icon+'</button>'
+      '" aria-pressed="'+(emojiCategory===group.id)+'"><span class="dk-emoji-cat-glyph" aria-hidden="true">'+group.icon+'</span></button>'
     ).join('')+
    '</div>'+
    '<div class="dk-emoji-footer"><span aria-hidden="true">☺</span><span class="dk-emoji-title">Emoji</span>'+ 
@@ -292,9 +324,31 @@
  }
  keyboard.addEventListener('pointerdown',e=>{
   if(e.target.closest('button'))e.preventDefault(); // retain input focus
+  clearTimeout(skinTimer);
+  const candidate=e.target.closest('.dk-emoji-choice');
+  if(!candidate||!SKIN_TONES[candidate.dataset.kbKey]){
+   if(!e.target.closest('.dk-skin-choices'))keyboard.querySelector('.dk-skin-choices')?.remove();
+   return;
+  }
+  skinTimer=setTimeout(()=>{
+   showSkinTones(candidate);
+   suppressEmojiTap=true;
+  },480);
+ });
+ keyboard.addEventListener('pointerup',()=>clearTimeout(skinTimer));
+ keyboard.addEventListener('pointercancel',()=>clearTimeout(skinTimer));
+ keyboard.addEventListener('contextmenu',e=>{
+  const candidate=e.target.closest('.dk-emoji-choice');
+  if(candidate&&SKIN_TONES[candidate.dataset.kbKey]){
+   e.preventDefault();
+   showSkinTones(candidate);
+  }
  });
  keyboard.addEventListener('click',e=>{
   const control=e.target.closest('button');if(!control)return;
+  if(suppressEmojiTap&&control.classList.contains('dk-emoji-choice')){
+   suppressEmojiTap=false;return;
+  }
   const action=control.dataset.kbAction;
   if(action==='done'){hide(true);return}
   if(action==='delete'){erase();return}
@@ -343,6 +397,7 @@
    if(emojiMode){
     emojiHistory.unshift(value);
     if(emojiHistory.length>24)emojiHistory.pop();
+    keyboard.querySelector('.dk-skin-choices')?.remove();
     updateEmojiGrid();
    }
   }
