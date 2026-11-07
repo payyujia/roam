@@ -41,13 +41,16 @@
   keyboard.classList.toggle('theme-light',!darkKeys);
  }
  const shiftIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 13h5v8h8v-8h5L12 3Z" fill="currentColor" stroke="none"/></svg>';
- const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H21v16H9L2 12l7-8Z"/><path d="m12 9 6 6m0-6-6 6"/></svg>';
+ const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 4.8h10.3a1.5 1.5 0 0 1 1.5 1.5v11.4a1.5 1.5 0 0 1-1.5 1.5H9.5L2.8 12l6.7-7.2Z"/><path d="m12.1 9.4 5.4 5.2m0-5.2-5.4 5.2"/></svg>';
  const globeIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/></svg>';
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
- const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.7" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><circle cx="15.3" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><path d="M6.5 13.2c.7 3.1 3.1 5 5.5 5s4.8-1.9 5.5-5" fill="none" stroke="var(--dk-emoji-cutout)" stroke-width="1.7" stroke-linecap="round"/></svg>';
- const returnIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 6v11a4 4 0 0 1-4 4H6m0 0 6-6m-6 6 6 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.25" fill="currentColor"/><circle cx="8.6" cy="9.5" r="1.1" fill="var(--dk-emoji-cutout)"/><circle cx="15.4" cy="9.5" r="1.1" fill="var(--dk-emoji-cutout)"/><path d="M6.6 13.15c.65 3.9 2.8 5.95 5.4 5.95s4.75-2.05 5.4-5.95c-3.2 1.1-7.6 1.1-10.8 0Z" fill="var(--dk-emoji-cutout)"/><path d="M7.45 14.2c3.05.85 6.05.85 9.1 0" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" fill="none"/></svg>';
+ /* The reference's iOS Return glyph hooks from a short top bar into a
+    left-pointing arrow. The previous glyph had an overly tall vertical stem. */
+ /* Minimal bent Return arrow, proportioned to the subdued iOS key glyph. */
+ const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
  /* Use the same Return glyph in both themes: this field sends chat messages,
     so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
@@ -222,6 +225,7 @@
     update from the real chat input (including physical keyboard typing).
     This does not claim to reproduce Apple's proprietary prediction model. */
  const PREDICTION_LEXICON=(
+  "edit education editing edited editor educate educational edition " +
   "the to and a i you it is in of for on with we are was be have has had do did " +
   "can could would should will shall may might not no yes yeah okay ok hi hey hello " +
   "thanks thank please sorry sure great good nice awesome amazing perfect wonderful " +
@@ -374,10 +378,9 @@
   const bar=keyboard.querySelector('.dk-predict');
   if(!bar||!opened)return;
   const suggestions=predictionList();
-  bar.innerHTML=suggestions.map((word,i)=>word?
-   '<button type="button" class="dk-prediction'+(i===1?' dk-prediction-primary':'')+
-   '" data-kb-suggest="'+escapeText(word)+'" aria-label="Use suggestion '+escapeText(word)+
-   '">'+escapeText(word)+'</button>':
+  bar.innerHTML=suggestions.map(word=>word?
+   '<button type="button" class="dk-prediction" data-kb-suggest="'+escapeText(word)+
+   '" aria-label="Use suggestion '+escapeText(word)+'">'+escapeText(word)+'</button>':
    '<span class="dk-prediction dk-prediction-empty" aria-hidden="true"></span>'
   ).join('');
  }
@@ -433,14 +436,14 @@
        '<button type="button" class="dk-key dk-special dk-shift'+(shifted?' is-on':'')+
         '" data-kb-action="shift" aria-label="'+shiftLabel+'" aria-pressed="'+shifted+'">'+shiftContent+'</button>'+
        chars(layout[2])+
-       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete"><span class="dk-key-icon">'+deleteIcon+'</span></button>'+
      '</div>'+
      '<div class="dk-row dk-bottom">'+
        '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers and symbols')+'">'+bottomLabel+'</button>'+
-       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-action="emoji" aria-label="Open emoji keyboard">'+emojiIcon+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-action="emoji" aria-label="Open emoji keyboard"><span class="dk-key-icon">'+emojiIcon+'</span></button>'+
        '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
        '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message">'+
-         '<span class="dk-return-icon">'+returnIcon+'</span></button>'+
+         '<span class="dk-key-icon dk-return-icon">'+returnIcon+'</span></button>'+
      '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';

@@ -2,298 +2,889 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#F3F8FF">
-<title>Roam — Card Component Sheet · Sunrise Frost</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roam — Master Components Library · Sunrise Frost</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- Import the actual live styles in the same order as the Roam app. -->
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/components.css">
-<link rel="stylesheet" href="../css/shell.css">
-<link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/map.css">
-<link rel="stylesheet" href="../css/screens.css">
-<link rel="stylesheet" href="../css/flat.css">
-<link rel="stylesheet" href="../css/trips.css">
-<link rel="stylesheet" href="../css/system.css">
-<link rel="stylesheet" href="../css/liquid-glass.css">
-<link rel="stylesheet" href="../css/liquid-glass-v6.css">
-<link rel="stylesheet" href="../css/card-library.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Documentation layout only. All card styling comes from the shared CSS. */
-html{scroll-behavior:smooth}
-body.spec-page{
-  display:block;min-height:100vh;padding:0;margin:0;
-  background:linear-gradient(140deg,#e8f2fe 0%,#f8faff 51%,#ffece7 100%);
-  color:#0E1116;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+/* ROAM · SUNRISE FROST · MASTER COMPONENTS LIBRARY v12
+   Typography: h1 36 · h2 23 · h3 20 · subheader 16 · regular 14 · subtitle 12
+   DUE label 8 · DUE month 9 · DUE day 20
+   Cards: master card foundation (min 84px, radius 22, media 56×60 radius 14) */
+
+:root{
+  --sky-50:#F3F8FF; --sky-150:#D8EAFF; --sky-200:#BDDCFF; --sky-300:#8FC6FF; --sky-400:#6DB6FF; --sky-500:#2F8CFF; --sky-600:#1F63B5;
+  --coral-100:#FFE4DD; --coral-200:#FFC9BC; --coral-300:#FFA899; --coral-500:#FF6F61;
+  --amber:#FFA23A; --rose:#FF5C93;
+  --ink:#0E1116; --white:#FFFFFF; --muted:#5B6878;
+  --sky:var(--sky-400); --sky-deep:var(--sky-500); --sky-ink:var(--sky-600); --sky-wash:rgba(109,182,255,.35);
+  --coral:var(--coral-200); --canvas:var(--sky-50);
+  --glass:rgba(255,255,255,.26); --glass-hi:rgba(255,255,255,.4);
+  --rim:linear-gradient(135deg,rgba(255,255,255,1) 0%,rgba(255,255,255,.45) 22%,rgba(255,255,255,0) 46%,rgba(255,255,255,0) 54%,rgba(255,255,255,.45) 78%,rgba(255,255,255,1) 100%);
+  --shadow:0 12px 34px rgba(40,100,180,.18),0 2px 6px rgba(40,100,180,.08);
+  --t1:var(--sky-500); --t2:var(--coral-500); --t3:var(--amber); --t4:var(--rose);
+  --t1g:var(--sky-500); --t2g:var(--coral-500); --t3g:var(--amber); --t4g:var(--rose);
+  --warn:#B25E2A;
+  --font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'SF Pro Text',Arial,sans-serif;
 }
-.spec-shell{max-width:1180px;padding:42px 32px 70px;margin:0 auto}
-.spec-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:38px}
-.spec-brand{font-weight:800;letter-spacing:.16em;font-size:15px;display:flex;align-items:center;gap:11px}
-.spec-logo{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#6DB6FF;color:#0E1116;font-size:20px}
-.spec-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-.spec-links a{color:#1F63B5;text-decoration:none;font-size:12px;font-weight:700}
-.spec-links a:hover{text-decoration:underline}
-.spec-heading{max-width:680px;margin-bottom:38px}
-.spec-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#477BA9;font-weight:800;margin:0 0 12px}
-.spec-heading h1{font-size:clamp(34px,5vw,53px);line-height:1.08;font-weight:800;letter-spacing:-.055em;max-width:none;margin:0 0 15px}
-.spec-heading p{font-size:15px;line-height:1.65;color:#526478;margin:0}
-.spec-grid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:44px;align-items:start}
-.spec-notes{min-width:0}
-.spec-panel{border:1px solid rgba(255,255,255,.85);background:rgba(255,255,255,.64);border-radius:25px;padding:24px;margin-bottom:16px;box-shadow:0 16px 35px rgba(42,98,161,.07);backdrop-filter:blur(16px)}
-.spec-panel h2{font-size:19px;line-height:1.3;margin:0 0 12px;letter-spacing:-.02em}
-.spec-panel p{font-size:13px;line-height:1.65;color:#526478;margin:0 0 12px}
-.spec-panel p:last-child{margin:0}
+
+*{box-sizing:border-box}
+html{height:100%;scroll-behavior:smooth}
+body{
+  margin:0;min-height:100%;color:var(--ink);font:500 14px/1.5 var(--font);
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
+  background:
+   radial-gradient(ellipse 60% 38% at 100% 0%,rgba(255,168,153,.75),transparent 75%),
+   radial-gradient(ellipse 60% 40% at 0% 100%,rgba(109,182,255,.7),transparent 75%),
+   radial-gradient(ellipse 45% 30% at 100% 100%,rgba(255,168,153,.5),transparent 75%),
+   radial-gradient(ellipse 45% 30% at 0% 40%,rgba(109,182,255,.35),transparent 75%),
+   #F3F8FF;background-attachment:fixed;
+}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--sky-ink);outline-offset:3px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- TYPE SCALE ---------- */
+h1,.t-h1{font-size:36px;font-weight:800;line-height:1.05;letter-spacing:-.05em;margin:0}
+h2,.t-h2{font-size:23px;font-weight:800;line-height:1.2;letter-spacing:-.03em;margin:0}
+h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;margin:0}
+.t-sub,.subheader{font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em}
+.t-reg,.regular{font-size:14px;font-weight:500;line-height:1.5}
+.t-sub2,.subtitle{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
+.micro{font-size:12px;color:var(--muted);line-height:1.5}
+.c{font-size:12px;color:var(--muted)}
+.s{font-size:16px;font-weight:700}
+.h{font-size:23px;font-weight:800;letter-spacing:-.03em}
+.d{font-size:36px;font-weight:800;line-height:1.05;letter-spacing:-.05em}
+
+/* ---------- FROST RECIPE ---------- */
+.glass{
+  position:relative;background:var(--glass);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:var(--shadow),inset 0 1px 10px rgba(255,255,255,.4);
+}
+.glass::before,.chip::before,.tag::before,.badge::before,.btn::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:2;
+  background:var(--rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+.glass>*{position:relative;z-index:3}
+
+/* ---------- HEADER ---------- */
+.hero{position:relative;z-index:2;background:var(--sky);padding:calc(28px + env(safe-area-inset-top,0)) 28px 26px;border-radius:0 0 36px 36px}
+.hero-top{display:flex;justify-content:space-between;align-items:center;max-width:1180px;margin:0 auto 22px}
+.brand{font-weight:800;letter-spacing:.2em;font-size:12px}
+.hero h1{max-width:1180px;margin:0 auto;font-size:36px}
+.hero-meta{max-width:1180px;margin:18px auto 0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.orb{position:fixed;border-radius:50%;filter:blur(40px);z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:34px 20px 70px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;align-items:start}
+.panel{border-radius:30px;padding:22px}
+.panel.wide{grid-column:1/-1}
+.ph{font-size:23px;font-weight:800;line-height:1.2;letter-spacing:-.03em;margin:0 0 18px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ph span{color:var(--muted);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;line-height:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row.nowrap{flex-wrap:nowrap}
+.stack{display:flex;flex-direction:column;gap:12px}
+.note{font-size:12px;color:var(--muted);margin:14px 0 0;line-height:1.6}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(31,99,181,.18),transparent);margin:16px 0}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:block}
+.rule + .lbl{margin-top:0}
+
+/* ---------- PALETTE ---------- */
+#pal .pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin-bottom:14px}
+.sw i{display:block;height:58px;border-radius:16px;margin-bottom:6px;box-shadow:0 6px 14px rgba(40,100,180,.14)}
+.sw b{font-size:12px;display:block;font-weight:700}
+.sw small{font-size:12px;color:var(--muted);line-height:1.35}
+
+/* ---------- BUTTONS ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 22px;border:0;border-radius:999px;
+  font-weight:700;font-size:14px;background:var(--glass-hi);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25);
+  transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px)}.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sky{background:rgba(109,182,255,.62)}
+.btn.coral{background:rgba(255,201,188,.6)}
+.btn.ink{background:rgba(14,17,22,.9);color:#fff;box-shadow:0 6px 16px rgba(14,17,22,.18)}
+.btn.ink::before{background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,255,255,0) 46%,rgba(255,255,255,0) 54%,rgba(255,255,255,.5))}
+.btn.round{width:50px;height:50px;padding:0}
+.btn.sm{height:34px;padding:0 14px;font-size:12px}
+.btn.tiny{height:28px;padding:0 12px;font-size:12px}
+.btn.lg{width:66px;height:66px;padding:0}.btn.lg svg{width:26px;height:26px}
+.btn.mini{width:34px;height:34px;padding:0}.btn.mini svg{width:15px;height:15px}
+
+/* ---------- CHIPS / TAGS / STATUS ---------- */
+.chip{height:36px;padding:0 15px;border:0;border-radius:999px;background:var(--glass-hi);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);font-size:12px;font-weight:700;color:var(--muted);display:inline-flex;align-items:center;gap:6px;position:relative;box-shadow:0 4px 12px rgba(40,100,180,.1)}
+.chip[aria-pressed=true]{background:var(--sky-wash);color:var(--ink)}
+.chip[aria-pressed=true]::before{background:linear-gradient(135deg,var(--sky-deep),rgba(109,182,255,.15) 50%,var(--sky-deep))}
+.chip svg{width:14px;height:14px}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--coral-500);color:var(--ink);font-size:10px;font-weight:800;display:inline-grid;place-items:center;box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6);position:relative}
+.status{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:600;line-height:16px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--sky-deep);flex:none}
+.status.ok i{background:#2E9C7A}.status.warn i{background:var(--coral-300)}.status.err i{background:var(--coral-500)}
+.status.ok{color:#1E7D5F}
+.tag{position:relative;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 6px 0 13px;border-radius:999px;background:var(--glass-hi);font-size:12px;font-weight:700;box-shadow:0 3px 10px rgba(40,100,180,.1)}
+.tag button{width:20px;height:20px;border:0;border-radius:50%;background:rgba(255,255,255,.55);display:grid;place-items:center;padding:0;position:relative;z-index:3}
+.tag button svg{width:11px;height:11px}
+
+/* ---------- FIELDS ---------- */
+.field{display:flex;align-items:center;gap:10px;height:50px;padding:0 16px;border-radius:18px}
+.field input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-size:14px}
+.field input::placeholder{color:#5B6878}
+.field svg{width:17px;color:var(--muted)}
+.field:focus-within{box-shadow:var(--shadow),0 0 0 2px var(--sky)}
+.fw{display:block;min-width:0}
+.fl{font-size:12px;font-weight:700;margin:0 0 6px 4px;display:block;color:var(--muted)}
+.fr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fr .field{width:100%;padding:0 14px}
+.switch{appearance:none;width:52px;height:31px;border-radius:999px;border:0;background:rgba(120,140,165,.25);position:relative;transition:background .2s;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(30,60,95,.2);transition:transform .2s}
+.switch[aria-checked=true]{background:var(--sky)}
+.switch[aria-checked=true]::after{transform:translateX(21px)}
+.seg{display:flex;padding:4px;border-radius:999px;gap:2px}
+.seg button{flex:1;height:38px;border:0;background:transparent;border-radius:999px;font-size:12px;font-weight:700;color:var(--muted)}
+.seg button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(70,105,140,.12)}
+.sw-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.checkbox{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--glass-hi);box-shadow:0 3px 8px rgba(40,100,180,.12);position:relative;flex:none}
+.checkbox.on{background:rgba(109,182,255,.75);color:#fff}
+.checkbox svg{width:14px;stroke-width:3}
+
+/* ---------- PROGRESS ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.steps::before{content:"";position:absolute;left:12.5%;right:12.5%;top:21px;height:2px;background:linear-gradient(90deg,var(--sky) 0 40%,rgba(109,182,255,.35) 40%);border-radius:2px}
+.step{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);text-align:center;position:relative;z-index:1}
+.node{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--muted);background:#fff}
+.step.done .node{background:var(--sky-300);color:var(--sky-ink)}
+.step.now .node{background:var(--sky);color:var(--ink);box-shadow:var(--shadow),0 0 0 6px rgba(109,182,255,.28)}
+.step.now,.step.done{color:var(--ink)}
+.node svg{width:18px;stroke-width:2.6}
+
+/* ---------- MASTER CARD FOUNDATION ---------- */
+/* One foundation: min-height 84, radius 22, padding 10/12, gap 10, media 56×60 r14. */
+.trow,.trip-row,.chat-row,.srow,.checkcard{font:inherit;color:inherit;border:0;text-align:left}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:84px;padding:10px 12px;border-radius:22px}
+.tmain{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.dtile{width:56px;height:60px;border-radius:14px;background:rgba(109,182,255,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;line-height:1;color:var(--ink)}
+.dtile i{font-style:normal;font-size:8px;font-weight:800;letter-spacing:.12em;line-height:10px}
+.dtile b{font-size:20px;font-weight:800;letter-spacing:-.04em;line-height:22px}
+.dtile span{font-size:9px;font-weight:800;letter-spacing:.08em;line-height:12px}
+.gr{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.gr b{display:block;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap{font-size:12px;font-weight:500;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap.sm{font-size:12px}
+.due{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;line-height:16px;color:var(--sky-ink);margin-top:1px}
+.due.awaiting{color:var(--warn)}
+.dotc{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--sky-500);flex:none;margin-right:5px}
+.dotc.ok{background:#2E9C7A}.dotc.wait{background:var(--amber)}
+.tgo{height:28px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:rgba(109,182,255,.62);color:var(--ink);box-shadow:0 3px 10px rgba(40,100,180,.12);flex:none}
+.cover{width:56px;height:60px;border-radius:14px;flex:none;overflow:hidden;display:grid;place-items:center;background:linear-gradient(160deg,#FFC9BC,#6DB6FF)}
+.cover img{display:block;width:100%;height:100%;object-fit:cover}
+.tact{display:flex;gap:6px;flex:none}
+.ib{width:34px;height:34px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(255,255,255,.4);box-shadow:0 3px 10px rgba(40,100,180,.12);position:relative;padding:0}
+.ib::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:var(--rim);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.ib.p{background:rgba(109,182,255,.62)}
+.ib svg{width:16px;height:16px}
+
+/* Trip card */
+.trip-row{display:flex;align-items:center;gap:10px;width:100%;min-height:84px;padding:10px 12px;border-radius:22px}
+.st{display:flex;align-items:center;flex:none}
+.av{width:26px;height:26px;border-radius:50%;position:relative;display:grid;place-items:center;font-size:10px;font-weight:800;margin-left:-7px;overflow:hidden;box-shadow:0 2px 6px rgba(40,100,180,.25);flex:none}
+.av:first-child{margin-left:0}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.l-blue{background:#6DB6FF}.l-orange{background:#FFA23A}.l-green{background:#2E9C7A}.l-teal{background:#2AA6A6}.l-rose{background:#FF5C93}
+
+/* Chat card */
+.chat-row{display:flex;align-items:center;gap:10px;width:100%;min-height:84px;padding:10px 12px;border-radius:22px}
+.chat-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.chat-time{font-size:12px;font-weight:500;color:var(--muted);line-height:16px}
+.chat-unread{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--coral-500);color:var(--ink);font-size:10px;font-weight:700;display:grid;place-items:center;box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6)}
+
+/* Account card */
+.srow{display:flex;align-items:center;gap:12px;width:100%;min-height:84px;padding:10px 14px;border-radius:22px}
+.srow .gr b{font-size:16px}
+.av.profile{width:56px;height:56px;border-radius:50%;font-size:22px;margin:0;box-shadow:0 4px 12px rgba(40,100,180,.2)}
+.srow .chev{color:var(--muted)}
+
+/* Settings card */
+.set-row{min-height:60px;border-radius:18px;padding:8px 12px;gap:10px}
+.sic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.5);box-shadow:0 3px 8px rgba(40,100,180,.12)}
+.stt{font-size:16px;font-weight:700;flex:1;min-width:0;line-height:22px}
+.sval{font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap}
+.set-row .chev{color:var(--muted)}
+
+/* Multiselect card (no search) */
+.checkcard{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 14px;border-radius:18px}
+.cc-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.checkcard b{font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em}
+.checkcard small{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
+
+/* ---------- DROPDOWN ---------- */
+.dd-trigger{width:100%;border:0;text-align:left;font-size:14px;font-weight:700}
+.dd-trigger .chev{margin-left:auto;transition:transform .2s}
+.dd-trigger.open{box-shadow:var(--shadow),0 0 0 2px var(--sky)}
+.dd-trigger.open .chev{transform:rotate(180deg)}
+.dd-dot{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55);flex:none}
+.dd-list{margin-top:8px;padding:6px;border-radius:22px;background:var(--glass-hi)}
+.dd-opts{display:flex;flex-direction:column;gap:2px}
+.dd-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:0 12px;border:0;border-radius:16px;background:none;text-align:left;font-size:14px;font-weight:700;transition:background .15s}
+.dd-opt:hover,.dd-opt.hov{background:rgba(255,255,255,.45)}
+.dd-opt[aria-selected=true]{background:var(--sky-wash);box-shadow:inset 0 0 0 1px rgba(47,140,255,.3)}
+.dd-opt .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.dd-opt small{font-size:12px;font-weight:500;color:var(--muted)}
+.dd-opt .tick{width:16px;height:16px;color:var(--sky-ink);stroke-width:2.6}
+.dd-opt.add{min-height:44px;color:var(--sky-ink)}
+.dd-opt.add svg{width:16px;height:16px}
+
+/* ---------- CALENDAR ---------- */
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-h b{font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
+.cal-nav{display:flex;gap:6px}
+.cal-wd,.cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.cal-wd span{height:28px;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+.cal-g{row-gap:2px}
+.day{position:relative;height:40px;padding:0;border:0;border-radius:0;background:none;display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ink)}
+.day>span{position:relative;z-index:1;width:min(36px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;transition:background .15s}
+.day:hover>span{background:rgba(255,255,255,.55)}
+.day.today>span{box-shadow:inset 0 0 0 1.5px var(--sky-500);color:var(--sky-ink);font-weight:800}
+.day.in::before,.day.start::before,.day.end::before{content:"";position:absolute;top:2px;bottom:2px;left:0;right:0;background:rgba(109,182,255,.28)}
+.day.start::before{left:50%}.day.end::before{right:50%}
+.day.sel>span{background:var(--sky);color:var(--ink);font-weight:800;box-shadow:0 4px 12px rgba(40,100,180,.28),inset 0 1px 1px rgba(255,255,255,.5)}
+.day:disabled{cursor:not-allowed}
+.day:disabled>span{background:none;color:var(--muted);opacity:.55}
+.day.out:disabled>span{opacity:.3}
+.day .dot{position:absolute;left:50%;bottom:4px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--g)}
+
+/* ---------- NAVBAR (not scrollable) ---------- */
+.navframe{position:relative;height:170px;border-radius:30px;overflow:hidden;background:linear-gradient(160deg,#FFA899 0%,#FFDDD3 38%,#6DB6FF 100%);margin-bottom:14px}
+.navframe small{position:absolute;left:18px;top:14px;font-size:10px;font-weight:800;letter-spacing:.1em;color:rgba(14,17,22,.6)}
+.tb{position:absolute;left:0;right:0;bottom:0;height:94px;padding:0 9px 27px;display:grid;grid-template-columns:repeat(5,1fr);
+  background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(34px) saturate(160%);backdrop-filter:blur(34px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 -8px 24px rgba(40,100,180,.12)}
+.tb>button{display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:10px;border:0;background:none;font-size:12px;line-height:14px;font-weight:700;color:#5B6878;position:relative}
+.tb>button.on{color:var(--sky-ink);font-weight:800}
+.tb svg{width:22px;height:22px}
+.tb .av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FFA899,#6DB6FF);box-shadow:0 2px 6px rgba(40,100,180,.25);margin:0}
+.tb .on .av{box-shadow:0 0 0 2px var(--sky-ink)}
+.tb .ctr{padding-top:46px;color:var(--sky-ink)}
+.tb .circ{position:absolute;left:50%;top:-27px;margin-left:-33px;width:66px;height:66px}
+.tb .circ.btn{background:#fff}
+.tb .ctr.on .circ.btn{background:#A4D2FE}
+.tb .circ svg{width:30px;height:30px}
+
+/* ---------- OVERLAYS ---------- */
+.toast{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:20px;font-size:14px;font-weight:700}
+.toast button{border:0;background:none;font-weight:800;color:var(--sky-ink);font-size:14px}
+.msg{max-width:78%;padding:10px 14px;border-radius:20px 20px 20px 6px;font-size:14px;font-weight:500;line-height:1.45}
+.msg.mine{align-self:flex-end;border-radius:20px 20px 6px 20px;background:rgba(109,182,255,.6)}
+.menu{border-radius:22px;padding:6px;display:flex;flex-direction:column}
+.menu button{display:flex;gap:10px;align-items:center;height:42px;padding:0 14px;border:0;background:none;border-radius:16px;font-size:14px;font-weight:700;text-align:left}
+.menu button:hover{background:rgba(255,255,255,.45)}
+.menu .danger{color:#C4505A}
+
+/* ---------- MAP ---------- */
+.map{position:relative;height:300px;border-radius:26px;overflow:hidden;background:#E8DEC9}
+.map svg.bg{position:absolute;inset:0;width:100%;height:100%;stroke:none}
+.pin{position:absolute;width:46px;height:54px;transform:translate(-50%,-100%);filter:drop-shadow(0 5px 7px rgba(30,60,110,.22));transition:transform .2s}
+.pin .pb{position:absolute;inset:0;clip-path:path('M15 0H31A15 15 0 0 1 46 15V31A15 15 0 0 1 31 46H27.5L24.4 51.4Q23 53.6 21.6 51.4L18.5 46H15A15 15 0 0 1 0 31V15A15 15 0 0 1 15 0Z');
+  background:linear-gradient(160deg,rgba(255,255,255,.78),rgba(255,255,255,.42));-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%)}
+.pin svg.rim{position:absolute;inset:0;width:46px;height:54px;stroke:url(#rm);stroke-width:1.2;fill:none;overflow:visible}
+.pin .ph2{position:absolute;left:5px;top:5px;width:36px;height:36px;border-radius:9px;background:linear-gradient(160deg,rgba(255,201,188,.95),rgba(109,182,255,.9))}
+.pin .pbadge{position:absolute;top:-8px;right:-8px;min-width:24px;height:24px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(rgba(255,255,255,.32),rgba(255,255,255,0) 60%),var(--g);color:#fff;font-weight:800;font-size:12px;line-height:1;
+  box-shadow:0 3px 8px rgba(40,60,100,.25),inset 0 1px 1px rgba(255,255,255,.55)}
+.pin .pbadge::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:var(--rim);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.pin.dk .pbadge{color:var(--ink)}
+.pin.sel{transform:translate(-50%,-100%) scale(1.14)}
+.pin.sel .pb{background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(255,255,255,.6))}
+.map svg.bg path{vector-effect:non-scaling-stroke}
+.here{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--sky-500);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(20,60,140,.35)}
+.here::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--rim);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.here::after{content:"";position:absolute;inset:-12px;border-radius:50%;background:rgba(47,140,255,.28);animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.4);opacity:0}}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.legend .chip{height:32px;padding:0 12px;font-size:12px}
+.legend i{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55)}
+
+/* ---------- LAYOUT HELPERS ---------- */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start}
+.card-group{min-width:0}
+.card-group h3{font-size:20px;margin-bottom:4px}
+.card-group .spec-description{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.card-stack{display:flex;flex-direction:column;gap:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:start}
+.invite-box{border-radius:20px;padding:10px}
+.invite-box .row{flex-wrap:nowrap}
+.invite-box input{border:0;outline:0;background:transparent;flex:1;min-width:0;font-size:14px}
 .spec-tokens{width:100%;border-collapse:collapse;font-size:12px}
-.spec-tokens td{padding:11px 0;border-bottom:1px solid rgba(91,104,120,.14)}
+.spec-tokens td{padding:9px 0;border-bottom:1px solid rgba(91,104,120,.14)}
 .spec-tokens tr:last-child td{border-bottom:0}
-.spec-tokens td:first-child{color:#526478}
-.spec-tokens td:last-child{font-weight:800;text-align:right;color:#0E1116}
-.spec-key{font:600 11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-word;color:#1F63B5}
-.spec-path{display:inline-block;background:rgba(109,182,255,.14);padding:4px 7px;border-radius:7px}
-.spec-variants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.spec-variant{background:rgba(109,182,255,.1);padding:12px 9px;border-radius:13px;font-size:11px;line-height:1.5;font-weight:700}
-.spec-variant small{display:block;font-size:10px;font-weight:500;color:#526478;margin-top:5px}
-.spec-flag{display:inline-block;padding:5px 9px;background:#d9edff;border-radius:999px;color:#1F63B5;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
-.spec-aside-label{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.02em;color:#526478}
-#dev.spec-phone{width:390px;height:766px;max-width:100%;margin:0;box-shadow:0 18px 56px rgba(45,96,151,.19);border:1px solid rgba(255,255,255,.8)}
-#dev .spec-feed{
-  position:absolute;inset:0;overflow-y:auto;padding:34px 20px 46px;
-  background:radial-gradient(ellipse 50% 25% at 100% 4%,rgba(255,168,153,.45),transparent 95%),
-    radial-gradient(ellipse 55% 30% at 0% 95%,rgba(109,182,255,.35),transparent 90%);
+.spec-tokens td:first-child{color:var(--muted)}
+.spec-tokens td:last-child{font-weight:800;text-align:right}
+.foot{text-align:center;font-size:12px;color:var(--muted);padding-bottom:30px}
+
+@media(max-width:640px){
+  .fr{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr}
+  .hero{padding-inline:20px}
 }
-#dev .spec-feed .spec-group{margin:0 0 24px}
-#dev .spec-feed .spec-group h3{
-  color:#0E1116;font-family:var(--font);font-size:16px;
-  font-weight:800;letter-spacing:-.03em;line-height:1.3;margin:0 0 5px;
-}
-#dev .spec-feed .spec-group .spec-description{font-size:10px;color:var(--muted);margin:0 0 13px;line-height:1.5}
-#dev .spec-feed .tlist{display:flex;flex-direction:column;gap:10px;padding:0;margin:0;background:none}
-#dev .spec-feed .row.tier{margin-bottom:10px}
-#dev .spec-feed #s-chat .chat-row{width:100%;margin:0 0 10px}
-#dev .spec-feed .trow.tier,
-#dev .spec-feed .row.tier{cursor:default}
-#dev .spec-feed button{pointer-events:none;cursor:default}
-#dev .spec-feed .cover img{display:block;width:100%;height:100%;object-fit:cover}
-#dev .spec-feed .av img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:50%}
-#dev .spec-feed .spec-footnote{margin-top:16px;color:var(--muted);font-size:10px;line-height:1.5}
-.spec-footer{margin-top:34px;font-size:12px;color:#526478}
-@media(max-width:850px){
-  .spec-grid{grid-template-columns:1fr;gap:25px}
-  .spec-notes{order:2}
-  .spec-preview{order:1;max-width:390px;margin:0 auto;width:100%}
-  .spec-heading{margin-bottom:30px}
-}
-@media(max-width:480px){
-  .spec-shell{padding:23px 15px 54px}
-  .spec-top{margin-bottom:28px}
-  #dev.spec-phone{height:780px;max-width:100%;width:100%;border-radius:32px;border:1px solid rgba(255,255,255,.9)}
-  #dev .spec-feed{padding-inline:16px}
-  .spec-variants{grid-template-columns:1fr}
-}
-/* Card typography reference: documentation only. Actual sizes live in shared CSS. */
-.spec-type-scroll{width:100%;overflow-x:auto;margin:12px 0}
-.spec-type-table{width:100%;border-collapse:collapse;min-width:510px;font-size:11px;line-height:1.5}
-.spec-type-table th{
-  padding:10px 8px;background:rgba(109,182,255,.13);
-  color:#1F63B5;text-align:left;font-weight:800;white-space:nowrap
-}
-.spec-type-table td{padding:10px 8px;border-bottom:1px solid rgba(91,104,120,.13);vertical-align:top;color:#526478}
-.spec-type-table tr:last-child td{border-bottom:0}
-.spec-type-table td:first-child{color:#0E1116;font-weight:700}
-.spec-type-table td:nth-child(2),.spec-type-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
-.spec-type-sample{margin:12px 0;display:flex;flex-direction:column;gap:5px}
-.spec-type-sample strong{font-family:var(--roam-card-title-family);font-size:var(--roam-card-title-size);font-weight:var(--roam-card-title-weight);line-height:var(--roam-card-title-line-height);letter-spacing:var(--roam-card-title-letter-spacing)}
-.spec-type-sample small{font:500 12px/18px var(--font);color:#526478}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body class="spec-page">
-<main class="spec-shell">
-  <header class="spec-top">
-    <div class="spec-brand"><span class="spec-logo" aria-hidden="true">✦</span> ROAM <span style="font-weight:500;letter-spacing:.02em;color:#5B6878">/ CARDS</span></div>
-    <nav class="spec-links" aria-label="Component links">
-      <a href="../index.html">Open Roam</a>
-      <a href="./sticker-sheet.html">Full sticker sheet</a>
-      <a href="https://github.com/payyujia/roam/blob/main/css/card-library.css">Edit shared CSS</a>
-    </nav>
-  </header>
-  <div class="spec-heading">
-    <div class="spec-kicker">Sunrise Frost · Design System · Cards</div>
-    <h1>One card foundation. Six useful variants.</h1>
-    <p>These static specimens use Roam’s <strong>actual app stylesheets</strong>, including the shared card tokens. The cards share live styling tokens while each variant keeps its own content and actions.</p>
-  </div>
-  <div class="spec-grid">
-    <div class="spec-notes">
-      <section class="spec-panel">
-        <span class="spec-flag">BaseCard</span>
-        <h2 style="margin-top:12px">Shared foundation</h2>
-        <p>Change a value in the central CSS to update the Home and Chat card dimensions. Profile variants use matching horizontal gutters with distinct heights and media shapes.</p>
-        <table class="spec-tokens">
-          <tr><td>Minimum height</td><td>84px</td></tr>
-          <tr><td>Width</td><td>100%</td></tr>
-          <tr><td>Vertical padding</td><td>10px</td></tr>
-          <tr><td>Horizontal padding</td><td>12px</td></tr>
-          <tr><td>Card radius</td><td>22px</td></tr>
-          <tr><td>Content gap</td><td>10px</td></tr>
-          <tr><td>Media / DUE tile</td><td>56 × 60px</td></tr>
-          <tr><td>Media radius</td><td>14px</td></tr>
-          <tr><td>Material</td><td>Sunrise Frost glass</td></tr>
-          <tr><td>Standard title</td><td>16px / Bold 700</td></tr>
-          <tr><td>Title line height</td><td>22px</td></tr>
-          <tr><td>Font family</td><td>Plus Jakarta Sans</td></tr>
-        </table>
-      </section>
-      <section class="spec-panel">
-        <h2>Six variants</h2>
-        <div class="spec-variants">
-          <div class="spec-variant">Voting<small>DUE tile, title, deadline, Review pill</small></div>
-          <div class="spec-variant">Rescheduling<small>Trip photo, context, decline and accept</small></div>
-          <div class="spec-variant">Trip<small>Trip photo, date, status, members</small></div>
-          <div class="spec-variant">Chat<small>Trip photo, latest sender, sent time above the unread badge on the preview row</small></div>
-           <div class="spec-variant">AccountCard<small>84px tall, 22px radius, round 56px profile photo</small></div>
-           <div class="spec-variant">SettingsCard<small>60px tall, 18px radius, circular icon and preference summary</small></div>
-        </div>
-        <p style="margin-top:13px">Voting, rescheduling, trip and chat cards use an 84px minimum height. AccountCard uses the same 84px foundation with a circular profile photo; SettingsCard is compact at 60px. Profile variants share the same outer width (24px page gutters).</p>
-      </section>
-      <section class="spec-panel" id="typography">
-        <span class="spec-flag">Typography · live card variants</span>
-        <h2 style="margin-top:12px">Every card font size and style</h2>
-        <p>Voting, Rescheduling and Trip cards now use the <strong>same three-level text hierarchy</strong>. It also applies to the corresponding text roles in Chat, AccountCard and SettingsCard. All sizes and weights come from <span class="spec-key spec-path">css/card-library.css</span> (<span class="spec-key spec-path">--roam-card-title-*</span>, <span class="spec-key spec-path">--roam-card-detail-*</span> and <span class="spec-key spec-path">--roam-card-status-*</span>).</p>
-        <div class="spec-type-sample"><strong>Reading Date</strong><small style="font-family:var(--font);font-size:var(--roam-card-detail-size);font-weight:var(--roam-card-detail-weight);line-height:var(--roam-card-detail-line-height)">Thu 12 Nov · In 12 days</small><small style="font-family:var(--font);font-size:var(--roam-card-status-size);font-weight:var(--roam-card-status-weight);line-height:var(--roam-card-status-line-height)"><span style="color:#2E9C7A">●</span> Itinerary ready</small></div>
-        <div class="spec-type-scroll">
-          <table class="spec-type-table">
-            <thead><tr><th>Text role</th><th>Font size</th><th>Weight / style</th><th>Line height / examples</th></tr></thead>
-            <tbody>
-              <tr><td>Card title (shared)</td><td>16px</td><td>700 · Bold</td><td>22px · Reading Date, Move Reading Date?, Plaise, Travel style, JB Daytrip</td></tr>
-              <tr><td>Middle detail (shared)</td><td>12px</td><td>500 · Medium</td><td>16px · Trip dates, Raymond's proposed date, voting details, chat previews, Singapore · Joined 2025, Balanced; chat timestamps match this size</td></tr>
-              <tr><td>Bottom status (shared)</td><td>12px</td><td>600 · Semi Bold</td><td>16px · Awaiting your response, Waiting for your vote, Itinerary ready</td></tr>
-              <tr><td>Review action</td><td>11px</td><td>700 · Bold</td><td>28px-high button · Review / Submit on Voting cards</td></tr>
-              <tr><td>Chat unread count</td><td>10px</td><td>700 · Bold</td><td>20px badge · Number of unread messages</td></tr>
-              <tr><td>Profile avatar fallback initial</td><td>22px</td><td>700 · Bold</td><td>Circular avatar · Initial shown when photo is unavailable</td></tr>
-              <tr><td>DUE label</td><td>8px</td><td>800 · Extra Bold</td><td>10px · Top of Voting date tile</td></tr>
-              <tr><td>DUE day number</td><td>20px</td><td>800 · Extra Bold</td><td>22px · Middle of Voting date tile</td></tr>
-              <tr><td>DUE month</td><td>9px</td><td>800 · Extra Bold</td><td>12px · Bottom of Voting date tile</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p><strong>Outside the regular card system:</strong> Featured trip titles remain 18px / 800, and Trips/Profile section headings remain 23px / 800. They are intentionally not controlled by the shared 16px card-title token.</p>
-        <p><strong>How to read this table:</strong> Each shared typography role appears once. For example, Rescheduling context, Profile city and Settings summary values all follow the Middle detail style. Rescheduling status and Trip status share Bottom status. Chat timestamps have matching middle-detail measurements but retain separate metadata positioning. Action buttons, unread badges, avatars and date-tile figures intentionally have their own sizes.</p>
-      </section>
-      <section class="spec-panel">
-        <h2>Where to edit</h2>
-        <p><span class="spec-key spec-path">css/card-library.css</span> — central card dimensions and all shared title, middle detail, and bottom status typography.</p>
-        <p><span class="spec-key spec-path">css/liquid-glass-v6.css</span> — existing glass material, title styles, status dots, and button treatments.</p>
-        <p><span class="spec-key spec-path">docs/card-components.html</span> — this read-only preview. It imports the same CSS as the live app.</p>
-        <p>The specimens are static; live Profile cards keep their existing click handlers and stored preferences.</p>
-      </section>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <span class="brand">ROAM</span>
+    <div class="row">
+      <button class="btn round" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7zM10 20a2 2 0 0 0 4 0"/></svg></button>
+      <button class="btn round" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></button>
     </div>
-    <div class="spec-preview">
-      <p class="spec-aside-label">Card specimens · iPhone width · Scroll to see all</p>
-      <div id="dev" class="spec-phone">
-        <div id="s-trips" class="spec-feed">
-          <section class="spec-group">
-            <h3>01 · Voting card</h3>
-            <p class="spec-description">Date tile · due status · primary Review action</p>
-            <div class="tlist">
-              <button type="button" class="trow task tier t2" aria-label="Voting card preview">
-                <div class="tmain">
-                  <div class="dtile" aria-hidden="true"><i>DUE</i><b>09</b><span>NOV</span></div>
-                  <div class="gr"><b>Vote on JB Daytrip</b><div class="cap sm">4 stops to review</div><span class="due">Waiting for your vote</span></div>
-                </div>
-                <span class="tgo">Review</span>
-              </button>
-              <button type="button" class="trow task tier t2" aria-label="Voting card preview">
-                <div class="tmain">
-                  <div class="dtile" aria-hidden="true"><i>DUE</i><b>12</b><span>NOV</span></div>
-                  <div class="gr"><b>Vote on China 3D2N</b><div class="cap sm">3 stops to review</div><span class="due">Waiting for your vote</span></div>
-                </div>
-                <span class="tgo">Review</span>
-              </button>
-            </div>
-          </section>
-          <section class="spec-group">
-            <h3>02 · Rescheduling card</h3>
-            <p class="spec-description">Same trip photo · compact text · two actions</p>
-            <div class="tlist">
-              <div class="trow task tier t2 reschedule-row" role="group" aria-label="Rescheduling card preview">
-                <div class="tmain">
-                  <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
-                  <div class="gr"><b>Move Reading Date?</b><div class="cap sm" title="Raymond suggested Sat 14 Nov">Raymond · Sat 14 Nov</div><span class="due awaiting">Awaiting your response</span></div>
-                </div>
-                <div class="tact">
-                  <button type="button" class="ib f" aria-label="Decline preview"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-                  <button type="button" class="ib p" aria-label="Accept preview"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg></button>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section class="spec-group">
-            <h3>03 · Trip card</h3>
-            <p class="spec-description">Trip thumbnail · contextual status · member avatars</p>
-            <button type="button" class="row tier t2" aria-label="Trip card preview">
-              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
-              <div class="gr"><b>Reading Date</b><div class="cap sm">Thu 12 Nov · In 12 days</div><div class="cap sm"><span class="dotc ok"></span> Itinerary ready</div></div>
-              <span class="st" aria-hidden="true"><span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span><span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span></span>
-            </button>
-            <button type="button" class="row tier t2" aria-label="Trip card preview">
-              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
-              <div class="gr"><b>Gaming Cafe</b><div class="cap sm">Wed 18 Nov · In 18 days</div><div class="cap sm"><span class="dotc wait"></span> Voting open</div></div>
-              <span class="st" aria-hidden="true"><span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span><span class="av l-green">E<img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span><span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span></span>
-            </button>
-          </section>
-          <section class="spec-group" id="s-chat">
-            <h3>04 · Chat card</h3>
-            <p class="spec-description">Same card foundation · wider message preview · compact time column · unread beside preview</p>
-            <button type="button" class="row chat-row" aria-label="JB Daytrip chat card preview, 2 unread">
-              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
-              <div class="gr"><b>JB Daytrip</b><div class="cap sm">Eustace: Voting closes 9 Nov…</div></div>
-              <div class="chat-meta"><span class="cap sm chat-time">20:46</span><span class="bd2 chat-unread">2</span></div>
-            </button>
-            <button type="button" class="row chat-row" aria-label="MacRitchie Hike chat card preview">
-              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
-              <div class="gr"><b>MacRitchie Hike</b><div class="cap sm">You: Bringing snacks</div></div>
-              <div class="chat-meta"><span class="cap sm chat-time">Mon</span></div>
-            </button>
-          </section>
-          <div id="s-profile">
-            <section class="spec-group">
-            <h3>05 · AccountCard</h3>
-            <p class="spec-description">Same shared card width · 84px height · circular profile avatar</p>
-            <div class="sg profile-card-group">
-              <button type="button" class="srow acct" aria-label="Profile account card preview">
-                <span class="av profile l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
-                <span class="gr"><b>Plaise</b><span class="cap">Singapore · Joined 2025</span></span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-              </button>
-            </div>
-          </section>
-          <section class="spec-group" id="s-profile-settings">
-            <h3>06 · SettingsCard</h3>
-            <p class="spec-description">Same width as AccountCard · compact glass surface · circular frosted icons</p>
-            <div class="spec-profile-variants">
-              <div class="sg profile-settings-group">
-                <button type="button" class="srow settings-card" aria-label="Travel style setting card preview">
-                  <span class="sic l-orange"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m14.8 9.2-2 5.6-3.6-3.6 5.6-2Z"/></svg></span>
-                  <span class="stt">Travel style</span><span class="sval">Balanced</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                </button>
-                <button type="button" class="srow settings-card" aria-label="Getting around setting card preview">
-                  <span class="sic l-teal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m21 3-7 18-3-8-8-3 18-7Z"/></svg></span>
-                  <span class="stt">Getting around</span><span class="sval">Public transport</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                </button>
-              </div>
-            </div>
-          </section>
-          </div>
-          <p class="spec-footnote">Design preview only (illustrative sample times). Buttons do not navigate. Live Roam chats use stored send timestamps where available.</p>
-        </div>
+  </div>
+  <h1>Plan together.<br>Roam together.</h1>
+  <div class="hero-meta">Master Components Library · Sunrise Frost · v12</div>
+</header>
+
+<i class="orb" style="width:340px;height:340px;left:6%;top:38%;background:#6DB6FF;opacity:.55"></i>
+<i class="orb" style="width:300px;height:300px;right:4%;top:30%;background:#FFA899;opacity:.7"></i>
+<i class="orb" style="width:260px;height:260px;left:42%;bottom:6%;background:#2F8CFF;opacity:.4"></i>
+
+<main class="wrap">
+
+  <!-- ============ COLOUR ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Colour <span>sunrise · sky &amp; coral</span></h2>
+    <div id="pal"></div>
+    <p class="note">Sky 400 is the primary UI colour. Sky 500 is the main saturated blue. Coral 500 appears only in the location pin (Trip 2). Amber and rose are standalone trip colours.</p>
+  </section>
+
+  <!-- ============ TYPE ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Type <span>Plus Jakarta Sans</span></h2>
+    <div class="stack">
+      <div><span class="lbl">H1 · 36</span><div class="t-h1">Plan together.</div></div>
+      <div><span class="lbl">H2 · 23</span><div class="t-h2">Trip overview</div></div>
+      <div><span class="lbl">H3 · 20 · page title</span><div class="t-h3">Components Library</div></div>
+      <div><span class="lbl">Subheader · 16</span><div class="t-sub">Reading Date</div></div>
+      <div><span class="lbl">Regular · 14</span><div class="t-reg">Create trip · Description in reels</div></div>
+      <div><span class="lbl">Subtitle · 12</span><div class="t-sub2">Thu 12 Nov · In 12 days</div></div>
+      <div class="row" style="margin-top:4px">
+        <div class="dtile"><i>DUE</i><b>09</b><span>NOV</span></div>
+        <div class="micro">DUE label 8 · day 20 · month 9</div>
       </div>
     </div>
-  </div>
-  <footer class="spec-footer">Roam · Sunrise Frost · Cards-only component sheet · Source of truth: <strong>css/card-library.css</strong></footer>
+  </section>
+
+  <!-- ============ BUTTONS ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Buttons <span>frosted · diagonal rim</span></h2>
+    <span class="lbl">66 × 66</span>
+    <div class="row" style="margin-bottom:14px">
+      <button class="btn lg ink" aria-label="Explore"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg></button>
+      <button class="btn lg sky" aria-label="Add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button class="btn lg" aria-label="Favourite"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.4-7 10-7 10z"/></svg></button>
+      <button class="btn lg coral" aria-label="More"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button>
+    </div>
+    <span class="lbl">Pill actions · regular 14</span>
+    <div class="row" style="margin-bottom:10px">
+      <button class="btn sky"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create trip</button>
+      <button class="btn ink">Continue<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="row" style="margin-bottom:14px">
+      <button class="btn">Navigate</button>
+      <button class="btn coral">Reschedule</button>
+      <button class="btn" disabled>Disabled</button>
+    </div>
+    <div class="row">
+      <button class="btn mini" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button class="btn mini ink" aria-label="Share"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></button>
+      <button class="btn mini sky" aria-label="Confirm"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></button>
+      <button class="btn tiny">View all 6</button>
+    </div>
+  </section>
+
+  <!-- ============ FILTERS / TAGS / STATUS ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Filters, tags &amp; status</h2>
+    <span class="lbl">Filter chips · selected = blue rim</span>
+    <div class="row" data-g="f" style="margin-bottom:6px">
+      <button class="chip" aria-pressed="true">All</button>
+      <button class="chip" aria-pressed="false">Do</button>
+      <button class="chip" aria-pressed="false">Eat</button>
+      <button class="chip" aria-pressed="false">Shop</button>
+    </div>
+    <div class="rule"></div>
+    <span class="lbl">Removable tags</span>
+    <div class="row">
+      <span class="tag">Raymond <button aria-label="Remove Raymond" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+      <span class="tag">Eustace <button aria-label="Remove Eustace" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+      <span class="tag">Museums <button aria-label="Remove Museums" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+    </div>
+    <div class="rule"></div>
+    <span class="lbl">Status &amp; badge</span>
+    <div class="row" style="gap:14px">
+      <span class="status"><i></i>Voting open</span>
+      <span class="status ok"><i></i>Ready</span>
+      <span class="status warn"><i></i>Due soon</span>
+      <span class="status err"><i></i>Full</span>
+      <span class="badge">2</span>
+    </div>
+  </section>
+
+  <!-- ============ FORM INPUTS ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Form inputs <span>text · single select · boolean · multiselect</span></h2>
+    <div class="form-grid">
+
+      <div class="stack">
+        <label class="fw"><span class="fl">Destination</span><span class="field glass"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><input value="Malacca" placeholder="Choose a destination" aria-label="Destination"></span></label>
+        <div class="fr">
+          <label class="fw"><span class="fl">Start</span><span class="field glass"><input value="14/11/2026" aria-label="Start date"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span></label>
+          <label class="fw"><span class="fl">End</span><span class="field glass"><input value="15/11/2026" aria-label="End date"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span></label>
+        </div>
+        <label class="fw"><span class="fl">Budget per person (SGD)</span><span class="field glass"><input inputmode="numeric" value="300" aria-label="Budget"></span></label>
+      </div>
+
+      <div class="stack">
+        <span class="lbl" style="margin-bottom:0">Boolean · toggle</span>
+        <div class="sw-row"><div><div class="s" style="font-size:16px">Recommend activities</div><div class="micro">Use everyone's saved travel preferences</div></div><button class="switch" role="switch" aria-checked="true" aria-label="Recommend activities"></button></div>
+        <div class="sw-row"><div><div class="s" style="font-size:16px">Trip reminders</div><div class="micro">Notify me before voting closes</div></div><button class="switch" role="switch" aria-checked="false" aria-label="Trip reminders"></button></div>
+        <div class="rule" style="margin:4px 0"></div>
+        <span class="lbl" style="margin-bottom:0">Segmented · subtitle 12</span>
+        <div class="seg glass" data-g="s"><button aria-selected="true">Upcoming</button><button aria-selected="false">Past</button></div>
+        <div class="row" style="justify-content:space-between;margin-top:4px">
+          <div class="row"><span class="checkbox on"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><span class="micro">Selected</span></div>
+          <div class="row"><span class="checkbox"></span><span class="micro">Unselected</span></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <span class="lbl" style="margin-bottom:0">Multiselect · no search · checkbox at end</span>
+        <button type="button" class="checkcard glass on" aria-pressed="true">
+          <span class="cc-main"><b>Museums</b><small>12 nearby · art &amp; history</small></span>
+          <span class="checkbox on"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>
+        </button>
+        <button type="button" class="checkcard glass" aria-pressed="false">
+          <span class="cc-main"><b>Food markets</b><small>8 nearby · local eats</small></span>
+          <span class="checkbox"></span>
+        </button>
+        <button type="button" class="checkcard glass on" aria-pressed="true">
+          <span class="cc-main"><b>Nature trails</b><small>5 nearby · outdoor</small></span>
+          <span class="checkbox on"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>
+        </button>
+      </div>
+
+      <div class="stack">
+        <span class="lbl" style="margin-bottom:0">Single select · dropdown</span>
+        <div class="fw">
+          <span class="fl" id="dd-l2">Trip</span>
+          <button type="button" class="field glass dd-trigger open" aria-haspopup="listbox" aria-expanded="true" aria-controls="dd-list" aria-labelledby="dd-l2 dd-v2">
+            <i class="dd-dot" style="--g:var(--t1g)"></i>
+            <span id="dd-v2">Reading Date</span>
+            <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="dd-list glass" id="dd-list">
+            <div class="dd-opts" role="listbox" aria-labelledby="dd-l2">
+              <button type="button" role="option" class="dd-opt" aria-selected="true"><i class="dd-dot" style="--g:var(--t1g)"></i><span class="t">Reading Date<small>Thu 12 Nov</small></span><svg class="tick" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></button>
+              <button type="button" role="option" class="dd-opt hov" aria-selected="false"><i class="dd-dot" style="--g:var(--t2g)"></i><span class="t">Gaming Cafe<small>Wed 18 Nov</small></span></button>
+              <button type="button" role="option" class="dd-opt" aria-selected="false"><i class="dd-dot" style="--g:var(--t3g)"></i><span class="t">JB Daytrip<small>Sat 28 Nov</small></span></button>
+              <button type="button" role="option" class="dd-opt" aria-selected="false"><i class="dd-dot" style="--g:var(--t4g)"></i><span class="t">China 3D2N<small>Fri 4 Dec</small></span></button>
+            </div>
+            <div class="rule" style="margin:6px 8px"></div>
+            <button type="button" class="dd-opt add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create new trip</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <span class="lbl" style="margin-bottom:0">Multiselect · with query input</span>
+        <div class="glass invite-box">
+          <div class="row">
+            <svg viewBox="0 0 24 24" style="color:var(--muted);width:17px"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-4 3.5-6 7-6s6.2 2 7 6M17 5a3.5 3.5 0 0 1 0 7"/></svg>
+            <input id="fi" aria-label="Friend's name" placeholder="Type a friend's name">
+            <button class="btn mini sky" onclick="addF('ft','fi')" aria-label="Add friend"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+          <div class="row" id="ft" style="margin-top:10px">
+            <span class="tag">Raymond <button aria-label="Remove" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+          </div>
+        </div>
+        <div class="glass invite-box">
+          <div class="row">
+            <svg viewBox="0 0 24 24" style="color:var(--muted);width:17px"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg>
+            <input id="hi" aria-label="Health and accessibility need" placeholder="Add dietary or access need">
+            <button class="btn mini sky" onclick="addF('ht','hi')" aria-label="Add need"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+          <div class="row" id="ht" style="margin-top:10px">
+            <span class="tag">Vegetarian <button aria-label="Remove" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+            <span class="tag">Wheelchair <button aria-label="Remove" onclick="this.parentElement.remove()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CALENDAR ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Calendar <span>range · today · trip days</span></h2>
+    <div class="cal-h">
+      <b>November 2026</b>
+      <div class="cal-nav">
+        <button class="btn mini" aria-label="Previous month"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="btn mini" aria-label="Next month"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="cal-wd" aria-hidden="true"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+    <div class="cal-g">
+      <button type="button" class="day" aria-label="Sun 1 November" disabled><span>1</span></button>
+      <button type="button" class="day" aria-label="Mon 2 November" disabled><span>2</span></button>
+      <button type="button" class="day" aria-label="Tue 3 November" disabled><span>3</span></button>
+      <button type="button" class="day" aria-label="Wed 4 November" disabled><span>4</span></button>
+      <button type="button" class="day" aria-label="Thu 5 November" disabled><span>5</span></button>
+      <button type="button" class="day" aria-label="Fri 6 November" disabled><span>6</span></button>
+      <button type="button" class="day today" aria-label="Sat 7 November" aria-current="date"><span>7</span></button>
+      <button type="button" class="day" aria-label="Sun 8 November"><span>8</span></button>
+      <button type="button" class="day" aria-label="Mon 9 November"><span>9</span></button>
+      <button type="button" class="day" aria-label="Tue 10 November"><span>10</span></button>
+      <button type="button" class="day" aria-label="Wed 11 November"><span>11</span></button>
+      <button type="button" class="day" aria-label="Thu 12 November"><span>12<i class="dot" style="--g:var(--t1g)"></i></span></button>
+      <button type="button" class="day" aria-label="Fri 13 November"><span>13</span></button>
+      <button type="button" class="day" aria-label="Sat 14 November"><span>14</span></button>
+      <button type="button" class="day" aria-label="Sun 15 November"><span>15</span></button>
+      <button type="button" class="day sel start" aria-label="Mon 16 November" aria-pressed="true"><span>16</span></button>
+      <button type="button" class="day in" aria-label="Tue 17 November"><span>17</span></button>
+      <button type="button" class="day in" aria-label="Wed 18 November"><span>18<i class="dot" style="--g:var(--t2g)"></i></span></button>
+      <button type="button" class="day sel end" aria-label="Thu 19 November" aria-pressed="true"><span>19</span></button>
+      <button type="button" class="day" aria-label="Fri 20 November"><span>20</span></button>
+      <button type="button" class="day" aria-label="Sat 21 November"><span>21</span></button>
+      <button type="button" class="day" aria-label="Sun 22 November"><span>22</span></button>
+      <button type="button" class="day" aria-label="Mon 23 November"><span>23</span></button>
+      <button type="button" class="day" aria-label="Tue 24 November"><span>24</span></button>
+      <button type="button" class="day" aria-label="Wed 25 November"><span>25</span></button>
+      <button type="button" class="day" aria-label="Thu 26 November"><span>26</span></button>
+      <button type="button" class="day" aria-label="Fri 27 November"><span>27</span></button>
+      <button type="button" class="day" aria-label="Sat 28 November"><span>28<i class="dot" style="--g:var(--t3g)"></i></span></button>
+      <button type="button" class="day" aria-label="Sun 29 November"><span>29</span></button>
+      <button type="button" class="day" aria-label="Mon 30 November"><span>30</span></button>
+      <button type="button" class="day out" aria-label="Tue 1 December" disabled><span>1</span></button>
+      <button type="button" class="day out" aria-label="Wed 2 December" disabled><span>2</span></button>
+      <button type="button" class="day out" aria-label="Thu 3 December" disabled><span>3</span></button>
+      <button type="button" class="day out" aria-label="Fri 4 December" disabled><span>4</span></button>
+      <button type="button" class="day out" aria-label="Sat 5 December" disabled><span>5</span></button>
+    </div>
+    <div class="rule"></div>
+    <div class="row" style="justify-content:space-between">
+      <div><div class="s" style="font-size:16px">Mon 16 – Thu 19 Nov</div><div class="micro">3 nights</div></div>
+      <div class="row" style="gap:8px"><button class="btn sm">Clear</button><button class="btn sm sky">Set dates</button></div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRESS ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Progress nodes <span>opaque state indicators</span></h2>
+    <div class="steps">
+      <div class="step done"><div class="node glass"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div>Destination</div>
+      <div class="step done"><div class="node glass"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div>Date</div>
+      <div class="step now"><div class="node glass">3</div>Vote</div>
+      <div class="step"><div class="node glass">4</div>Itinerary</div>
+    </div>
+  </section>
+
+  <!-- ============ MASTER CARDS ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Cards <span>master foundation · six variants</span></h2>
+
+    <table class="spec-tokens" style="margin-bottom:20px">
+      <tr><td>Minimum height</td><td>84px</td></tr>
+      <tr><td>Width</td><td>100%</td></tr>
+      <tr><td>Vertical / horizontal padding</td><td>10px / 12px</td></tr>
+      <tr><td>Card radius</td><td>22px</td></tr>
+      <tr><td>Content gap</td><td>10px</td></tr>
+      <tr><td>Media / DUE tile</td><td>56 × 60px · radius 14px</td></tr>
+      <tr><td>Material</td><td>Sunrise Frost glass</td></tr>
+      <tr><td>Card title</td><td>16px / Bold 700 · 22px</td></tr>
+      <tr><td>Middle detail</td><td>12px / Medium 500 · 16px</td></tr>
+      <tr><td>Bottom status</td><td>12px / Semi Bold 600 · 16px</td></tr>
+    </table>
+
+    <div class="card-grid">
+
+      <!-- 01 Voting -->
+      <div class="card-group">
+        <h3>01 · Voting card</h3>
+        <p class="spec-description">Date tile · due status · primary Review action</p>
+        <div class="card-stack">
+          <button type="button" class="trow glass">
+            <div class="tmain">
+              <div class="dtile" aria-hidden="true"><i>DUE</i><b>09</b><span>NOV</span></div>
+              <div class="gr"><b>Vote on JB Daytrip</b><div class="cap sm">4 stops to review</div><span class="due">Waiting for your vote</span></div>
+            </div>
+            <span class="tgo">Review</span>
+          </button>
+          <button type="button" class="trow glass">
+            <div class="tmain">
+              <div class="dtile" aria-hidden="true"><i>DUE</i><b>12</b><span>NOV</span></div>
+              <div class="gr"><b>Vote on China 3D2N</b><div class="cap sm">3 stops to review</div><span class="due">Waiting for your vote</span></div>
+            </div>
+            <span class="tgo">Review</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 02 Rescheduling -->
+      <div class="card-group">
+        <h3>02 · Rescheduling card</h3>
+        <p class="spec-description">Trip photo · compact text · two actions</p>
+        <div class="card-stack">
+          <div class="trow glass" role="group" aria-label="Rescheduling card">
+            <div class="tmain">
+              <div class="cover" aria-hidden="true"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+              <div class="gr"><b>Move Reading Date?</b><div class="cap sm" title="Raymond suggested Sat 14 Nov">Raymond · Sat 14 Nov</div><span class="due awaiting">Awaiting your response</span></div>
+            </div>
+            <div class="tact">
+              <button type="button" class="ib" aria-label="Decline"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+              <button type="button" class="ib p" aria-label="Accept"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 Trip -->
+      <div class="card-group">
+        <h3>03 · Trip card</h3>
+        <p class="spec-description">Trip thumbnail · contextual status · member avatars</p>
+        <div class="card-stack">
+          <button type="button" class="trip-row glass">
+            <div class="cover" aria-hidden="true"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+            <div class="gr"><b>Reading Date</b><div class="cap sm">Thu 12 Nov · In 12 days</div><div class="cap sm"><span class="dotc ok"></span>Itinerary ready</div></div>
+            <span class="st" aria-hidden="true">
+              <span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+              <span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+            </span>
+          </button>
+          <button type="button" class="trip-row glass">
+            <div class="cover" aria-hidden="true"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+            <div class="gr"><b>Gaming Cafe</b><div class="cap sm">Wed 18 Nov · In 18 days</div><div class="cap sm"><span class="dotc wait"></span>Voting open</div></div>
+            <span class="st" aria-hidden="true">
+              <span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+              <span class="av l-green">E<img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+              <span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 04 Chat -->
+      <div class="card-group">
+        <h3>04 · Chat card</h3>
+        <p class="spec-description">Same foundation · wider preview · compact time column</p>
+        <div class="card-stack">
+          <button type="button" class="chat-row glass" aria-label="JB Daytrip chat card, 2 unread">
+            <div class="cover" aria-hidden="true"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+            <div class="gr"><b>JB Daytrip</b><div class="cap sm">Eustace: Voting closes 9 Nov…</div></div>
+            <div class="chat-meta"><span class="chat-time">20:46</span><span class="chat-unread">2</span></div>
+          </button>
+          <button type="button" class="chat-row glass" aria-label="MacRitchie Hike chat card">
+            <div class="cover" aria-hidden="true"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+            <div class="gr"><b>MacRitchie Hike</b><div class="cap sm">You: Bringing snacks</div></div>
+            <div class="chat-meta"><span class="chat-time">Mon</span></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 05 Account -->
+      <div class="card-group">
+        <h3>05 · Account card</h3>
+        <p class="spec-description">84px · 22px radius · round 56px profile photo</p>
+        <div class="card-stack">
+          <button type="button" class="srow glass" aria-label="Profile account card">
+            <span class="av profile l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+            <span class="gr"><b>Plaise</b><span class="cap">Singapore · Joined 2025</span></span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 06 Settings -->
+      <div class="card-group">
+        <h3>06 · Settings card</h3>
+        <p class="spec-description">60px · 18px radius · circular frosted icon</p>
+        <div class="card-stack">
+          <button type="button" class="srow glass set-row" aria-label="Travel style setting card">
+            <span class="sic l-orange"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m14.8 9.2-2 5.6-3.6-3.6 5.6-2Z"/></svg></span>
+            <span class="stt">Travel style</span>
+            <span class="sval">Balanced</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+          <button type="button" class="srow glass set-row" aria-label="Getting around setting card">
+            <span class="sic l-teal"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 3-7 18-3-8-8-3 18-7Z"/></svg></span>
+            <span class="stt">Getting around</span>
+            <span class="sval">Public transport</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Overlays &amp; feedback</h2>
+    <div class="toast glass">
+      <span class="row" style="gap:8px"><svg viewBox="0 0 24 24" style="color:#1E7D5F"><path d="M5 12l5 5 9-10"/></svg>Trip created successfully</span>
+      <button>Undo</button>
+    </div>
+    <div class="stack" style="gap:7px;margin:14px 0">
+      <div class="msg glass">Can we move it to Saturday?</div>
+      <div class="msg mine glass">Works for me!</div>
+    </div>
+    <div class="menu glass">
+      <button><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg>Share trip</button>
+      <button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Reschedule</button>
+      <button class="danger"><svg viewBox="0 0 24 24"><path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/></svg>Leave trip</button>
+    </div>
+  </section>
+
+  <!-- ============ NAVBAR ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Navbar <span>two states · not scrollable</span></h2>
+    <div class="navframe">
+      <small>REELS ACTIVE</small>
+      <nav class="tb">
+        <button><span class="av"></span>Profile</button>
+        <button class="on"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M10 9l5 3-5 3z"/></svg>Reels</button>
+        <button class="ctr"><span class="circ btn lg"><svg viewBox="0 0 24 24"><path d="M21 3L3 10l7 3 3 7z"/><path d="M10 13l11-10"/></svg></span>Trips</button>
+        <button><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
+        <button><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg>Chats</button>
+      </nav>
+    </div>
+    <div class="navframe">
+      <small>TRIPS ACTIVE</small>
+      <nav class="tb">
+        <button><span class="av"></span>Profile</button>
+        <button><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M10 9l5 3-5 3z"/></svg>Reels</button>
+        <button class="ctr on"><span class="circ btn lg sky"><svg viewBox="0 0 24 24"><path d="M21 3L3 10l7 3 3 7z"/><path d="M10 13l11-10"/></svg></span>Trips</button>
+        <button><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
+        <button><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg>Chats</button>
+      </nav>
+    </div>
+    <p class="note">The centre Trips button is intentionally opaque. Progress nodes and the active segmented-control tab are the other opaque exceptions.</p>
+  </section>
+
+  <!-- ============ MAP ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Map pins &amp; trip colour-coding <span>sunrise trip palette</span></h2>
+    <div class="map" aria-label="Sample map with four trips">
+      <svg class="bg" viewBox="0 0 600 300" preserveAspectRatio="none">
+        <path d="M0 210C120 170 220 250 330 200S520 120 600 160V300H0z" fill="#D9E3E6"/>
+        <g fill="none" stroke="#F7F1E3" stroke-width="7" stroke-linecap="round"><path d="M-10 80L250 120 420 40 620 90"/><path d="M120 0L150 300M320 0L360 300M500 0L470 300"/></g>
+        <g fill="none" stroke-linecap="round" stroke-linejoin="round" style="vector-effect:non-scaling-stroke">
+          <g stroke-width="16">
+            <path d="M110 90L240 125 330 75" stroke="#1E6FD6"/>
+            <path d="M180 230L300 205 420 235" stroke="#D9503F"/>
+            <path d="M450 80L520 150" stroke="#D9801A"/>
+            <path d="M40 170L120 150 200 175" stroke="#D93C74"/>
+          </g>
+          <g stroke-width="11">
+            <path d="M110 90L240 125 330 75" stroke="#2F8CFF"/>
+            <path d="M180 230L300 205 420 235" stroke="#FF6F61"/>
+            <path d="M450 80L520 150" stroke="#FFA23A"/>
+            <path d="M40 170L120 150 200 175" stroke="#FF5C93"/>
+          </g>
+        </g>
+      </svg>
+      <i class="here" style="left:47%;top:74%" aria-label="Your location"></i>
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <linearGradient id="rm" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+            <stop offset=".35" stop-color="#fff" stop-opacity="0"/>
+            <stop offset=".65" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="1" stop-color="#fff" stop-opacity=".9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="legend">
+      <span class="chip glass" style="--g:var(--t1g)"><i></i>Trip 1 · sky</span>
+      <span class="chip glass" style="--g:var(--t2g)"><i></i>Trip 2 · coral</span>
+      <span class="chip glass" style="--g:var(--t3g)"><i></i>Trip 3 · amber</span>
+      <span class="chip glass" style="--g:var(--t4g)"><i></i>Trip 4 · rose</span>
+    </div>
+    <p class="note"><b>Routes</b> copy Google Maps: a thick line with a darker casing in the same hue. <b>Pins</b> are frosted-glass bubbles with a photo slot and a one-character badge in the trip colour. The selected pin scales up 14%.</p>
+  </section>
+
 </main>
+
+<p class="foot">Roam · Sunrise Frost · master components library · light theme only</p>
+
+<script>
+/* ---------- PALETTE ---------- */
+const G=[
+['Sky','Primary UI + main blue',[['50','#F3F8FF','canvas'],['150','#D8EAFF',''],['200','#BDDCFF',''],['300','#8FC6FF',''],['400','#6DB6FF','primary UI'],['500','#2F8CFF','main · trip 1'],['600','#1F63B5','text-blue']]],
+['Coral','500 = location pin only',[['100','#FFE4DD','bg aura'],['200','#FFC9BC','buttons'],['300','#FFA899','aura'],['500','#FF6F61','pin · trip 2'],['Amber','#FFA23A','trip 3'],['Rose','#FF5C93','trip 4']]],
+['Neutral','one grey only',[['Ink','#0E1116','text · nav'],['White','#FFFFFF','glass base'],['Slate','#5B6878','muted text']]]
+];
+document.getElementById('pal').innerHTML=G.map(([n,d,c])=>`<span class="lbl">${n} · ${d}</span><div class="pal">${c.map(([k,h,u])=>`<div class="sw"><i style="background:${h}"></i><b>${n=='Neutral'||k=='Amber'||k=='Rose'?k:n+' '+k}</b><small>${h}${u?'<br>'+u:''}</small></div>`).join('')}</div>`).join('');
+
+/* ---------- MAP PINS ---------- */
+const M=document.querySelector('.map');
+[['1','t1',18,36],['2','t1',40,48],['1','t2',30,80,'dk'],['A','t3',70,62,'dk sel'],['!','t4',86,35]].forEach(([n,t,x,y,c=''])=>{
+  const d=document.createElement('div');
+  d.className='pin '+c;
+  d.style.cssText=`--g:var(--${t}g);left:${x}%;top:${y}%`;
+  d.innerHTML=`<div class="pb"></div><span class="ph2"></span><svg class="rim" viewBox="0 0 46 54"><path d="M15 .6H31A14.4 14.4 0 0 1 45.4 15V31A14.4 14.4 0 0 1 31 45.4H27.3L24 51Q23 52.6 22 51L18.7 45.4H15A14.4 14.4 0 0 1 .6 31V15A14.4 14.4 0 0 1 15 .6Z"/></svg><span class="pbadge">${n}</span>`;
+  M.append(d);
+});
+
+/* ---------- CHIPS / SEGMENTED / SWITCHES ---------- */
+document.querySelectorAll('[data-g]').forEach(g=>{
+  g.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    g.querySelectorAll('button').forEach(x=>x.setAttribute(g.dataset.g=='f'?'aria-pressed':'aria-selected',x===b));
+  });
+});
+
+document.querySelectorAll('.chip[aria-pressed]').forEach(b=>{
+  b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+});
+
+document.querySelectorAll('.switch').forEach(b=>{
+  b.onclick=()=>b.setAttribute('aria-checked',b.getAttribute('aria-checked')!=='true');
+});
+
+/* ---------- CHECKCARDS ---------- */
+document.querySelectorAll('.checkcard').forEach(c=>{
+  c.onclick=()=>{
+    const on=c.classList.toggle('on');
+    c.setAttribute('aria-pressed',on);
+    const cb=c.querySelector('.checkbox');
+    cb.classList.toggle('on',on);
+    cb.innerHTML=on?'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':'';
+  };
+});
+
+/* ---------- INVITE FRIENDS ---------- */
+function addF(listId,inputId){
+  const i=document.getElementById(inputId);
+  const v=i.value.trim().slice(0,30);
+  if(!v)return;
+  const t=document.createElement('span');
+  t.className='tag';
+  t.append(v+' ');
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Remove '+v);
+  b.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  b.onclick=()=>t.remove();
+  t.append(b);
+  document.getElementById(listId).append(t);
+  i.value='';
+  i.focus();
+}
+</script>
 </body>
 </html>

@@ -215,7 +215,7 @@ body{font-weight:500}
 /* Home Trips Create trip button: Body 700 at 14px, without altering Map or other actions. */
 #dev .btn{padding:0 22px}
 #dev .btn.sm2{height:34px;padding:0 14px;font-size:11px}
-#dev .tgo{height:28px;padding:0 12px;font-size:11px}
+#dev .tgo{height:28px;padding:0 12px;font-size:12px}
 #dev #fab,#dev #psave{padding:0 22px}
 #dev #fab:hover,#dev #psave:hover{transform:translate(-50%,-1px)}
 #dev #fab:active,#dev #psave:active{transform:translateX(-50%) scale(.98)}
@@ -592,6 +592,47 @@ body{font-weight:500}
 /* Tabs and instant actions must remain instant, without late animations. */
 #dev #app.nt .scr.on,
 #dev #app.instant .scr.on{transition:none!important}
+
+/* Keep the Profile's frosted surface fully painted beneath its detail page.
+   Previously it was visibility:hidden and was only rebuilt at the moment of
+   exit, temporarily exposing an uncomposited background during the swipe. */
+#dev #app:has(#s-pdet.on) #s-profile.scr.under{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+  z-index:0;
+}
+#dev #app #s-pdet.scr.on{z-index:1}
+#dev #app #s-profile.scr.back-reveal{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+}
+
+/* iOS-style back navigation for Chat threads and Profile detail pages.
+   Keep the departing page visible while it slides out to the right, revealing
+   the parent underneath. Other inactive screens remain instantly hidden. */
+@keyframes roam-back-slide-right{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(100%,0,0)}
+}
+#dev #app .scr.back-exit{
+  visibility:visible!important;
+  z-index:3;
+  pointer-events:none;
+  animation:roam-back-slide-right .3s cubic-bezier(.22,.72,.26,1) both!important;
+}
+#dev #app .scr.back-reveal.on{
+  z-index:2;
+  transition:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #dev #app .scr.back-exit{
+    animation:none!important;
+    visibility:hidden!important;
+  }
+}
+
 
 /* Small, nested translucent controls don't need a costly second blur pass.
    Keep the Sunrise Frost translucent fills, rim highlights and shadows. */
@@ -1062,44 +1103,56 @@ body{font-weight:500}
 }
 
 
-/* Profile > Travel style: the Pace label and three-option control share a row. */
-#dev #s-pdet .pg:has(.travel-style-form) .top .tt{
+/* Profile settings detail pages: one shared 20px / Bold 700 heading,
+   including Budget, Travel style, Getting around, Accessibility and Activity.
+   This intentionally affects only the subpage title, not its field labels. */
+#dev #s-pdet .top .tt{
   font-family:var(--font);
   font-size:20px;
   font-weight:700;
   line-height:26px;
   letter-spacing:-.02em;
+  min-width:0;
 }
-#dev #s-pdet .travel-style-form .lb{
+/* Profile > Travel preferences: two settings use the existing components,
+   the card-library type scale and identical outer gutters. */
+#dev #s-pdet .travel-preferences-form{gap:24px}
+#dev #s-pdet .travel-preferences-form .travel-setting-group{min-width:0}
+#dev #s-pdet .travel-preferences-form .travel-setting-label{
   font-family:var(--roam-card-title-family,var(--font));
   font-size:var(--roam-card-title-size,16px);
   font-weight:var(--roam-card-title-weight,700);
   line-height:var(--roam-card-title-line-height,22px);
   letter-spacing:var(--roam-card-title-letter-spacing,0);
+  margin-bottom:10px;
 }
-/* Pace label and the three-option selector share one horizontal row. */
-#dev #s-pdet .travel-pace-field{
-  display:grid;
-  grid-template-columns:max-content minmax(0,1fr);
-  align-items:center;
-  column-gap:12px;
-  min-width:0;
-}
-#dev #s-pdet .travel-pace-field .seg{
+#dev #s-pdet .travel-pace-dropdown,
+#dev #s-pdet .travel-pace-dropdown .dd{
   width:100%;
   min-width:0;
+}
+#dev #s-pdet .travel-pace-dropdown .dd-trigger{min-height:52px}
+#dev #s-pdet .travel-transport-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#dev #s-pdet .travel-transport-options .rd{
   box-sizing:border-box;
+  width:100%;
+  min-height:60px;
+  border-radius:18px;
+  padding:12px 14px;
+  background:var(--glass-surface-bg);
+  box-shadow:var(--control-shadow);
 }
-#dev #s-pdet .travel-style-form .seg button:not([aria-checked="true"]){
-  color:#506178!important;
-}
-@media(max-width:360px){
-  #dev #s-pdet .travel-pace-field{column-gap:8px}
-  #dev #s-pdet .travel-pace-field .seg button{padding-inline:3px}
+#dev #s-pdet .travel-transport-options .rd[aria-checked=true]{
+  background:rgba(109,182,255,.24);
+  box-shadow:inset 0 0 0 1px rgba(47,140,255,.3),var(--control-shadow);
 }
 /* The Save action stays unmistakably disabled, but no longer fades to
    near-invisibility. Enabled actions retain the regular Sky 400 styling. */
-#dev #s-pdet:has(.travel-style-form) .dock.sv .btn[data-a="psave"]:disabled{
+#dev #s-pdet:has(.travel-preferences-form) .dock.sv .btn[data-a="psave"]:disabled{
   --action-fill:rgba(231,242,253,.85);
   --action-ink:#61738A;
   --action-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 3px 12px rgba(48,88,135,.07);

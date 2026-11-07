@@ -17,7 +17,7 @@
   --dk-divider:rgba(220,220,226,.15);
   --dk-shadow:0 1px 0 rgba(0,0,0,.24);
   --dk-pressed:#646468;
-  --dk-radius:7px;
+  --dk-radius:9px;
   --dk-emoji-cutout:#454547;
   position:absolute;
   left:0;
@@ -29,7 +29,7 @@
   flex-direction:column;
   width:100%;
   height:var(--demo-keyboard-height);
-  padding:7px 3px 4px;
+  padding:7px 0 4px;
   border:0;
   border-radius:18px 18px 0 0;
   overflow:hidden;
@@ -51,7 +51,7 @@
   --dk-divider:rgba(90,100,115,.17);
   --dk-shadow:0 1px 1px rgba(70,80,100,.14);
   --dk-pressed:#EDF0F3;
-  --dk-radius:8px;
+  --dk-radius:10px;
   --dk-emoji-cutout:#FFFFFF;
   -webkit-backdrop-filter:blur(24px) saturate(140%);
   backdrop-filter:blur(24px) saturate(140%);
@@ -59,7 +59,8 @@
 #dev .demo-keyboard.theme-dark{--dk-bg:#202020}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
-  flex:0 0 38px;
+  flex:0 0 44px;
+  margin-bottom:10px;
   min-height:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -69,7 +70,7 @@
   font-weight:400;
   line-height:1.2;
   text-align:center;
-  padding:0 8px 3px;
+  padding:0 6px 3px;
 }
 /* iOS QuickType-style prediction buttons: same three aligned columns,
    but interactive and updated as the user types or moves the cursor. */
@@ -96,7 +97,8 @@
 #dev .dk-prediction + .dk-prediction{
   border-left:1px solid var(--dk-divider);
 }
-#dev .dk-prediction-primary{font-weight:500;color:var(--dk-ink)}
+/* All QuickType suggestions are regular-weight, including the centre. */
+#dev .dk-prediction-primary{font-weight:400;color:var(--dk-sub)}
 #dev .dk-prediction:active{background:rgba(135,139,148,.19)}
 #dev .dk-prediction:focus-visible{
   outline:2px solid #75B7FF;
@@ -107,7 +109,7 @@
   min-height:0;
   display:flex;
   flex-direction:column;
-  gap:9px;
+  gap:11px;
   padding:0 0 2px;
 }
 #dev .dk-row{
@@ -117,10 +119,18 @@
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:4px;
+  gap:7px;
   box-sizing:border-box;
 }
-#dev .dk-offset{padding-inline:4.5%}
+/* Keep first/last keycaps about 6px from the phone edge (as in the reference),
+   without clipping them against the keyboard's rounded outside frame.
+   Row 2 remains staggered by ~24px each side at 402px screen width. */
+#dev .dk-row:not(.dk-offset){
+  width:calc(100% - 12px);
+  margin-left:6px;
+  margin-right:6px;
+}
+#dev .dk-offset{padding-inline:6%}
 #dev .dk-key{
   flex:1 1 0;
   min-width:0;
@@ -136,7 +146,7 @@
   background:var(--dk-key);
   color:var(--dk-ink);
   box-shadow:var(--dk-shadow);
-  font:400 21px/1 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font:300 20px/1 "SF Pro Text","SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   text-align:center;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
@@ -147,7 +157,37 @@
   outline-offset:-2px;
 }
 #dev .dk-special{background:var(--dk-control);font-size:16px}
-#dev .dk-special svg{display:block;width:23px;height:23px}
+/* Give the backspace, emoji and Return controls identical icon alignment.
+   The SVG viewboxes and wrappers keep the glyph centered across Windows fonts. */
+#dev .dk-key-icon{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  line-height:0;
+  pointer-events:none;
+}
+#dev .dk-delete,
+#dev .dk-emoji,
+#dev .dk-return{
+  display:grid;
+  place-items:center;
+  align-items:center;
+  justify-items:center;
+}
+#dev .dk-key-icon svg{
+  display:block;
+  flex:none;
+  width:24px;
+  height:24px;
+  margin:0 auto;
+  overflow:visible;
+  vertical-align:middle;
+}
+#dev .dk-shift svg{display:block;width:23px;height:23px}
 #dev .dk-shift,
 #dev .dk-delete{flex:1.45 1 0}
 #dev .dk-shift.is-on{background:#E3E3E6;color:#252528}
@@ -155,17 +195,21 @@
 #dev .dk-numbers-third .dk-shift,
 #dev .dk-numbers-third .dk-delete{flex:1.3 1 0}
 #dev .dk-numbers-third .dk-char{font-size:19px}
-#dev .dk-bottom{margin-top:0;gap:6px}
+#dev .dk-bottom{margin-top:0;gap:7px}
 #dev .dk-bottom .dk-mode{
-  flex:0 0 12%;
+  flex:0 0 11%;
   background:var(--dk-control);
   font-size:16px;
 }
 #dev .dk-bottom .dk-emoji{
-  flex:0 0 12%;
+  flex:0 0 10%;
   background:var(--dk-control);
 }
-#dev .dk-bottom .dk-emoji svg{display:block;width:24px;height:24px}
+/* Restore fuller smiley proportions while retaining the functional emoji picker. */
+#dev .dk-bottom .dk-emoji .dk-key-icon svg{
+  width:23px;
+  height:23px;
+}
 #dev .dk-bottom .dk-space{
   flex:1 1 auto;
   position:relative;
@@ -179,13 +223,19 @@
   font-weight:500;
   line-height:1;
 }
+/* The idle Return glyph is deliberately subdued, like the supplied
+   iOS dark-keyboard reference, rather than bright grey. */
 #dev .dk-bottom .dk-return{
   flex:0 0 25%;
   background:var(--dk-control);
-  color:#89898D;
+  color:#69696D;
 }
 #dev .dk-return-icon{display:grid;place-items:center}
-#dev .dk-return svg{display:block;width:27px;height:27px}
+#dev .dk-return .dk-key-icon svg{
+  width:25px;
+  height:25px;
+}
+#dev .dk-delete .dk-key-icon svg{width:24px;height:24px}
 #dev .dk-bottom .dk-return.has-text{
   background:var(--dk-control);
   color:#F7F7FA;
@@ -199,7 +249,7 @@
   color:#5F6977;
 }
 #dev .dk-accessories{
-  flex:0 0 62px;
+  flex:0 0 54px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -504,15 +554,16 @@
 
 @media(max-height:700px){
   #dev{--demo-keyboard-height:272px}
-  #dev .dk-predict{flex-basis:34px;font-size:15px}
-  #dev .dk-rows{gap:5px}
-  #dev .dk-row{gap:4px}
-  #dev .dk-offset{padding-inline:4.5%}
-  #dev .dk-key{font-size:19px;border-radius:8px}
+  #dev .dk-predict{flex-basis:38px;margin-bottom:7px;font-size:15px}
+  #dev .dk-rows{gap:7px}
+  #dev .dk-row{gap:5px}
+  #dev .dk-offset{padding-inline:6%}
+  #dev .dk-key{font-size:18px;border-radius:9px}
   #dev .dk-bottom .dk-mode{font-size:14px}
-  #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
-  #dev .dk-return svg{width:24px;height:24px}
-  #dev .dk-accessories{flex-basis:48px}
+  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:21px;height:21px}
+  #dev .dk-return .dk-key-icon svg{width:23px;height:23px}
+  #dev .dk-delete .dk-key-icon svg{width:22px;height:22px}
+  #dev .dk-accessories{flex-basis:44px}
   #dev .dk-accessories svg{width:22px;height:22px}
   #dev .dk-accessories .dk-globe svg{width:24px;height:24px}
 }
