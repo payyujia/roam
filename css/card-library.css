@@ -404,6 +404,19 @@
   overflow:hidden;
 }
 #dev #s-chat .chat-row > .gr > b{letter-spacing:-.02em}
+/* The earlier grid placed text on a grid track using align-self:center.
+   In the library's flex layout, that rule instead centres each text element
+   and clips the beginning of previews. Stretch both lines to the full
+   available width while keeping their original ellipsis behaviour. */
+#dev #s-chat .chat-row > .gr > b,
+#dev #s-chat .chat-row > .gr > .cap.sm{
+  align-self:stretch;
+  width:100%;
+  text-align:left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 #dev #s-chat .chat-row .chat-meta{
   display:flex;
   flex:0 0 auto;
