@@ -793,3 +793,23 @@ body{font-weight:500}
   color:#252525!important;
   letter-spacing:-.02em;
 }
+
+/* Battery icon rendered as a single vector: no inherited text sizing or battery fill overlays. */
+#dev #sb .ios-battery{
+  display:block;
+  flex:0 0 30px;
+  width:30px;
+  height:16px;
+  min-width:30px;
+  overflow:visible;
+  align-self:center;
+  color:#FFFFFF;
+  fill:none;
+}
+#dev #sb .ios-battery text{
+  fill:#30343B;
+  stroke:none;
+  paint-order:normal;
+}
+#dev #sb .ios-battery rect,
+#dev #sb .ios-battery path{fill:#fff}
