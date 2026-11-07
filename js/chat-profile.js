@@ -71,13 +71,13 @@ const TransportCheck=(key,label,subtitle,values)=>{
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
+/* Five fixed suggestions; selecting one removes it without adding a replacement. */
+const INTEREST_SUGGESTIONS=Object.freeze(["Shopping","Beaches","Night markets","Art galleries","Nature"]);
 const interestOptionsHTML=()=>{
  const q=(S.interestQuery||"").trim().toLocaleLowerCase();
  const available=INTEREST_CATALOG.filter(name=>!S.p.likes.includes(name));
- const filtered=q?available.filter(name=>name.toLocaleLowerCase().includes(q)):available;
- const shown=q||S.interestsExpanded?filtered:filtered.slice(0,6);
- const more=!q&&available.length>6;
- return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span>${more?`<button type="button" class="interest-browse" data-a="pinterestMore">${S.interestsExpanded?"Show less":"View all"}</button>`:""}</div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"All available interests have been selected."}</p>`}`;
+ const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS.filter(name=>available.includes(name))).slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"All five suggested interests have been selected."}</p>`}`;
 };
 const InterestPicker=()=>`<div class="pad interest-picker"><div class="glass invite-box tag-query interest-search-card"><div class="tq-row">${ic("search",18)}<input id="interest-search" type="search" placeholder="Search interests..." aria-label="Search interests" aria-controls="interest-suggestions" value="${esc(S.interestQuery||"")}" autocomplete="off" oninput="A.pinterestSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pinterestFirst()}"></div><div class="tags tq-tags" id="interest-tags">${S.p.likes.map(x=>Tag("likes",x)).join("")}</div></div><div class="interest-suggestions" id="interest-suggestions">${interestOptionsHTML()}</div></div>`;
 const PD={
