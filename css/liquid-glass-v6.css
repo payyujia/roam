@@ -85,7 +85,8 @@ body{font-weight:500}
 #dev #s-trips .sec{padding-top:13px;padding-bottom:8px}
 /* Home section labels match the component sheet's Heading 800 typography.
    Scope to these titles only; Upcoming/Past remains a segmented control. */
-#dev #s-trips .sec > h2{
+#dev #s-trips .sec > h2,
+#dev #s-profile .ph{
   font-family:var(--font);
   font-size:23px;
   font-weight:800;
@@ -93,6 +94,8 @@ body{font-weight:500}
   line-height:1.22;
   color:var(--ink);
 }
+/* Profile section labels follow the same 24px horizontal gutter as Trips. */
+#dev #s-profile .ph{padding-inline:24px}
 #dev #s-profile .profile-notif{
   --action-fill:var(--glass-control-bg);
   position:absolute;
