@@ -37,8 +37,8 @@ Object.assign(A,{
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
 
- prefSearch:q=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;S.prefSearch=q;const el=$('#preference-suggestions');if(el)el.innerHTML=profilePreferenceOptionsHTML(S.pd)},
- prefFirst:()=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k];if(!config)return;const q=(S.prefSearch||'').trim().toLocaleLowerCase();const options=q?config.catalog.filter(x=>x.toLocaleLowerCase().includes(q)):(S.prefSuggestions||profilePreferenceSuggestions(k));const name=options.find(x=>!profilePreferenceDraft(k).includes(x));if(name)A.prefAdd(encodeURIComponent(name))},
+ prefSearch:q=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;S.prefSearch=q;const el=$('#preference-suggestions');if(el){el.innerHTML=profilePreferenceOptionsHTML(S.pd);el.hidden=!q.trim()}},
+ prefFirst:()=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k];if(!config)return;const q=(S.prefSearch||'').trim().toLocaleLowerCase();if(!q)return;const name=config.catalog.find(x=>x.toLocaleLowerCase().includes(q)&&!profilePreferenceDraft(k).includes(x));if(name)A.prefAdd(encodeURIComponent(name))},
  prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft))return;const name=decodeURIComponent(value);if(!config.catalog.includes(name)||draft.includes(name))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input)input.value='';refreshProfilePreferencePicker(k)},
  prefRemove:value=>{const k=S.pd;if(!PROFILE_PREFERENCE_PICKERS[k]||!Array.isArray(S.p[k+'Draft']))return;const name=decodeURIComponent(value);S.p[k+'Draft']=S.p[k+'Draft'].filter(x=>x!==name);refreshProfilePreferencePicker(k)},
  pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
@@ -72,7 +72,7 @@ Object.assign(A,{
   S.p.dietDraft=S.p.dietDraft.filter(x=>x!==name);
   refreshDietaryPicker();
  },
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];S.dietaryQuery='';if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}if(PROFILE_PREFERENCE_PICKERS[k]){S.prefSearch='';S.p[k+'Draft']=[...S.p[k]];S.prefSuggestions=profilePreferenceSuggestions(k)}go('pdet')},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='diet')S.p.dietDraft=[...S.p.diet];S.dietaryQuery='';if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}if(PROFILE_PREFERENCE_PICKERS[k]){S.prefSearch='';S.p[k+'Draft']=[...S.p[k]]}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -136,7 +136,7 @@ const discardProfileTagDraft=()=>{
  S.p.likesDraft=null;S.interestQuery='';S.interestSuggestions=null;
  S.p.dietDraft=null;S.dietaryQuery='';
  for(const k of Object.keys(PROFILE_PREFERENCE_PICKERS))S.p[k+'Draft']=null;
- S.prefSearch='';S.prefSuggestions=null;S.p.dirty=0;
+ S.prefSearch='';S.p.dirty=0;
 };
 const tagEditorBack=A.back;
 A.back=(...args)=>{
