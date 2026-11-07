@@ -69,7 +69,7 @@
   padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
   border-radius:var(--roam-card-radius);
   column-gap:var(--roam-card-gap);
-  grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 52px;
+  grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 44px;
 }
 #dev #s-chat .chat-row .cover.z-m{
   --cz:var(--roam-card-media-width);
@@ -80,40 +80,49 @@
   overflow:hidden;
 }
 
-/* WhatsApp-inspired Chat metadata: sent time stays in the top-right;
-   unread count is centred vertically in the card, not under the preview.
-   This is deliberately limited to Chat and doesn't alter other variants. */
+/* WhatsApp-inspired Chat metadata: the time aligns with the title on
+   row one, and the unread count aligns with the preview on row two.
+   Match the existing .gr two-row rhythm, not the full card height. */
 #dev #s-chat .chat-row .chat-meta{
-  position:relative;
-  display:block;
-  align-self:stretch;
+  position:static;
+  display:grid;
+  grid-template-rows:22px 22px;
+  align-self:center;
+  justify-items:end;
   width:100%;
-  height:auto;
-  min-height:var(--roam-card-media-height);
+  height:44px;
+  min-height:0;
   text-align:right;
 }
 #dev #s-chat .chat-row .chat-time{
-  position:absolute;
-  top:0;
-  right:0;
+  position:static;
+  grid-row:1;
+  align-self:center;
+  justify-self:end;
   width:auto;
   line-height:16px;
   font-variant-numeric:tabular-nums;
 }
 #dev #s-chat .chat-row .chat-unread{
-  position:absolute;
-  inset:auto 0 auto auto;
-  top:50%;
-  right:0;
-  grid-row:auto;
-  transform:translateY(-50%);
+  position:static;
+  grid-row:2;
+  align-self:center;
+  justify-self:end;
+  inset:auto;
+  top:auto;
+  right:auto;
+  width:20px;
+  min-width:20px;
+  height:20px;
+  font-size:10px;
+  transform:none;
   margin:0;
 }
 
 /* Keep image sizes consistent on narrow screens as well. */
 @media(max-width:360px){
   #dev #s-chat .chat-row{
-    grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 46px;
+    grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 40px;
     column-gap:8px;
     padding-inline:var(--roam-card-padding-x-compact);
   }
