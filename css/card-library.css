@@ -308,6 +308,175 @@
   --action-shadow:0 3px 10px rgba(40,100,180,.12);
 }
 
+/* ---------- MASTER CARDS 01–05 · LIVE PARITY ----------
+   Exact variant styling from docs/card-components.html (Sunrise Frost v12).
+   The app retains its own data, action handlers and navigation.
+   These rules run after older CSS overrides via card-library.css. */
+
+/* Frost material from the library's .glass surface (older live rules
+   disabled backdrop-filter on card surfaces for performance). */
+#dev :is(.trow.task.tier,.row.tier,.chat-row,.srow.acct){
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+}
+
+/* Card 01 — Voting: .trow.task.tier and .tgo already use the master
+   84px/22px/56×60px/16-12-12 and 28px Sky pill tokens above. */
+
+/* Card 02 — Rescheduling: same title/detail/status hierarchy as Voting.
+   Library icon controls are 34×34px, with frosted / Sky surfaces. */
+#dev .trow.reschedule-row .tmain .gr > b{
+  font-size:var(--roam-card-title-size);
+  font-weight:var(--roam-card-title-weight);
+  line-height:var(--roam-card-title-line-height);
+  letter-spacing:-.02em;
+}
+#dev .trow.reschedule-row .tmain .gr > .cap.sm{
+  font-size:var(--roam-card-detail-size);
+  font-weight:var(--roam-card-detail-weight);
+  line-height:var(--roam-card-detail-line-height);
+}
+#dev .trow.reschedule-row .tmain .gr > .due.awaiting{
+  font-size:var(--roam-card-status-size);
+  font-weight:var(--roam-card-status-weight);
+  line-height:var(--roam-card-status-line-height);
+  color:#B25E2A;
+}
+#dev .trow.reschedule-row .tact{gap:6px}
+#dev .trow.reschedule-row .tact .ib{
+  box-sizing:border-box;
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border-radius:50%;
+  box-shadow:0 3px 10px rgba(40,100,180,.12)!important;
+}
+#dev .trow.reschedule-row .tact .ib.f{background:rgba(255,255,255,.4)!important}
+#dev .trow.reschedule-row .tact .ib.p{background:rgba(109,182,255,.62)!important}
+#dev .trow.reschedule-row .tact .ib svg{width:16px;height:16px}
+
+/* Card 03 — Trip: same column rhythm and 26px stacked avatars as
+   the library .trip-row. Preserve the existing trip click action. */
+#dev .row.tier > .gr{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  min-width:0;
+}
+#dev .row.tier > .gr > b{letter-spacing:-.02em}
+#dev .row.tier .st{display:flex;align-items:center;flex:none}
+#dev .row.tier .st .av{
+  width:26px;
+  height:26px;
+  flex:0 0 26px;
+  margin-left:-7px;
+  font-size:10px;
+  font-weight:800;
+  box-shadow:0 2px 6px rgba(40,100,180,.25);
+}
+#dev .row.tier .st .av:first-child{margin-left:0}
+#dev .row.tier .dotc.wait{background:var(--amber)}
+#dev .row.tier .dotc.ok{background:#2E9C7A}
+
+/* Card 04 — Chat: the library uses flex, the same 56×60px cover,
+   a short 12px muted timestamp and a 20px coral unread badge.
+   Keep the live truncated preview and live message timestamps. */
+#dev #s-chat .chat-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:var(--roam-card-min-height);
+}
+#dev #s-chat .chat-row .cover.z-m{
+  --cz:56px;
+  width:56px;
+  height:60px;
+  flex:0 0 56px;
+  border-radius:14px;
+}
+#dev #s-chat .chat-row > .gr{
+  display:flex;
+  flex:1 1 auto;
+  flex-direction:column;
+  justify-content:center;
+  gap:1px;
+  min-width:0;
+  overflow:hidden;
+}
+#dev #s-chat .chat-row > .gr > b{letter-spacing:-.02em}
+#dev #s-chat .chat-row .chat-meta{
+  display:flex;
+  flex:0 0 auto;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  gap:4px;
+  width:auto;
+  height:auto;
+  min-height:0;
+  align-self:center;
+}
+#dev #s-chat .chat-row .chat-time{
+  display:block;
+  align-self:auto;
+  justify-self:auto;
+  width:auto;
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  color:var(--muted);
+  text-align:right;
+}
+#dev #s-chat .chat-row .chat-unread{
+  position:static;
+  display:grid;
+  place-items:center;
+  align-self:auto;
+  width:20px;
+  min-width:20px;
+  height:20px;
+  padding:0 6px!important;
+  background:var(--coral-500);
+  color:var(--ink);
+  font-size:10px;
+  font-weight:700;
+  line-height:1;
+  border-radius:999px;
+  box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6)!important;
+}
+@media(max-width:360px){
+  #dev #s-chat .chat-row{gap:10px}
+  #dev #s-chat .chat-row .cover.z-m{width:56px;height:60px;flex-basis:56px}
+}
+
+/* Card 05 — Account: the library's 10×14px inset, 12px gap,
+   56px round avatar, 16px title, 12px/16px detail and 18px chevron. */
+#dev #s-profile .srow.acct{
+  min-height:84px;
+  padding:10px 14px;
+  gap:12px;
+}
+#dev #s-profile .srow.acct > .gr{
+  display:flex;
+  flex:1 1 auto;
+  flex-direction:column;
+  gap:1px;
+  min-width:0;
+}
+#dev #s-profile .srow.acct .gr > b{letter-spacing:-.02em}
+#dev #s-profile .srow.acct .gr > .cap{
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  color:var(--muted);
+}
+#dev #s-profile .srow.acct > svg:last-child{
+  width:18px;
+  height:18px;
+  flex:none;
+  color:var(--muted);
+}
+
 /* ---------- MULTISELECT · WITH QUERY INPUT ----------
    Copied from docs/card-components.html (.invite-box + mini sky button + tags).
    Used by Profile > Health & accessibility (Dietary needs, Accessibility,
