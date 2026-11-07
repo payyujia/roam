@@ -1858,3 +1858,5 @@ body{font-weight:500}
 #dev .rate button svg{fill:none;stroke:currentColor}
 #dev .rate button[aria-pressed=true] svg{fill:currentColor;stroke:currentColor}
 #dev .rate button[aria-pressed=true] svg :is(path,circle,rect,polygon,polyline,ellipse){fill:currentColor}
+/* Toast readability: use a more opaque white glass surface for clear text contrast. */
+#dev #toast{background:rgba(255,255,255,.78)!important}
