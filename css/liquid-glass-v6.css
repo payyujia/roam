@@ -992,3 +992,55 @@ body{font-weight:500}
 @media(max-height:740px){
   #dev #s-trips .sec{padding-top:12px;padding-bottom:14px}
 }
+
+
+/* Live navigation: keep every timeline marker on one fixed vertical axis. */
+#dev .tl.nv .tn{align-items:center}
+#dev .tl.nv .nd{
+  box-sizing:border-box;
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  margin:0;
+  transform:scale(.7272727);
+  transform-origin:center;
+}
+#dev .tl.nv .tn.cur .nd{
+  width:44px;
+  height:44px;
+  transform:none;
+  background:var(--coral-200)!important;
+  color:var(--ink)!important;
+  border-color:var(--coral-200)!important;
+}
+#dev .tl.nv .tn.done .nd{
+  background:var(--coral-200)!important;
+  color:var(--ink)!important;
+  border-color:var(--coral-200)!important;
+}
+#dev .tl.nv .tc .ln{width:44px;flex:0 0 44px}
+#dev .tl.nv .tc .ln::after{
+  left:19px;
+  background:var(--coral-200)!important;
+}
+#dev .tl.nv .tc.done .ln::after{background:var(--coral-200)!important}
+#dev .tl.nv .tdone{color:var(--ink)!important}
+#dev .tl.nv .tdone svg{color:var(--coral-200)!important}
+#dev .tl.nv .cc{color:var(--ink)!important}
+#dev .tl.nv .arr{
+  background:var(--coral-200)!important;
+  color:var(--ink)!important;
+}
+
+/* Live destination label is rendered in a top-level map layer. */
+#dev .mp-label-layer{
+  position:absolute;
+  inset:0;
+  z-index:100000;
+  pointer-events:none;
+}
+#dev .mp-label-layer .pl2{
+  z-index:100001!important;
+  background:var(--coral-200)!important;
+  color:var(--ink)!important;
+}
