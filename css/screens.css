@@ -47,7 +47,10 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* profile: section headers + Save bar fixed at the end of a subpage */
 .ph{padding:28px 30px 0}.ph+.sg{margin-top:10px}
 .pg:has(>.dock.sv){padding-bottom:92px}
-.dock.sv{display:flex;justify-content:center;padding-bottom:38px}
+/* Save changes hugs its label (not full-width) and sits at the same --fab-b height as Create trip!:
+   button bottom = dock bottom offset + dock padding-bottom = var(--fab-b). */
+.dock.sv{display:flex;justify-content:center;padding-bottom:38px;bottom:calc(var(--fab-b,136px) - 38px)}
+.dock.sv .btn{width:auto}
 /* Long vote-status messages must not get cut off by shared one-line row styles. */
 #s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
 
