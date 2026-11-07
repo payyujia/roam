@@ -1,0 +1,30 @@
+/* NAVIGATION TIMELINE RAIL (.tl.nv) · Sunrise Frost
+   Same rail language as the fork swap card: 36px nodes (open / now / done),
+   a 2px connector between them, plain text bodies instead of a card per stop.
+   Applies to the Preview and the live navigation timeline. The live "arrived"
+   button keeps its glass card because it is a tap target. */
+#dev #mc .tl.nv{padding:0 24px;gap:0}
+#dev #mc .tl.nv .tn{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;min-height:0;padding:0;position:relative}
+#dev #mc .tl.nv .tn::before,#dev #mc .tl.nv .tn::after{content:none!important;display:none!important}
+#dev #mc .tl.nv .tn .gr,#dev #mc .tl.nv .tn .cc{min-width:0;margin:0}
+#dev #mc .tl.nv .tn-t{display:none}
+
+/* nodes */
+#dev #mc .tl.nv .nd{width:36px;height:36px;flex:none;margin:0;font-size:13px;font-weight:800;color:var(--ink)!important;transform:none!important;
+  background:rgba(255,255,255,.55)!important;box-shadow:inset 0 0 0 1.5px rgba(47,140,255,.45)!important}
+#dev #mc .tl.nv .tn.cur .nd{background:var(--sky-400)!important;box-shadow:0 8px 22px rgba(40,100,180,.2),0 0 0 5px rgba(109,182,255,.28)!important}
+#dev #mc .tl.nv .tn.done .nd{background:var(--sky-300)!important;color:var(--sky-600)!important;box-shadow:0 4px 12px rgba(40,100,180,.14)!important}
+#dev #mc .tl.nv .tn.rest{opacity:1}
+
+/* plain body for the current stop in Preview (no card) */
+#dev #mc .tl.nv div.cc{background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;padding:0;min-height:0}
+#dev #mc .tl.nv div.cc::before{display:none!important;content:none!important}
+
+/* connector row */
+#dev #mc .tl.nv .tc{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;height:auto;min-height:44px}
+#dev #mc .tl.nv .tc .ln{width:36px;height:100%;flex:none;position:relative}
+#dev #mc .tl.nv .tc .ln::after{content:"";position:absolute;left:17px;top:3px;bottom:3px;width:2px;border-radius:2px;
+  background:repeating-linear-gradient(180deg,rgba(47,140,255,.45) 0 4px,transparent 4px 8px)!important}
+#dev #mc .tl.nv .tc.done .ln::after{background:var(--sky-400)!important}
+#dev #mc .tl.nv .tc .cap{display:flex;align-items:center;gap:6px;color:var(--muted)}
+#dev #mc .tl.nv .tdone{padding:0 0 8px 0}
