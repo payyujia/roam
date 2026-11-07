@@ -21,7 +21,7 @@
 
 /* The shared card family keeps common sizing while permitting each variant
    to have its own content/actions and to grow if text needs more room. */
-#dev :is(.trow.tier,.row.tier,.chat-row),
+#dev :is(.trow.tier,.row.tier,.chat-row,.srow.acct),
 #dev #s-trips :is(.trow.tier,.row.tier){
   box-sizing:border-box;
   width:100%;
@@ -67,6 +67,17 @@
 #dev #s-profile .hd + .sg{
   margin-top:calc(var(--roam-first-section-gap) + 4px);
 }
+
+/* Account card uses the shared card sizing, surface and 24px page gutters.
+   Only its avatar differs: preserve the circular profile photograph. */
+#dev #s-profile .hd + .sg{margin-inline:24px}
+#dev #s-profile .srow.acct .av.profile{
+  width:var(--roam-card-media-width);
+  height:var(--roam-card-media-width);
+  flex:0 0 var(--roam-card-media-width);
+  border-radius:50%;
+}
+#dev #s-profile .srow.acct .av.profile img{border-radius:50%}
 
 /* Chat cards share the same foundation. Keep the timestamp/unread column
    just wide enough for a 24-hour time so the preview can show more text. */
