@@ -659,3 +659,38 @@ body{font-weight:500}
 @media(max-height:650px){
   #dev #s-thread.flex{padding-bottom:136px}
 }
+
+
+/* Chat header: Sunrise Frost sheet round back button, with breathing room for messages. */
+#dev #s-thread .top{
+  display:grid;
+  grid-template-columns:50px minmax(0,1fr) 50px;
+  align-items:center;
+  padding:16px 20px 0;
+  min-height:66px;
+}
+#dev #s-thread .top .thread-back{
+  --action-fill:var(--glass-control-bg);
+  --action-ink:var(--ink);
+  --action-shadow:var(--control-shadow);
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:50px;
+  height:50px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+}
+#dev #s-thread .top .thread-back svg{
+  width:20px;
+  height:20px;
+  margin:0;
+}
+#dev #s-thread .top .tt{
+  min-width:0;
+  text-align:center;
+}
+#dev #s-thread .msgs{
+  margin-top:24px;
+}
