@@ -235,7 +235,20 @@ ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Publ
  health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>ProfilePreferencePicker('health')},
  likes:{t:'Interests',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>InterestPicker()},
  notif:{t:'Notifications',i:'clock',c:'red',v:()=>Object.values(S.p.notif).filter(Boolean).length+' on',b:()=>{const n=S.p.notif;return `<div class="fl" style="margin-top:12px">${Switch('remind','Trip reminders','The day before, and on the morning',n.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',n.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',n.fork)}</div>`}},
- rate:{t:'My trip ratings',i:'star',c:'yellow',v:()=>'4 trips',b:()=>{const p=S.p;return `<div class="pad" style="margin-top:12px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><b>Sunrise at East Coast</b><div class="cap sm">${p.rate?p.rate+' out of 5':'Tap a star'}</div></div><div class="rate" role="group" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button aria-pressed="${n<=p.rate}" aria-label="${n} star${n>1?'s':''}" data-a="prate:${n}">${ic('star',26,n<=p.rate?'currentColor':'none')}</button>`).join('')}</div></div></div>`}},
+ rate:{t:'My trip ratings',i:'star',c:'yellow',v:()=>'Rate completed trips',b:()=>{
+  // Match the app's Past tab, and only show trips the profile owner joined.
+  const completed=PAST().filter(t=>t.m.includes('P')),p=S.p;
+  return `<div class="pad" style="margin-top:12px">
+    <p class="cap sm">Only past trips can be rated.</p>
+    ${completed.length?`<div style="display:flex;flex-direction:column;gap:20px;margin-top:20px">${completed.map(t=>{
+      const rating=Number(p.ratings?.[t.id]??(t.id==='sun'?p.rate:0))||0;
+      return `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div style="min-width:0"><b>${esc(t.n)}</b><div class="cap sm">${rating?rating+' out of 5':'Tap a star'}</div></div>
+        <div class="rate" role="group" aria-label="Rate ${esc(t.n)}">${[1,2,3,4,5].map(n=>`<button type="button" aria-pressed="${n<=rating}" aria-label="Rate ${esc(t.n)} ${n} star${n===1?'':'s'}" data-a="prate:${t.id}:${n}">${ic('star',26,n<=rating?'currentColor':'none')}</button>`).join('')}</div>
+      </div>`;
+    }).join('')}</div>`:Empty('No completed trips yet','Finish a trip to rate it here.')}
+  </div>`;
+ }},
  liked:{t:'Liked reels',ro:1,i:'heart',c:'red',v:()=>String(savedReels('likes').length),b:()=>{const L=savedReels('likes');return L.length?`<div class="rgrid">${L.map(([r,i])=>`<button type="button" class="rg l-${r.c}" data-a="rgo:${i}" aria-label="Open ${esc(r.n)} reel">${Pic(RP[i],r.n,400)}<span class="rg-n">${ic('play',12,'currentColor')}<span>${esc(r.n)}</span></span></button>`).join('')}</div>`:Empty('No liked reels yet','Tap the heart on a reel to see it here.')}},
  saved:{t:'Saved reels',ro:1,i:'bookmark',c:'blue',v:()=>String(savedReels('all').length),b:()=>{const L=savedReels(),opts=[['all','All'],['likes','Likes'],...S.col.map(c=>[c.id,c.n])];return `<div class="pad" style="margin:12px 0 8px"><span class="lb">Collection</span>${Dropdown({id:'scf',aria:'Collection',value:S.colf,opts:opts.map(([k,n],i)=>({v:k,t:n,dot:TRIPDOT[i%4]})),pick:v=>A.colf(v)})}</div>${L.length?`<div class="rgrid">${L.map(([r,i])=>`<button class="rg l-${r.c}" data-a="rgo:${i}" aria-label="Open ${esc(r.n)} reel">${Pic(RP[i],r.n,400)}<span class="rg-n">${ic('play',12,'currentColor')}<span>${esc(r.n)}</span></span></button>`).join('')}</div>`:Empty('No reels here yet','Tap the bookmark on a reel to add it to a collection, or the heart to like it.')}`}}
 };
