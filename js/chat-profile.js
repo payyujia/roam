@@ -85,14 +85,10 @@ const dietaryMatches=()=>{
 };
 const DietaryTag=name=>`<span class="tag2">${esc(name)}<button type="button" aria-label="Remove ${esc(name)}" data-a="pdietRemove:${encodeURIComponent(name)}">${ic('x',14)}</button></span>`;
 const dietaryTagsHTML=()=>dietDraft().length?dietDraft().map(DietaryTag).join(''):'<span class="cap sm interest-empty">No dietary needs added yet</span>';
+/* Show common suggestions only when the query field is empty. */
 const dietaryOptionsHTML=()=>{
- const query=dietaryQuery(),nameKey=query.toLocaleLowerCase();
- const shown=dietaryMatches();
- const canAddCustom=!!query&&!dietDraft().some(name=>name.toLocaleLowerCase()===nameKey)
-   &&!dietarySuggestions.some(name=>name.toLocaleLowerCase()===nameKey);
- const choices=shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('');
- const custom=canAddCustom?`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(query)}" aria-label="Add custom dietary need ${esc(query)}"><span class="t">Add “${esc(query)}”</span>${ic('plus',16)}</button>`:'';
- return `<div class="interest-option-heading"><span class="lb">${query?'Matching dietary needs':'Common dietary needs'}</span></div>${choices||custom?`<div class="dd-list glass"><div class="dd-opts">${choices}${custom}</div></div>`:`<p class="cap interest-no-matches">${query?'No other dietary needs match your search.':'All suggested dietary needs added.'}</p>`}`;
+ const shown=dietaryAvailable().slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">Common dietary needs</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">All suggested dietary needs added.</p>`}`;
 };
 const refreshDietaryPicker=()=>{
  const tags=$('#dietary-tags');
@@ -100,7 +96,7 @@ const refreshDietaryPicker=()=>{
  const count=$('#dietary-count');
  if(count)count.textContent=dietDraft().length+' selected';
  const options=$('#dietary-suggestions');
- if(options)options.innerHTML=dietaryOptionsHTML();
+ if(options){options.innerHTML=dietaryOptionsHTML();options.hidden=!!dietaryQuery();}
  const changed=dietDraftChanged();
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
@@ -110,7 +106,7 @@ const refreshDietaryPicker=()=>{
 const ProfileQueryMultiselect=(id,label,placeholder,query,searchAction,addAction,tagsId,tagsHTML,suggestionsId)=>`<div class="glass invite-box tag-query profile-multi-card">
  <div class="tq-row">
   <svg viewBox="0 0 24 24" class="tq-ic" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg>
-  <input id="${id}" type="text" placeholder="${esc(placeholder)}" aria-label="${esc(label)}" aria-controls="${suggestionsId}" value="${esc(query||'')}" maxlength="30" autocomplete="off" oninput="A.${searchAction}(this.value);this.nextElementSibling.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'){event.preventDefault();A.${addAction}()}">
+  <input id="${id}" type="text" placeholder="${esc(placeholder)}" aria-label="${esc(label)}" ${suggestionsId?`aria-controls="${suggestionsId}"`:''} value="${esc(query||'')}" maxlength="30" autocomplete="off" oninput="A.${searchAction}(this.value);this.nextElementSibling.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'){event.preventDefault();A.${addAction}()}">
   <button type="button" class="btn mini sky profile-multi-add" data-a="${addAction}" aria-label="Add ${esc(label)}" ${String(query||'').trim()?'':'disabled'}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
  </div>
  <div class="tags tq-tags profile-multi-tags" id="${tagsId}" aria-label="Selected ${esc(label)}" aria-live="polite">${tagsHTML}</div>
@@ -121,7 +117,7 @@ const DietaryPicker=()=>`<div class="pad interest-picker profile-query-picker di
   ${ProfileQueryHeading('Your dietary needs','dietary-count',dietDraft().length)}
   ${ProfileQueryMultiselect('dietary-search','dietary need','Add dietary need...',S.dietaryQuery,'pdietSearch','pdietFirst','dietary-tags',dietaryTagsHTML(),'dietary-suggestions')}
  </section>
- <section class="interest-suggestions" id="dietary-suggestions" aria-label="Common dietary needs">${dietaryOptionsHTML()}</section>
+ <section class="interest-suggestions" id="dietary-suggestions" aria-label="Common dietary needs"${dietaryQuery()?' hidden':''}>${dietaryOptionsHTML()}</section>
 </div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
@@ -147,36 +143,36 @@ const refreshInterestPicker=()=>{
  const count=$('#interest-count');
  if(count)count.textContent=interestDraft().length+' selected';
  const options=$('#interest-suggestions');
- if(options)options.innerHTML=interestOptionsHTML();
+ if(options){options.innerHTML=interestOptionsHTML();options.hidden=!!(S.interestQuery||'').trim();}
  const changed=interestDraftChanged();
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
  if(save)save.disabled=!changed;
 };
+/* Suggested interests stay available without opening a matching-results section. */
 const interestOptionsHTML=()=>{
- const q=(S.interestQuery||"").trim().toLocaleLowerCase();
  const available=INTEREST_CATALOG.filter(name=>!interestDraft().includes(name));
- const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name))).slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"No more suggestions available."}</p>`}`;
+ const shown=(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name)).slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">Suggested interests</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">No more suggestions available.</p>`}`;
 };
 const InterestPicker=()=>`<div class="pad interest-picker profile-query-picker">
  <section class="profile-query-section" aria-label="Your interests">
   ${ProfileQueryHeading('Your interests','interest-count',interestDraft().length)}
   ${ProfileQueryMultiselect('interest-search','interest','Add interest...',S.interestQuery,'pinterestSearch','pinterestFirst','interest-tags',interestTagsHTML(),'interest-suggestions')}
  </section>
- <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests">${interestOptionsHTML()}</section>
+ <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests"${(S.interestQuery||'').trim()?' hidden':''}>${interestOptionsHTML()}</section>
 </div>`;
 /* Accessibility and Health conditions reuse Interests' glass search / selected
    tags / five suggestions layout. These editors are fixed-choice and draft-only
    until the user taps Save changes; other Profile tag editors are unchanged. */
 const PROFILE_PREFERENCE_PICKERS={
  access:{
-  your:'Your accessibility needs',results:'Matching accessibility needs',
+  your:'Your accessibility needs',
   search:'Search accessibility needs...',empty:'No accessibility needs selected yet',
   catalog:['Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support','Step-free routes','Accessible toilets','Elevator access','Rest stops','Seating availability','Accessible transport','Avoid stairs','Low-sensory areas','Clear signage','Assistance with navigation','Wide pathways','Accessible entrances','Short walking distances','Wheelchair-friendly seating']
  },
  health:{
-  your:'Your health conditions',results:'Matching health conditions',
+  your:'Your health conditions',
   search:'Search health conditions...',empty:'No health conditions selected yet',
   catalog:['Asthma','Bad knees','Motion sickness','Heat sensitivity','Migraine','Chronic eye stye','Food allergies','Back pain','Joint pain','Chronic pain','Fatigue','Respiratory sensitivity','Sun sensitivity','Dizziness','Low stamina','Diabetes','Epilepsy','Vertigo','Anxiety']
  }
@@ -188,19 +184,11 @@ const profilePreferenceChanged=k=>{
 };
 const ProfilePreferenceTag=(k,x)=>`<span class="tag2">${esc(x)}<button type="button" aria-label="Remove ${esc(x)}" data-a="prefRemove:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
 const profilePreferenceTagsHTML=k=>profilePreferenceDraft(k).length?profilePreferenceDraft(k).map(x=>ProfilePreferenceTag(k,x)).join(''):`<span class="cap sm interest-empty">${PROFILE_PREFERENCE_PICKERS[k].empty}</span>`;
-const profilePreferenceOptionsHTML=k=>{
- const config=PROFILE_PREFERENCE_PICKERS[k],q=(S.prefSearch||'').trim().toLocaleLowerCase();
- if(!q)return '';
- const shown=config.catalog.filter(name=>!profilePreferenceDraft(k).includes(name)&&name.toLocaleLowerCase().includes(q)).slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">${config.results}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="prefAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">No other options match your search.</p>`}`;
-};
 const refreshProfilePreferencePicker=k=>{
  const tags=$('#preference-tags');
  if(tags)tags.innerHTML=profilePreferenceTagsHTML(k);
  const count=$('#preference-count');
  if(count)count.textContent=profilePreferenceDraft(k).length+' selected';
- const options=$('#preference-suggestions');
- if(options){options.innerHTML=profilePreferenceOptionsHTML(k);options.hidden=!(S.prefSearch||'').trim();}
  const changed=profilePreferenceChanged(k);
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
@@ -211,10 +199,9 @@ const ProfilePreferencePicker=k=>{
  return `<div class="pad interest-picker profile-query-picker">
   <section class="profile-query-section" aria-label="${esc(config.your)}">
    ${ProfileQueryHeading(config.your,'preference-count',profilePreferenceDraft(k).length)}
-   ${ProfileQueryMultiselect('preference-search',k==='access'?'accessibility need':'health condition',config.search,S.prefSearch,'prefSearch','prefFirst','preference-tags',profilePreferenceTagsHTML(k),'preference-suggestions')}
+   ${ProfileQueryMultiselect('preference-search',k==='access'?'accessibility need':'health condition',config.search,S.prefSearch,'prefSearch','prefFirst','preference-tags',profilePreferenceTagsHTML(k),null)}
    ${config.note?`<p class="cap sm preference-helper">${esc(config.note)}</p>`:''}
   </section>
-  <section class="interest-suggestions" id="preference-suggestions" aria-label="${esc(config.results)}"${(S.prefSearch||'').trim()?'':' hidden'}>${profilePreferenceOptionsHTML(k)}</section>
  </div>`;
 };
 const PD={
