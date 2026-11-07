@@ -745,3 +745,44 @@ body{font-weight:500}
 @media(prefers-reduced-motion:reduce){
   #dev #sb::before{transition:none}
 }
+
+
+/* Apple-reference status glyph proportions; preserve screen backgrounds and scroll blur. */
+/* On iOS the system family resolves to San Francisco. On other platforms,
+   use the native UI font; never load or ship Apple font assets. */
+#dev #sb{
+  font-family:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+  text-shadow:none!important;
+}
+#dev #sb .sbt{gap:0}
+#dev #sb .sbloc{display:none} /* Apple reference shows time without location arrow. */
+#dev #sb .sbr{gap:6px;align-items:center}
+#dev #sb .sbr > svg{display:block;flex:none}
+#dev #sb .sbr > svg:first-child{width:17px;height:12px}
+#dev #sb .sbr > svg:nth-child(2){width:17px;height:12px}
+#dev #sb .sbr > svg:first-child rect:last-child{opacity:1}
+#dev #sb .sbb{
+  width:25px;
+  height:12px;
+  border-radius:3.5px;
+  margin-right:3px;
+}
+#dev #sb .sbb::after{
+  right:-3px;
+  top:4px;
+  width:1.5px;
+  height:4px;
+}
+#dev #sb .sbb b{
+  font-family:inherit;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:0;
+  line-height:1;
+}
