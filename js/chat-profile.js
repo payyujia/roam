@@ -86,9 +86,12 @@ const interestDraftChanged=()=>{
  return draft.length!==saved.length||draft.some(name=>!saved.includes(name));
 };
 const InterestTag=x=>`<span class="tag2">${esc(x)}<button type="button" aria-label="Remove ${esc(x)}" data-a="pinterestRemove:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
+const interestTagsHTML=()=>interestDraft().length?interestDraft().map(InterestTag).join(''):'<span class="cap sm interest-empty">No interests selected yet</span>';
 const refreshInterestPicker=()=>{
  const tags=$('#interest-tags');
- if(tags)tags.innerHTML=interestDraft().map(InterestTag).join('');
+ if(tags)tags.innerHTML=interestTagsHTML();
+ const count=$('#interest-count');
+ if(count)count.textContent=interestDraft().length+' selected';
  const options=$('#interest-suggestions');
  if(options)options.innerHTML=interestOptionsHTML();
  const changed=interestDraftChanged();
@@ -102,7 +105,16 @@ const interestOptionsHTML=()=>{
  const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name))).slice(0,5);
  return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"No more suggestions available."}</p>`}`;
 };
-const InterestPicker=()=>`<div class="pad interest-picker"><div class="glass invite-box tag-query interest-search-card"><div class="tq-row">${ic("search",18)}<input id="interest-search" type="search" placeholder="Search interests..." aria-label="Search interests" aria-controls="interest-suggestions" value="${esc(S.interestQuery||"")}" autocomplete="off" oninput="A.pinterestSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pinterestFirst()}"></div><div class="tags tq-tags" id="interest-tags">${interestDraft().map(InterestTag).join("")}</div></div><div class="interest-suggestions" id="interest-suggestions">${interestOptionsHTML()}</div></div>`;
+const InterestPicker=()=>`<div class="pad interest-picker">
+ <div class="glass invite-box tag-query interest-search-card">
+  <div class="tq-row">${ic("search",18)}<input id="interest-search" type="search" placeholder="Search interests..." aria-label="Search interests" aria-controls="interest-suggestions" value="${esc(S.interestQuery||"")}" autocomplete="off" oninput="A.pinterestSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pinterestFirst()}"></div>
+ </div>
+ <section class="interest-selected-section" aria-labelledby="interest-selected-title">
+  <div class="interest-section-head"><span class="lb" id="interest-selected-title">Your interests</span><span class="cap sm" id="interest-count" aria-live="polite">${interestDraft().length} selected</span></div>
+  <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="interest-tags">${interestTagsHTML()}</div></div>
+ </section>
+ <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests">${interestOptionsHTML()}</section>
+</div>`;
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
