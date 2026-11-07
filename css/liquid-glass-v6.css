@@ -1312,7 +1312,8 @@ body{font-weight:500}
 #dev #tb .ctr,
 #dev #tb .ctr .circ,
 #dev #tb .ctr .trip-plane{overflow:visible!important}
-#dev #tb .ctr .circ{background:var(--sky-500)!important;color:var(--sky-300)!important}
+#dev #tb .ctr .circ{background:#fff!important;color:var(--sky-500)!important}
+#dev #tb .ctr.on .circ{background:var(--sky-500)!important;color:var(--sky-300)!important}
 #dev #tb .ctr .trip-plane{width:28px;height:28px}
 #dev #tb .ctr .trip-plane path{fill:none;stroke:var(--sky-500)}
 #dev #tb .ctr.on .trip-plane path{fill:var(--sky-300)!important;stroke:var(--sky-300)!important}
