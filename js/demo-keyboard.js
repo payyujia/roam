@@ -46,7 +46,7 @@
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
- const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.6" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><circle cx="15.4" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><path d="M7.3 13.2c.65 3.05 2.3 4.65 4.7 4.65s4.05-1.6 4.7-4.65c-2.4 1.05-7 1.05-9.4 0Z" fill="var(--dk-emoji-cutout)"/><path d="M8.5 14.4c2.3.5 4.8.5 7 0" fill="none" stroke="currentColor" stroke-width=".85" stroke-linecap="round"/></svg>';
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5" fill="currentColor"/><ellipse cx="8.5" cy="9.1" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><ellipse cx="15.5" cy="9.1" rx="1.15" ry="1.4" fill="var(--dk-emoji-cutout)"/><path d="M6.1 13.1c1.05 4.15 3.05 6.2 5.9 6.2s4.85-2.05 5.9-6.2c-3.4 1.55-8.4 1.55-11.8 0Z" fill="var(--dk-emoji-cutout)"/><path d="M7.5 14.65Q12 15.75 16.5 14.65L16 15.9Q12 17.2 8 15.9Z" fill="currentColor"/></svg>';
  /* The reference's iOS Return glyph hooks from a short top bar into a
     left-pointing arrow. The previous glyph had an overly tall vertical stem. */
  const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.1 6.5h4.6a2.8 2.8 0 0 1 2.8 2.8v5.4a3 3 0 0 1-3 3H5.5"/><path d="m10.4 12.8-4.9 4.9 4.9 4.1"/></svg>';
@@ -376,10 +376,9 @@
   const bar=keyboard.querySelector('.dk-predict');
   if(!bar||!opened)return;
   const suggestions=predictionList();
-  bar.innerHTML=suggestions.map((word,i)=>word?
-   '<button type="button" class="dk-prediction'+(i===1?' dk-prediction-primary':'')+
-   '" data-kb-suggest="'+escapeText(word)+'" aria-label="Use suggestion '+escapeText(word)+
-   '">'+escapeText(word)+'</button>':
+  bar.innerHTML=suggestions.map(word=>word?
+   '<button type="button" class="dk-prediction" data-kb-suggest="'+escapeText(word)+
+   '" aria-label="Use suggestion '+escapeText(word)+'">'+escapeText(word)+'</button>':
    '<span class="dk-prediction dk-prediction-empty" aria-hidden="true"></span>'
   ).join('');
  }
