@@ -1003,9 +1003,11 @@ body{font-weight:500}
   background:var(--coral-200)!important;
   color:var(--ink)!important;
 }
-/* Home Upcoming/Past: Sunrise Frost segmented control from component sheet. */
-/* Scope to the Home tab: other segmented controls and Reels are unchanged. */
-#dev #s-trips .seg{
+/* Sunrise Frost segmented control used by Home Upcoming/Past and
+   Profile > Travel style (Chill/Balanced/Packed).
+   Both are the same Seg() component; share one pill treatment.
+   Other segmented controls and Reels are unchanged. */
+#dev :is(#s-trips,#s-pdet) .seg{
   display:flex;
   align-items:center;
   gap:3px;
@@ -1015,7 +1017,7 @@ body{font-weight:500}
   background:rgba(231,243,255,.55)!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 4px 12px rgba(60,101,150,.08)!important;
 }
-#dev #s-trips .seg button{
+#dev :is(#s-trips,#s-pdet) .seg button{
   position:relative;
   display:flex;
   align-items:center;
@@ -1035,23 +1037,23 @@ body{font-weight:500}
   box-shadow:none!important;
   transition:background .16s ease,color .16s ease,box-shadow .16s ease;
 }
-#dev #s-trips .seg button[aria-checked="true"]{
+#dev :is(#s-trips,#s-pdet) .seg button[aria-checked="true"]{
   background:rgba(255,255,255,.94)!important;
   color:var(--ink)!important;
   font-weight:700;
   box-shadow:0 2px 9px rgba(48,88,135,.13)!important;
 }
-/* Remove the old system-style ink underline beneath the selected pill. */
-#dev #s-trips .seg button[aria-checked="true"]::after{
+/* Remove the old system-style ink underline beneath the selected pill on both screens. */
+#dev :is(#s-trips,#s-pdet) .seg button[aria-checked="true"]::after{
   content:none!important;
   display:none!important;
 }
-#dev #s-trips .seg button:focus-visible{
+#dev :is(#s-trips,#s-pdet) .seg button:focus-visible{
   outline:2px solid var(--sky-600)!important;
   outline-offset:2px;
 }
 @media(prefers-reduced-motion:reduce){
-  #dev #s-trips .seg button{transition:none}
+  #dev :is(#s-trips,#s-pdet) .seg button{transition:none}
 }
 
 
