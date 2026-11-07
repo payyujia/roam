@@ -3,15 +3,15 @@
    translucent white keyboard. Native keyboards still handle real phones. */
 #dev{--demo-keyboard-height:315px}
 #dev .demo-keyboard{
-  --dk-bg:#202020;
-  --dk-key:#444444;
-  --dk-special:#444444;
+  --dk-bg:#151516;
+  --dk-key:#636366;
+  --dk-special:#3A3A3C;
   --dk-ink:#F7F7F7;
   --dk-sub:#A2A2A2;
   --dk-divider:rgba(210,210,210,.18);
-  --dk-key-shadow:none;
-  --dk-pressed:#535355;
-  --dk-emoji-cutout:#444444;
+  --dk-key-shadow:0 1px 0 rgba(0,0,0,.35);
+  --dk-pressed:#8E8E93;
+  --dk-emoji-cutout:#3A3A3C;
   position:absolute;
   inset:auto 0 0;
   z-index:48;
@@ -20,9 +20,9 @@
   box-sizing:border-box;
   height:var(--demo-keyboard-height);
   width:100%;
-  padding:6px 3px 5px;
+  padding:8px 6px 4px;
   border:0;
-  border-radius:16px 16px 0 0;
+  border-radius:12px 12px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
@@ -46,7 +46,7 @@
   --dk-pressed:#EAECF0;
   --dk-emoji-cutout:white;
 }
-#dev .demo-keyboard.theme-dark{--dk-bg:#202020}
+#dev .demo-keyboard.theme-dark{--dk-bg:#151516}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
   flex:0 0 38px;
@@ -73,7 +73,7 @@
   flex:1 1 auto;
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:10px;
   padding:0;
   min-height:0;
 }
@@ -82,10 +82,10 @@
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:3px;
+  gap:6px;
   min-height:0;
 }
-#dev .dk-offset{padding-inline:14px}
+#dev .dk-offset{padding-inline:4%}
 #dev .dk-key{
   flex:1 1 0;
   display:grid;
@@ -96,11 +96,11 @@
   padding:0;
   margin:0;
   border:0;
-  border-radius:7px;
+  border-radius:5px;
   background:var(--dk-key);
   color:var(--dk-ink);
   font-family:inherit;
-  font-size:23px;
+  font-size:20px;
   font-weight:400;
   line-height:1;
   text-align:center;
@@ -110,16 +110,30 @@
 #dev .dk-key:active{background:var(--dk-pressed)}
 #dev .dk-key:focus-visible{outline:2px solid #82BCFC;outline-offset:-2px}
 #dev .dk-special{
-  flex:1.35 1 0;
+  flex:1.25 1 0;
   background:var(--dk-special);
   font-size:17px;
 }
 #dev .dk-special svg{width:24px;height:24px;display:block}
 #dev .dk-bottom{margin-top:0}
+/* Match the supplied iPhone example: key stagger, Shift highlight, and
+   rectangular numbers/symbols rows rather than a phone dial pad. */
+#dev .dk-shift.is-on{
+  background:var(--dk-ink);
+  color:var(--dk-bg);
+}
+#dev .dk-numbers-third .dk-shift,
+#dev .dk-numbers-third .dk-delete{flex:1.55 1 0}
+#dev .dk-space-label{
+  font-size:15px;
+  font-weight:400;
+}
+#dev .dk-row .dk-space .dk-en{display:none}
+#dev .dk-return.has-text{color:white}
 #dev .dk-bottom .dk-mode,
 #dev .dk-bottom .dk-emoji{
   flex:0 0 12.5%;
-  font-size:18px;
+  font-size:16px;
   font-weight:400;
 }
 #dev .dk-bottom .dk-emoji svg{
@@ -141,7 +155,8 @@
 }
 #dev .dk-bottom .dk-return{
   flex:0 0 23%;
-  background:var(--dk-key);
+  background:var(--dk-special);
+  font-size:15px;
 }
 #dev .dk-return svg{width:27px;height:27px;display:block}
 #dev .dk-return-dark{color:#929296}
@@ -152,7 +167,7 @@
 #dev .theme-light .dk-return-dark{display:none}
 #dev .theme-light .dk-return-light{display:block;color:white}
 #dev .dk-accessories{
-  flex:0 0 43px;
+  flex:0 0 40px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -170,105 +185,6 @@
   stroke-width:1.8;
 }
 #dev .dk-accessories .dk-globe svg{width:27px;height:27px}
-
-/* Circular numeric dial pad: HTML buttons driven by js/demo-keyboard.js.
-   Available from the chat keyboard's 123 key; ABC switches back to letters. */
-#dev .dk-phonepad{
-  box-sizing:border-box;
-  flex:1 1 auto;
-  min-height:0;
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  padding:7px 13px 12px;
-  color:var(--dk-ink);
-}
-#dev .dk-phonepad-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex:0 0 35px;
-  padding:0 14px;
-  color:var(--dk-sub);
-  font-size:13px;
-  font-weight:600;
-}
-#dev .dk-phonepad-switch{
-  color:#0A84FF;
-  background:transparent;
-  border:0;
-  padding:7px 9px;
-  font-size:14px;
-  font-weight:700;
-  cursor:pointer;
-}
-#dev .dk-phonepad-rows{
-  display:flex;
-  flex:1 1 auto;
-  flex-direction:column;
-  min-height:0;
-  gap:5px;
-}
-#dev .dk-phonepad-row{
-  display:flex;
-  flex:1 1 0;
-  min-height:0;
-  justify-content:space-evenly;
-  align-items:center;
-  gap:12px;
-}
-#dev .dk-phone-key{
-  display:grid;
-  flex:0 0 auto;
-  place-items:center;
-  width:clamp(44px,15vw,62px);
-  height:clamp(44px,15vw,62px);
-  max-width:100%;
-  max-height:100%;
-  padding:0;
-  border:0;
-  border-radius:50%;
-  background:#2C2C2E;
-  color:#fff;
-  font-family:inherit;
-  font-weight:400;
-  font-size:25px;
-  line-height:1;
-  cursor:pointer;
-  transition:background-color .15s ease;
-}
-#dev .theme-light .dk-phone-key{
-  background:rgba(255,255,255,.96);
-  color:#101116;
-}
-#dev .dk-phone-key:active{background:#48484A}
-#dev .theme-light .dk-phone-key:active{background:#D8DBE1}
-#dev .dk-phone-action{
-  background:#3A3A3C;
-  color:#0A84FF;
-  font-size:17px;
-  font-weight:600;
-}
-#dev .theme-light .dk-phone-action{
-  background:rgba(250,250,252,.82);
-  color:#2877D5;
-}
-#dev .dk-phone-key:focus-visible,
-#dev .dk-phonepad-switch:focus-visible{
-  outline:2px solid #6DB6FF;
-  outline-offset:2px;
-}
-@media(max-height:700px){
-  #dev .dk-phonepad{padding:3px 10px 9px}
-  #dev .dk-phonepad-head{flex-basis:30px}
-  #dev .dk-phonepad-rows{gap:3px}
-  #dev .dk-phone-key{
-    width:clamp(40px,13.5vw,55px);
-    height:clamp(40px,13.5vw,55px);
-    font-size:22px;
-  }
-  #dev .dk-phone-action{font-size:15px}
-}
 
 /* Soften only the active chat composer ring during desktop keyboard use.
    Keep a subtle visible focus indicator for keyboard accessibility. */
@@ -319,8 +235,8 @@
   #dev{--demo-keyboard-height:272px}
   #dev .dk-predict{font-size:15px}
   #dev .dk-predict{flex-basis:34px}
-  #dev .dk-rows{gap:5px}
-  #dev .dk-offset{padding-inline:12px}
+  #dev .dk-rows{gap:7px}
+  #dev .dk-offset{padding-inline:4%}
   #dev .dk-key{font-size:21px}
   #dev .dk-accessories{flex-basis:38px}
   #dev .dk-bottom .dk-mode{font-size:15px}
