@@ -85,18 +85,11 @@ const dietaryMatches=()=>{
 };
 const DietaryTag=name=>`<span class="tag2">${esc(name)}<button type="button" aria-label="Remove ${esc(name)}" data-a="pdietRemove:${encodeURIComponent(name)}">${ic('x',14)}</button></span>`;
 const dietaryTagsHTML=()=>dietDraft().length?dietDraft().map(DietaryTag).join(''):'<span class="cap sm interest-empty">No dietary needs added yet</span>';
-/* Show common suggestions only when the query field is empty. */
-const dietaryOptionsHTML=()=>{
- const shown=dietaryAvailable().slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">Common dietary needs</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">All suggested dietary needs added.</p>`}`;
-};
 const refreshDietaryPicker=()=>{
  const tags=$('#dietary-tags');
  if(tags)tags.innerHTML=dietaryTagsHTML();
  const count=$('#dietary-count');
  if(count)count.textContent=dietDraft().length+' selected';
- const options=$('#dietary-suggestions');
- if(options){options.innerHTML=dietaryOptionsHTML();options.hidden=!!dietaryQuery();}
  const changed=dietDraftChanged();
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
@@ -115,9 +108,8 @@ const ProfileQueryHeading=(heading,countId,count)=>`<div class="interest-section
 const DietaryPicker=()=>`<div class="pad interest-picker profile-query-picker dietary-picker">
  <section class="profile-query-section" aria-label="Your dietary needs">
   ${ProfileQueryHeading('Your dietary needs','dietary-count',dietDraft().length)}
-  ${ProfileQueryMultiselect('dietary-search','dietary need','Add dietary need...',S.dietaryQuery,'pdietSearch','pdietFirst','dietary-tags',dietaryTagsHTML(),'dietary-suggestions')}
+  ${ProfileQueryMultiselect('dietary-search','dietary need','Add dietary need...',S.dietaryQuery,'pdietSearch','pdietFirst','dietary-tags',dietaryTagsHTML(),null)}
  </section>
- <section class="interest-suggestions" id="dietary-suggestions" aria-label="Common dietary needs"${dietaryQuery()?' hidden':''}>${dietaryOptionsHTML()}</section>
 </div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
@@ -142,29 +134,19 @@ const refreshInterestPicker=()=>{
  if(tags)tags.innerHTML=interestTagsHTML();
  const count=$('#interest-count');
  if(count)count.textContent=interestDraft().length+' selected';
- const options=$('#interest-suggestions');
- if(options){options.innerHTML=interestOptionsHTML();options.hidden=!!(S.interestQuery||'').trim();}
  const changed=interestDraftChanged();
  S.p.dirty=changed?1:0;
  const save=$('#s-pdet .sv .btn');
  if(save)save.disabled=!changed;
 };
-/* Suggested interests stay available without opening a matching-results section. */
-const interestOptionsHTML=()=>{
- const available=INTEREST_CATALOG.filter(name=>!interestDraft().includes(name));
- const shown=(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name)).slice(0,5);
- return `<div class="interest-option-heading"><span class="lb">Suggested interests</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">No more suggestions available.</p>`}`;
-};
 const InterestPicker=()=>`<div class="pad interest-picker profile-query-picker">
  <section class="profile-query-section" aria-label="Your interests">
   ${ProfileQueryHeading('Your interests','interest-count',interestDraft().length)}
-  ${ProfileQueryMultiselect('interest-search','interest','Add interest...',S.interestQuery,'pinterestSearch','pinterestFirst','interest-tags',interestTagsHTML(),'interest-suggestions')}
+  ${ProfileQueryMultiselect('interest-search','interest','Add interest...',S.interestQuery,'pinterestSearch','pinterestFirst','interest-tags',interestTagsHTML(),null)}
  </section>
- <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests"${(S.interestQuery||'').trim()?' hidden':''}>${interestOptionsHTML()}</section>
 </div>`;
-/* Accessibility and Health conditions reuse Interests' glass search / selected
-   tags / five suggestions layout. These editors are fixed-choice and draft-only
-   until the user taps Save changes; other Profile tag editors are unchanged. */
+/* Accessibility and Health conditions reuse the compact multiselect input and selected tags.
+   These editors remain fixed-choice and draft-only until Save changes. */
 const PROFILE_PREFERENCE_PICKERS={
  access:{
   your:'Your accessibility needs',
