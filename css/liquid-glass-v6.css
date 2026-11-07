@@ -1127,3 +1127,19 @@ body{font-weight:500}
   }
   #dev #s-chat .chat-row .cover{width:52px;height:52px}
 }
+
+
+/* Reel save: keep the glass control surface unchanged; tint only the bookmark. */
+#dev .rv .rail .ib[aria-pressed="true"]{
+  --action-fill:var(--glass-control-bg)!important;
+  --action-ink:var(--ink)!important;
+}
+#dev .rv .rail .ib[aria-pressed="true"] svg{
+  color:var(--sky-600)!important;
+}
+
+/* A selected downvote uses the softer coral-300 from the Sunrise Frost palette. */
+#dev #s-trip .vote-row .vb.dn[aria-pressed="true"]{
+  --action-fill:var(--coral-300)!important;
+  --action-ink:var(--ink)!important;
+}
