@@ -1226,16 +1226,6 @@ body{font-weight:500}
   outline:2px solid var(--sky-600);
   outline-offset:3px;
 }
-/* The Save action stays unmistakably disabled, but no longer fades to
-   near-invisibility. Enabled actions retain the regular Sky 400 styling. */
-#dev #s-pdet:has(.travel-preferences-form) .dock.sv .btn[data-a="psave"]:disabled{
-  --action-fill:rgba(231,242,253,.85);
-  --action-ink:#61738A;
-  --action-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 3px 12px rgba(48,88,135,.07);
-  opacity:1!important;
-  color:var(--action-ink)!important;
-}
-
 /* Home-only section rhythm: Heading 800 breathing room without moving Create trip. */
 /* The headings are 23px/800; give them clear separation from the cards.
    All card dimensions, the Home FAB, navigation and segmented control remain intact. */
