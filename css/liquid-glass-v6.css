@@ -840,21 +840,21 @@ body{font-weight:500}
   align-items:center;
   justify-content:center;
   box-sizing:border-box;
-  flex:0 0 27px;
-  width:27px;
-  height:13px;
+  flex:0 0 29px;
+  width:29px;
+  height:15px;
   margin-right:3px;
-  border-radius:3.5px;
+  border-radius:4px;
   background:#fff;
   box-shadow:none;
 }
 #dev #sb .ios-battery::after{
   content:"";
   position:absolute;
-  top:4.5px;
+  top:5px;
   right:-3px;
   width:2px;
-  height:4px;
+  height:5px;
   border-radius:0 1px 1px 0;
   background:inherit;
 }
@@ -864,7 +864,7 @@ body{font-weight:500}
   padding:0;
   color:#252525;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
-  font-size:10px;
+  font-size:11px;
   font-weight:600;
   line-height:1;
   letter-spacing:-.025em;
