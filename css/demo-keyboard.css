@@ -25,7 +25,7 @@
   flex-direction:column;
   width:100%;
   height:var(--demo-keyboard-height);
-  padding:7px 5px 4px;
+  padding:7px 3px 4px;
   border:0;
   border-radius:18px 18px 0 0;
   overflow:hidden;
@@ -92,10 +92,10 @@
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:5px;
+  gap:4px;
   box-sizing:border-box;
 }
-#dev .dk-offset{padding-inline:5.5%}
+#dev .dk-offset{padding-inline:4.5%}
 #dev .dk-key{
   flex:1 1 0;
   min-width:0;
@@ -245,16 +245,68 @@
 #dev .dk-emoji-search::-webkit-search-cancel-button{
   -webkit-appearance:searchfield-cancel-button;
 }
+#dev .dk-emoji-section-title{
+  flex:0 0 24px;
+  display:flex;
+  align-items:center;
+  min-height:0;
+  padding:1px 15px 0;
+  box-sizing:border-box;
+  color:var(--dk-sub);
+  font:600 12px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+}
+#dev .dk-emoji-cat-glyph{
+  display:grid;
+  place-items:center;
+  filter:grayscale(1);
+  opacity:.68;
+  font-size:19px;
+}
+#dev .dk-emoji-category.active .dk-emoji-cat-glyph{opacity:1}
+#dev .dk-skin-choices{
+  position:absolute;
+  z-index:6;
+  left:clamp(8px,var(--dk-tone-x,10px),calc(100% - 233px));
+  bottom:79px;
+  display:flex;
+  align-items:center;
+  gap:2px;
+  box-sizing:border-box;
+  padding:4px;
+  border:1px solid var(--dk-divider);
+  border-radius:14px;
+  background:var(--dk-control);
+  box-shadow:0 7px 23px rgba(0,0,0,.28);
+}
+#dev .dk-skin-option{
+  display:grid;
+  place-items:center;
+  width:35px;
+  height:37px;
+  min-width:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  font:normal 26px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  cursor:pointer;
+}
+#dev .dk-skin-option:active{background:rgba(155,158,170,.25)}
+#dev .dk-skin-option:focus-visible{
+  outline:2px solid #75B7FF;
+  outline-offset:-1px;
+}
 #dev .dk-emoji-grid{
   flex:1 1 auto;
   min-height:0;
   box-sizing:border-box;
   display:grid;
   grid-template-columns:repeat(8,minmax(0,1fr));
-  grid-auto-rows:43px;
+  grid-auto-rows:42px;
   align-content:start;
   gap:5px 1px;
-  padding:5px 9px 7px;
+  padding:2px 8px 7px;
   overflow-y:auto;
   overscroll-behavior:contain;
   scrollbar-width:none;
@@ -266,14 +318,14 @@
   place-items:center;
   box-sizing:border-box;
   min-width:0;
-  height:43px;
+  height:42px;
   margin:0;
   padding:0;
   border:0;
   border-radius:9px;
   background:transparent;
   color:var(--dk-ink);
-  font:normal 29px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font:normal 30px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
   cursor:pointer;
   touch-action:manipulation;
 }
@@ -430,7 +482,7 @@
   #dev .dk-predict{flex-basis:34px;font-size:15px}
   #dev .dk-rows{gap:5px}
   #dev .dk-row{gap:4px}
-  #dev .dk-offset{padding-inline:5.5%}
+  #dev .dk-offset{padding-inline:4.5%}
   #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
   #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
