@@ -22,8 +22,8 @@ function chrome(){
   fab.innerHTML=`${ic('plus',20)}<span>${label}</span>`;
   fab.setAttribute('aria-label',label);
  }else{
-  fab.textContent='Create trip!';
-  fab.setAttribute('aria-label','Create trip!');
+  fab.innerHTML=`${ic('plus',20)}<span>Create trip</span>`;
+  fab.setAttribute('aria-label','Create trip');
  }
 }
 function upd(){const st=cur(),tp=topId();$$('.scr').forEach(s=>{const id=s.dataset.id,i=st.indexOf(id);s.classList.toggle('on',id==tp);s.classList.toggle('under',i>-1&&id!=tp);s.inert=id!=tp});tabbar();chrome();sbSync();typeof reelsSync=='function'&&reelsSync()}

@@ -308,3 +308,26 @@
 #dev .tag-query .tag2{gap:6px;padding:0 6px 0 13px}
 #dev .tag-query .tag2 button{width:20px;height:20px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;position:relative;z-index:3}
 #dev .tag-query .tag2 button svg{width:11px;height:11px}
+
+/* ---------- PILL ACTIONS · REGULAR 14 ----------
+   Create trip (#fab), Add a new activity (#fab on the vote step) and
+   Profile > Save changes (#psave / .btn[data-a="psave"]) follow the
+   library's .btn.sky: 46px high, 0 22px padding, 14px / 700, 8px gap,
+   20px icon, frosted Sky fill. */
+#dev :is(#fab,#psave,.btn[data-a="psave"]){
+  height:46px;
+  padding:0 22px;
+  border-radius:999px;
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:0;
+  gap:8px;
+}
+#dev :is(#fab,.btn[data-a="psave"]):not(:disabled){
+  --action-fill:var(--sky-fill)!important;
+  --action-shadow:var(--control-shadow)!important;
+}
+#dev :is(#fab,#psave,.btn[data-a="psave"]) svg{width:20px;height:20px;flex:none}
+#dev #fab span{font-size:14px;font-weight:700;line-height:1}
