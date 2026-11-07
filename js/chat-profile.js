@@ -106,13 +106,20 @@ const refreshDietaryPicker=()=>{
  const save=$('#s-pdet .sv .btn');
  if(save)save.disabled=!changed;
 };
-const DietaryPicker=()=>`<div class="pad interest-picker dietary-picker">
- <div class="glass invite-box tag-query interest-search-card">
-  <div class="tq-row">${ic('search',18)}<input id="dietary-search" type="search" placeholder="Search dietary needs..." aria-label="Search dietary needs" aria-controls="dietary-suggestions" value="${esc(S.dietaryQuery||'')}" maxlength="30" autocomplete="off" oninput="A.pdietSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pdietFirst()}"></div>
+/* Reusable ROAM Card Components 'Multiselect · with query input' SVG control. */
+const ProfileQueryMultiselect=(id,label,placeholder,query,searchAction,addAction,tagsId,tagsHTML,suggestionsId)=>`<div class="glass invite-box tag-query profile-multi-card">
+ <div class="tq-row">
+  <svg viewBox="0 0 24 24" class="tq-ic" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg>
+  <input id="${id}" type="text" placeholder="${esc(placeholder)}" aria-label="${esc(label)}" aria-controls="${suggestionsId}" value="${esc(query||'')}" maxlength="30" autocomplete="off" oninput="A.${searchAction}(this.value);this.nextElementSibling.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'){event.preventDefault();A.${addAction}()}">
+  <button type="button" class="btn mini sky profile-multi-add" data-a="${addAction}" aria-label="Add ${esc(label)}" ${String(query||'').trim()?'':'disabled'}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
  </div>
- <section class="interest-selected-section" aria-labelledby="dietary-selected-title">
-  <div class="interest-section-head"><span class="lb" id="dietary-selected-title">Your dietary needs</span><span class="cap sm" id="dietary-count" aria-live="polite">${dietDraft().length} selected</span></div>
-  <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="dietary-tags" aria-live="polite">${dietaryTagsHTML()}</div></div>
+ <div class="tags tq-tags profile-multi-tags" id="${tagsId}" aria-label="Selected ${esc(label)}" aria-live="polite">${tagsHTML}</div>
+</div>`;
+const ProfileQueryHeading=(heading,countId,count)=>`<div class="interest-section-head profile-query-heading"><span class="lb">${esc(heading)}</span><span class="cap sm" id="${countId}" aria-live="polite">${count} selected</span></div>`;
+const DietaryPicker=()=>`<div class="pad interest-picker profile-query-picker dietary-picker">
+ <section class="profile-query-section" aria-label="Your dietary needs">
+  ${ProfileQueryHeading('Your dietary needs','dietary-count',dietDraft().length)}
+  ${ProfileQueryMultiselect('dietary-search','dietary need','Add dietary need...',S.dietaryQuery,'pdietSearch','pdietFirst','dietary-tags',dietaryTagsHTML(),'dietary-suggestions')}
  </section>
  <section class="interest-suggestions" id="dietary-suggestions" aria-label="Common dietary needs">${dietaryOptionsHTML()}</section>
 </div>`;
@@ -152,17 +159,13 @@ const interestOptionsHTML=()=>{
  const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions()).filter(name=>available.includes(name))).slice(0,5);
  return `<div class="interest-option-heading"><span class="lb">${q?"Matching interests":"Suggested interests"}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pinterest:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic("plus",16)}</button>`).join("")}</div></div>`:`<p class="cap interest-no-matches">${q?"No other interests match your search.":"No more suggestions available."}</p>`}`;
 };
-const InterestPicker=()=>`<div class="pad interest-picker">
- <div class="glass invite-box tag-query interest-search-card">
-  <div class="tq-row">${ic("search",18)}<input id="interest-search" type="search" placeholder="Search interests..." aria-label="Search interests" aria-controls="interest-suggestions" value="${esc(S.interestQuery||"")}" autocomplete="off" oninput="A.pinterestSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.pinterestFirst()}"></div>
- </div>
- <section class="interest-selected-section" aria-labelledby="interest-selected-title">
-  <div class="interest-section-head"><span class="lb" id="interest-selected-title">Your interests</span><span class="cap sm" id="interest-count" aria-live="polite">${interestDraft().length} selected</span></div>
-  <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="interest-tags">${interestTagsHTML()}</div></div>
+const InterestPicker=()=>`<div class="pad interest-picker profile-query-picker">
+ <section class="profile-query-section" aria-label="Your interests">
+  ${ProfileQueryHeading('Your interests','interest-count',interestDraft().length)}
+  ${ProfileQueryMultiselect('interest-search','interest','Add interest...',S.interestQuery,'pinterestSearch','pinterestFirst','interest-tags',interestTagsHTML(),'interest-suggestions')}
  </section>
  <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests">${interestOptionsHTML()}</section>
 </div>`;
-
 /* Accessibility and Health conditions reuse Interests' glass search / selected
    tags / five suggestions layout. These editors are fixed-choice and draft-only
    until the user taps Save changes; other Profile tag editors are unchanged. */
@@ -206,16 +209,13 @@ const refreshProfilePreferencePicker=k=>{
 };
 const ProfilePreferencePicker=k=>{
  const config=PROFILE_PREFERENCE_PICKERS[k];
- return `<div class="pad interest-picker">
-  <div class="glass invite-box tag-query interest-search-card">
-   <div class="tq-row">${ic('search',18)}<input id="preference-search" type="search" placeholder="${esc(config.search)}" aria-label="${esc(config.search)}" aria-controls="preference-suggestions" value="${esc(S.prefSearch||'')}" autocomplete="off" oninput="A.prefSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.prefFirst()}"></div>
-  </div>
-  <section class="interest-selected-section" aria-labelledby="preference-selected-title">
-   <div class="interest-section-head"><span class="lb" id="preference-selected-title">${config.your}</span><span class="cap sm" id="preference-count" aria-live="polite">${profilePreferenceDraft(k).length} selected</span></div>
-   <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="preference-tags">${profilePreferenceTagsHTML(k)}</div></div>
-   ${config.note?`<p class="cap sm preference-helper">${config.note}</p>`:''}
+ return `<div class="pad interest-picker profile-query-picker">
+  <section class="profile-query-section" aria-label="${esc(config.your)}">
+   ${ProfileQueryHeading(config.your,'preference-count',profilePreferenceDraft(k).length)}
+   ${ProfileQueryMultiselect('preference-search',k==='access'?'accessibility need':'health condition',config.search,S.prefSearch,'prefSearch','prefFirst','preference-tags',profilePreferenceTagsHTML(k),'preference-suggestions')}
+   ${config.note?`<p class="cap sm preference-helper">${esc(config.note)}</p>`:''}
   </section>
-  <section class="interest-suggestions" id="preference-suggestions" aria-label="${config.results}"${(S.prefSearch||'').trim()?'':' hidden'}>${profilePreferenceOptionsHTML(k)}</section>
+  <section class="interest-suggestions" id="preference-suggestions" aria-label="${esc(config.results)}"${(S.prefSearch||'').trim()?'':' hidden'}>${profilePreferenceOptionsHTML(k)}</section>
  </div>`;
 };
 const PD={
