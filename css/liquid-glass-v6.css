@@ -420,7 +420,7 @@ body{color:var(--ink);background:#EAF1F9}
    Exact component-library material: 40% white face, 22px/180% frost,
    diagonal rim, restrained blue-tinted shadow.
    ===================================================================== */
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib){
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib,.rinfo,.vote-info-btn,.vb,.avedit){
   position:relative;
   display:inline-flex;
   align-items:center;
@@ -435,7 +435,7 @@ body{color:var(--ink);background:#EAF1F9}
     inset 0 1px 4px rgba(255,255,255,.25)!important;
   transition:transform .15s,box-shadow .15s,background .15s;
 }
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib)::before{
+#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib,.rinfo,.vote-info-btn,.vb,.avedit)::before{
   content:"";
   position:absolute;
   inset:0;
@@ -516,7 +516,7 @@ body{color:var(--ink);background:#EAF1F9}
 #dev #s-profile .profile-notif{
   position:absolute;
   z-index:2;
-  top:64px;
+  top:calc(78px + env(safe-area-inset-top,0px));
   left:24px;
   width:50px;
   height:50px;
@@ -577,3 +577,25 @@ body{color:var(--ink);background:#EAF1F9}
 #dev #tb .ctr.on .circ{background:#A4D2FE!important;color:#1F63B5!important}
 #dev #tb .ctr .circ svg{width:30px;height:30px}
 #dev #tb .av{width:24px;height:24px;border-radius:50%;margin:0}
+
+
+/* Small/specialized action buttons use the same component-library glass.
+   Keep their existing hit-area dimensions and placement. */
+#dev :is(.rinfo,.vote-info-btn,.vb,.avedit){
+  -webkit-backdrop-filter:blur(22px) saturate(180%)!important;
+  backdrop-filter:blur(22px) saturate(180%)!important;
+  box-shadow:0 4px 14px rgba(70,105,140,.10),
+    inset 0 1px 4px rgba(255,255,255,.25)!important;
+}
+#dev .rinfo,#dev .vote-info-btn,#dev .vb{
+  background:rgba(255,255,255,.40)!important;
+  color:var(--ink)!important;
+}
+#dev .vb[aria-pressed="true"]{
+  background:rgba(109,182,255,.62)!important;
+  color:var(--ink)!important;
+}
+#dev .avedit{
+  background:rgba(109,182,255,.62)!important;
+  color:var(--ink)!important;
+}
