@@ -1,5 +1,5 @@
 /* ===== STATE + RULES ===== */
-const S={tab:'trips',prev:'trips',stack:{trips:['trips'],map:['map'],reels:['reels'],chat:['chat'],profile:['profile']},cur:'hike',step:2,seg:'up',cat:'All',mapTrip:'hike',nav:0,leg:0,mx:0,fyp:1,th:0,typing:0,inv:true,saved:{0:1,1:1},sh:[],rs:[],q:'',undo:null,newReel:1,f:newF(),fe:{},p:{name:'Plaise',diet:['Vegetarian'],likes:['Cafes','Museums','Hikes'],access:['Step-free routes'],budget:300,dirty:0}};
+const S={tab:'trips',prev:'trips',stack:{trips:['trips'],map:['map'],reels:['reels'],chat:['chat'],profile:['profile']},cur:'hike',step:2,seg:'up',cat:'All',mapTrip:'hike',nav:0,leg:0,mx:0,fyp:1,th:0,typing:0,inv:true,saved:{0:1,1:1},shared:{},sh:[],rs:[],q:'',undo:null,newReel:1,f:newF(),fe:{},p:{name:'Plaise',diet:['Vegetarian'],likes:['Cafes','Museums','Hikes'],access:['Step-free routes'],budget:300,dirty:0}};
 const needs=t=>t.st=='voting'&&!t.vs.P?t.stops.filter(s=>s.m==0).length:0;
 const pend=t=>Object.keys(t.vs).filter(k=>!t.vs[k]),fin=t=>t.st!='voting'||!pend(t).length,inItin=s=>s.u>=s.d,baseStops=t=>fin(t)?t.stops.filter(inItin):t.stops,mstops=t=>vstops(t);
 const UP=()=>T.filter(t=>!t.left&&dd(t.date)>=0).sort((a,b)=>a.date-b.date),PAST=()=>T.filter(t=>!t.left&&dd(t.date)<0).sort((a,b)=>b.date-a.date),OV=()=>UP().filter(t=>t.stops.length);
