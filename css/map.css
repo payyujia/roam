@@ -107,3 +107,10 @@
 .chg{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--s1)}
 .pathseg{margin:14px 24px 0}.altrow{padding:12px 24px 0;display:flex;flex-direction:column;gap:6px}.altrow .cap{text-align:center}
 .youpath{margin:12px 24px 0;padding:12px 14px;border-radius:16px;background:#FFF6D6;display:flex;gap:10px;align-items:center;color:#5C4200;font-size:13px;line-height:18px;font-weight:600}
+
+
+/* Completed stop check badge: coral fill with an ink-black tick. */
+#dev .pn .bg.done{
+  background:var(--coral-200)!important;
+  color:var(--ink)!important;
+}
