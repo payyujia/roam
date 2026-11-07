@@ -140,3 +140,8 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    Add button never prevents the last activity from being read. */
 #s-trip .vote-row:last-child{margin-bottom:100px}
 
+
+
+/* Review rating control: amber outline when empty, amber fill when selected. */
+#dev .rate button{color:var(--amber,#FFA23A)}
+#dev .rate button[aria-pressed=true]{color:var(--amber,#FFA23A)}

@@ -41,3 +41,19 @@
 #dev #s-form .lb .opt{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
 /* Collections use the .cx checkbox rows from the alternatives tray; cancel the form's side padding so rows align with the fields */
 #dev #s-form .cxg{margin:0 -24px}
+
+
+/* Save-to-collection sheet: use the master multiselect checkbox rows. */
+#dev .collection-options{display:flex;flex-direction:column;gap:2px;margin:0 0 8px}
+#dev .collection-options .cx{padding:10px 24px;min-height:64px}
+#dev .collection-options .cx .si{width:36px;height:36px;border-radius:12px}
+#dev .collection-options .cx .gr{display:flex;flex-direction:column;gap:1px}
+#dev .collection-options .cx .gr b{font-size:16px;line-height:22px;font-weight:700}
+#dev .collection-options .cx .cap{font-size:12px;line-height:16px}
+#dev .collection-options .cx .cbx{width:26px;height:26px;border-radius:9px}
+#dev .collection-options .cx[aria-checked=true] .cbx{background:var(--sky-500);color:#fff;box-shadow:none}
+#dev .collection-create{margin-top:4px}
+#dev .collection-name-field .fi{background:var(--glass);border-radius:18px;box-shadow:0 4px 14px rgba(40,100,180,.1),inset 0 1px 5px rgba(255,255,255,.45)}
+#dev .collection-name-field .fi input{font:500 14px/1.5 var(--font);color:var(--ink)}
+#dev .collection-name-field .fi input::placeholder{color:var(--muted)}
+#dev .collection-name-field .fi:focus-within{background:var(--glass-hi);box-shadow:var(--shadow),0 0 0 2px var(--sky-400)}
