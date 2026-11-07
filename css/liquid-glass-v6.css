@@ -1389,3 +1389,40 @@ body{font-weight:500}
     padding-inline:8px;
   }
 }
+
+
+/* Reschedule task actions: restore matched frosted decline and blue accept discs. */
+/* Shared icon-only selection rules otherwise leave the primary check transparent. */
+#dev .reschedule-row .tact .ib{
+  position:relative;
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  padding:0;
+  border:0!important;
+  border-radius:50%!important;
+  color:var(--ink)!important;
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  box-shadow:var(--control-shadow)!important;
+}
+#dev .reschedule-row .tact .ib.f{
+  background:rgba(255,255,255,.82)!important;
+}
+#dev .reschedule-row .tact .ib.p{
+  background:var(--sky-fill)!important;
+}
+#dev .reschedule-row .tact .ib svg{
+  width:18px;
+  height:18px;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:2;
+}
+#dev .reschedule-row .tact .ib:focus-visible{
+  outline:2px solid var(--sky-600);
+  outline-offset:2px;
+}
