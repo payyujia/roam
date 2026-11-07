@@ -59,16 +59,25 @@ V.thread=()=>{const c=CH[S.th];return `<div class="top"><button class="ib thread
 
 /* ===== PROFILE: Settings-style. The list shows one row per topic; tap a row to see and edit its details. ===== */
 const pSum=a=>a.length?a[0]+(a.length>1?' +'+(a.length-1):''):'None';
+/* Shared component-library multiselect card: independent selections,
+   labels on the left, frosted square checkbox on the right. */
+const TransportCheck=(key,label,subtitle,values)=>{
+ const checked=values.includes(key);
+ return `<button type="button" class="checkcard glass transport-checkcard${checked?' on':''}" data-a="pmove:${encodeURIComponent(key)}" aria-pressed="${checked}">
+ <span class="cc-main"><b>${label}</b><small>${subtitle}</small></span>
+ <span class="checkbox${checked?' on':''}" aria-hidden="true">${checked?'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':''}</span>
+ </button>`;
+};
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:8px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
- style:{t:'Travel preferences',i:'compass',c:'orange',v:()=> '2 preferences set',b:()=>{const p=S.p;return `<div class="fl travel-preferences-form" style="margin-top:12px">
+ style:{t:'Travel preferences',i:'compass',c:'orange',v:()=> '2 preferences set',b:()=>{const p=S.p,selected=Array.isArray(p.move)?p.move:[p.move].filter(Boolean);return `<div class="fl travel-preferences-form" style="margin-top:12px">
 <div class="travel-setting-group"><div class="travel-setting-label">Travel pace</div>
-<div class="travel-pace-dropdown">${Dropdown({id:'travel-pace',aria:'Travel pace',value:p.pace,opts:[{v:'Chill',t:'Chill'},{v:'Balanced',t:'Balanced'},{v:'Packed',t:'Packed'}],pick:v=>{S.p.pace=v;pd();render('profile')}})}</div></div>
-<div class="travel-setting-group"><div class="travel-setting-label" id="travel-transport-label">Getting around</div>
-<div class="travel-transport-options" role="radiogroup" aria-labelledby="travel-transport-label">
-${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([k,l,s])=>Radio(k,l,s,p.move,'pmove')).join('')}
+<div class="travel-pace-dropdown">${Dropdown({id:'travel-pace',aria:'Travel pace',value:p.pace,opts:[{v:'Chill',t:'Chill'},{v:'Balanced',t:'Balanced'},{v:'Packed',t:'Packed'}],pick:v=>{S.p.pace=v;pd();render('pdet')}})}</div></div>
+<div class="travel-setting-group"><div class="travel-setting-label" id="travel-transport-label">Transport preferences</div>
+<div class="travel-transport-options" role="group" aria-labelledby="travel-transport-label">
+${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Public transport first'],['Car','Car or taxi','Door to door']].map(([key,label,sub])=>TransportCheck(key,label,sub,selected)).join('')}
 </div></div></div>`}},
  budget:{t:'Trip budget',i:'bag',c:'green',v:()=>'S$'+Number(S.p.budget).toLocaleString('en-SG'),b:()=>{const pc=S.p.budget;return `<div class="pad" style="margin-top:12px"><h2 id="bv" style="margin-bottom:12px">SGD ${pc}</h2><input type="range" class="rg" min="50" max="2000" step="50" value="${pc}" style="--v:${(pc-50)/1950*100}%" aria-label="Trip budget in SGD" oninput="S.p.budget=+this.value;this.style.setProperty('--v',((this.value-50)/1950*100)+'%');$('#bv').textContent='SGD '+this.value;pd()"><div class="rgl"><span>SGD 50</span><span>SGD 2,000</span></div></div>`}},
  diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>pTags('diet','Add a dietary need…',['Halal','Vegetarian','Kosher','Vegan','Gluten-free'])},
