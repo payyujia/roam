@@ -38,8 +38,8 @@ Object.assign(A,{
  /* profile */
 
  prefSearch:q=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;S.prefSearch=q;},
- prefFirst:()=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k];if(!config)return;const q=(S.prefSearch||'').trim().toLocaleLowerCase();if(!q)return;const name=config.catalog.find(x=>x.toLocaleLowerCase().includes(q)&&!profilePreferenceDraft(k).includes(x));if(name)A.prefAdd(encodeURIComponent(name))},
- prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft))return;const name=decodeURIComponent(value);if(!config.catalog.includes(name)||draft.includes(name))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input){input.value='';if(input.nextElementSibling)input.nextElementSibling.disabled=true}refreshProfilePreferencePicker(k)},
+ prefFirst:()=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;const name=(S.prefSearch||'').trim().replace(/\s+/g,' ').slice(0,30);if(name)A.prefAdd(encodeURIComponent(name))},
+ prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft)||!value)return;const typed=decodeURIComponent(value).trim().replace(/\s+/g,' ').slice(0,30);if(!typed)return;const name=config.catalog.find(x=>x.toLocaleLowerCase()===typed.toLocaleLowerCase())||typed;if(draft.some(x=>x.toLocaleLowerCase()===name.toLocaleLowerCase()))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input){input.value='';if(input.nextElementSibling)input.nextElementSibling.disabled=true}refreshProfilePreferencePicker(k)},
  prefRemove:value=>{const k=S.pd;if(!PROFILE_PREFERENCE_PICKERS[k]||!Array.isArray(S.p[k+'Draft']))return;const name=decodeURIComponent(value);S.p[k+'Draft']=S.p[k+'Draft'].filter(x=>x!==name);refreshProfilePreferencePicker(k)},
  pinterestSearch:q=>{S.interestQuery=q},
  pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();if(!q)return;const options=INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q));const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},

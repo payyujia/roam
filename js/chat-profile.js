@@ -150,12 +150,12 @@ const InterestPicker=()=>`<div class="pad interest-picker profile-query-picker">
 const PROFILE_PREFERENCE_PICKERS={
  access:{
   your:'Your accessibility needs',
-  search:'Search accessibility needs...',empty:'No accessibility needs selected yet',
+  search:'Add accessibility need...',empty:'No accessibility needs selected yet',
   catalog:['Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support','Step-free routes','Accessible toilets','Elevator access','Rest stops','Seating availability','Accessible transport','Avoid stairs','Low-sensory areas','Clear signage','Assistance with navigation','Wide pathways','Accessible entrances','Short walking distances','Wheelchair-friendly seating']
  },
  health:{
   your:'Your health conditions',
-  search:'Search health conditions...',empty:'No health conditions selected yet',
+  search:'Add health condition...',empty:'No health conditions selected yet',
   catalog:['Asthma','Bad knees','Motion sickness','Heat sensitivity','Migraine','Chronic eye stye','Food allergies','Back pain','Joint pain','Chronic pain','Fatigue','Respiratory sensitivity','Sun sensitivity','Dizziness','Low stamina','Diabetes','Epilepsy','Vertigo','Anxiety']
  }
 };
