@@ -1292,3 +1292,27 @@ body{font-weight:500}
 #dev #tb .ctr .trip-plane path{fill:none;stroke:var(--sky-500)}
 #dev #tb .ctr.on .trip-plane path{fill:var(--sky-500);stroke:var(--sky-500)}
 #dev #tb .on .av{box-shadow:none!important}
+
+
+/* Reel actions: keep the original iconography and remove only the button discs. */
+#dev .rv .rail .ib{
+  width:44px;height:44px;padding:0!important;
+  background:transparent!important;
+  border:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  color:inherit!important;
+}
+#dev .rv .rail .ib::before,
+#dev .rv .rail .ib::after{display:none!important;content:none!important}
+#dev .rv .rail .ib svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2}
+#dev .rv .rail .ib[aria-pressed="true"] svg{fill:currentColor;stroke:currentColor}
+#dev .rv .rail .ib[aria-pressed="true"] svg :is(path,circle,rect,polygon,polyline,ellipse){fill:currentColor}
+
+/* Raised Trips icon: selected disc is sky-500 and the plane is sky-300. */
+#dev #tb .ctr,
+#dev #tb .ctr .circ,
+#dev #tb .ctr .trip-plane{overflow:visible!important}
+#dev #tb .ctr .circ{background:var(--sky-500)!important;color:var(--sky-300)!important}
+#dev #tb .ctr .trip-plane{width:28px;height:28px}
+#dev #tb .ctr .trip-plane path{fill:none;stroke:var(--sky-500)}
+#dev #tb .ctr.on .trip-plane path{fill:var(--sky-300)!important;stroke:var(--sky-300)!important}
