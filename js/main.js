@@ -15,6 +15,8 @@ function syncLiveClock(){
   if(status)status.textContent=(hour&&minute)?`${hour}:${minute}`:`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
   const heading=$('#s-trips .hd h1');
   if(heading)heading.textContent=`${greet(now)}, ${S.p.name.trim()||'there'}`;
+  /* Refresh only the visible age labels, without rebuilding chat/search UI. */
+  if(typeof syncChatAges==='function')syncChatAges();
 }
 syncLiveClock();
 /* Small, non-rendering updates avoid interrupting scrolling, reels and chat. */
