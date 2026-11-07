@@ -1845,7 +1845,7 @@ body{font-weight:500}
 
 /* Reels typography follows docs/card-components.html (master type scale). */
 #dev #s-reels .rtg button{font-family:var(--font)!important;font-size:16px!important;font-weight:700!important;line-height:22px!important}
-#dev #s-reels .rv h1{font-family:var(--font)!important;font-size:23px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important}
+#dev #s-reels .rv h1{font-family:var(--font)!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important}
 #dev #s-reels .rv>div:not(.sap):not(.cap):not(.pills):not(.rail){font-size:14px!important;font-weight:500!important;line-height:1.5!important}
 #dev #s-reels .rv>div:not(.sap):not(.cap):not(.pills):not(.rail) b{font-size:16px!important;font-weight:700!important}
 #dev #s-reels .rv .cap{font-size:12px!important;font-weight:500!important;line-height:16px!important}
