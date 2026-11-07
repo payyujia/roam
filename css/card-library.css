@@ -582,6 +582,28 @@
    Internal field spacing and the Save changes gap remain unchanged. */
 #dev #s-pdet .pdb{padding-top:16px;padding-bottom:24px}
 
+/* Travel pace uses the same dropdown as the component sheet, but its
+   menu overlays Transport preferences instead of increasing page height.
+   Keep this scoped to Travel pace: other dropdowns retain their layouts. */
+#dev #s-pdet .travel-preferences-form .travel-setting-group:first-child{
+  position:relative;
+  z-index:5;
+}
+#dev #s-pdet .travel-pace-dropdown .dd{
+  position:relative;
+}
+#dev #s-pdet .travel-pace-dropdown .dd-list{
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  box-sizing:border-box;
+  width:100%;
+  margin-top:8px;
+  z-index:10;
+}
+
+
 /* ---------- PROFILE SUBPAGES ----------
    Field labels are the library Subheader (16px / 700 / 22px / -.01em) on
    every nested page; field values are Regular 14; helper text is Subtitle 12. */
