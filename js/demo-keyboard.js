@@ -145,7 +145,7 @@
   '👋':['👋🏻','👋🏼','👋🏽','👋🏾','👋🏿'],
   '🫶':['🫶🏻','🫶🏼','🫶🏽','🫶🏾','🫶🏿']
  };
- let skinTimer=null,suppressEmojiTap=false;
+ let skinTimer=null,suppressEmojiTap=false,suppressedEmojiKey=null;
  function showSkinTones(button){
   const emoji=button.dataset.kbKey,tones=SKIN_TONES[emoji];
   if(!tones||!keyboard.getBoundingClientRect)return;
@@ -333,6 +333,7 @@
   skinTimer=setTimeout(()=>{
    showSkinTones(candidate);
    suppressEmojiTap=true;
+   suppressedEmojiKey=candidate.dataset.kbKey;
   },480);
  });
  keyboard.addEventListener('pointerup',()=>clearTimeout(skinTimer));
@@ -346,8 +347,12 @@
  });
  keyboard.addEventListener('click',e=>{
   const control=e.target.closest('button');if(!control)return;
-  if(suppressEmojiTap&&control.classList.contains('dk-emoji-choice')){
-   suppressEmojiTap=false;return;
+  if(suppressEmojiTap){
+   const samePressedEmoji=control.classList.contains('dk-emoji-choice')&&
+    control.dataset.kbKey===suppressedEmojiKey;
+   suppressEmojiTap=false;
+   suppressedEmojiKey=null;
+   if(samePressedEmoji)return;
   }
   const action=control.dataset.kbAction;
   if(action==='done'){hide(true);return}
