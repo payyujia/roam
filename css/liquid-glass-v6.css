@@ -149,11 +149,13 @@ body{font-weight:500}
 #dev :is(.trow.tier,.row.tier){min-height:76px;padding:10px 12px;gap:10px}
 #dev .trow .tmain{gap:10px}
 #dev .trow .tact{gap:5px}
+/* Date tiles match the trip thumbnails' 56 × 60px visual footprint. */
 #dev .dtile{
-  width:52px;
-  height:56px;
+  width:56px;
+  height:60px;
+  flex:0 0 56px;
   border:0;
-  border-radius:15px;
+  border-radius:14px;
   background:rgba(109,182,255,.28);
   color:var(--ink);
   box-shadow:none!important;
