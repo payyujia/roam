@@ -54,6 +54,21 @@
   '" data-kb-key="'+escapeText(value)+'" aria-label="'+escapeText(label||value)+'">'+
   escapeText(label||value)+'</button>';
  function draw(){
+  /* The 123 mode uses the circular HTML/CSS/JS phone pad from the example,
+     while the regular alphabetic keyboard remains available for chat. */
+  if(numbers){
+   const rows=[['1','2','3'],['4','5','6'],['7','8','9'],['clear','0','delete']];
+   keyboard.innerHTML='<div class="dk-phonepad" aria-label="Numeric phone pad">'+
+    '<div class="dk-phonepad-head"><span>Phone pad</span>'+
+    '<button type="button" class="dk-phonepad-switch" data-kb-action="mode" aria-label="Switch to letters">ABC</button></div>'+
+    '<div class="dk-phonepad-rows">'+
+    rows.map(row=>'<div class="dk-phonepad-row">'+row.map(value=>{
+     if(value==='clear')return '<button type="button" class="dk-phone-key dk-phone-action" data-kb-action="clear" aria-label="Clear input">CLR</button>';
+     if(value==='delete')return '<button type="button" class="dk-phone-key dk-phone-action" data-kb-action="delete" aria-label="Backspace">⌫</button>';
+     return '<button type="button" class="dk-phone-key" data-kb-key="'+value+'" aria-label="'+value+'">'+value+'</button>';
+    }).join('')+'</div>').join('')+'</div></div>';
+   return;
+  }
   const a=numbers?
    (shifted?
     [['[',']','{','}','#','%','^','*','+','='],
@@ -144,6 +159,16 @@
   const control=e.target.closest('button');if(!control)return;
   const action=control.dataset.kbAction;
   if(action==='done'){hide(true);return}
+  if(action==='clear'){
+   const input=currentInput();
+   if(input){
+    input.focus({preventScroll:true});
+    input.value='';
+    input.setSelectionRange(0,0);
+    input.dispatchEvent(new Event('input',{bubbles:true}));
+   }
+   return;
+  }
   if(action==='delete'){erase();return}
   if(action==='shift'){shifted=!shifted;draw();return}
   if(action==='mode'){numbers=!numbers;shifted=false;draw();return}
