@@ -1071,3 +1071,59 @@ body{font-weight:500}
     padding-top:20px;
   }
 }
+
+
+/* Chat list alignment: consistent 24px gutters and fixed metadata column. */
+/* Keep the Chat title, search and conversations aligned to one gutter. */
+#dev #s-chat .hd{padding-left:24px;padding-right:24px}
+#dev #s-chat .cs{
+  box-sizing:border-box;
+  width:100%;
+  margin-top:16px!important;
+  padding:0 24px;
+}
+#dev #s-chat .cs .fi.sr{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  width:100%;
+  height:50px;
+  min-height:50px;
+  margin:0;
+}
+#dev #s-chat .cs .fi.sr > svg{flex:none}
+#dev #s-chat .cs .fi.sr > input{min-width:0;width:100%}
+#dev #s-chat .cl{margin-top:12px}
+#dev #s-chat .chat-row{
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) 38px;
+  align-items:center;
+  column-gap:12px;
+  width:calc(100% - 48px);
+  min-height:80px;
+  margin:0 24px 12px;
+  padding:10px 12px;
+  text-align:left;
+}
+#dev #s-chat .chat-row .cover{
+  width:56px;
+  height:56px;
+  border-radius:14px;
+}
+#dev #s-chat .chat-row > .gr{min-width:0}
+#dev #s-chat .chat-row > :last-child{
+  justify-self:end;
+  align-self:center;
+  min-width:0;
+  text-align:right;
+}
+#dev #s-chat .chat-row > :last-child .cap{white-space:nowrap}
+@media(max-width:360px){
+  #dev #s-chat .chat-row{
+    grid-template-columns:52px minmax(0,1fr) 34px;
+    column-gap:10px;
+    padding-inline:10px;
+  }
+  #dev #s-chat .chat-row .cover{width:52px;height:52px}
+}
