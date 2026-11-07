@@ -28,8 +28,16 @@ function chrome(){
 }
 function upd(){const st=cur(),tp=topId();$$('.scr').forEach(s=>{const id=s.dataset.id,i=st.indexOf(id);s.classList.toggle('on',id==tp);s.classList.toggle('under',i>-1&&id!=tp);s.inert=id!=tp});tabbar();chrome();sbSync();typeof reelsSync=='function'&&reelsSync()}
 /* iPhone-style status bar: blurs once the visible screen has scrolled */
-function sbSync(){const e=$('#s-'+topId());$('#dev').classList.toggle('sbb',!!e&&!e.classList.contains('nos')&&!e.classList.contains('rls')&&e.scrollTop>2)}
-document.addEventListener('scroll',e=>{const t=e.target;t&&t.classList&&t.classList.contains('scr')&&sbSync()},true);
+function sbSync(){
+ const e=$('#s-'+topId());
+ const nested=e?.querySelector('.msgs');
+ const scrolled=!!e&&(e.scrollTop>2||(nested&&nested.scrollTop>2));
+ $('#dev').classList.toggle('sbb',scrolled&&!e.classList.contains('nos')&&!e.classList.contains('rls'));
+}
+document.addEventListener('scroll',e=>{
+ const t=e.target;
+ if(t?.closest?.('.scr.on'))sbSync();
+},true);
 const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;else st.push(id);upd();if(!ROOT[id])$('#s-'+id).scrollTop=0};
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
