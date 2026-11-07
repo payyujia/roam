@@ -2,37 +2,53 @@
 const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1]))S.f.coll.push(f[1]);render('form')},
  tsel:(k,v)=>{if(!v)return;const a=S.p[k];if(!a.some(x=>x.toLowerCase()==v.toLowerCase()))a.push(v);pd();render('profile')}, activity:i=>{const x=tripPlacePX(+i);if(!x)return;S.ci=x;lay('sheet',infoHTML(x),'Place Info')},
  info:gi=>{S.ci=+gi;lay('sheet',infoHTML(+gi),'Place info')},cmpick:()=>setLy(pickHTML(S.ci)),cmpto:j=>setLy(cmpHTML(S.ci,+j)),cmpback:()=>setLy(infoHTML(S.ci)),tab,toast,back:()=>{
-  const stack=cur();
-  if(stack.length<2)return;
-  const exitingId=topId(),fromForm=exitingId==='form';
+  const stack=cur(),app=$('#app');
+  if(stack.length<2||app.classList.contains('back-pending'))return;
+  const exitingId=topId(),returningId=stack[stack.length-2];
+  const fromForm=exitingId==='form';
   const slideRight=exitingId==='thread'||exitingId==='pdet';
-  const app=$('#app');
   const exiting=slideRight?$('#s-'+exitingId):null;
-  const returning=slideRight?$('#s-'+stack[stack.length-2]):null;
-  if(fromForm)app.classList.add('nt');
+  const returning=slideRight?$('#s-'+returningId):null;
   if(exiting&&returning){
-    exiting.classList.add('back-exit');
+    // Paint the parent before the slide begins so its frosted surfaces don't flash.
+    render(returningId);
     returning.classList.add('back-reveal');
+    app.classList.add('back-pending');
+    requestAnimationFrame(()=>{
+      if(topId()!==exitingId){
+        returning.classList.remove('back-reveal');
+        app.classList.remove('back-pending');
+        return;
+      }
+      stack.pop();
+      upd();
+      exiting.classList.add('back-exit');
+      let finished=false;
+      const finish=()=>{
+        if(finished)return;
+        finished=true;
+        exiting.removeEventListener('animationend',onEnd);
+        exiting.classList.remove('back-exit');
+        returning.classList.remove('back-reveal');
+        app.classList.remove('back-pending');
+      };
+      const onEnd=e=>{if(e.target===exiting)finish()};
+      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        finish();
+      }else{
+        exiting.addEventListener('animationend',onEnd);
+        setTimeout(finish,360);
+      }
+    });
+    return;
   }
+  if(fromForm)app.classList.add('nt');
   stack.pop();
   render(topId());
   upd();
   if(fromForm)requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')));
-  if(exiting&&returning){
-    let finished=false;
-    const finish=()=>{
-      if(finished)return;
-      finished=true;
-      exiting.removeEventListener('animationend',onEnd);
-      exiting.classList.remove('back-exit');
-      returning.classList.remove('back-reveal');
-    };
-    const onEnd=e=>{if(e.target===exiting)finish()};
-    exiting.addEventListener('animationend',onEnd);
-    setTimeout(finish,360);
-  }
 },
- open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;goInstant('trip')},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
+  open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;goInstant('trip')},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
  vt:(i,d)=>{const v=trip(S.cur).stops[i];d=+d;if(v.m==d){d==1?v.u--:v.d--;v.m=0}else{v.m==1&&v.u--;v.m==-1&&v.d--;d==1?v.u++:v.d++;v.m=d}rr()},
  submit:()=>{const t=trip(S.cur);if(!t||t.vs.P)return;const missing=t.stops.filter(s=>s.m===0).length;if(!t.stops.length||missing){toast(missing?`Vote on ${missing} more activit${missing==1?'y':'ies'} before submitting`:'Add activities before submitting');return}const id=t.id;t.vs.P=1;rr();toast('Votes submitted');pend(t).forEach((k,j)=>setTimeout(()=>{t.vs[k]=1;if(!pend(t).length){t.st='final';toast('Everyone’s voted. Your itinerary is ready.');if(S.cur==id&&topId()=='trip')S.step=2}rr()},1700*(j+1)))},
  nudge:()=>toast('Nudge sent to '+pend(trip(S.cur)).filter(k=>k!='P').map(k=>PE[k][2]).join(' & ')),
