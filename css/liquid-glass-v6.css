@@ -696,12 +696,11 @@ body{font-weight:500}
 }
 
 
-/* Apple-reference status bar: clean white SF-style indicators on a dark strip. */
-/* The reference uses a solid charcoal status area, not glowing text or a gradient.
-   A dark backing keeps the white indicators readable on the chat's pale canvas. */
+/* Clear iOS status bar at rest; frosted glass fades in only after scrolling.
+   Preserve Apple's white time, signal, Wi-Fi, and battery styling. */
 #dev #sb{
   height:50px;
-  background:#39393B;
+  background:transparent!important;
   color:#fff!important;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
   font-size:15px;
@@ -709,7 +708,23 @@ body{font-weight:500}
   letter-spacing:-.01em;
   text-shadow:none!important;
 }
-#dev #sb::before{display:none!important}
+#dev #sb::before{
+  display:block!important;
+  content:"";
+  position:absolute;
+  inset:0 0 -10px;
+  z-index:0;
+  pointer-events:none;
+  background:rgba(243,248,255,.18);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);
+  opacity:0;
+  transition:opacity .18s ease;
+}
+#dev.sbb #sb::before{opacity:1}
+#dev #sb > *{position:relative;z-index:1}
 #dev #sb svg{fill:currentColor;color:#fff!important;filter:none!important}
 #dev #sb .sbb{
   width:27px;
@@ -719,14 +734,14 @@ body{font-weight:500}
   box-shadow:none!important;
 }
 #dev #sb .sbb::after{background:#fff!important}
-#dev #sb .sbb i{
-  width:90%;
-  background:#fff!important;
-}
+#dev #sb .sbb i{width:90%;background:#fff!important}
 #dev #sb .sbb b{
   color:#252525!important;
   font-family:inherit;
   font-size:10px;
   font-weight:700;
   text-shadow:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #dev #sb::before{transition:none}
 }
