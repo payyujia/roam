@@ -195,7 +195,7 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 #dev .th .cover{border-radius:18px;box-shadow:0 8px 22px rgba(33,61,95,.12)!important}
 
 /* Neutral glass replaces per-card color fills across the existing component library. */
-#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.stat3>div,.srow,.fcm,.fcard,.pop,.msh,#lyc.sheet,#lyc.menu,#lyc.dlg,.pc2,.cp,.nv .cc,.sign,.chip,.fld,.fi,.in,.rinfo,.kb,.si,.sic,.fic,.xic,.dtile,.tag,.tag2,.pill,.tbx,.chg,.youpath,.nvs,.avedit,.win){
+#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.stat3>div,.srow,.fcm,.fcard,.pop,.msh,:where(#lyc.sheet,#lyc.menu,#lyc.dlg),.pc2,.cp,.nv .cc,.sign,.chip,.fld,.fi,.in,.rinfo,.kb,.si,.sic,.fic,.xic,.tag,.tag2,.pill,.tbx,.chg,.youpath,.nvs,.avedit,.win){
   border:1px solid transparent;
   background:var(--glass-surface-bg);
   -webkit-backdrop-filter:var(--glass-blur);
@@ -447,73 +447,6 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 /* Invalid text fields still show a gentle error background. */
 #dev .in.bad:focus{background-color:var(--err-t)!important}
 
-/* ===== Glass refinement: compact Home, readable cards, unobstructed actions ===== */
-/* Shorter Home greeting, with the same cool blue frosted gradient. */
-#dev #s-trips .hd{
-  height:152px;
-  min-height:152px;
-  padding:66px 24px 18px;
-  border-radius:0 0 26px 26px;
-}
-#dev #s-trips .hd h1{
-  font-size:27px;
-  line-height:32px;
-  max-width:none;
-}
-#dev #s-trips .hd::before{opacity:.65;filter:blur(12px)}
-#dev #s-trips .sec{padding-top:18px;padding-bottom:10px}
-#dev #s-trips .feat{
-  padding:14px;
-  align-items:center;
-  background:linear-gradient(135deg,rgba(255,255,255,.77),rgba(232,243,255,.68))!important;
-  box-shadow:0 7px 20px rgba(43,77,113,.09)!important;
-}
-#dev #s-trips .tlist{gap:8px}
-#dev #s-trips .trow.tier{
-  padding:10px 12px;
-  background:rgba(255,255,255,.77)!important;
-  border:1px solid rgba(255,255,255,.9)!important;
-  box-shadow:0 5px 16px rgba(43,77,113,.07)!important;
-}
-#dev #s-trips .dtile{
-  background:rgba(244,248,255,.90)!important;
-  box-shadow:none!important;
-}
-#dev #s-trips .trow.tier .tgo{
-  background:rgba(71,146,230,.14)!important;
-  color:#286DAF!important;
-}
-/* The Home feed ends above the shared fixed Create trip! button.
-   Tasks remain scrollable and can never disappear beneath the button/nav. */
-#dev #s-trips.scr{bottom:calc(var(--fab-b) + 56px)}
-#dev #s-trips .pg{padding-bottom:24px}
-/* Match light glass surfaces rather than a high-contrast opaque black footer. */
-#dev #tb{
-  background:rgba(248,251,255,.92)!important;
-  border-top:1px solid rgba(255,255,255,.9)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(150%);
-  backdrop-filter:blur(18px) saturate(150%);
-  box-shadow:0 -8px 24px rgba(33,68,103,.07)!important;
-}
-#dev #tb button{color:#657287!important}
-#dev #tb .on{color:var(--primary-strong)!important}
-#dev #tb button:not(.ctr).on{
-  background:rgba(71,146,230,.10)!important;
-  color:var(--primary-strong)!important;
-}
-#dev #tb .ctr .circ{
-  background:rgba(71,146,230,.13)!important;
-  color:var(--primary-strong)!important;
-  border:4px solid rgba(248,251,255,.97)!important;
-  box-shadow:none!important;
-}
-#dev #tb .ctr.on .circ{
-  background:var(--primary)!important;
-  color:#fff!important;
-  box-shadow:0 5px 16px rgba(71,146,230,.20)!important;
-}
-#dev #tb .on .av{box-shadow:0 0 0 2px var(--primary)!important}
-
 /* Typography refinement — preserve the blue glass style and hierarchy. */
 #dev{
   font-family:var(--font);
@@ -537,76 +470,3 @@ h1,h2,h3{color:var(--ink);font-family:var(--font);letter-spacing:-.04em}
 }
 #dev .th .thd .dt{font-size:13px;line-height:18px}
 #dev :is(.btn,#fab,#psave){font-weight:700}
-
-/* Home trip switch: fully rounded glass segmented control and clear card spacing.
-   Only the Home Upcoming/Past switch is affected, not other step or category tabs. */
-#dev #s-trips .seg{
-  display:flex;
-  gap:4px;
-  padding:4px;
-  border-radius:999px!important;
-  background:rgba(255,255,255,.48)!important;
-  border:1px solid rgba(255,255,255,.86)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
-}
-#dev #s-trips .seg button{
-  flex:1;
-  border:0!important;
-  border-radius:999px!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  overflow:hidden;
-}
-#dev #s-trips .seg button[aria-checked=true]{
-  background:rgba(71,146,230,.20)!important;
-  border:0!important;
-  border-radius:999px!important;
-  color:var(--primary-strong)!important;
-  box-shadow:none!important;
-}
-/* No underline beneath Upcoming or Past; the selected pill communicates state. */
-#dev #s-trips .seg button[aria-checked=true]::after{
-  content:none!important;
-  display:none!important;
-}
-
-/* New trip: fully opaque glass-tinted canvas prevents previously open screens
-   from showing through while form navigation and status bar update. */
-#dev #s-form.scr{
-  background:linear-gradient(155deg,#E8F2FE 0%,#F5F8FE 52%,#FAF5F6 100%)!important;
-}
-/* One coherent iOS-like switch: blue track, centred white thumb, no dark ring.
-   Confine the override to New trip so Profile preference toggles are unchanged. */
-#dev #s-form .sw{
-  position:relative;
-  display:inline-block;
-  flex:0 0 50px;
-  width:50px;
-  height:30px;
-  border:0!important;
-  border-radius:999px;
-  background:rgba(102,119,145,.26)!important;
-  box-shadow:none!important;
-  transition:background .18s ease;
-}
-#dev #s-form .sw.on{
-  background:var(--primary)!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-#dev #s-form .sw::after{
-  content:"";
-  position:absolute;
-  top:3px!important;
-  left:3px!important;
-  width:24px!important;
-  height:24px!important;
-  border:0!important;
-  border-radius:50%;
-  background:#fff!important;
-  transform:translateX(0)!important;
-  box-shadow:0 1px 4px rgba(26,55,87,.18)!important;
-  transition:transform .18s ease;
-}
-#dev #s-form .sw.on::after{transform:translateX(20px)!important}
-#dev #s-form .sw:focus-visible{outline:2px solid var(--primary)!important;outline-offset:3px}

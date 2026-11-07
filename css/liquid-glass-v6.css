@@ -1,601 +1,450 @@
-/* ROAM V6 · LIVE LIQUID GLASS MATERIALS
-   Reference: docs/sticker-sheet.html
-   #4792E6 accent. Uniform low-opacity white passive surfaces.
-   Raised controls use a masked 132-degree diagonal RIM shine only.
-*/
+/* Sunrise Frost component library, applied to Roam's live controls. */
 :root{
-  color-scheme:light;
-  --primary:#4792E6;--primary-strong:#2478D2;--primary-soft:#DCEBFD;
-  --secondary:#DCEBFD;--ink:#0F1118;--black:#0F1118;
-  --bg:#EDF4FC;--tx2:#58677C;--tx3:#8190A4;
-  --s1:rgba(255,255,255,.45);--s2:rgba(255,255,255,.45);
-  --s3:rgba(255,255,255,.62);--line:rgba(92,119,150,.20);
-  --glass-surface-bg:rgba(255,255,255,.45);
-  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.62),
-    0 8px 26px rgba(48,86,134,.07);
-  --glass-blur:blur(22px) saturate(135%);
-  --coral:var(--primary-soft);--coral-m:#EAF4FF;
-  --coral-t:rgba(71,146,230,.10);
-  --sun:var(--primary-soft);--sun-m:#EAF4FF;
-  --sun-t:rgba(71,146,230,.08);
-  --teal:var(--primary);--teal-m:#91C1F4;
-  --teal-t:rgba(71,146,230,.13);--teal-tt:rgba(71,146,230,.08);
-  --tag:rgba(255,255,255,.45);--tag-d:rgba(255,255,255,.45);
-  --tag-ink:var(--ink);--tink:var(--primary-strong);
-  --lc:var(--primary);--lt:#fff;
+  --sky-50:#F3F8FF;
+  --sky-150:#D8EAFF;
+  --sky-300:#8FC6FF;
+  --sky-400:#6DB6FF;
+  --sky-500:#2F8CFF;
+  --sky-600:#1F63B5;
+  --coral-100:#FFE4DD;
+  --coral-200:#FFC9BC;
+  --coral-300:#FFA899;
+  --coral-500:#FF6F61;
+  --amber:#FFA23A;
+  --rose:#FF5C93;
+  --ink:#0E1116;
+  --muted:#5B6878;
+
+  --primary:var(--sky-400);
+  --primary-strong:var(--sky-600);
+  --primary-soft:var(--sky-150);
+  --secondary:var(--sky-150);
+  --coral:var(--coral-200);
+  --bg:var(--sky-50);
+  --tx2:var(--muted);
+  --tx3:var(--muted);
+  --s1:rgba(255,255,255,.26);
+  --s2:rgba(255,255,255,.40);
+  --s3:rgba(255,255,255,.62);
+  --green:#1E7D5F;
+  --red:#C4505A;
+
+  --glass-surface-bg:rgba(255,255,255,.26);
+  --glass-control-bg:rgba(255,255,255,.40);
+  --glass-blur:blur(28px) saturate(180%);
+  --glass-shadow:0 12px 34px rgba(40,100,180,.18),0 2px 6px rgba(40,100,180,.08),
+    inset 0 1px 10px rgba(255,255,255,.4);
+  --control-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25);
+  --glass-rim:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.45) 22%,
+    transparent 46%,transparent 54%,rgba(255,255,255,.45) 78%,#fff 100%);
+  --sky-fill:rgba(109,182,255,.62);
+  --coral-fill:rgba(255,201,188,.60);
+  --sunrise-canvas:
+    radial-gradient(ellipse 60% 38% at 100% 0%,rgba(255,168,153,.75),transparent 75%),
+    radial-gradient(ellipse 60% 40% at 0% 100%,rgba(109,182,255,.70),transparent 75%),
+    radial-gradient(ellipse 45% 30% at 100% 100%,rgba(255,168,153,.50),transparent 75%),
+    radial-gradient(ellipse 45% 30% at 0% 40%,rgba(109,182,255,.35),transparent 75%),
+    var(--bg);
 }
-html{background:#EAF1F9}
-body{color:var(--ink);background:#EAF1F9}
-#dev{
-  font-family:var(--font);font-optical-sizing:auto;
-  background:
-    radial-gradient(ellipse at 10% 4%,rgba(84,157,239,.25),transparent 43%),
-    radial-gradient(ellipse at 96% 60%,rgba(171,213,255,.28),transparent 46%),
-    linear-gradient(150deg,#E9F3FE,#F7F9FD 55%,#EDF4FC)!important;
-}
-#dev :is(h1,h2,h3){color:var(--ink);letter-spacing:-.035em}
-#dev :is(h1,h2,.lb){font-weight:800}
-#dev :is(.cap,.sm){color:var(--tx2)}
-/* Soft blue header ambience, not a diagonal sheen on card faces. */
+
+html,body{background:var(--bg)}
+body{font-weight:500}
+#dev,#dev #s-form.scr{background:var(--sunrise-canvas)!important}
+#dev{overflow:clip}
+#dev :is(h1,h2){font-weight:800}
+#dev .lb{font-size:11px;line-height:16px;font-weight:700}
+#dev :focus-visible{outline:2px solid var(--sky-600)!important;outline-offset:3px}
+
+/* Sky headers and the full-width, scrollable Home feed. */
 #dev :is(.hd,.th){
-  background:linear-gradient(132deg,rgba(71,146,230,.18),
-   rgba(255,255,255,.26) 55%,rgba(186,221,252,.16))!important;
-}
-#dev :is(.hd,.th)::before{
-  background:
-    radial-gradient(ellipse at 18% 12%,rgba(71,146,230,.3),transparent 48%),
-    radial-gradient(ellipse at 84% 31%,rgba(181,220,255,.34),transparent 50%)!important;
-}
-#dev .wash{background:linear-gradient(135deg,rgba(71,146,230,.13),
-  rgba(255,255,255,.20) 70%)!important}
-#dev #s-form.scr{background:linear-gradient(150deg,#E8F2FE,#F7F9FE 56%,#F2F7FC)!important}
-/* Every passive variant gets the SAME translucent white face.
-   No diagonal light beam, pink card, radial shine or state-specific fill. */
-#dev :is(.glass-surface,.glass-control,.feat,.tile,.empty,.ban,.lockc,
- .row.tier,.trow.tier,.stat3>div,.srow,.fcm,.fcard,.pop,.msh,
- #lyc.sheet,#lyc.menu,#lyc.dlg,.pc2,.cp,.nv .cc,.sign,.chip,
- .fld,.fi,.in,.rinfo,.kb,.si,.sic,.fic,.xic,.dtile,.tag,.tag2,
- .tbx,.chg,.youpath,.nvs,.win,.avedit,.bub){
-  background:rgba(255,255,255,.45)!important;
-  border-color:rgba(255,255,255,.84)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%);
-  backdrop-filter:blur(22px) saturate(135%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.62),
-    0 8px 26px rgba(48,86,134,.07)!important;
-}
-#dev :is(.tier,.tier.t0,.tier.t1,.tier.t2,.tier.t3,
- .dtile.hot,.sign,.win,.srow:active,.tile:active,
- .trow.tier:active,.row.tier:active){
-  background:rgba(255,255,255,.45)!important;
-}
-#dev #s-trips :is(.feat,.trow.tier){background:rgba(255,255,255,.45)!important}
-#dev .tlist{background:transparent!important;border:0!important;box-shadow:none!important}
-#dev .dtile.hot,#dev .sign,#dev .win{color:var(--ink)!important}
-#dev .dtile.hot span,#dev .sign .cap{color:var(--tx2)!important}
-#dev .tag.ok{color:#168365!important}
-#dev .tag.d{color:#B33E44!important}
-/* Neutral controls across all variants; blue ring/ink signifies selection. */
-#dev :is(.pill,.pill.on,.pill[aria-pressed=true],.tag,.tag2,
- .seg,.seg button,.seg button[aria-checked=true],.pc2,.pc2[aria-pressed=true]){
-  background:rgba(255,255,255,.45)!important;
-}
-#dev :is(.pill.on,.pill[aria-pressed=true],.pc2[aria-pressed=true]){
-  color:var(--primary-strong)!important;
-  border:1px solid rgba(71,146,230,.65)!important;
-  box-shadow:inset 0 0 0 1px rgba(71,146,230,.45)!important;
-}
-#dev .seg{
-  border:1px solid rgba(255,255,255,.84)!important;
-  border-radius:999px!important;padding:4px!important;gap:3px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important;
-}
-#dev .seg button{border:0!important;border-radius:999px!important;box-shadow:none!important}
-#dev .seg button[aria-checked=true]{
-  color:var(--primary-strong)!important;
-  box-shadow:inset 0 0 0 1px rgba(71,146,230,.42)!important;
-}
-#dev .seg button[aria-checked=true]::after{content:none!important;display:none!important}
-#dev #s-trips .seg button[aria-checked=true]{background:rgba(255,255,255,.45)!important}
-/* Dimensional buttons: face + inset/exterior shadows and rim-only glints. */
-#dev :is(.btn,.gob,.vbtn,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ){
-  position:relative;isolation:isolate;overflow:hidden;
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-}
-#dev :is(#fab,#psave){isolation:isolate;overflow:hidden}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ)::before{
-  content:"";position:absolute;inset:0;padding:1.8px;z-index:2;
-  border-radius:inherit;pointer-events:none;
-  background:linear-gradient(132deg,
-    rgba(255,255,255,.99) 0%,rgba(255,255,255,.88) 17%,
-    rgba(255,255,255,.12) 39%,rgba(18,41,69,.3) 65%,
-    rgba(255,255,255,.23) 81%,rgba(255,255,255,.95) 100%);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
-}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib,.qty button,#tb .ctr .circ)::after{
-  content:"";position:absolute;inset:1px;padding:2px;z-index:2;
-  border-radius:inherit;pointer-events:none;
-  background:linear-gradient(136deg,
-    rgba(255,255,255,.38),transparent 36%,transparent 75%,rgba(255,255,255,.13));
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
-}
-/* Blue face replaces pink, for active and primary actions. */
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,#tb .ctr.on .circ){
-  color:#fff!important;
-  background:linear-gradient(180deg,#56A0EE 0%,#4792E6 54%,#367FD1 100%)!important;
-  border:0!important;
-  box-shadow:0 0 2px rgba(17,60,103,.10),0 5px 14px rgba(39,119,212,.23),
-   inset 1px 1px .5px rgba(255,255,255,.43),
-   inset -1px -1px 1px rgba(0,50,104,.23),
-   inset 0 0 12px rgba(255,255,255,.12)!important;
-}
-/* Clear glass uses the same button rim as blue/dark, not a flat 2D box. */
-#dev :is(.btn.sec,.btn.out,.top .ib){
-  color:var(--ink)!important;
-  background:rgba(255,255,255,.45)!important;
-  border:1px solid rgba(255,255,255,.84)!important;
-  box-shadow:0 0 2px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.12),
-   inset 1px 1px 0 -.5px rgba(255,255,255,.88),
-   inset -1px -1px 0 -.5px rgba(27,46,69,.20),
-   inset 0 0 3px rgba(255,255,255,.26),
-   inset 0 0 16px rgba(255,255,255,.18)!important;
-}
-/* Black recipe matches the sticker's layered Figma background and shadow. */
-#dev :is(.ib.f,#tb .ctr:not(.on) .circ){
-  color:#fff!important;
-  background:linear-gradient(0deg,#0F0F0F,#0F0F0F),
-    linear-gradient(0deg,rgba(51,51,51,.45),rgba(51,51,51,.45)),
-    rgba(153,153,153,.3)!important;
-  background-blend-mode:plus-lighter,luminosity,darken;
-  box-shadow:0 0 2px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.12),
-   inset 1px 1px 0 -.5px #333333,inset -1px -1px 0 -.5px #262626,
-   inset 1px 1px .5px -1px #FFFFFF,inset -1px -1px .5px -1px #FFFFFF,
-   inset 0 0 3px rgba(255,255,255,.5),inset 0 0 16px #F2F2F2!important;
-}
-#dev .btn.dg{color:#B33E44!important;background:rgba(255,255,255,.45)!important;
-  border:1px solid rgba(255,255,255,.84)!important}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled{
-  background:rgba(255,255,255,.45)!important;color:var(--tx3)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.62)!important;opacity:.55;
-}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled::before,
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button):disabled::after{opacity:.3}
-#dev #tb .ctr .circ{
-  width:66px;height:66px;top:-27px;margin-left:-33px;
-  border-radius:34px;border:3px solid rgba(255,255,255,.78)!important;
-}
-#dev #tb .ctr.on .circ{
-  background:linear-gradient(180deg,#56A0EE,#4792E6 54%,#367FD1)!important;
-  box-shadow:0 0 2px rgba(17,60,103,.1),0 5px 14px rgba(39,119,212,.23),
-   inset 1px 1px .5px rgba(255,255,255,.43),
-   inset -1px -1px 1px rgba(0,50,104,.23)!important;
-}
-#dev #tb{
-  background:rgba(15,17,24,.94)!important;
-  border-top:1px solid rgba(255,255,255,.14)!important;
-  box-shadow:0 -8px 24px rgba(15,24,40,.18)!important;
-  -webkit-backdrop-filter:blur(18px) saturate(140%);
-  backdrop-filter:blur(18px) saturate(140%);
-}
-#dev #tb button{color:rgba(255,255,255,.70)!important}
-#dev #tb button.on{color:#82BBFA!important}
-#dev #tb button:not(.ctr).on{background:rgba(71,146,230,.16)!important;color:#94C8FF!important}
-#dev #tb .ctr.on{color:#94C8FF!important}
-#dev #tb .ti svg,#dev #tb .ctr svg{fill:none!important;stroke:currentColor!important}
-/* Blue-only stepper: selected solid blue, all other steps in pale blue. */
-#dev .stp{color:#7A9DC9!important}
-#dev .stp.done{color:#4D91DA!important}
-#dev .stp.on{color:var(--primary-strong)!important}
-#dev .stp::before,#dev .stp.lock::before{background:#CDE0F8!important;height:3px}
-#dev .stp.done::before{background:#9BC7F5!important}
-#dev .stp.on::before{background:var(--primary)!important}
-#dev .sd{background:#E7F2FF!important;color:#6EA9EA!important;
-  border:0!important;box-shadow:inset 0 0 0 1.5px #C6DCF8!important}
-#dev .stp.done .sd{background:#DCEBFD!important;color:var(--primary-strong)!important;
-  border:0!important;box-shadow:inset 0 0 0 1.5px #9BC7F5!important}
-#dev .stp.on .sd{background:var(--primary)!important;color:#fff!important;
-  border:0!important;box-shadow:none!important}
-#dev .segs i{background:#CDE0F8!important}
-#dev .segs i.on{background:var(--primary)!important}
-#dev .tc .ln::after{background:#CDE0F8!important}
-#dev .tc.done .ln::after{background:#9BC7F5!important}
-#dev .dotc.wait{background:#9BC7F5!important}
-#dev .dotc.ok{background:var(--primary)!important}
-@media(prefers-reduced-motion:reduce){
-  #dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.ib.f,.top .ib){transition:none!important}
-}
-
-/* =====================================================================
-   V6.1 HOME AND NAVIGATION REFINEMENT
-   Keep the bright #4792E6 Liquid Glass system but avoid heavy black UI,
-   awkward Home clipping and overpowering action shadows.
-   ===================================================================== */
-
-/* The Home feed should scroll through the whole phone. Its previous
-   shortened viewport left a large empty band and cut off task 3.
-   Bottom padding provides scroll clearance for both fixed controls. */
-#dev #s-trips.scr{
-  bottom:0!important;
-  overflow-y:auto;
-  overscroll-behavior-y:contain;
-}
-#dev #s-trips .pg{
-  padding-bottom:calc(var(--fab-b) + 112px)!important;
-}
-
-/* Compact Home hierarchy: greeting, upcoming trip, then tasks. */
-#dev #s-trips .hd{
-  height:138px;
-  min-height:138px;
-  padding:62px 24px 15px;
-}
-#dev #s-trips .hd h1{
-  font-size:25px;
-  line-height:31px;
-  font-weight:800;
-}
-#dev #s-trips .sec{
-  padding-top:13px;
-  padding-bottom:8px;
-}
-#dev #s-trips .feat{
-  padding:12px;
-  gap:12px;
-  border:1px solid rgba(255,255,255,.84)!important;
-  background:rgba(255,255,255,.45)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),
-    0 5px 16px rgba(48,86,134,.065)!important;
-}
-#dev #s-trips .feat .cover.z-l{
-  --cz:104px;
-  border-radius:15px;
-}
-#dev #s-trips .feat h2{font-size:18px;line-height:23px}
-#dev #s-trips .tlist{gap:7px}
-#dev #s-trips .trow.tier{
-  min-height:70px;
-  padding:7px 10px;
-  gap:8px;
-  background:rgba(255,255,255,.45)!important;
-  border:1px solid rgba(255,255,255,.84)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),
-    0 4px 12px rgba(48,86,134,.06)!important;
-}
-#dev #s-trips .trow .tmain{gap:10px}
-#dev #s-trips .trow .gr b{
-  font-size:14px;
-  line-height:19px;
-}
-#dev #s-trips .dtile{
-  width:45px;
-  height:52px;
-  border-radius:12px;
-  background:rgba(255,255,255,.45)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.65)!important;
-}
-#dev #s-trips .trow .tgo{
-  height:30px;
-  padding:0 12px;
-  background:rgba(255,255,255,.45)!important;
-  color:var(--primary-strong)!important;
-  border:1px solid rgba(71,146,230,.14)!important;
-  box-shadow:none!important;
-}
-
-/* Make reject / accept look like one coherent pair of quiet controls.
-   Never apply the glossy black icon-button variant to a task rejection. */
-#dev #s-trips .trow .tact{gap:5px;align-items:center}
-#dev #s-trips .trow .tact :is(.ib.f,.ib.p){
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background:rgba(255,255,255,.45)!important;
-  border:1px solid rgba(255,255,255,.85)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),
-    0 1px 4px rgba(48,86,134,.07)!important;
-  -webkit-backdrop-filter:blur(8px);
-  backdrop-filter:blur(8px);
-}
-#dev #s-trips .trow .tact .ib.f{color:#64758B!important}
-#dev #s-trips .trow .tact .ib.p{color:var(--primary-strong)!important}
-#dev #s-trips .trow .tact :is(.ib.f,.ib.p)::before,
-#dev #s-trips .trow .tact :is(.ib.f,.ib.p)::after{
-  content:none!important;
-  display:none!important;
-}
-#dev #s-trips .trow .tact .ib:active{
-  background:rgba(71,146,230,.12)!important;
-}
-
-/* Bright frosted navigation, preserving the five-tab layout and the
-   raised Trips action. Keep enough height for labels and home indicator. */
-#dev #tb{
-  height:94px;
-  padding:0 9px 27px;
-  overflow:visible;
-  background:rgba(248,251,255,.85)!important;
-  border-top:1px solid rgba(255,255,255,.86)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(145%);
-  backdrop-filter:blur(20px) saturate(145%);
-  box-shadow:0 -6px 21px rgba(42,79,122,.065)!important;
-}
-#dev #tb button{
-  color:#69798B!important;
-  font-weight:600;
-}
-#dev #tb :is(button.on,button[aria-current="page"]){
-  color:var(--primary-strong)!important;
-}
-#dev #tb button:not(.ctr).on{
-  background:transparent!important;
-  color:var(--primary-strong)!important;
-}
-#dev #tb button:not(.ctr).on::before,
-#dev #tb .ctr.on::after{
-  content:none!important;
-  display:none!important;
-}
-#dev #tb .ctr{
-  padding-top:46px;
-  overflow:visible;
-  color:var(--primary-strong)!important;
-}
-#dev #tb .ctr .circ{
-  position:absolute;
-  width:66px;
-  height:66px;
-  top:-27px;
-  left:50%;
-  margin-left:-33px;
-  border-radius:34px;
-  border:3px solid rgba(248,251,255,.97)!important;
-  box-shadow:0 4px 13px rgba(39,119,212,.15),
-    inset 1px 1px .5px rgba(255,255,255,.38)!important;
-}
-#dev #tb .ctr.on .circ{
-  color:#fff!important;
-  background:linear-gradient(180deg,#56A0EE 0%,#4792E6 54%,#367FD1 100%)!important;
-  box-shadow:0 4px 13px rgba(39,119,212,.18),
-    inset 1px 1px .5px rgba(255,255,255,.43),
-    inset -1px -1px 1px rgba(0,50,104,.20)!important;
-}
-#dev #tb .ctr:not(.on) .circ{
-  color:var(--primary-strong)!important;
-  background:rgba(255,255,255,.5)!important;
-  background-blend-mode:normal!important;
-  box-shadow:0 3px 10px rgba(48,86,134,.08),
-    inset 0 1px 0 rgba(255,255,255,.7)!important;
-}
-/* Soft restrained gloss is still confined to the button rim. */
-#dev #fab{
-  height:43px;
-  padding:0 21px;
-  border-radius:999px;
-  box-shadow:0 5px 15px rgba(39,119,212,.16),
-    inset 1px 1px .5px rgba(255,255,255,.4),
-    inset -1px -1px 1px rgba(0,50,104,.15)!important;
-}
-
-/* On shorter phones retain full scroll access instead of moving the CTA
-   into the task content. The dock remains fixed but not screen-blocking. */
-@media(max-height:740px){
-  #dev #s-trips .hd{height:124px;min-height:124px;padding-top:56px}
-  #dev #s-trips .feat .cover.z-l{--cz:94px}
-  #dev #s-trips .sec{padding-top:10px;padding-bottom:7px}
-}
-@media(max-width:360px){
-  #dev #s-trips .feat{padding:10px}
-  #dev #s-trips .feat .cover.z-l{--cz:94px}
-  #dev #s-trips .trow.tier{padding-inline:8px}
-}
-
-
-/* =====================================================================
-   SUNRISE FROST · REELS, PROFILE, TRIP DETAIL AND CHAT POLISH
-   Styling only: preserve the existing screen and component layouts.
-   ===================================================================== */
-
-/* Trip detail typography follows the library's display / heading scale. */
-#dev #s-trip .thd .gr h1{
-  font-size:clamp(40px,9vw,56px)!important;
-  line-height:.98!important;
-  font-weight:800!important;
-  letter-spacing:-.06em!important;
-}
-#dev #s-trip .gr b{
-  font-size:24px;
-  line-height:1.12;
-  font-weight:800;
-}
-
-
-
-/* =====================================================================
-   SUNRISE FROST v11 · BUTTONS, NAVBAR AND DISPLAY HEADERS
-   Exact component-library material: 40% white face, 22px/180% frost,
-   diagonal rim, restrained blue-tinted shadow.
-   ===================================================================== */
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib,.rinfo,.vote-info-btn,.vb,.avedit){
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  background:rgba(255,255,255,.40)!important;
-  color:var(--ink)!important;
-  border:0!important;
-  -webkit-backdrop-filter:blur(22px) saturate(180%)!important;
-  backdrop-filter:blur(22px) saturate(180%)!important;
-  box-shadow:0 4px 14px rgba(70,105,140,.10),
-    inset 0 1px 4px rgba(255,255,255,.25)!important;
-  transition:transform .15s,box-shadow .15s,background .15s;
-}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib,.rinfo,.vote-info-btn,.vb,.avedit)::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  padding:1px;
-  pointer-events:none;
-  background:linear-gradient(135deg,
-    rgba(255,255,255,1) 0%,
-    rgba(255,255,255,.45) 22%,
-    rgba(255,255,255,0) 46%,
-    rgba(255,255,255,0) 54%,
-    rgba(255,255,255,.45) 78%,
-    rgba(255,255,255,1) 100%);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
-}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib):hover{transform:translateY(-1px)}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib):active{transform:scale(.98)}
-#dev :is(.btn,.gob,.vbtn,#fab,#psave,.play,.tpl,.qty button,.ib):disabled{
-  opacity:.45!important;
-  cursor:not-allowed;
-  transform:none;
-  background:rgba(255,255,255,.40)!important;
-  color:var(--tx3)!important;
-  box-shadow:inset 0 1px 4px rgba(255,255,255,.25)!important;
-}
-#dev .btn{height:46px;padding:0 22px;border-radius:999px;font-size:13px;font-weight:700}
-#dev .btn.round{width:50px;height:50px;padding:0}
-#dev .btn.sm{height:34px;padding:0 14px;font-size:11px}
-#dev .btn.sky{background:rgba(109,182,255,.62)!important;color:var(--ink)!important}
-#dev .btn.coral{background:rgba(255,201,188,.60)!important;color:var(--ink)!important}
-#dev .btn.ink{background:rgba(14,17,22,.90)!important;color:#fff!important;box-shadow:0 6px 16px rgba(14,17,22,.18)!important}
-#dev .btn.ink::before{background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,255,255,0) 46%,rgba(255,255,255,0) 54%,rgba(255,255,255,.5))}
-#dev .btn.dg{background:rgba(217,75,87,.09)!important;color:var(--ink)!important}
-#dev .btn.sec,#dev .btn.out{background:rgba(255,255,255,.40)!important;color:var(--ink)!important}
-#dev .play{width:54px;height:54px;border-radius:50%}
-#dev .ib{border-radius:50%;border:0!important}
-#dev .ib.f,#dev .top .ib{background:rgba(255,255,255,.40)!important}
-#dev .ib:active{background:rgba(109,182,255,.32)!important}
-#dev .btn svg,#dev .gob svg,#dev .vbtn svg,#dev .play svg,#dev .tpl svg,#dev .ib svg{position:relative;z-index:1}
-
-/* Library display header: opaque Sunrise sky, black display type, left aligned. */
-#dev #s-chat .hd,#dev #s-profile .hd{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:flex-end;
-  box-sizing:border-box;
-  height:208px;
-  min-height:208px;
-  margin-top:-50px;
-  padding:84px 24px 25px;
-  overflow:hidden;
-  border:0!important;
+  background:var(--sky-400);
+  border:0;
   border-radius:0 0 36px 36px;
-  background:#6DB6FF!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  box-shadow:none!important;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:none;
 }
-#dev #s-chat .hd::before,#dev #s-chat .hd::after,
-#dev #s-profile .hd::before,#dev #s-profile .hd::after{content:none!important;display:none!important}
-#dev #s-chat .hd h1,#dev #s-profile .hd h1{
-  align-self:flex-start;
-  width:100%;
-  max-width:none;
-  margin:0;
-  color:#0E1116!important;
-  font-size:clamp(44px,8vw,64px)!important;
-  line-height:.95!important;
-  font-weight:800!important;
-  letter-spacing:-.06em!important;
-  text-align:left!important;
+#dev :is(.hd,.th)::before,#dev :is(.hd,.th)::after{content:none}
+#dev .hd h1,#dev .th .thd h1{
+  color:var(--ink);
+  font-size:clamp(40px,10vw,56px);
+  font-weight:800;
+  line-height:.98;
+  letter-spacing:-.06em;
+  overflow-wrap:anywhere;
 }
+#dev #s-trips.scr{bottom:0;overflow-y:auto;overscroll-behavior-y:contain}
+#dev #s-trips .pg{padding-bottom:calc(var(--fab-b) + 112px)}
+#dev #s-trips .hd{height:auto;min-height:138px;padding:62px 24px 18px}
+#dev #s-trips .hd h1{max-width:none;font-size:clamp(25px,8vw,34px);line-height:1.12;letter-spacing:-.045em}
+#dev #s-trips .sec{padding-top:13px;padding-bottom:8px}
 #dev #s-profile .profile-notif{
+  --action-fill:var(--glass-control-bg);
   position:absolute;
-  z-index:2;
   top:calc(78px + env(safe-area-inset-top,0px));
   left:24px;
   width:50px;
   height:50px;
-  min-width:50px;
   padding:0;
-  border-radius:50%;
-  color:#0E1116!important;
 }
-#dev #s-profile .profile-notif svg{width:20px;height:20px}
+#dev .profile-notif svg{width:20px;height:20px}
 
-/* Component-library navigation: translucent white frost, five equal tabs,
-   raised centre action, blue active state and no dark navbar treatment. */
+/* Shared glass surfaces. Keep positioning for sheets and map overlays. */
+#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.vote-row,.chat-row,
+  .stat3>div,.srow,.fcm,.cp,.nv .cc,.sign,.fld,.fi,.tbx,.chg,.youpath,.nvs,.bub,.seg,.rtg){
+  position:relative;
+}
+#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.vote-row,.chat-row,
+  .stat3>div,.srow,.fcm,.fcard,.pop,.msh,.cp,.nv .cc,.sign,.fld,.fi,.tbx,
+  .chg,.youpath,.nvs,.bub,.seg,.rtg,#lyc.sheet,#lyc.menu,#lyc.dlg,#toast){
+  background:var(--glass-surface-bg)!important;
+  border:0!important;
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--surface-shadow,var(--glass-shadow))!important;
+}
+#dev :is(.feat,.tile,.empty,.ban,.lockc,.row.tier,.trow.tier,.vote-row,.chat-row,
+  .stat3>div,.srow,.fcm,.fcard,.pop,.msh,.cp,.nv .cc,.sign,.fld,.fi,.tbx,
+  .chg,.youpath,.nvs,.bub,.seg,.rtg,#lyc.sheet,#lyc.menu,#lyc.dlg,#toast,
+  .btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.qty button,.avedit,.rinfo,.vote-info-btn,.vb,
+  .tgo,#fab,#psave,.pill,.chip,.pc2,.tag,.tag2,.bdg,.bd2,.pn .bg,.mp .you)::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  height:auto;
+  opacity:1;
+  border-radius:inherit;
+  padding:1px;
+  pointer-events:none;
+  background:var(--rim,var(--glass-rim));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+#dev :is(.feat,.row.tier,.trow.tier,.vote-row,.chat-row){border-radius:22px}
+#dev #s-trips .feat{padding:12px;gap:12px;align-items:center}
+#dev #s-trips .feat .cover.z-l{--cz:104px;border-radius:15px}
+#dev #s-trips .feat h2{font-size:18px;line-height:23px}
+#dev :is(.row.tier,.chat-row) .cover{width:56px;height:60px;border-radius:14px}
+#dev .cover{background:linear-gradient(160deg,var(--coral-200),var(--sky-400))}
+#dev .st .av{color:var(--ink)}
+#dev .st .av:nth-child(2){background:var(--coral-200)}
+#dev .st .av:nth-child(3){background:var(--sky-150)}
+#dev .tlist{gap:10px;background:none;border:0;box-shadow:none}
+#dev :is(.trow.tier,.row.tier){min-height:76px;padding:10px 12px;gap:10px}
+#dev .trow .tmain{gap:10px}
+#dev .trow .tact{gap:5px}
+#dev .dtile{
+  width:52px;
+  height:56px;
+  border:0;
+  border-radius:15px;
+  background:rgba(109,182,255,.28);
+  color:var(--ink);
+  box-shadow:none!important;
+}
+#dev .dtile :is(i,span){color:var(--ink)}
+#dev .dtile i{font-size:8px}
+#dev .dtile span{font-size:9px;font-weight:800}
+#dev .dtile svg{color:var(--sky-600)}
+#dev .task .due{
+  color:var(--muted);
+  white-space:normal;
+}
+#dev .task .due.hot{color:#99472F}
+#dev .task .due::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--sky-500)}
+#dev .task .due.hot::before{background:var(--coral-300)}
+#dev .task .due.undated::before{background:var(--muted)}
+#dev .dotc{width:7px;height:7px;vertical-align:1px}
+#dev .dotc.wait{background:var(--sky-500)}
+#dev .dotc.ok{background:#2E9C7A}
+#dev #s-trip .vote-row{
+  width:auto;
+  margin-inline:16px;
+  margin-top:8px;
+  padding-inline:10px;
+}
+#dev #s-trip .vote-row .vote-heading b{font-size:14px}
+#dev #s-trip .vote-row:last-child{margin-bottom:100px}
+#dev .chat-row{width:calc(100% - 48px);margin:0 24px 10px;padding:10px 12px}
+
+/* Frosted pill actions, round controls and small card actions. */
+#dev :is(.btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.qty button,.rinfo,.vote-info-btn,.vb,.tgo){position:relative}
+#dev :is(.btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.qty button,.rinfo,.vote-info-btn,.vb,
+  .tgo,.avedit,#fab,#psave){
+  background:var(--action-fill,var(--glass-control-bg))!important;
+  color:var(--action-ink,var(--ink))!important;
+  border:0!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:var(--action-shadow,var(--control-shadow))!important;
+  transition:transform .15s,box-shadow .15s,background .15s;
+}
+#dev :is(.btn,.btn.y,.gob,.vbtn,.play,.tpl,.qty button,.tgo,.avedit,#fab,.ib.p,
+  .ib[aria-pressed=true],.vb[aria-pressed=true]){--action-fill:var(--sky-fill)}
+#dev :is(.btn.sec,.btn.out){--action-fill:var(--glass-control-bg)}
+#dev :is(.btn.dg,.kb){--action-fill:var(--coral-fill)}
+#dev :is(.btn[data-a="formnext"],.btn[data-a="submit"],.btn[data-a="psave"],#psave){
+  --action-fill:rgba(14,17,22,.90);
+  --action-ink:var(--white);
+  --action-shadow:0 6px 16px rgba(14,17,22,.18);
+  --rim:linear-gradient(135deg,rgba(255,255,255,.6),transparent 46%,
+    transparent 54%,rgba(255,255,255,.5));
+}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave){height:46px;border-radius:999px;font-size:13px;font-weight:700}
+#dev .btn{padding:0 22px}
+#dev .btn.sm2{height:34px;padding:0 14px;font-size:11px}
+#dev .tgo{height:28px;padding:0 12px;font-size:11px}
+#dev #fab,#dev #psave{padding:0 22px}
+#dev #fab:hover,#dev #psave:hover{transform:translate(-50%,-1px)}
+#dev #fab:active,#dev #psave:active{transform:translateX(-50%) scale(.98)}
+#dev :is(.btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.avedit,.rinfo,.vote-info-btn,.vb):hover:not(:disabled){
+  transform:translateY(-1px);
+}
+#dev :is(.btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.avedit,.rinfo,.vote-info-btn,.vb):active:not(:disabled){
+  transform:scale(.98);
+}
+#dev :is(.btn,.ib,.gob,.kb,.vbtn,.play,.tpl,.qty button,#fab,#psave):disabled{
+  --action-fill:var(--glass-control-bg);
+  --action-ink:var(--muted);
+  --action-shadow:inset 0 1px 4px rgba(255,255,255,.25);
+  --rim:var(--glass-rim);
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+}
+#dev #psave:disabled{transform:translateX(-50%)}
+#dev :is(.ib,.kb,.vote-info-btn,.vb){border-radius:999px}
+#dev #s-trip .vote-row .vb{border-radius:999px}
+#dev :is(.ib,.vb)::after{content:none}
+#dev .play{width:54px;height:54px}
+#dev .dock{background:linear-gradient(transparent,rgba(243,248,255,.94) 40%,var(--bg))}
+
+/* Filters, tags and badges. */
+#dev :is(.pill,.chip,.pc2,.tag,.tag2){position:relative;font-size:12px;font-weight:700}
+#dev :is(.pill,.chip,.pc2,.tag,.tag2){
+  background:var(--glass-control-bg)!important;
+  border:0!important;
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  box-shadow:0 4px 12px rgba(40,100,180,.10)!important;
+}
+#dev :is(.pill,.chip){height:36px;padding-inline:15px;color:var(--muted)}
+#dev :is(.pill,.pc2)[aria-pressed=true]{
+  --rim:linear-gradient(135deg,var(--sky-500),rgba(109,182,255,.15) 50%,var(--sky-500));
+  background:rgba(109,182,255,.35)!important;
+  color:var(--ink);
+}
+#dev :is(.tag,.tag2){height:32px}
+#dev .tag2 button{width:20px;height:20px;background:rgba(255,255,255,.55)!important}
+#dev .tag2 button svg{width:11px;height:11px}
+#dev .tag.ok{color:#1E7D5F}
+#dev .tag.d{color:var(--red)}
+#dev :is(.bdg,.bd2){
+  min-width:20px;
+  height:20px;
+  padding:0 6px;
+  background:var(--coral-200);
+  color:var(--ink);
+  font-size:10px;
+  font-weight:800;
+  display:inline-grid;
+  place-items:center;
+  box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6)!important;
+}
+#dev .bd2{position:relative}
+#dev .bdg.dot{width:9px;height:9px;min-width:0;padding:0;background:var(--coral-300)}
+
+/* Input fields and selection controls. */
+#dev :is(.in,.fld,.fi){
+  color:var(--ink);
+  border:0!important;
+  border-radius:18px;
+  font-size:13px;
+}
+#dev :is(input,button):is(.in,.fld),#dev .fi{min-height:50px}
+#dev :is(.in,.fld input,.fi input,.tip)::placeholder{color:var(--muted);opacity:1}
+#dev .in{
+  background:var(--glass-surface-bg)!important;
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow)!important;
+}
+#dev .fld{min-height:50px}
+#dev .fld > svg{flex:none;color:var(--muted)}
+#dev :is(.fld,.fi) > .in{
+  min-height:0;
+  background:transparent!important;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:none!important;
+}
+#dev .fld > .in{height:100%;padding:0;min-width:0;flex:1}
+#dev :is(.fld,.fi,.fi.sr,.tbx):focus-within,#dev .in:focus{
+  box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important;
+}
+#dev :is(.fld,.fi) :is(input,textarea):focus-visible,#dev .tip:focus-visible{outline:none!important}
+#dev :is(.fld,.fi) > .in:focus{box-shadow:none!important}
+#dev .in.bad,#dev #s-form .fld.bad{background:var(--coral-100)!important}
+#dev .form-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#dev .comp .in{border-radius:999px}
+#dev .sw{
+  width:52px;
+  height:31px;
+  flex:0 0 52px;
+  border:0!important;
+  background:rgba(120,140,165,.25)!important;
+  box-shadow:none!important;
+}
+#dev .sw[aria-checked=true]{
+  background:var(--sky-400)!important;
+  box-shadow:none!important;
+}
+#dev .sw::after{
+  top:3px!important;
+  left:3px!important;
+  width:25px!important;
+  height:25px!important;
+  background:#fff!important;
+  box-shadow:0 2px 5px rgba(30,60,95,.20)!important;
+}
+#dev .sw[aria-checked=true]::after{transform:translateX(21px)!important}
+#dev :is(.cbx,.rdo){
+  width:24px;
+  height:24px;
+  border:0!important;
+  background:var(--glass-control-bg)!important;
+  box-shadow:0 3px 8px rgba(40,100,180,.12)!important;
+}
+#dev .cbx{border-radius:8px}
+#dev :is(.cx,.rd)[aria-checked=true] :is(.cbx,.rdo){background:rgba(109,182,255,.75)!important;color:var(--ink)!important}
+#dev .rd[aria-checked=true] .rdo::after{background:var(--sky-600)}
+#dev .seg,#dev #s-trips .seg,#dev .rtg{
+  --surface-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 12px rgba(40,100,180,.10);
+  padding:4px;
+  gap:2px;
+  border-radius:999px!important;
+}
+#dev .rtg{position:absolute;left:24px;right:24px}
+#dev .rtg::before{z-index:auto}
+#dev :is(.seg,.rtg,#s-trips .seg) button{
+  height:38px;
+  flex:1;
+  border:0!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  box-shadow:none!important;
+}
+#dev #s-reels .rtg button{color:var(--white);opacity:1;text-shadow:0 1px 3px rgba(14,17,22,.7)}
+#dev .rtg .sp{display:none}
+#dev .rv h1{color:var(--white)}
+#dev :is(.seg,.rtg,#s-trips .seg) button:is([aria-checked=true],[aria-selected=true]){
+  background:#fff!important;
+  color:var(--ink)!important;
+  text-shadow:none;
+  box-shadow:0 2px 8px rgba(70,105,140,.12)!important;
+}
+#dev :is(.seg,.rtg) button::after{content:none!important}
+
+/* Opaque progress states and their connecting line. */
+#dev .stp{gap:8px;color:var(--muted);font-size:10px;font-weight:700}
+#dev .stp::before,#dev .stp.lock::before{top:21px;height:2px;background:rgba(109,182,255,.35)}
+#dev .stp.done::before,#dev .stp.on::before{background:var(--sky-400)}
+#dev .sd{
+  width:44px;
+  height:44px;
+  border:0;
+  background:#fff;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+  box-shadow:none!important;
+}
+#dev .sd svg{width:18px;height:18px;stroke-width:2.6}
+#dev .stp.done .sd{background:var(--sky-300);color:var(--sky-600)}
+#dev .stp.on .sd{background:var(--sky-400);color:var(--ink);box-shadow:0 0 0 6px rgba(109,182,255,.28)!important}
+#dev :is(.stp.done,.stp.on){color:var(--ink)}
+#dev .segs i{background:var(--sky-150)}
+#dev .segs i.on,#dev .tc.done .ln::after{background:var(--sky-400)}
+#dev .tc .ln::after{background:rgba(109,182,255,.35)}
+
+/* Overlays and feedback. Denser sheet glass keeps long content readable over the scrim. */
+#dev :is(#lyc.sheet,#lyc.menu,#lyc.dlg,.msh,.fcard,.pop){background:rgba(243,248,255,.85)!important}
+#dev #lyc.dlg{border-radius:22px}
+#dev .scrim{background:rgba(14,17,22,.26)}
+#dev #lyc.menu .mi{
+  width:auto;
+  min-height:42px;
+  margin-inline:8px;
+  padding:0 16px;
+  gap:10px;
+  border-radius:16px;
+  font-size:13px;
+}
+#dev #lyc.menu .mi:is(:hover,:active){background:rgba(255,255,255,.45)}
+#dev #lyc.menu .mi.dg{color:var(--red)}
+#dev #toast{border-radius:20px;color:var(--ink);font-size:12px}
+#dev #toast button{color:var(--sky-600);font-weight:800}
+#dev #toast > span{display:flex;align-items:center;gap:8px}
+#dev #toast svg{color:#1E7D5F;flex:none}
+#dev .bub{border-radius:20px 20px 20px 6px;color:var(--ink);font-size:12px;font-weight:600}
+#dev #s-thread .me .bub{background:rgba(109,182,255,.6)!important;border-radius:20px 20px 6px 20px;color:var(--ink)!important}
+
+/* Five fixed tabs and the raised, opaque Trips action. */
 #dev #tb{
   height:94px;
   padding:0 9px 27px;
   overflow:visible;
   background:rgba(255,255,255,.80)!important;
-  border-top:0!important;
-  -webkit-backdrop-filter:blur(34px) saturate(160%)!important;
-  backdrop-filter:blur(34px) saturate(160%)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),
-    0 -8px 24px rgba(40,100,180,.12)!important;
-}
-#dev #tb>button{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  gap:3px;
-  padding-top:11px;
   border:0!important;
-  border-radius:0!important;
+  -webkit-backdrop-filter:blur(34px) saturate(160%);
+  backdrop-filter:blur(34px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 -8px 24px rgba(40,100,180,.12)!important;
+}
+#dev #tb.off{transform:translateY(128px)}
+#dev #tb>button{
+  padding-top:11px;
   background:transparent!important;
-  box-shadow:none!important;
-  color:#5B6878!important;
+  color:var(--muted)!important;
   font-size:10px;
   line-height:12px;
   font-weight:700;
 }
-#dev #tb>button::before,#dev #tb>button::after{content:none!important;display:none!important}
-#dev #tb>button.on{color:#1F63B5!important;font-weight:800}
-#dev #tb>button svg{width:22px;height:22px}
-#dev #tb .ctr{padding-top:46px;color:#1F63B5!important}
+#dev #tb>button:is(.on,.ctr){color:var(--sky-600)!important}
+#dev #tb>button.on{font-weight:800}
+#dev #tb>button:not(.ctr).on{background:transparent!important;color:var(--sky-600)!important}
+#dev #tb>button::before,#dev #tb>button.ctr.on::after{content:none}
+#dev #tb .ti svg{width:22px;height:22px}
+#dev #tb .ctr{padding-top:46px}
 #dev #tb .ctr .circ{
-  position:absolute;
-  left:50%;
   top:-27px;
   margin-left:-33px;
   width:66px;
   height:66px;
-  border-radius:50%;
-  border:3px solid rgba(255,255,255,.95)!important;
+  border:0!important;
   background:#fff!important;
-  color:#1F63B5!important;
-  box-shadow:0 4px 14px rgba(40,100,180,.12)!important;
+  color:var(--sky-600)!important;
+  box-shadow:var(--control-shadow)!important;
 }
-#dev #tb .ctr .circ::before{content:none!important;display:none!important}
-#dev #tb .ctr.on .circ{background:#A4D2FE!important;color:#1F63B5!important}
-#dev #tb .ctr .circ svg{width:30px;height:30px}
-#dev #tb .av{width:24px;height:24px;border-radius:50%;margin:0}
+#dev #tb .ctr.on .circ{background:#A4D2FE!important;color:var(--sky-600)!important}
+#dev #tb .ctr svg{width:30px;height:30px}
+#dev #tb .av{
+  width:24px;height:24px;margin:0;color:var(--ink);
+  background:linear-gradient(135deg,var(--coral-300),var(--sky-400));
+}
+#dev #tb .on .av{box-shadow:0 0 0 2px var(--sky-600)!important}
 
-
-/* Small/specialized action buttons use the same component-library glass.
-   Keep their existing hit-area dimensions and placement. */
-#dev :is(.rinfo,.vote-info-btn,.vb,.avedit){
-  -webkit-backdrop-filter:blur(22px) saturate(180%)!important;
-  backdrop-filter:blur(22px) saturate(180%)!important;
-  box-shadow:0 4px 14px rgba(70,105,140,.10),
-    inset 0 1px 4px rgba(255,255,255,.25)!important;
+@media(max-height:740px){
+  #dev #s-trips .hd{min-height:124px;padding-top:56px}
+  #dev #s-trips .feat .cover.z-l{--cz:94px}
+  #dev #s-trips .sec{padding-top:10px;padding-bottom:7px}
 }
-#dev .rinfo,#dev .vote-info-btn,#dev .vb{
-  background:rgba(255,255,255,.40)!important;
-  color:var(--ink)!important;
-}
-#dev .vb[aria-pressed="true"]{
-  background:rgba(109,182,255,.62)!important;
-  color:var(--ink)!important;
-}
-#dev .avedit{
-  background:rgba(109,182,255,.62)!important;
-  color:var(--ink)!important;
+@media(max-width:360px){
+  #dev #s-trips .feat .cover.z-l{--cz:94px}
+  #dev :is(.trow.tier,.row.tier){padding-inline:8px}
+  #dev #s-trip .vote-row{margin-inline:12px}
 }

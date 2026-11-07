@@ -94,7 +94,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 #s-trip .vote-info-btn{grid-column:3;grid-row:1;width:28px;height:36px;align-self:center;border-radius:10px;background:transparent;color:var(--ink);display:grid;place-items:center;flex:none}
 #s-trip .vote-info-btn:active{background:transparent}
 #s-trip .vote-info-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-/* Transparent, equally sized voting controls with centred icons and numeric counts. */
+/* Keep the voting controls the same size and centre the icons and counts. */
 #s-trip .vote-row .vt{grid-column:4;grid-row:1;width:92px;display:grid;grid-template-columns:repeat(2,44px);gap:4px;align-items:center;justify-items:center}
 #dev #s-trip .vote-row .vb{
   width:44px;height:36px;
@@ -105,7 +105,6 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 }
 #s-trip .vote-row .vb svg{display:block;flex:none}
 #s-trip .vote-row .vote-count{width:12px;text-align:center;font-size:11px;line-height:14px;font-weight:600;color:inherit;font-variant-numeric:tabular-nums}
-#dev #s-trip .vote-row .vb[aria-pressed=true]{background:transparent;box-shadow:none!important;color:var(--ink)}
 #dev #s-trip .vote-row .vb[aria-pressed=true] svg{stroke-width:3}
 #dev #s-trip .vote-row .vb[aria-pressed=true] .vote-count{font-weight:800}
 /* Remove the global selected-dot overlay which floated above the vote controls. */
