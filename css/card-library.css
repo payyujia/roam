@@ -658,7 +658,7 @@
 #dev #s-pdet .interest-picker{display:flex;flex-direction:column;gap:18px;margin-top:12px}
 #dev #s-pdet .interest-search-card{padding:12px}
 #dev #s-pdet .interest-search-card .tq-row{min-height:34px}
-#dev #s-pdet .interest-search-card .tq-row>svg{width:18px;height:18px;flex:none;color:var(--muted)}
+#dev #s-pdet .interest-search-card .tq-row>svg{width:18px;height:18px;flex:none;color:var(--muted);transform:translateY(-1px)}
 #dev #s-pdet .interest-search-card input{height:34px;min-width:0;width:100%}
 #dev #s-pdet #interest-tags:empty{display:none}
 #dev #s-pdet .interest-option-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
