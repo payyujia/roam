@@ -510,6 +510,14 @@
   color:var(--muted);
 }
 
+/* Search-field typography: Chat and Profile search controls share one input scale. */
+#dev :is(.fi.sr input,.tag-query input){
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:500;
+  line-height:21px;
+}
+
 /* ---------- MULTISELECT · WITH QUERY INPUT ----------
    Copied from docs/card-components.html (.invite-box + mini sky button + tags).
    Used by Profile > Health & accessibility (Dietary needs, Accessibility,
