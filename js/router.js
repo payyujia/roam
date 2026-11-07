@@ -48,9 +48,22 @@ const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;e
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
 function tab(t){const same=S.tab==t;$('#app').classList.add('nt');if(same)S.stack[t]=[t];else{S.prev=S.tab;S.tab=t}if(t=='reels')S.newReel=0;render(t);upd();requestAnimationFrame(()=>requestAnimationFrame(()=>$('#app').classList.remove('nt')))}
+/* Pick toast foreground from the actual rendered surface color.
+   Alpha is composited over Roam's pale app canvas before luminance is measured. */
+function syncToastContrast(t){
+ const raw=getComputedStyle(t).backgroundColor.match(/[\\d.]+/g);
+ if(!raw||raw.length<3)return;
+ const a=raw.length>3?Number(raw[3]):1,base=[243,248,255];
+ const rgb=base.map((v,i)=>Number(raw[i])*a+v*(1-a));
+ const linear=rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
+ const luminance=.2126*linear[0]+.7152*linear[1]+.0722*linear[2];
+ t.classList.toggle('toast-contrast-dark',luminance>.179);
+ t.classList.toggle('toast-contrast-light',luminance<=.179);
+}
 function toast(message,undo,icon){
  const t=$('#toast'),canUndo=typeof undo==='function';
  t.innerHTML=`<span>${icon?ic(icon,20):''}<span>${message}</span></span>${canUndo?'<button data-a="undo">Undo</button>':''}`;
+ syncToastContrast(t);
  S.undo=canUndo?undo:null;
  t.classList.add('on');
  clearTimeout(toast.h);
