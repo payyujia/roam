@@ -17,7 +17,7 @@
  keyboard.hidden=true;
  dev.appendChild(keyboard);
 
- let opened=false,shifted=true,numbers=false;
+ let opened=false,shifted=true,numbers=false,capsLock=false,lastShiftTap=0;
  /* Inverse-contrast themes are chosen from the actual chat background.
     ?keyboard-theme=dark|light can force a skin when previewing either design. */
  function brightness(el){
@@ -46,7 +46,8 @@
     differs by skin; both bottom action icons still send the chat message. */
  const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.7" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><circle cx="15.3" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><path d="M6.5 13.2c.7 3.1 3.1 5 5.5 5s4.8-1.9 5.5-5" fill="none" stroke="var(--dk-emoji-cutout)" stroke-width="1.7" stroke-linecap="round"/></svg>';
  const returnIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 6v11a4 4 0 0 1-4 4H6m0 0 6-6m-6 6 6 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- const searchIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12.4" cy="12.4" r="7.8" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="m18.3 18.3 6.3 6.3" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>';
+ /* Use the same Return glyph in both themes: this field sends chat messages,
+    so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
@@ -72,7 +73,7 @@
     ['a','s','d','f','g','h','j','k','l'],
     ['z','x','c','v','b','n','m']];
   const chars=row=>row.map(ch=>key(!numbers&&shifted?ch.toUpperCase():ch,
-    numbers?ch:ch.toUpperCase(),'dk-char')).join('');
+    numbers?ch:(shifted?ch.toUpperCase():ch),'dk-char')).join('');
   const shiftLabel=numbers?(shifted?'123':'#+='):'Shift';
   const shiftContent=numbers?(shifted?'123':'#+='):shiftIcon;
   const bottomLabel=numbers?'ABC':'123';
@@ -91,9 +92,9 @@
      '<div class="dk-row dk-bottom">'+
        '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers and symbols')+'">'+bottomLabel+'</button>'+
        '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">'+emojiIcon+'</button>'+
-       '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-space-label">space</span><span class="dk-en">EN</span></button>'+
+       '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
        '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message">'+
-         '<span class="dk-return-dark">'+returnIcon+'</span><span class="dk-return-light">'+searchIcon+'</span></button>'+
+         '<span class="dk-return-icon">'+returnIcon+'</span></button>'+
      '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
@@ -119,7 +120,7 @@
    opened=true;
    keyboard.hidden=false;
    dev.classList.add('demo-keyboard-open');
-   shifted=true;numbers=false;
+   shifted=true;numbers=false;capsLock=false;lastShiftTap=0;
    selectSkin();draw();
   }
   scrollEnd();
@@ -138,7 +139,11 @@
   const end=input.selectionEnd??start;
   input.setRangeText(value,start,end,'end');
   input.dispatchEvent(new Event('input',{bubbles:true}));
-  if(shifted&&!numbers&&/^[a-z]$/i.test(value)){shifted=false;draw()}
+  if(!numbers&&shifted&&!capsLock&&/^[a-z]$/i.test(value)){
+   shifted=false;draw();
+  } else if(!numbers&&/[.!?]\s$/.test(input.value)&&!capsLock){
+   shifted=true;draw();
+  }
  }
  function erase(){
   const input=currentInput();if(!input)return;
@@ -160,8 +165,17 @@
   const action=control.dataset.kbAction;
   if(action==='done'){hide(true);return}
   if(action==='delete'){erase();return}
-  if(action==='shift'){shifted=!shifted;draw();return}
-  if(action==='mode'){numbers=!numbers;shifted=false;draw();return}
+  if(action==='shift'){
+   if(numbers){shifted=!shifted;}
+   else{
+    const now=Date.now();
+    if(now-lastShiftTap<360){capsLock=true;shifted=true;}
+    else{capsLock=false;shifted=!shifted;}
+    lastShiftTap=now;
+   }
+   draw();return;
+  }
+  if(action==='mode'){numbers=!numbers;shifted=false;capsLock=false;draw();return}
   if(action==='send'){
    const input=currentInput();
    if(input?.value.trim())A.send();
@@ -173,7 +187,13 @@
   if(e.target.id==='cin')show();
  });
  document.addEventListener('input',e=>{
-  if(e.target.id==='cin'&&opened)updateSend();
+  if(e.target.id!=='cin'||!opened)return;
+  updateSend();
+  // Match native keyboard case when typing with a physical desktop keyboard.
+  if(!numbers&&!capsLock){
+   const sentenceStart=!e.target.value||/[.!?]\s$/.test(e.target.value);
+   if(shifted!==sentenceStart){shifted=sentenceStart;draw();}
+  }
  });
  window.addEventListener('resize',()=>{if(opened)selectSkin()});
  document.addEventListener('keydown',e=>{
