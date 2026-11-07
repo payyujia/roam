@@ -146,7 +146,7 @@ body{font-weight:500}
 #dev .st .av:nth-child(2){background:var(--coral-200)}
 #dev .st .av:nth-child(3){background:var(--sky-150)}
 #dev .tlist{gap:10px;background:none;border:0;box-shadow:none}
-#dev :is(.trow.tier,.row.tier){min-height:84px;padding:10px 12px;gap:10px}
+#dev :is(.trow.tier,.row.tier){min-height:76px;padding:10px 12px;gap:10px}
 #dev .trow .tmain{gap:10px}
 #dev .trow .tact{gap:5px}
 /* Date tiles match the trip thumbnails' 56 × 60px visual footprint. */
@@ -1198,7 +1198,10 @@ body{font-weight:500}
    enough text width for TWO actions. Do not change the other task rows. */
 #dev .reschedule-row{
   align-items:center;
+  min-height:84px;
 }
+/* This Home-only rule overrides the shared 80px minimum, leaving other task cards untouched. */
+#dev #s-trips .trow.tier.reschedule-row{min-height:84px}
 #dev .reschedule-row .tmain{
   display:flex;
   align-items:center;
@@ -1378,12 +1381,13 @@ body{font-weight:500}
 }
 
 
-/* Home card parity: voting, rescheduling, and trip cards inherit the same
-   shared 84px minimum height and 56 × 60px thumbnails/date tiles.
-   Cards can still grow when longer content needs room. */
+/* Home card parity: Tasks and Your trips share the same outer dimensions. */
+/* Trips use 60px thumbnails; Tasks use 56px date tiles. Shared 80px
+   minimum accommodates both while allowing text to grow if required. */
 #dev #s-trips :is(.trow.tier,.row.tier){
   box-sizing:border-box;
   width:100%;
+  min-height:80px;
   padding:10px 12px;
   border-radius:22px;
   gap:10px;
