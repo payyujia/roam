@@ -942,58 +942,6 @@ body{font-weight:500}
   #dev #s-profile .profile-notif{bottom:18px}
 }
 
-
-/* Home spacing + inline Create trip action: no floating overlap with cards. */
-#dev #s-trips .sec{padding-top:14px;padding-bottom:15px}
-#dev #s-trips .feat + .sec,
-#dev #s-trips .tlist + .sec{margin-top:10px}
-#dev #s-trips .tlist{gap:12px}
-#dev #s-trips .home-trip-create{
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  padding:14px 24px 0;
-}
-#dev #s-trips .home-create-button{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:40px;
-  min-height:40px;
-  padding:0 18px;
-  border:0;
-  border-radius:999px;
-  background:var(--sky-fill);
-  color:var(--ink);
-  font-family:var(--font);
-  font-size:12px;
-  font-weight:700;
-  box-shadow:var(--control-shadow);
-  cursor:pointer;
-}
-#dev #s-trips .home-create-button::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  padding:1px;
-  pointer-events:none;
-  background:var(--glass-rim);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
-}
-#dev #s-trips .home-create-button:active{transform:scale(.98)}
-#dev #s-trips .home-trip-list{margin-top:20px}
-#dev #s-trips .pg{padding-bottom:calc(126px + env(safe-area-inset-bottom,0px))}
-#dev #fab[hidden]{display:none!important}
-@media(max-height:740px){
-  #dev #s-trips .sec{padding-top:12px;padding-bottom:14px}
-}
-
-
 /* Live navigation: keep every timeline marker on one fixed vertical axis. */
 #dev .tl.nv .tn{align-items:center}
 #dev .tl.nv .nd{
