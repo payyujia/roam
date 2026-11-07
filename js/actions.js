@@ -3,8 +3,7 @@ const A={tadd:(k,el)=>{const inp=el.closest('.tin').querySelector('input');let v
  if(k=='coll'){const f=FR.find(x=>x[0].toLowerCase()==v.toLowerCase());if(!f)return toast(`No friend named ${esc(v)}`);if(!S.f.coll.includes(f[1]))S.f.coll.push(f[1]);render('form')}
  else{const a=S.p[k];if(!a.some(x=>x.toLowerCase()==v.toLowerCase()))a.push(v);pd();render('profile')}
  setTimeout(()=>{const n=k==='coll'?$('#s-form .tin .tip'):$('#s-pdet [list=dl-'+k+']');n&&n.focus()},30)},
- trm:(k,v)=>{v=decodeURIComponent(v);if(k=='coll'){const f=FR.find(x=>x[0]==v);S.f.coll=S.f.coll.filter(x=>x!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(x=>x!=v);pd();render('profile')}},
- activity:i=>{const x=tripPlacePX(+i);if(!x)return;S.ci=x;lay('sheet',infoHTML(x),'Place Info')},
+ tsel:(k,v)=>{if(!v)return;const a=S.p[k];if(!a.some(x=>x.toLowerCase()==v.toLowerCase()))a.push(v);pd();render('profile')}, activity:i=>{const x=tripPlacePX(+i);if(!x)return;S.ci=x;lay('sheet',infoHTML(x),'Place Info')},
  info:gi=>{S.ci=+gi;lay('sheet',infoHTML(+gi),'Place info')},cmpick:()=>setLy(pickHTML(S.ci)),cmpto:j=>setLy(cmpHTML(S.ci,+j)),cmpback:()=>setLy(infoHTML(S.ci)),tab,toast,back:()=>{const s=cur();if(s.length>1){const fromForm=topId()==='form',app=$('#app');if(fromForm)app.classList.add('nt');s.pop();render(topId());upd();if(fromForm)requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))}},
  open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;goInstant('trip')},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
  vt:(i,d)=>{const v=trip(S.cur).stops[i];d=+d;if(v.m==d){d==1?v.u--:v.d--;v.m=0}else{v.m==1&&v.u--;v.m==-1&&v.d--;d==1?v.u++:v.d++;v.m=d}rr()},
