@@ -37,10 +37,10 @@ Object.assign(A,{
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
  pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
- pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS;const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
+ pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):(S.interestSuggestions||nextInterestSuggestions());const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';refreshInterestPicker()},
  pinterestRemove:value=>{if(!Array.isArray(S.p.likesDraft))return;const name=decodeURIComponent(value);S.p.likesDraft=S.p.likesDraft.filter(v=>v!==name);refreshInterestPicker()},
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes]}go('pdet')},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes];S.interestSuggestions=nextInterestSuggestions()}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -88,7 +88,7 @@ document.addEventListener('pointerup',e=>{if(SW&&e.clientX-SW.x>70&&Math.abs(e.c
 document.addEventListener('pointercancel',()=>SW=null);
 /* Leaving Interests via Back (including edge swipe) or tab navigation
    discards unsaved choices without changing the saved profile. */
-const discardInterestDraft=()=>{S.p.likesDraft=null;S.interestQuery='';S.p.dirty=0};
+const discardInterestDraft=()=>{S.p.likesDraft=null;S.interestQuery='';S.interestSuggestions=null;S.p.dirty=0};
 const interestBack=A.back;
 A.back=(...args)=>{
  if(S.tab==='profile'&&topId()==='pdet'&&S.pd==='likes'&&cur().length>1
