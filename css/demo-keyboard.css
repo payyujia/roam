@@ -344,6 +344,30 @@
   font-size:11px;
   font-weight:500;
 }
+#dev .dk-emoji-backspace{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  width:27px;
+  height:25px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:5px;
+  background:transparent;
+  color:var(--dk-ink);
+  cursor:pointer;
+}
+#dev .dk-emoji-backspace svg{
+  display:block;
+  width:22px;
+  height:22px;
+}
+#dev .dk-emoji-backspace:active{background:rgba(150,155,167,.21)}
+#dev .dk-emoji-backspace:focus-visible{
+  outline:2px solid #75B7FF;
+  outline-offset:0;
+}
 @media(max-height:700px){
   #dev .dk-emoji-search-row{flex-basis:42px;padding-top:3px}
   #dev .dk-emoji-search-wrap{height:33px}
