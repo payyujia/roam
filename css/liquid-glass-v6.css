@@ -1057,9 +1057,7 @@ body{font-weight:500}
 }
 
 
-/* Profile > Travel style: align typography to the shared card type scale.
-   Keep the Chill/Balanced/Packed segmented component, but leave the plus/minus
-   controls as individual circles rather than enclosing them in a frosted pill. */
+/* Profile > Travel style: the Pace label and three-option control share a row. */
 #dev #s-pdet .pg:has(.travel-style-form) .top .tt{
   font-family:var(--font);
   font-size:20px;
@@ -1073,10 +1071,6 @@ body{font-weight:500}
   font-weight:var(--roam-card-title-weight,700);
   line-height:var(--roam-card-title-line-height,22px);
   letter-spacing:var(--roam-card-title-letter-spacing,0);
-}
-/* Use the same left gutter and predictable vertical rhythm for both fields. */
-#dev #s-pdet .travel-style-form{
-  gap:24px;
 }
 /* Pace label and the three-option selector share one horizontal row. */
 #dev #s-pdet .travel-pace-field{
@@ -1094,64 +1088,9 @@ body{font-weight:500}
 #dev #s-pdet .travel-style-form .seg button:not([aria-checked="true"]){
   color:#506178!important;
 }
-#dev #s-pdet .travel-group-size{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:center;
-  column-gap:12px;
-}
-#dev #s-pdet .travel-group-copy{
-  flex:1 1 auto;
-  min-width:0;
-}
-#dev #s-pdet .travel-group-copy > b{
-  display:block;
-  font-family:var(--roam-card-title-family,var(--font));
-  font-size:var(--roam-card-title-size,16px);
-  font-weight:var(--roam-card-title-weight,700);
-  line-height:var(--roam-card-title-line-height,22px);
-  letter-spacing:var(--roam-card-title-letter-spacing,0);
-}
-#dev #s-pdet .travel-group-copy .cap{
-  display:block;
-  margin-top:4px;
-  font-family:var(--roam-card-title-family,var(--font));
-  font-size:var(--roam-card-detail-size,12px);
-  font-weight:var(--roam-card-detail-weight,500);
-  line-height:var(--roam-card-detail-line-height,16px);
-  letter-spacing:0;
-}
-#dev #s-pdet .travel-group-stepper{
-  display:inline-flex;
-  align-self:center;
-  /* Centre the minus, count and plus against the entire two-line setting. */
-  margin-top:0;
-  flex:0 0 auto;
-  align-items:center;
-  gap:8px;
-  padding:0;
-  border:0!important;
-  border-radius:0;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-#dev #s-pdet .travel-group-stepper button{
-  width:36px;
-  height:36px;
-  flex:0 0 36px;
-}
-#dev #s-pdet .travel-group-stepper output{
-  min-width:30px;
-  line-height:36px;
-  font-weight:800;
-}
 @media(max-width:360px){
   #dev #s-pdet .travel-pace-field{column-gap:8px}
   #dev #s-pdet .travel-pace-field .seg button{padding-inline:3px}
-  #dev #s-pdet .travel-group-size{column-gap:8px}
-  #dev #s-pdet .travel-group-stepper{gap:5px;margin-top:0}
-  #dev #s-pdet .travel-group-stepper button{width:32px;height:32px;flex-basis:32px}
-  #dev #s-pdet .travel-group-stepper output{min-width:24px;line-height:32px}
 }
 /* The Save action stays unmistakably disabled, but no longer fades to
    near-invisibility. Enabled actions retain the regular Sky 400 styling. */
