@@ -254,7 +254,12 @@
   "inside outside around away back front right left up down out into from by as at " +
   "better best worse worst fine fun cool lovely happy excited tired busy free available " +
   "possible impossible sure unsure excited quick quickly slow slowly fast faster " +
-  "agree agreed agreeeing sounds sound sounded think thinking thought know knowing knew " +
+  "agree agreed agreeing sounds sound sounded think thinking thought know knowing knew " +
+  "help helpful helping helped held hello helicopter helmet hellos " +
+  "here where there then these them their though thorough through throw threw three " +
+  "trying try tried truly true trust trusted trick tricky tree train trains training " +
+  "thank thankful thankfully goodness goodnight goodbye great greater greatest " +
+  "happen happened happening happens happiness happy happily " +
   "like liked liking love loved loving want wanted wanting need needed needing hope hoping " +
   "feel feeling felt look looking looked see seeing seen saw show showing showed " +
   "say saying said write writing wrote read reading listen listening heard hear " +
@@ -298,7 +303,8 @@
   tomorrow:['morning','afternoon','night'],today:['at','is','we'],
   coming:['soon','tomorrow','with'],bring:['some','the','it'],
   check:['the','with','it'],vote:['on','for','today'],
-  trip:['to','is','planning'],ready:['to','for','now'],
+  trip:['to','is','planning'],hello:['there','everyone','how'],
+  hi:['there','everyone','how'],help:['me','with','you'],ready:['to','for','now'],
   in:['the','Singapore','a'],on:['the','my','our'],at:['the','home','around'],
   to:['the','go','see'],for:['the','you','us']
  };
@@ -348,31 +354,31 @@
     found.push(formatted);
   }
   const corrected=COMMON_CORRECTIONS[lower];
+  // Keep the user's exact spelling available alongside suggested corrections.
+  add(typed);
   if(corrected)add(corrected);
-  else add(typed);
   const contextual=NEXT_WORDS[c.previous]||[];
   contextual.filter(w=>w.startsWith(lower)).forEach(add);
   uniqueWords.filter(w=>w.startsWith(lower)&&w!==lower).slice(0,8).forEach(add);
-  if(!corrected&&found.length<3){
-   uniqueWords.filter(w=>w.length>2&&w!==lower&&w.includes(lower)).slice(0,3).forEach(add);
+  if(corrected){
+   uniqueWords.filter(w=>w.startsWith(corrected)&&w!==corrected).slice(0,3).forEach(add);
   }
-  if(found.length<3){
-   if(!corrected)add(lower);
-   if(lower.length>2)add(lower+'s');
-   if(lower.length>3)add(lower+'ing');
+  if(found.length<3&&lower.length>2){
+   uniqueWords.filter(w=>w!==lower&&w.includes(lower)).slice(0,3).forEach(add);
   }
-  // Last slot remains useful even for unknown short words.
-  while(found.length<3)found.push(found[found.length-1]||typed);
+  // Keep any unused slots empty instead of inventing nonsense word endings.
+  while(found.length<3)found.push('');
   return found.slice(0,3);
  }
  function updatePredictions(){
   const bar=keyboard.querySelector('.dk-predict');
   if(!bar||!opened)return;
   const suggestions=predictionList();
-  bar.innerHTML=suggestions.map((word,i)=>
+  bar.innerHTML=suggestions.map((word,i)=>word?
    '<button type="button" class="dk-prediction'+(i===1?' dk-prediction-primary':'')+
    '" data-kb-suggest="'+escapeText(word)+'" aria-label="Use suggestion '+escapeText(word)+
-   '">'+escapeText(word)+'</button>'
+   '">'+escapeText(word)+'</button>':
+   '<span class="dk-prediction dk-prediction-empty" aria-hidden="true"></span>'
   ).join('');
  }
  function acceptPrediction(word){
