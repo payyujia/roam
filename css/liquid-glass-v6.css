@@ -1793,9 +1793,6 @@ body{font-weight:500}
 #dev #mc .tl.nv .cc .gr{min-width:0;flex:1}
 #dev #mc .tl.nv .cc .kick{display:block;margin-bottom:2px}
 #dev #mc .tl.nv .cc b{font-size:17px;line-height:22px;font-weight:800;letter-spacing:-.02em}
-#dev #mc .cc-eta{display:flex;flex-direction:column;align-items:center;flex:none;min-width:46px;padding-left:12px;border-left:1px solid rgba(31,99,181,.16);color:var(--ink)}
-#dev #mc .cc-eta b{font-size:24px;line-height:26px;font-weight:800;letter-spacing:-.05em}
-#dev #mc .cc-eta small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 #dev #mc .tn-t{margin-left:auto;flex:none;font-size:12px;font-weight:700;color:var(--muted)}
 #dev #mc .tc .cap svg{color:var(--sky-600)}
 
@@ -1888,3 +1885,20 @@ body{font-weight:500}
 #dev #s-trip .tl .gr b{font-size:16px!important;font-weight:700!important;line-height:22px!important}
 #dev #s-trip p.cap.pad{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
 #dev #lyc.menu .mh .gr b{font-size:16px!important;font-weight:700!important;line-height:22px!important}
+
+/* Live navigation (#mc): standardise on the card-components.html type primitives.
+   Hero distance (.nvh-big b, 52px) is intentionally kept above the scale.
+   Subheader 16/700/22 · Regular 14/500/1.5 · Subtitle 12/500/16 · H3 20/800 · Kicker 10/800. */
+#dev #mc .nvh-big span{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em}
+#dev #mc .nvh-meta{font-size:12px;font-weight:500;line-height:16px;letter-spacing:0}
+#dev #mc .nvh-r .micro{font-size:12px;font-weight:500;line-height:16px}
+#dev #mc .nvt b,
+#dev #mc .tl.nv .tn .gr b,
+#dev #mc .tl.nv .cc b,
+#dev #mc .tl.nv .tn.cur b{font-size:16px!important;font-weight:700!important;line-height:22px!important;letter-spacing:-.01em!important}
+#dev #mc .nvt .cap,
+#dev #mc .tl.nv .cap,
+#dev #mc .tl.nv .cc .cap{font-size:12px!important;font-weight:500!important;line-height:16px!important}
+#dev #mc .tn-t{font-size:12px;font-weight:500;line-height:16px}
+#dev #mc .tl.nv .tdone{font-size:14px;font-weight:500;line-height:1.5}
+#dev #mc .nvs{font-size:14px;font-weight:500;line-height:1.5}
