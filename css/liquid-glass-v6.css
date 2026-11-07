@@ -77,7 +77,8 @@ body{font-weight:500}
 #dev #s-trips .pg{padding-bottom:calc(var(--fab-b) + 112px)}
 #dev #s-trips .hd{height:auto;min-height:138px;padding:62px 24px 18px}
 /* Use the shared Display 800 type scale (Plus Jakarta Sans, 800, 40–56px). */
-#dev #s-trips .hd h1{max-width:none;font-size:clamp(40px,10vw,56px);font-weight:800;line-height:.98;letter-spacing:-.06em}
+/* Home greeting: compact responsive Display-800 variant; the component-sheet type scale is unchanged. */
+#dev #s-trips .hd h1{max-width:none;font-size:clamp(34px,9vw,36px);font-weight:800;line-height:1.06;letter-spacing:-.05em}
 #dev #s-trips .sec{padding-top:13px;padding-bottom:8px}
 #dev #s-profile .profile-notif{
   --action-fill:var(--glass-control-bg);
