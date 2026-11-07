@@ -1,7 +1,8 @@
 /* ROAM / CARD STYLING LIBRARY — Sunrise Frost
-   Single shared sizing/spacing source for the 3 live HTML variants:
+   Single shared sizing/spacing source for the 4 live HTML variants:
    .trow.task.tier (Voting), .trow.reschedule-row (Rescheduling),
-   .row.tier (Trip). Markup/behavior still lives in existing JS.
+   .row.tier (Trip), .chat-row (Chat).
+   Markup/behavior still lives in existing JS.
    The same rules power docs/card-components.html.
    Load this file AFTER liquid-glass-v6.css. */
 :root{
@@ -14,11 +15,13 @@
   --roam-card-media-width:56px;
   --roam-card-media-height:60px;
   --roam-card-media-radius:14px;
+  /* Same spacing from blue header to Home's first heading and Chat search. */
+  --roam-first-section-gap:16px;
 }
 
-/* All three variants share one base set of geometry tokens. Let cards
-   grow beyond the minimum when text or accessibility sizing requires it. */
-#dev :is(.trow.tier,.row.tier),
+/* The shared card family keeps common sizing while permitting each variant
+   to have its own content/actions and to grow if text needs more room. */
+#dev :is(.trow.tier,.row.tier,.chat-row),
 #dev #s-trips :is(.trow.tier,.row.tier){
   box-sizing:border-box;
   width:100%;
@@ -28,8 +31,8 @@
   gap:var(--roam-card-gap);
 }
 
-/* Consistent media tile across DUE, rescheduling, and trip cards. */
-#dev :is(.trow.tier,.row.tier) :is(.dtile,.cover.z-m){
+/* Consistent media tile across DUE, rescheduling, trip, and chat cards. */
+#dev :is(.trow.tier,.row.tier,.chat-row) :is(.dtile,.cover.z-m){
   --cz:var(--roam-card-media-width);
   width:var(--roam-card-media-width);
   height:var(--roam-card-media-height);
@@ -37,7 +40,7 @@
   border-radius:var(--roam-card-media-radius);
   overflow:hidden;
 }
-#dev :is(.trow.tier,.row.tier) .cover.z-m img{
+#dev :is(.trow.tier,.row.tier,.chat-row) .cover.z-m img{
   display:block;
   width:100%;
   height:100%;
@@ -51,6 +54,37 @@
 
 @media(max-width:360px){
   #dev #s-trips :is(.trow.tier,.row.tier){
+    padding-inline:var(--roam-card-padding-x-compact);
+  }
+}
+
+/* Share the exact blue-header-to-first-content spacing with Home's Up next. */
+#dev #s-trips .hd + .sec{padding-top:var(--roam-first-section-gap)}
+#dev #s-chat .hd + .cs{margin-top:var(--roam-first-section-gap)!important}
+
+/* Chat cards are a fourth visual variant of the same family. The grid keeps
+   its timestamp and unread-badge column; only shared styling is consolidated. */
+#dev #s-chat .chat-row{
+  min-height:var(--roam-card-min-height);
+  padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
+  border-radius:var(--roam-card-radius);
+  column-gap:var(--roam-card-gap);
+  grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 52px;
+}
+#dev #s-chat .chat-row .cover.z-m{
+  --cz:var(--roam-card-media-width);
+  width:var(--roam-card-media-width);
+  height:var(--roam-card-media-height);
+  flex:0 0 var(--roam-card-media-width);
+  border-radius:var(--roam-card-media-radius);
+  overflow:hidden;
+}
+
+/* Keep image sizes consistent on narrow screens as well. */
+@media(max-width:360px){
+  #dev #s-chat .chat-row{
+    grid-template-columns:var(--roam-card-media-width) minmax(0,1fr) 46px;
+    column-gap:8px;
     padding-inline:var(--roam-card-padding-x-compact);
   }
 }
