@@ -22,9 +22,28 @@ const DTile=d=>{
  return `<div class="dtile" aria-hidden="true"><i>DUE</i><b>${String(date.getDate()).padStart(2,'0')}</b><span>${MN[date.getMonth()]}</span></div>`;
 };
 const TaskRow3=id=>{
- if(id=='inv'){const t=trip('read');return `<div class="trow task tier t${tier(null)} reschedule-row" role="group" aria-label="Reschedule ${esc(t.n)}? Raymond suggested ${fd(REQ)}"><div class="tmain">${Cover(t,'m')}<div class="gr"><b>Move ${esc(t.n)}?</b><div class="cap sm" title="Raymond suggested ${fd(REQ)}">Raymond · ${fd(REQ)}</div><span class="due awaiting">Awaiting your response</span></div></div><div class="tact"><button class="ib f" data-a="inv:n" aria-label="Decline reschedule">${ic('x',18)}</button><button class="ib p" data-a="inv:y" aria-label="Accept reschedule">${ic('check',18)}</button></div></div>`}
+ if(id=='inv'){
+  const t=trip('read');
+  return TripTaskCard({
+   variant:'rescheduling',tierClass:`t${tier(null)}`,
+   label:`Reschedule ${esc(t.n)}? Raymond suggested ${fd(REQ)}`,
+   lead:Cover(t,'m'),title:`Move ${esc(t.n)}?`,
+   detail:`Raymond · ${fd(REQ)}`,detailTitle:`Raymond suggested ${fd(REQ)}`,
+   status:'<span class="due awaiting">Awaiting your response</span>',
+   trail:`<div class="tact"><button class="ib f" data-a="inv:n" aria-label="Decline reschedule">${ic('x',18)}</button><button class="ib p" data-a="inv:y" aria-label="Accept reschedule">${ic('check',18)}</button></div>`
+  });
+ }
  const t=trip(id),n=needs(t);
- return `<button class="trow task tier t${tier(t.close)}" data-a="votefor:${t.id}" aria-label="Vote on ${t.n}${t.close?`, due ${fd(t.close)}`:', no due date'}"><div class="tmain">${DTile(t.close)}<div class="gr"><b>Vote on ${t.n}</b><div class="cap sm">${n?`${n} stop${n==1?'':'s'} to review`:'Ready to submit'}</div>${tdue('Waiting for your vote',t.close)}</div></div><span class="tgo">${n?'Review':'Submit'}</span></button>`};
+ return TripTaskCard({
+  variant:'voting',tierClass:`t${tier(t.close)}`,
+  action:`votefor:${t.id}`,
+  label:`Vote on ${esc(t.n)}${t.close?`, due ${fd(t.close)}`: ', no due date'}`,
+  lead:DTile(t.close),title:`Vote on ${esc(t.n)}`,
+  detail:n?`${n} stop${n==1?'':'s'} to review`:'Ready to submit',
+  status:tdue('Waiting for your vote',t.close),
+  trail:`<span class="tgo">${n?'Review':'Submit'}</span>`
+ });
+};
 V.trips=()=>{const up=UP(),tk=tasksSorted(),L=S.seg=='up'?up.slice(1):PAST(),nx=up[0];return `<div class="hd"><h1>${greet()}, ${esc(S.p.name.trim()||'there')}</h1></div>
 ${nx?Sec('Up next')+`<button class="feat l-${nx.c}" data-a="open:${nx.id}">${Cover(nx,'l')}<div class="gr"><div class="eyebrow">${rel(nx.date)}</div><h2>${nx.n}</h2><div class="cap">${fd(nx.date)} · ${nx.stops.length} stops</div><div class="mt">${Stack(nx.m)}</div></div></button>`:''}
 ${Sec('Tasks',ViewAll2(tk.length,'tasks'))}${tk.length?`<div class="tlist">${tk.slice(0,TOP).map(TaskRow3).join('')}</div>`:Empty('You’re all caught up','Nothing needs your attention.')}
