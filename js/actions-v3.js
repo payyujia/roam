@@ -27,7 +27,7 @@ Object.assign(A,{
   S.fl.splice(S.fi,1);delete S.fr[i];S.ap=null;S.alts=[];
   if(S.fl.length){S.fi=Math.min(S.fi,S.fl.length-1);S.fk='flag';rr();render('map');toast(`${ic('check',16)} Swapped. ${S.fl.length} more to review`)}
   else{S.fk=null;rr();render('map');lay('sheet',doneHTML(t),'Your new path')}},
- finvite:()=>{const t=trip(S.mapTrip),c=CH.find(c=>c.tid==t.id);if(c){c.m.push(['P','',0,'fork',t.id]);c.t='now'}A.closeLy();rr();toast('Path shared in the '+t.n+' chat')},
+ finvite:()=>{const t=trip(S.mapTrip),c=CH.find(c=>c.tid==t.id);if(c)c.m.push(['P','',0,'fork',t.id,Date.now()]);A.closeLy();rr();toast('Path shared in the '+t.n+' chat')},
  pathpick:(w,tid)=>{const t=trip(tid||(S.nav?S.mapTrip:S.cur));if(!t||!t.fork)return;if(myPath(t)==w)return toast(`You’re already on ${w=='fork'?pn(t.fork.owner)+'’s':'the main'} path`);if($('#ly').classList.contains('open'))A.closeLy();lay('sheet',joinHTML(t,w),'Join a path')},
  pathjoin:(w,tid)=>{const t=trip(tid),fk=t.fork;if(w=='fork'){if(!fk.members.includes('P'))fk.members.push('P')}else fk.members=fk.members.filter(k=>k!='P');S.leg=0;S.pv=null;A.closeLy();rr();render('map');chrome();toast(w=='fork'?`You joined ${pn(fk.owner)}’s path`:'You’re back on the main path')},
  pview:k=>{S.pv=k;render('trip')},
@@ -40,7 +40,7 @@ Object.assign(A,{
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{S.p.move=decodeURIComponent(k);pd();render('profile')},pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
  pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:n=>{S.p.rate=+n;pd();render('profile')}});
 /* send keeps working with the new message shape */
-A.send=()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length]]);if(S.th==th)S.typing=0;render('thread');bottom();tabbar()},1500)};
+A.send=()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v,null,null,null,Date.now()]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length],null,null,null,Date.now()]);if(S.th==th)S.typing=0;render('thread');bottom();tabbar()},1500)};
 /* swipe in from the left edge = back (pushed screens only) */
 let SW=null;
 document.addEventListener('pointerdown',e=>{if(e.pointerType=='mouse'&&e.button)return;const d=$('#dev').getBoundingClientRect();if(e.clientX-d.left<24&&cur().length>1&&!$('#ly').classList.contains('open'))SW={x:e.clientX,y:e.clientY}});
