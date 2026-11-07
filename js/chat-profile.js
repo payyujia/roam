@@ -92,7 +92,7 @@ const dietaryOptionsHTML=()=>{
    &&!dietarySuggestions.some(name=>name.toLocaleLowerCase()===nameKey);
  const choices=shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('');
  const custom=canAddCustom?`<button type="button" class="dd-opt interest-choice" data-a="pdietAdd:${encodeURIComponent(query)}" aria-label="Add custom dietary need ${esc(query)}"><span class="t">Add “${esc(query)}”</span>${ic('plus',16)}</button>`:'';
- return `<div class="interest-option-heading"><span class="lb">${query?'Matching dietary needs':'Suggested dietary needs'}</span></div>${choices||custom?`<div class="dd-list glass"><div class="dd-opts">${choices}${custom}</div></div>`:`<p class="cap interest-no-matches">${query?'No other dietary needs match your search.':'All suggested dietary needs added.'}</p>`}`;
+ return `<div class="interest-option-heading"><span class="lb">${query?'Matching dietary needs':'Common dietary needs'}</span></div>${choices||custom?`<div class="dd-list glass"><div class="dd-opts">${choices}${custom}</div></div>`:`<p class="cap interest-no-matches">${query?'No other dietary needs match your search.':'All suggested dietary needs added.'}</p>`}`;
 };
 const refreshDietaryPicker=()=>{
  const tags=$('#dietary-tags');
@@ -114,7 +114,7 @@ const DietaryPicker=()=>`<div class="pad interest-picker dietary-picker">
   <div class="interest-section-head"><span class="lb" id="dietary-selected-title">Your dietary needs</span><span class="cap sm" id="dietary-count" aria-live="polite">${dietDraft().length} selected</span></div>
   <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="dietary-tags" aria-live="polite">${dietaryTagsHTML()}</div></div>
  </section>
- <section class="interest-suggestions" id="dietary-suggestions" aria-label="Suggested dietary needs">${dietaryOptionsHTML()}</section>
+ <section class="interest-suggestions" id="dietary-suggestions" aria-label="Common dietary needs">${dietaryOptionsHTML()}</section>
 </div>`;
 /* Interests use a fixed catalogue rather than accepting arbitrary new categories. */
 const INTEREST_CATALOG=Object.freeze(["Cafes","Museums","Hikes","Shopping","Beaches","Night markets","Art galleries","Nature","Theme parks","Movies","Arts & crafts","Food & dining","Historical sites","Photography","Live music","Outdoor adventures","Wellness","Sports","Architecture"]);
