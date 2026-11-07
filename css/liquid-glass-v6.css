@@ -1636,3 +1636,30 @@ body{font-weight:500}
 /* End navigation: library coral pill, hugs its label (not full width) */
 #dev #mc .nvf{display:flex;justify-content:center}
 #dev #mc .nvf .btn{width:auto;--action-fill:var(--coral-fill,rgba(255,201,188,.6))!important}
+
+/* ============================================================
+   Saved reels grid (Profile) + social approval (Reels)
+   Grid: Instagram-style 9:16 tiles, 3 columns, 2px gaps, edge to edge.
+   Heart badge: pin-badge recipe from the Components Library
+   (gloss overlay + inset highlight + diagonal rim), rose -> coral-500.
+   ============================================================ */
+#dev .rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin:8px 0 0}
+#dev .rgrid .rg{position:relative;display:block;width:100%;height:0;padding:177.78% 0 0;border:0;border-radius:0;overflow:hidden;background:var(--lc);color:#fff;text-align:left;transition:transform .15s}
+#dev .rgrid .rg:active{transform:scale(.98)}
+#dev .rgrid .rg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#dev .rgrid .rg::after{content:"";position:absolute;inset:auto 0 0 0;height:44%;background:linear-gradient(transparent,rgba(14,17,22,.62));pointer-events:none}
+#dev .rgrid .rg-n{position:absolute;left:8px;right:8px;bottom:8px;z-index:2;display:flex;align-items:center;gap:5px;font-size:11px;line-height:14px;font-weight:700}
+#dev .rgrid .rg-n svg{width:12px;height:12px;flex:none}
+#dev .rgrid .rg-n span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+#dev .sap{display:flex;align-items:center;padding:0 0 0 10px;margin-bottom:-2px}
+#dev .sap .sa{position:relative;display:inline-flex;margin-left:-8px}
+#dev .sap .sa .av{width:36px;height:36px;font-size:13px;color:var(--ink);box-shadow:0 0 0 2px #fff,0 3px 8px rgba(14,17,22,.28)}
+#dev .sap .sa .av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
+#dev .sap .hrt{position:absolute;top:-5px;right:-5px;z-index:3;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(rgba(255,255,255,.32),rgba(255,255,255,0) 60%),linear-gradient(135deg,var(--rose),var(--coral-500));
+  box-shadow:0 3px 8px rgba(40,60,100,.25),inset 0 1px 1px rgba(255,255,255,.55)}
+#dev .sap .hrt::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+#dev .sap .hrt svg{width:10px;height:10px;fill:currentColor;stroke:none}

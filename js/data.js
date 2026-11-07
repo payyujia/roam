@@ -60,7 +60,7 @@ const R=[{h:'Trying shark restaurant!',n:'Shark Restaurant',by:'Bullshark Testos
 const CH=[{n:'JB Daytrip',i:'truck',c:'cy',t:'2m',u:2,u2:'PREL',r:['Nice, noted!','Count me in','Haha agreed'],m:[['E','ok who’s driving on the 19th?'],['R','I can! Leaving at 8:30'],['P','Perfect. Voted for dim sum first btw'],['L','ngl the robot thing sounds weird. I’m in though'],['E','Voting closes 9 Nov, don’t forget!']]},{n:'China 3D2N',i:'globe',c:'cb',t:'1h',u:0,u2:'PLJ',r:['On it tonight','Sounds good!'],m:[['L','Voting is open!'],['P','On it tonight']]},{n:'MacRitchie Hike',i:'sun',c:'cg',t:'Mon',u:0,u2:'PJR',r:['See you at 7!','Bringing snacks too'],m:[['J','Meet at the MRT exit at 7am'],['P','Bringing snacks']]}];
 const FR=[['Raymond','R'],['Eustace','E'],['Ling Ling','L'],['Jason','J']];
 
-R.forEach(r=>r.c=LN[r.c]);['jb','cn','hike'].forEach((id,i)=>CH[i].tid=id);
+R.forEach(r=>r.c=LN[r.c]);[['R'],['E','L'],['E','J','R'],['L','R'],[]].forEach((s,i)=>R[i].sv=s);['jb','cn','hike'].forEach((id,i)=>CH[i].tid=id);
 const SAVED=[{n:'House of Gonjol',s:'Art centre · Jln Indera',i:'image',k:'Do',by:'RLE'},{n:'Paradigm Mall',s:'Mall · Skudai',i:'bag',k:'Shop',by:'RL'},{n:'Mid Valley Southkey',s:'Mall · Southkey',i:'bag',k:'Shop',by:'E'},{n:'Hutan Bandar Park',s:'Park · Larkin',i:'sun',k:'Do',by:'RL'},{n:'Jonker Street Night Market',s:'Market · Malacca',i:'bag',k:'Eat',by:'JE'},{n:'Books Actually',s:'Bookstore · Yong Siak St',i:'book',k:'Shop',by:'R'}];
 const MA={hike:[26,24],read:[74,23],game:[50,35],jb:[24,45],cn:[76,45],laz:[30,56],nan:[70,56]};
 const ov=(t,p)=>{const a=MA[t.id]||[20+T.indexOf(t)*23%60,30+T.indexOf(t)*13%22];return[a[0]+(p[0]-50)*.55,a[1]+(p[1]-38)*.7]};
