@@ -37,9 +37,10 @@ Object.assign(A,{
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
  pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
- pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS;const name=options.find(v=>!S.p.likes.includes(v));if(name)A.pinterest(encodeURIComponent(name))},
- pinterest:value=>{const name=decodeURIComponent(value);if(!INTEREST_CATALOG.includes(name)||S.p.likes.includes(name))return;S.p.likes.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';const tags=$('#interest-tags');if(tags)tags.innerHTML=S.p.likes.map(v=>Tag('likes',v)).join('');pd();const el=$('#interest-suggestions');if(el)el.innerHTML=interestOptionsHTML()},
- pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes')S.interestQuery='';go('pdet')},
+ pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();const options=q?INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q)):INTEREST_SUGGESTIONS;const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
+ pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input)input.value='';refreshInterestPicker()},
+ pinterestRemove:value=>{if(!Array.isArray(S.p.likesDraft))return;const name=decodeURIComponent(value);S.p.likesDraft=S.p.likesDraft.filter(v=>v!==name);refreshInterestPicker()},
+ pdet:k=>{S.pd=k;S.p.dirty=0;if(k==='budget')S.p.budgetDraft=String(S.p.budget);if(k==='likes'){S.interestQuery='';S.p.likesDraft=[...S.p.likes]}go('pdet')},
  pbudgetInput:el=>{
   const digits=el.value.replace(/[^0-9]/g,'');
   if(el.value!==digits)el.value=digits;
@@ -62,6 +63,11 @@ Object.assign(A,{
    S.p.budget=amount;
    S.p.budgetDraft=null;
   }
+  if(S.pd==='likes'){
+   if(!Array.isArray(S.p.likesDraft)||!interestDraftChanged())return;
+   S.p.likes=[...S.p.likesDraft];
+   S.p.likesDraft=null;
+  }
   S.p.dirty=0;A.back();toast('Changes saved')
  },
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{
@@ -80,3 +86,20 @@ let SW=null;
 document.addEventListener('pointerdown',e=>{if(e.pointerType=='mouse'&&e.button)return;const d=$('#dev').getBoundingClientRect();if(e.clientX-d.left<24&&cur().length>1&&!$('#ly').classList.contains('open'))SW={x:e.clientX,y:e.clientY}});
 document.addEventListener('pointerup',e=>{if(SW&&e.clientX-SW.x>70&&Math.abs(e.clientY-SW.y)<60)A.back();SW=null});
 document.addEventListener('pointercancel',()=>SW=null);
+/* Leaving Interests via Back (including edge swipe) or tab navigation
+   discards unsaved choices without changing the saved profile. */
+const discardInterestDraft=()=>{S.p.likesDraft=null;S.interestQuery='';S.p.dirty=0};
+const interestBack=A.back;
+A.back=(...args)=>{
+ if(S.tab==='profile'&&topId()==='pdet'&&S.pd==='likes'&&cur().length>1
+    &&!$('#app').classList.contains('back-pending'))discardInterestDraft();
+ return interestBack(...args);
+};
+const interestTab=A.tab;
+A.tab=t=>{
+ if(S.tab==='profile'&&topId()==='pdet'&&S.pd==='likes'){
+  discardInterestDraft();
+  S.stack.profile=['profile'];
+ }
+ return interestTab(t);
+};
