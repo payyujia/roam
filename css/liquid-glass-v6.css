@@ -1861,9 +1861,13 @@ body{font-weight:500}
 /* Toast readability: use a more opaque white glass surface for clear text contrast. */
 #dev #toast{background:rgba(255,255,255,.78)!important}
 
-/* Trip detail Navigate: Sky 500 fill, H2 type (card-components.html: 23/800/1.2/-.03em). */
+/* Trip detail Navigate: H2 type in every state (card-components.html: 23/800/1.2/-.03em);
+   Sky 500 fill + Sky 50 text only when enabled, disabled keeps its existing colours. */
+#dev #s-trip .th .tact .gob{
+  font-size:23px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important;
+}
 #dev #s-trip .th .tact .gob:not(:disabled){
   --action-fill:var(--sky-500)!important;
-  --action-ink:var(--ink)!important;
-  font-size:23px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important;
+  --action-ink:var(--sky-50)!important;
+  color:var(--sky-50)!important;
 }
