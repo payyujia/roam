@@ -41,15 +41,11 @@ Object.assign(A,{
  prefFirst:()=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k];if(!config)return;const q=(S.prefSearch||'').trim().toLocaleLowerCase();if(!q)return;const name=config.catalog.find(x=>x.toLocaleLowerCase().includes(q)&&!profilePreferenceDraft(k).includes(x));if(name)A.prefAdd(encodeURIComponent(name))},
  prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft))return;const name=decodeURIComponent(value);if(!config.catalog.includes(name)||draft.includes(name))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input){input.value='';if(input.nextElementSibling)input.nextElementSibling.disabled=true}refreshProfilePreferencePicker(k)},
  prefRemove:value=>{const k=S.pd;if(!PROFILE_PREFERENCE_PICKERS[k]||!Array.isArray(S.p[k+'Draft']))return;const name=decodeURIComponent(value);S.p[k+'Draft']=S.p[k+'Draft'].filter(x=>x!==name);refreshProfilePreferencePicker(k)},
- pinterestSearch:q=>{S.interestQuery=q;const el=$('#interest-suggestions');if(el)el.hidden=!!q.trim()},
+ pinterestSearch:q=>{S.interestQuery=q},
  pinterestFirst:()=>{const q=(S.interestQuery||'').trim().toLocaleLowerCase();if(!q)return;const options=INTEREST_CATALOG.filter(v=>v.toLocaleLowerCase().includes(q));const name=options.find(v=>!interestDraft().includes(v));if(name)A.pinterest(encodeURIComponent(name))},
  pinterest:value=>{const name=decodeURIComponent(value);if(!Array.isArray(S.p.likesDraft)||!INTEREST_CATALOG.includes(name)||S.p.likesDraft.includes(name))return;S.p.likesDraft.push(name);S.interestQuery='';const input=$('#interest-search');if(input){input.value='';if(input.nextElementSibling)input.nextElementSibling.disabled=true}refreshInterestPicker()},
  pinterestRemove:value=>{if(!Array.isArray(S.p.likesDraft))return;const name=decodeURIComponent(value);S.p.likesDraft=S.p.likesDraft.filter(v=>v!==name);refreshInterestPicker()},
- pdietSearch:q=>{
-  S.dietaryQuery=q;
-  const options=$('#dietary-suggestions');
-  if(options)options.hidden=!!q.trim();
- },
+ pdietSearch:q=>{S.dietaryQuery=q},
  pdietFirst:()=>{
   if(!dietaryQuery())return;
   const name=dietaryMatches()[0]||dietaryQuery();
