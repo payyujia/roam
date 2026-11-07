@@ -305,7 +305,10 @@
    emojiMode=false;numbers=false;capsLock=false;
    const value=currentInput()?.value||'';
    shifted=!value||/[.!?]\s$/.test(value);
-   draw();return;
+   draw();
+   // Returning from emoji search restores physical keyboard typing as well.
+   currentInput()?.focus({preventScroll:true});
+   return;
   }
   if(action==='category'){
    emojiCategory=control.dataset.kbCategory;
