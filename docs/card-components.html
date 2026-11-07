@@ -53,7 +53,7 @@ body.spec-page{
 .spec-tokens td:last-child{font-weight:800;text-align:right;color:#0E1116}
 .spec-key{font:600 11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-word;color:#1F63B5}
 .spec-path{display:inline-block;background:rgba(109,182,255,.14);padding:4px 7px;border-radius:7px}
-.spec-variants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.spec-variants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .spec-variant{background:rgba(109,182,255,.1);padding:12px 9px;border-radius:13px;font-size:11px;line-height:1.5;font-weight:700}
 .spec-variant small{display:block;font-size:10px;font-weight:500;color:#526478;margin-top:5px}
 .spec-flag{display:inline-block;padding:5px 9px;background:#d9edff;border-radius:999px;color:#1F63B5;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
@@ -72,6 +72,7 @@ body.spec-page{
 #dev .spec-feed .spec-group .spec-description{font-size:10px;color:var(--muted);margin:0 0 13px;line-height:1.5}
 #dev .spec-feed .tlist{display:flex;flex-direction:column;gap:10px;padding:0;margin:0;background:none}
 #dev .spec-feed .row.tier{margin-bottom:10px}
+#dev .spec-feed #s-chat .chat-row{width:100%;margin:0 0 10px}
 #dev .spec-feed .trow.tier,
 #dev .spec-feed .row.tier{cursor:default}
 #dev .spec-feed button{pointer-events:none;cursor:default}
@@ -106,7 +107,7 @@ body.spec-page{
   </header>
   <div class="spec-heading">
     <div class="spec-kicker">Sunrise Frost · Design System · Cards</div>
-    <h1>One card foundation. Three useful variants.</h1>
+    <h1>One card foundation. Four useful variants.</h1>
     <p>These static specimens use Roam’s <strong>actual app stylesheets</strong>, including the shared card tokens. Only the styling is centralised for now; your live pages and actions keep their existing JavaScript.</p>
   </div>
   <div class="spec-grid">
@@ -114,7 +115,7 @@ body.spec-page{
       <section class="spec-panel">
         <span class="spec-flag">BaseCard</span>
         <h2 style="margin-top:12px">Shared foundation</h2>
-        <p>Change a value in the central CSS to update the base dimensions of all three live Home card variants and this specimen sheet.</p>
+        <p>Change a value in the central CSS to update the base dimensions of all three Home card variants, the Chat list, and this specimen sheet.</p>
         <table class="spec-tokens">
           <tr><td>Minimum height</td><td>84px</td></tr>
           <tr><td>Width</td><td>100%</td></tr>
@@ -128,17 +129,18 @@ body.spec-page{
         </table>
       </section>
       <section class="spec-panel">
-        <h2>Three variants</h2>
+        <h2>Four variants</h2>
         <div class="spec-variants">
           <div class="spec-variant">Voting<small>DUE tile, title, deadline, Review pill</small></div>
           <div class="spec-variant">Rescheduling<small>Trip photo, context, decline and accept</small></div>
           <div class="spec-variant">Trip<small>Trip photo, date, status, members</small></div>
+          <div class="spec-variant">Chat<small>Trip photo, message preview, timestamp and unread badge</small></div>
         </div>
-        <p style="margin-top:13px">Only the inner content and actions differ. Cards are allowed to grow taller than 84px when text needs room.</p>
+        <p style="margin-top:13px">Only the inner content and actions differ. All four variants share the 84px minimum height and 56 × 60px image or DUE tile; cards grow if text needs room.</p>
       </section>
       <section class="spec-panel">
         <h2>Where to edit</h2>
-        <p><span class="spec-key spec-path">css/card-library.css</span> — shared dimensions, spacing, and media sizing for all three live variants.</p>
+        <p><span class="spec-key spec-path">css/card-library.css</span> — shared dimensions, spacing, and media sizing for all four live variants.</p>
         <p><span class="spec-key spec-path">css/liquid-glass-v6.css</span> — existing glass material, title styles, status dots, and button treatments.</p>
         <p><span class="spec-key spec-path">docs/card-components.html</span> — this read-only preview. It imports the same CSS as the live app.</p>
         <p>The live HTML/JavaScript builders are intentionally unchanged.</p>
@@ -196,6 +198,20 @@ body.spec-page{
               <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
               <div class="gr"><b>Gaming Cafe</b><div class="cap sm">Wed 18 Nov · In 18 days</div><div class="cap sm"><span class="dotc wait"></span> Voting open</div></div>
               <span class="st" aria-hidden="true"><span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span><span class="av l-green">E<img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span><span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span></span>
+            </button>
+          </section>
+          <section class="spec-group" id="s-chat">
+            <h3>04 · Chat card</h3>
+            <p class="spec-description">Same card foundation · trip image · message preview · time and unread</p>
+            <button type="button" class="row chat-row" aria-label="JB Daytrip chat card preview, 2 unread">
+              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+              <div class="gr"><b>JB Daytrip</b><div class="cap sm">Voting closes 9 Nov, don't forget…</div></div>
+              <div class="chat-meta"><span class="cap sm chat-time">2m</span><span class="bd2 chat-unread">2</span></div>
+            </button>
+            <button type="button" class="row chat-row" aria-label="MacRitchie Hike chat card preview">
+              <div class="cover z-m l-blue" aria-hidden="true"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=240&amp;q=70" alt=""></div>
+              <div class="gr"><b>MacRitchie Hike</b><div class="cap sm">Bringing snacks</div></div>
+              <div class="chat-meta"><span class="cap sm chat-time">Mon</span></div>
             </button>
           </section>
           <p class="spec-footnote">Design preview only. The sample buttons do not navigate. All live actions remain in the Roam app.</p>
