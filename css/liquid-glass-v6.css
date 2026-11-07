@@ -80,6 +80,16 @@ body{font-weight:500}
 /* Home greeting: compact responsive Display-800 variant; the component-sheet type scale is unchanged. */
 #dev #s-trips .hd h1{max-width:none;font-size:clamp(34px,9vw,36px);font-weight:800;line-height:1.06;letter-spacing:-.05em}
 #dev #s-trips .sec{padding-top:13px;padding-bottom:8px}
+/* Home section labels match the component sheet's Heading 800 typography.
+   Scope to these titles only; Upcoming/Past remains a segmented control. */
+#dev #s-trips .sec > h2{
+  font-family:var(--font);
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:-.042em;
+  line-height:1.22;
+  color:var(--ink);
+}
 #dev #s-profile .profile-notif{
   --action-fill:var(--glass-control-bg);
   position:absolute;
