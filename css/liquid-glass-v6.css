@@ -1204,3 +1204,35 @@ body{font-weight:500}
 #dev .reschedule-row .reschedule-tile{
   position:relative;
 }
+
+
+/* Icon selection system: preserve each icon's stroke colour; fill the glyph only. */
+#dev .rv .rail .ib.reel-icon-action{
+  width:44px;height:44px;padding:0;
+  background:transparent!important;color:inherit!important;
+  border:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+#dev .rv .rail .ib.reel-icon-action::before,
+#dev .rv .rail .ib.reel-icon-action::after{display:none!important;content:none!important}
+#dev .rv .rail .ib.reel-icon-action svg{
+  width:40px;height:40px;fill:none;stroke:currentColor;
+}
+#dev .rv .rail .ib.reel-icon-action[aria-pressed="true"] svg{
+  fill:currentColor;stroke:currentColor;
+}
+
+/* Navbar selection is outline-to-fill only: do not recolour active outlines. */
+#dev #tb>button,
+#dev #tb>button:is(.on,.ctr),
+#dev #tb>button:not(.ctr).on{color:var(--muted)!important}
+#dev #tb>button .ti svg{fill:none}
+#dev #tb>button.on .ti svg{fill:currentColor}
+#dev #tb .ctr,#dev #tb .ctr:is(.on){color:var(--sky-500)!important}
+#dev #tb .ctr .circ,#dev #tb .ctr.on .circ{
+  background:#fff!important;color:var(--sky-500)!important;
+}
+#dev #tb .ctr .trip-plane{width:25px;height:25px;display:block}
+#dev #tb .ctr .trip-plane path{fill:none;stroke:var(--sky-500)}
+#dev #tb .ctr.on .trip-plane path{fill:var(--sky-500);stroke:var(--sky-500)}
+#dev #tb .on .av{box-shadow:none!important}
