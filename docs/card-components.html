@@ -93,6 +93,20 @@ body.spec-page{
   #dev .spec-feed{padding-inline:16px}
   .spec-variants{grid-template-columns:1fr}
 }
+/* Card typography reference: documentation only. Actual sizes live in shared CSS. */
+.spec-type-scroll{width:100%;overflow-x:auto;margin:12px 0}
+.spec-type-table{width:100%;border-collapse:collapse;min-width:510px;font-size:11px;line-height:1.5}
+.spec-type-table th{
+  padding:10px 8px;background:rgba(109,182,255,.13);
+  color:#1F63B5;text-align:left;font-weight:800;white-space:nowrap
+}
+.spec-type-table td{padding:10px 8px;border-bottom:1px solid rgba(91,104,120,.13);vertical-align:top;color:#526478}
+.spec-type-table tr:last-child td{border-bottom:0}
+.spec-type-table td:first-child{color:#0E1116;font-weight:700}
+.spec-type-table td:nth-child(2),.spec-type-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
+.spec-type-sample{margin:12px 0;display:flex;flex-direction:column;gap:5px}
+.spec-type-sample strong{font-family:var(--roam-card-title-family);font-size:var(--roam-card-title-size);font-weight:var(--roam-card-title-weight);line-height:var(--roam-card-title-line-height);letter-spacing:var(--roam-card-title-letter-spacing)}
+.spec-type-sample small{font:500 12px/18px var(--font);color:#526478}
 </style>
 </head>
 <body class="spec-page">
@@ -126,6 +140,9 @@ body.spec-page{
           <tr><td>Media / DUE tile</td><td>56 × 60px</td></tr>
           <tr><td>Media radius</td><td>14px</td></tr>
           <tr><td>Material</td><td>Sunrise Frost glass</td></tr>
+          <tr><td>Standard title</td><td>16px / Bold 700</td></tr>
+          <tr><td>Title line height</td><td>22px</td></tr>
+          <tr><td>Font family</td><td>Plus Jakarta Sans</td></tr>
         </table>
       </section>
       <section class="spec-panel">
@@ -140,9 +157,38 @@ body.spec-page{
         </div>
         <p style="margin-top:13px">Voting, rescheduling, trip and chat cards use an 84px minimum height. AccountCard uses the same 84px foundation with a circular profile photo; SettingsCard is compact at 60px. Profile variants share the same outer width (24px page gutters).</p>
       </section>
+      <section class="spec-panel" id="typography">
+        <span class="spec-flag">Typography · live card variants</span>
+        <h2 style="margin-top:12px">Every card font size and style</h2>
+        <p>All six regular card titles share the same <strong>Plus Jakarta Sans · 16px · Bold 700 · 22px line height</strong>. Their type is controlled by <span class="spec-key spec-path">--roam-card-title-*</span> variables in <span class="spec-key spec-path">css/card-library.css</span>.</p>
+        <div class="spec-type-sample"><strong>Travel style · JB Daytrip · Plaise</strong><small>Supporting text remains smaller than the shared card title.</small></div>
+        <div class="spec-type-scroll">
+          <table class="spec-type-table">
+            <thead><tr><th>Text role</th><th>Font size</th><th>Weight / style</th><th>Line height / where used</th></tr></thead>
+            <tbody>
+              <tr><td>Standard card title</td><td>16px</td><td>700 · Bold</td><td>22px · All six variants</td></tr>
+              <tr><td>Trip, Voting &amp; Chat subtitle</td><td>12px</td><td>500 · Medium</td><td>16px · Secondary details / message preview</td></tr>
+              <tr><td>Voting status</td><td>12px</td><td>600 · Semi Bold</td><td>16px · Due / waiting status</td></tr>
+              <tr><td>Rescheduling context</td><td>11px</td><td>500 · Medium</td><td>15px · Sender / proposed date</td></tr>
+              <tr><td>Rescheduling status</td><td>11px</td><td>500 · Medium</td><td>15px · Awaiting response</td></tr>
+              <tr><td>Review action</td><td>11px</td><td>700 · Bold</td><td>28px-high button · Voting cards</td></tr>
+              <tr><td>Chat timestamp</td><td>12px</td><td>500 · Medium</td><td>16px · Chat metadata</td></tr>
+              <tr><td>Chat unread count</td><td>10px</td><td>800 · Extra Bold</td><td>20px badge · Unread indicator</td></tr>
+              <tr><td>Profile city / joined date</td><td>12px</td><td>500 · Medium</td><td>18px · AccountCard</td></tr>
+              <tr><td>Settings summary value</td><td>13px</td><td>500 · Medium</td><td>18px · SettingsCard</td></tr>
+              <tr><td>Profile avatar fallback initial</td><td>22px</td><td>700 · Bold</td><td>Circular avatar · Only when image is unavailable</td></tr>
+              <tr><td>DUE label</td><td>8px</td><td>800 · Extra Bold</td><td>10px · Voting date tile</td></tr>
+              <tr><td>DUE day number</td><td>20px</td><td>800 · Extra Bold</td><td>22px · Voting date tile</td></tr>
+              <tr><td>DUE month</td><td>9px</td><td>800 · Extra Bold</td><td>12px · Voting date tile</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Outside the regular card system:</strong> Featured trip titles remain 18px / 800, and Trips/Profile section headings remain 23px / 800. They are intentionally not controlled by the shared 16px card-title token.</p>
+        <p><strong>Style guidance:</strong> Bold 700 for card titles, Medium 500 for descriptions and values, Semi Bold 600 for voting status, Extra Bold 800 for tiny badges and date-tile text. Typography is normal (not italic); regular card titles have zero letter spacing.</p>
+      </section>
       <section class="spec-panel">
         <h2>Where to edit</h2>
-        <p><span class="spec-key spec-path">css/card-library.css</span> — shared dimensions, spacing, and media sizing for all six live variants.</p>
+        <p><span class="spec-key spec-path">css/card-library.css</span> — central card dimensions, spacing, and all standard 16px / 700 title typography.</p>
         <p><span class="spec-key spec-path">css/liquid-glass-v6.css</span> — existing glass material, title styles, status dots, and button treatments.</p>
         <p><span class="spec-key spec-path">docs/card-components.html</span> — this read-only preview. It imports the same CSS as the live app.</p>
         <p>The specimens are static; live Profile cards keep their existing click handlers and stored preferences.</p>
