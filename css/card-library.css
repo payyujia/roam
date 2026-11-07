@@ -1,0 +1,56 @@
+/* ROAM / CARD STYLING LIBRARY — Sunrise Frost
+   Single shared sizing/spacing source for the 3 live HTML variants:
+   .trow.task.tier (Voting), .trow.reschedule-row (Rescheduling),
+   .row.tier (Trip). Markup/behavior still lives in existing JS.
+   The same rules power docs/card-components.html.
+   Load this file AFTER liquid-glass-v6.css. */
+:root{
+  --roam-card-min-height:84px;
+  --roam-card-padding-y:10px;
+  --roam-card-padding-x:12px;
+  --roam-card-padding-x-compact:8px;
+  --roam-card-radius:22px;
+  --roam-card-gap:10px;
+  --roam-card-media-width:56px;
+  --roam-card-media-height:60px;
+  --roam-card-media-radius:14px;
+}
+
+/* All three variants share one base set of geometry tokens. Let cards
+   grow beyond the minimum when text or accessibility sizing requires it. */
+#dev :is(.trow.tier,.row.tier),
+#dev #s-trips :is(.trow.tier,.row.tier){
+  box-sizing:border-box;
+  width:100%;
+  min-height:var(--roam-card-min-height);
+  padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
+  border-radius:var(--roam-card-radius);
+  gap:var(--roam-card-gap);
+}
+
+/* Consistent media tile across DUE, rescheduling, and trip cards. */
+#dev :is(.trow.tier,.row.tier) :is(.dtile,.cover.z-m){
+  --cz:var(--roam-card-media-width);
+  width:var(--roam-card-media-width);
+  height:var(--roam-card-media-height);
+  flex:0 0 var(--roam-card-media-width);
+  border-radius:var(--roam-card-media-radius);
+  overflow:hidden;
+}
+#dev :is(.trow.tier,.row.tier) .cover.z-m img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Shared internal rhythm. Rescheduling keeps its two icon actions and
+   compact title text; voting and trips keep their own trailing controls. */
+#dev .trow.tier .tmain{gap:var(--roam-card-gap)}
+#dev .reschedule-row .tmain{gap:var(--roam-card-gap)}
+
+@media(max-width:360px){
+  #dev #s-trips :is(.trow.tier,.row.tier){
+    padding-inline:var(--roam-card-padding-x-compact);
+  }
+}
