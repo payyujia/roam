@@ -27,7 +27,7 @@
 #dev .dd-opt:hover,#dev .dd-opt:focus-visible{background:rgba(255,255,255,.45)}
 #dev .dd-opt[aria-selected=true]{background:var(--sky-wash);box-shadow:inset 0 0 0 1px rgba(47,140,255,.3)}
 #dev .dd-opt .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
-#dev .dd-opt small{font-size:12px;font-weight:600;color:var(--muted)}
+#dev .dd-opt small{font-size:12px;font-weight:500;color:var(--muted)}
 #dev .dd-opt .tick{width:16px;height:16px;flex:none;color:var(--sky-600);stroke-width:2.6}
 
 /* ---------- CALENDAR ---------- */
