@@ -29,7 +29,7 @@
   flex-direction:column;
   width:100%;
   height:var(--demo-keyboard-height);
-  padding:7px 3px 4px;
+  padding:7px 0 4px;
   border:0;
   border-radius:18px 18px 0 0;
   overflow:hidden;
@@ -69,7 +69,7 @@
   font-weight:400;
   line-height:1.2;
   text-align:center;
-  padding:0 8px 3px;
+  padding:0 6px 3px;
 }
 /* iOS QuickType-style prediction buttons: same three aligned columns,
    but interactive and updated as the user types or moves the cursor. */
@@ -121,15 +121,15 @@
   gap:4px;
   box-sizing:border-box;
 }
-/* Match the supplied iOS reference: the first and last full-width keys
-   reach the keyboard frame's outer edges. Keep the middle letter row inset
-   for standard iPhone QWERTY staggering. */
+/* Keep first/last keycaps about 6px from the phone edge (as in the reference),
+   without clipping them against the keyboard's rounded outside frame.
+   Row 2 remains staggered by ~24px each side at 402px screen width. */
 #dev .dk-row:not(.dk-offset){
-  width:calc(100% + 6px);
-  margin-left:-3px;
-  margin-right:-3px;
+  width:calc(100% - 12px);
+  margin-left:6px;
+  margin-right:6px;
 }
-#dev .dk-offset{padding-inline:4.5%}
+#dev .dk-offset{padding-inline:6%}
 #dev .dk-key{
   flex:1 1 0;
   min-width:0;
@@ -194,7 +194,7 @@
 #dev .dk-numbers-third .dk-shift,
 #dev .dk-numbers-third .dk-delete{flex:1.3 1 0}
 #dev .dk-numbers-third .dk-char{font-size:19px}
-#dev .dk-bottom{margin-top:0;gap:6px}
+#dev .dk-bottom{margin-top:0;gap:5px}
 #dev .dk-bottom .dk-mode{
   flex:0 0 12%;
   background:var(--dk-control);
@@ -204,10 +204,10 @@
   flex:0 0 12%;
   background:var(--dk-control);
 }
-/* iOS-style complete smiley, with visible eyes, open grin and teeth. */
+/* iPhone-inspired full white smiley. */
 #dev .dk-bottom .dk-emoji .dk-key-icon svg{
-  width:26px;
-  height:26px;
+  width:23px;
+  height:23px;
 }
 #dev .dk-bottom .dk-space{
   flex:1 1 auto;
@@ -556,10 +556,10 @@
   #dev .dk-predict{flex-basis:34px;font-size:15px}
   #dev .dk-rows{gap:5px}
   #dev .dk-row{gap:4px}
-  #dev .dk-offset{padding-inline:4.5%}
+  #dev .dk-offset{padding-inline:6%}
   #dev .dk-key{font-size:19px;border-radius:8px}
   #dev .dk-bottom .dk-mode{font-size:14px}
-  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:23px;height:23px}
+  #dev .dk-bottom .dk-emoji .dk-key-icon svg{width:21px;height:21px}
   #dev .dk-return .dk-key-icon svg{width:23px;height:23px}
   #dev .dk-delete .dk-key-icon svg{width:22px;height:22px}
   #dev .dk-accessories{flex-basis:48px}
