@@ -11,7 +11,7 @@
 
 /* ---------- DROPDOWN ---------- */
 #dev .dd{display:block;min-width:0}
-#dev .dd-trigger{display:flex;align-items:center;gap:10px;width:100%;padding:0 16px;border:0;text-align:left;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+#dev .dd-trigger{display:flex;align-items:center;gap:10px;width:100%;padding:0 16px;border:0;text-align:left;font-size:14px;font-weight:700;cursor:pointer;color:var(--ink)}
 #dev .dd-trigger>svg{flex:none;color:var(--muted)}
 #dev .dd-trigger>.dd-val{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #dev .dd-trigger>.dd-val.nov{color:var(--muted);font-weight:500}
@@ -23,11 +23,11 @@
 #dev .dd-dot{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55);flex:none}
 #dev .dd-list{margin-top:8px;padding:6px;border-radius:22px}
 #dev .dd-opts{display:flex;flex-direction:column;gap:2px;max-height:280px;overflow-y:auto}
-#dev .dd-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:0 12px;border:0;border-radius:16px;background:none;text-align:left;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;transition:background .15s}
+#dev .dd-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:0 12px;border:0;border-radius:16px;background:none;text-align:left;font-size:14px;font-weight:700;color:var(--ink);cursor:pointer;transition:background .15s}
 #dev .dd-opt:hover,#dev .dd-opt:focus-visible{background:rgba(255,255,255,.45)}
 #dev .dd-opt[aria-selected=true]{background:var(--sky-wash);box-shadow:inset 0 0 0 1px rgba(47,140,255,.3)}
 #dev .dd-opt .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
-#dev .dd-opt small{font-size:11px;font-weight:600;color:var(--muted)}
+#dev .dd-opt small{font-size:12px;font-weight:600;color:var(--muted)}
 #dev .dd-opt .tick{width:16px;height:16px;flex:none;color:var(--sky-600);stroke-width:2.6}
 
 /* ---------- CALENDAR ---------- */
