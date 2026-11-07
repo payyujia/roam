@@ -42,6 +42,11 @@
  const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H21v16H9L2 12l7-8Z"/><path d="m12 9 6 6m0-6-6 6"/></svg>';
  const globeIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/></svg>';
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
+ /* Monochrome icons match the supplied iPhone screenshots. The display
+    differs by skin; both bottom action icons still send the chat message. */
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.7" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><circle cx="15.3" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><path d="M6.5 13.2c.7 3.1 3.1 5 5.5 5s4.8-1.9 5.5-5" fill="none" stroke="var(--dk-emoji-cutout)" stroke-width="1.7" stroke-linecap="round"/></svg>';
+ const returnIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 6v11a4 4 0 0 1-4 4H6m0 0 6-6m-6 6 6 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const searchIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12.4" cy="12.4" r="7.8" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="m18.3 18.3 6.3 6.3" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>';
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
@@ -60,8 +65,7 @@
    ['qwertyuiop'.split(''),'asdfghjkl'.split(''),'zxcvbnm'.split('')];
   const letters=arr=>arr.map(x=>key(shifted&&!numbers?x.toUpperCase():x,numbers?x:x.toUpperCase())).join('');
   keyboard.innerHTML='<div class="dk-predict" aria-label="Predictive text suggestions">'+
-   '<span>I</span><span>The</span><span>Is</span>'+
-   '<button type="button" class="dk-hide" data-kb-action="done" aria-label="Hide keyboard">⌄</button></div>'+
+   '<span>I</span><span>The</span><span>Is</span></div>'+
    '<div class="dk-rows" role="group" aria-label="Keyboard keys">'+
     '<div class="dk-row">'+letters(a[0])+'</div>'+
     '<div class="dk-row dk-offset">'+letters(a[1])+'</div>'+
@@ -71,17 +75,17 @@
      '<button type="button" class="dk-key dk-special" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
     '</div>'+
     '<div class="dk-row dk-bottom">'+
-     '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode">'+(numbers?'ABC':'?123')+'</button>'+
-     '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">☺</button>'+
-     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-space-label">space</span><span class="dk-en">EN</span></button>'+
-     '<button type="button" class="dk-key dk-send" data-kb-action="send">send</button>'+
+     '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode">'+(numbers?'ABC':'123')+'</button>'+
+     '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">'+emojiIcon+'</button>'+
+     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
+     '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message"><span class="dk-return-dark">'+returnIcon+'</span><span class="dk-return-light">'+searchIcon+'</span></button>'+
     '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
   updateSend();
  }
  function updateSend(){
-  const button=keyboard.querySelector('.dk-send');
+  const button=keyboard.querySelector('.dk-return');
   if(button)button.classList.toggle('has-text',!!currentInput()?.value.trim());
  }
  const currentInput=()=>document.querySelector('#s-thread.on #cin');
