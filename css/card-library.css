@@ -270,3 +270,41 @@
   line-height:var(--roam-card-status-line-height);
   letter-spacing:0;
 }
+
+/* ---------- MULTISELECT · WITH QUERY INPUT ----------
+   Copied from docs/card-components.html (.invite-box + mini sky button + tags).
+   Used by Profile > Health & accessibility (Dietary needs, Accessibility,
+   Health conditions) and any other TagBox with suggestions. */
+#dev .tag-query{
+  position:relative;
+  border-radius:20px;
+  padding:10px;
+  background:var(--glass-control-bg);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow)!important;
+}
+#dev .tag-query::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:2;
+  background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+#dev .tag-query>*{position:relative;z-index:3}
+#dev .tag-query .tq-row{display:flex;flex-wrap:nowrap;gap:10px;align-items:center}
+#dev .tag-query .tq-ic{width:17px;height:17px;flex:none;color:var(--muted);fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#dev .tag-query input{
+  border:0;outline:0;background:transparent;flex:1;min-width:0;
+  font-family:var(--font);font-size:14px;color:var(--ink);box-shadow:none!important;
+}
+#dev .tag-query input::placeholder{color:var(--muted);font-weight:500}
+#dev .tag-query .btn.mini{
+  width:34px;height:34px;padding:0;flex:none;
+  background:rgba(109,182,255,.62);
+}
+#dev .tag-query .btn.mini svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#dev .tag-query .tq-tags{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding-top:0}
+#dev .tag-query .tag2{gap:6px;padding:0 6px 0 13px}
+#dev .tag-query .tag2 button{width:20px;height:20px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;position:relative;z-index:3}
+#dev .tag-query .tag2 button svg{width:11px;height:11px}
