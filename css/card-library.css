@@ -640,33 +640,24 @@
   color:var(--muted);
   margin:0 0 20px;
 }
-/* Trip budget: value is a Subheader, not a Heading. */
-#dev #s-pdet #bv{
+/* Budget textbox: match the Card Component Library glass input (50px / 18px).
+   The existing .fi surface and focus styles provide the glass treatment. */
+#dev #s-pdet .budget-input-field{
+  min-height:50px;
+  height:50px;
+  padding:0 16px;
+  border-radius:18px;
+}
+#dev #s-pdet .budget-input-field > input{
+  width:100%;
+  min-width:0;
   font-family:var(--font);
-  font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;
-  margin:0 0 12px;
+  font-size:14px;
+  font-weight:500;
+  line-height:21px;
+  color:var(--ink);
 }
-#dev #s-pdet .rgl{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
-/* Slider: track like the library switch (off) + Sky (filled); thumb is the
-   library .btn.mini.sky — 34px, frosted sky, no content. */
-#dev #s-pdet input.rg{height:34px;margin:0;background:none}
-#dev #s-pdet input.rg::-webkit-slider-runnable-track{
-  height:6px;border-radius:999px;
-  background:linear-gradient(to right,var(--sky-400) var(--v,15%),rgba(120,140,165,.25) var(--v,15%))!important;
+#dev #s-pdet .budget-input-error{
+  margin-top:8px;
+  color:var(--red);
 }
-#dev #s-pdet input.rg::-moz-range-track{height:6px;border-radius:999px;background:rgba(120,140,165,.25)!important}
-#dev #s-pdet input.rg::-moz-range-progress{height:6px;border-radius:999px;background:var(--sky-400)!important}
-#dev #s-pdet input.rg::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;
-  width:34px;height:34px;margin-top:-14px;
-  border:0;border-radius:50%;
-  background:linear-gradient(rgba(109,182,255,.62),rgba(109,182,255,.62)),var(--bg)!important;
-  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.85)!important;
-}
-#dev #s-pdet input.rg::-moz-range-thumb{
-  width:34px;height:34px;border:0;border-radius:50%;
-  background:linear-gradient(rgba(109,182,255,.62),rgba(109,182,255,.62)),var(--bg)!important;
-  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.85)!important;
-}
-#dev #s-pdet input.rg:focus-visible{outline:none}
-#dev #s-pdet input.rg:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(--sky-400),0 4px 14px rgba(70,105,140,.10)!important}
