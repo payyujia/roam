@@ -982,6 +982,11 @@ body{font-weight:500}
   background:rgba(109,182,255,.35)!important;
 }
 #dev .tl.nv .tc.done .ln::after{background:var(--sky-400)!important}
+/* the line stops at the circle's edge (the nodes are 44px wide) so it never shows through a dimmed circle */
+#dev .tl.nv{--nd-r:22px}
+#dev .tl.nv .tc + .tn::before{top:0;bottom:calc(50% + var(--nd-r))}
+#dev .tl.nv .tn:has(+ .tc)::after{top:calc(50% + var(--nd-r));bottom:0}
+#dev .tl.nv .tn.cur:has(+ .tc)::after{bottom:-6px}
 #dev .tl.nv .tdone{color:var(--sky-600)!important}
 #dev .tl.nv .tdone svg{color:var(--sky-600)!important}
 #dev .tl.nv .cc{color:var(--ink)!important}
