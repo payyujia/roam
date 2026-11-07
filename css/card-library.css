@@ -631,15 +631,6 @@
 }
 #dev #s-pdet .fl .rowx .cap.sm{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
 
-/* Profile trip budget: personal preference explanation uses Subtitle 12 / 500 / 16. */
-#dev #s-pdet .budget-preference-subtitle{
-  font-family:var(--font);
-  font-size:12px;
-  font-weight:500;
-  line-height:16px;
-  color:var(--muted);
-  margin:0 0 20px;
-}
 /* Budget textbox: match the Card Component Library glass input (50px / 18px).
    The existing .fi surface and focus styles provide the glass treatment. */
 #dev #s-pdet .budget-input-field{
