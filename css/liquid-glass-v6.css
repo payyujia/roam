@@ -1209,10 +1209,10 @@ body{font-weight:500}
 }
 /* Reuse the very same trip cover shown in Your trips. */
 #dev .reschedule-row .cover{
-  --cz:48px;
-  width:48px;
-  height:52px;
-  flex:0 0 48px;
+  --cz:56px;
+  width:56px;
+  height:60px;
+  flex:0 0 56px;
   border-radius:14px;
   overflow:hidden;
 }
