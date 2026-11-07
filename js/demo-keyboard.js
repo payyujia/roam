@@ -179,7 +179,8 @@
       '" aria-pressed="'+(emojiCategory===group.id)+'">'+group.icon+'</button>'
     ).join('')+
    '</div>'+
-   '<div class="dk-emoji-footer"><span>☺</span><span class="dk-emoji-title">Emoji</span><span>⌫</span></div>';
+   '<div class="dk-emoji-footer"><span aria-hidden="true">☺</span><span class="dk-emoji-title">Emoji</span>'+ 
+   '<button type="button" class="dk-emoji-backspace" data-kb-action="delete" aria-label="Delete last character">'+deleteIcon+'</button></div>';
   updateEmojiGrid();
  }
 
