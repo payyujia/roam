@@ -331,3 +331,61 @@
 }
 #dev :is(#fab,#psave,.btn[data-a="psave"]) svg{width:20px;height:20px;flex:none}
 #dev #fab span{font-size:14px;font-weight:700;line-height:1}
+
+/* ---------- PROFILE SUBPAGES ----------
+   Field labels are the library Subheader (16px / 700 / 22px / -.01em) on
+   every nested page; field values are Regular 14; helper text is Subtitle 12. */
+#dev #s-pdet .pdb :is(.lb,.travel-setting-label){
+  display:block;
+  font-family:var(--font);
+  font-size:16px;
+  font-weight:700;
+  line-height:22px;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin:0 0 10px;
+}
+#dev #s-pdet .pdb :is(.fi input,.fld input,.in,textarea,.tag-query input){
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:500;
+  line-height:1.5;
+}
+/* Notifications: library .sw-row — Subheader title, Subtitle helper, 52 x 31 switch. */
+#dev #s-pdet .fl .rowx{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#dev #s-pdet .fl .rowx b{
+  display:block;
+  font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;
+}
+#dev #s-pdet .fl .rowx .cap.sm{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
+
+/* Trip budget: value is a Subheader, not a Heading. */
+#dev #s-pdet #bv{
+  font-family:var(--font);
+  font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;
+  margin:0 0 12px;
+}
+#dev #s-pdet .rgl{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
+/* Slider: track like the library switch (off) + Sky (filled); thumb is the
+   library .btn.mini.sky — 34px, frosted sky, no content. */
+#dev #s-pdet input.rg{height:34px;margin:0;background:none}
+#dev #s-pdet input.rg::-webkit-slider-runnable-track{
+  height:6px;border-radius:999px;
+  background:linear-gradient(to right,var(--sky-400) var(--v,15%),rgba(120,140,165,.25) var(--v,15%))!important;
+}
+#dev #s-pdet input.rg::-moz-range-track{height:6px;border-radius:999px;background:rgba(120,140,165,.25)!important}
+#dev #s-pdet input.rg::-moz-range-progress{height:6px;border-radius:999px;background:var(--sky-400)!important}
+#dev #s-pdet input.rg::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:34px;height:34px;margin-top:-14px;
+  border:0;border-radius:50%;
+  background:linear-gradient(rgba(109,182,255,.62),rgba(109,182,255,.62)),var(--bg)!important;
+  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.85)!important;
+}
+#dev #s-pdet input.rg::-moz-range-thumb{
+  width:34px;height:34px;border:0;border-radius:50%;
+  background:linear-gradient(rgba(109,182,255,.62),rgba(109,182,255,.62)),var(--bg)!important;
+  box-shadow:0 4px 14px rgba(70,105,140,.10),inset 0 1px 4px rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.85)!important;
+}
+#dev #s-pdet input.rg:focus-visible{outline:none}
+#dev #s-pdet input.rg:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(--sky-400),0 4px 14px rgba(70,105,140,.10)!important}
