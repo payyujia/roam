@@ -89,7 +89,7 @@ function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
  return `<${g} class="pn tone-${p.tone} ${p.cls||''}" style="${L};z-index:${Math.round(y)}" ${accessible} aria-label="${esc(p.label)}">
   <span class="pn-face" aria-hidden="true"></span>${PIN_RIM}
   <span class="pn-cover" aria-hidden="true">${ic(p.icon,18)}${photo}${p.alert?`<span class="pn-mark">${p.mark}</span>`:''}</span>
-  <span class="bg" aria-hidden="true">${badge}</span>
+  <span class="bg${p.tone==='done'&&p.mark?' done':''}" aria-hidden="true">${badge}</span>
  </${g}>`;
 }
 function routeH(r,project){
