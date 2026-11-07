@@ -17,7 +17,7 @@
  keyboard.hidden=true;
  dev.appendChild(keyboard);
 
- let opened=false,shifted=false,numbers=false;
+ let opened=false,shifted=true,numbers=false;
  /* Inverse-contrast themes are chosen from the actual chat background.
     ?keyboard-theme=dark|light can force a skin when previewing either design. */
  function brightness(el){
@@ -53,49 +53,48 @@
  const key=(value,label='',cls='')=>'<button type="button" class="dk-key '+cls+
   '" data-kb-key="'+escapeText(value)+'" aria-label="'+escapeText(label||value)+'">'+
   escapeText(label||value)+'</button>';
- /* The iPhone typing keyboard uses the same rectangular key grid for
-    letters, numbers and symbols. 123 must never open the Phone app dial pad. */
+ /* Render the same four-row iPhone-style typing keyboard for letters,
+    numbers and symbols. Keep the chat input editable by real keyboard too. */
  function draw(){
-  const layouts=numbers?
+  const layout=numbers?
    (shifted?
     [
      ['[',']','{','}','#','%','^','*','+','='],
      ['_','\\','|','~','<','>','€','£','¥','•'],
-     ['. ',',','?','!','\u0027']
+     ['.',',','?','!','\'']
     ]:
     [
      ['1','2','3','4','5','6','7','8','9','0'],
      ['-','/',':',';','(',')','$','&','@','"'],
-     ['.',',','?','!','\u0027']
+     ['.',',','?','!','\'']
     ]):
-   [
-    [...'qwertyuiop'],
-    [...'asdfghjkl'],
-    [...'zxcvbnm']
-   ];
-  const cap=value=>numbers?value:(shifted?value.toUpperCase():value.toUpperCase());
-  const letters=row=>row.map(x=>key(numbers?x:shifted?x.toUpperCase():x,cap(x))).join('');
-  const bottomMode=numbers?'ABC':'123';
-  const modifierLabel=numbers?(shifted?'123':'#+='):'Shift';
-  const modifierGlyph=numbers?(shifted?'123':'#+='):shiftIcon;
+   [['q','w','e','r','t','y','u','i','o','p'],
+    ['a','s','d','f','g','h','j','k','l'],
+    ['z','x','c','v','b','n','m']];
+  const chars=row=>row.map(ch=>key(!numbers&&shifted?ch.toUpperCase():ch,
+    numbers?ch:ch.toUpperCase(),'dk-char')).join('');
+  const shiftLabel=numbers?(shifted?'123':'#+='):'Shift';
+  const shiftContent=numbers?(shifted?'123':'#+='):shiftIcon;
+  const bottomLabel=numbers?'ABC':'123';
   keyboard.innerHTML=
    '<div class="dk-predict" aria-label="Predictive text suggestions">'+
-    '<span>I</span><span>The</span><span>Is</span></div>'+
+     '<span>I</span><span>The</span><span>Is</span></div>'+
    '<div class="dk-rows" role="group" aria-label="'+(numbers?'Numbers and symbols':'Letters')+'">'+
-    '<div class="dk-row">'+letters(layouts[0])+'</div>'+
-    '<div class="dk-row'+(numbers?'':' dk-offset')+'">'+letters(layouts[1])+'</div>'+
-    '<div class="dk-row'+(numbers?' dk-numbers-third':'')+'">'+
-     '<button type="button" class="dk-key dk-special dk-shift'+(shifted?' is-on':'')+
-      '" data-kb-action="shift" aria-label="'+modifierLabel+'" aria-pressed="'+shifted+'">'+modifierGlyph+'</button>'+
-     letters(layouts[2])+
-     '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
-    '</div>'+
-    '<div class="dk-row dk-bottom">'+
-     '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers')+'">'+bottomMode+'</button>'+
-     '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">'+emojiIcon+'</button>'+
-     '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
-     '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message"><span class="dk-return-dark">'+returnIcon+'</span><span class="dk-return-light">'+searchIcon+'</span></button>'+
-    '</div>'+
+     '<div class="dk-row">'+chars(layout[0])+'</div>'+
+     '<div class="dk-row'+(numbers?'':' dk-offset')+'">'+chars(layout[1])+'</div>'+
+     '<div class="dk-row'+(numbers?' dk-numbers-third':'')+'">'+
+       '<button type="button" class="dk-key dk-special dk-shift'+(shifted?' is-on':'')+
+        '" data-kb-action="shift" aria-label="'+shiftLabel+'" aria-pressed="'+shifted+'">'+shiftContent+'</button>'+
+       chars(layout[2])+
+       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
+     '</div>'+
+     '<div class="dk-row dk-bottom">'+
+       '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers and symbols')+'">'+bottomLabel+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-key="😊" aria-label="Emoji">'+emojiIcon+'</button>'+
+       '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-space-label">space</span><span class="dk-en">EN</span></button>'+
+       '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message">'+
+         '<span class="dk-return-dark">'+returnIcon+'</span><span class="dk-return-light">'+searchIcon+'</span></button>'+
+     '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
   updateSend();
@@ -120,7 +119,7 @@
    opened=true;
    keyboard.hidden=false;
    dev.classList.add('demo-keyboard-open');
-   shifted=false;numbers=false;
+   shifted=true;numbers=false;
    selectSkin();draw();
   }
   scrollEnd();
@@ -139,7 +138,7 @@
   const end=input.selectionEnd??start;
   input.setRangeText(value,start,end,'end');
   input.dispatchEvent(new Event('input',{bubbles:true}));
-  if(shifted&&!numbers){shifted=false;draw()}
+  if(shifted&&!numbers&&/^[a-z]$/i.test(value)){shifted=false;draw()}
  }
  function erase(){
   const input=currentInput();if(!input)return;
