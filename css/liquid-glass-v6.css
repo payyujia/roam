@@ -76,7 +76,8 @@ body{font-weight:500}
 #dev #s-trips.scr{bottom:0;overflow-y:auto;overscroll-behavior-y:contain}
 #dev #s-trips .pg{padding-bottom:calc(var(--fab-b) + 112px)}
 #dev #s-trips .hd{height:auto;min-height:138px;padding:62px 24px 18px}
-#dev #s-trips .hd h1{max-width:none;font-size:clamp(25px,8vw,34px);line-height:1.12;letter-spacing:-.045em}
+/* Use the shared Display 800 type scale (Plus Jakarta Sans, 800, 40–56px). */
+#dev #s-trips .hd h1{max-width:none;font-size:clamp(40px,10vw,56px);font-weight:800;line-height:.98;letter-spacing:-.06em}
 #dev #s-trips .sec{padding-top:13px;padding-bottom:8px}
 #dev #s-profile .profile-notif{
   --action-fill:var(--glass-control-bg);
