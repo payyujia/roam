@@ -37,7 +37,10 @@ const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${w
 Object.assign(A,{
  ddadd:id=>{S.dd=null;DDP['+'+id]&&DDP['+'+id]();rr()},
  trm:(k,x)=>{x=decodeURIComponent(x);if(k=='coll'){const f=FR.find(y=>y[0]==x);S.f.coll=(S.f.coll||[]).filter(c=>!f||c!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(y=>y!=x);pd();rr()}},
- ddt:id=>{S.dd=S.dd===id?null:id;rr();const el=S.dd&&$(`#dev .dd-opt[aria-selected=true]`)||$(`[data-dd="${id}"]`);el&&el.focus()},
+ /* Keep the open trigger focused so the selected option shows the single soft
+    selection highlight from the component sheet, not an extra focus outline.
+    Arrow keys can still move focus into the list. */
+ ddt:id=>{S.dd=S.dd===id?null:id;rr();const el=$(`[data-dd="${id}"]`);el&&el.focus()},
  ddp:(id,v)=>{S.dd=null;DDP[id]&&DDP[id](decodeURIComponent(v));const t=$(`[data-dd="${id}"]`);t&&t.focus()},
  calopen:w=>{if(S.cal&&S.cal.on===w){S.cal=null}else{const f=S.f,s=f.start&&p8(f.start);S.cal={on:w,a:f.start||null,b:f.end||null,m:new Date((s||NOW).getFullYear(),(s||NOW).getMonth(),1)}}render('form')},
  calmo:n=>{const m=S.cal.m;S.cal.m=new Date(m.getFullYear(),m.getMonth()+ +n,1);render('form');const b=$(`[data-a="calmo:${n}"]`);b&&!b.disabled&&b.focus()},
@@ -50,7 +53,15 @@ document.addEventListener('click',e=>{if(S.dd&&!e.target.closest('.dd')){S.dd=nu
 document.addEventListener('keydown',e=>{
  if(S.dd){
   if(e.key=='Escape'){e.stopImmediatePropagation();const id=S.dd;S.dd=null;rr();const t=$(`[data-dd="${id}"]`);t&&t.focus();return}
-  if(e.key=='ArrowDown'||e.key=='ArrowUp'){const o=$$('#dev .dd-opt'),i=o.indexOf(document.activeElement);if(o.length){e.preventDefault();o[(i+(e.key=='ArrowDown'?1:-1)+o.length)%o.length].focus()}}
+  if(e.key=='ArrowDown'||e.key=='ArrowUp'){
+   const o=$('#dev .dd-opt'),i=o.indexOf(document.activeElement);
+   if(o.length){
+    e.preventDefault();
+    const chosen=o.findIndex(el=>el.getAttribute('aria-selected')==='true');
+    const first=i<0?(chosen>=0?chosen:(e.key=='ArrowDown'?0:o.length-1)):(i+(e.key=='ArrowDown'?1:-1)+o.length)%o.length;
+    o[first].focus();
+   }
+  }
  }else if(S.cal&&e.key=='Escape'&&topId()=='form'){e.stopImmediatePropagation();S.cal=null;render('form')}
 },true);
 /* a fresh trip form always starts with the calendar closed */
