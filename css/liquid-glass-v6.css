@@ -211,7 +211,7 @@ body{font-weight:500}
   --rim:linear-gradient(135deg,rgba(255,255,255,.6),transparent 46%,
     transparent 54%,rgba(255,255,255,.5));
 }
-#dev :is(.btn,.gob,.vbtn,#fab,#psave){height:46px;border-radius:999px;font-size:13px;font-weight:700}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave){border-radius:999px;font-size:13px;font-weight:700}
 /* Home Trips Create trip button: Body 700 at 14px, without altering Map or other actions. */
 #dev .btn{padding:0 22px}
 #dev .btn.sm2{height:34px;padding:0 14px;font-size:11px}
