@@ -593,6 +593,22 @@ body{font-weight:500}
 #dev #app.nt .scr.on,
 #dev #app.instant .scr.on{transition:none!important}
 
+/* Keep the Profile's frosted surface fully painted beneath its detail page.
+   Previously it was visibility:hidden and was only rebuilt at the moment of
+   exit, temporarily exposing an uncomposited background during the swipe. */
+#dev #app:has(#s-pdet.on) #s-profile.scr.under{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+  z-index:0;
+}
+#dev #app #s-pdet.scr.on{z-index:1}
+#dev #app #s-profile.scr.back-reveal{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+}
+
 /* iOS-style back navigation for Chat threads and Profile detail pages.
    Keep the departing page visible while it slides out to the right, revealing
    the parent underneath. Other inactive screens remain instantly hidden. */
