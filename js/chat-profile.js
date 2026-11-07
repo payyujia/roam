@@ -147,6 +147,63 @@ const InterestPicker=()=>`<div class="pad interest-picker">
  </section>
  <section class="interest-suggestions" id="interest-suggestions" aria-label="Suggested interests">${interestOptionsHTML()}</section>
 </div>`;
+
+/* Accessibility and Health conditions reuse Interests' glass search / selected
+   tags / five suggestions layout. These editors are fixed-choice and draft-only
+   until the user taps Save changes; other Profile tag editors are unchanged. */
+const PROFILE_PREFERENCE_PICKERS={
+ access:{
+  your:'Your accessibility needs',suggested:'Suggested accessibility needs',
+  search:'Search accessibility needs...',empty:'No accessibility needs selected yet',
+  catalog:['Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support','Step-free routes','Accessible toilets','Elevator access','Rest stops','Seating availability','Accessible transport','Avoid stairs','Low-sensory areas','Clear signage','Assistance with navigation','Wide pathways','Accessible entrances','Short walking distances','Wheelchair-friendly seating']
+ },
+ health:{
+  your:'Your health conditions',suggested:'Suggested health conditions',
+  search:'Search health conditions...',empty:'No health conditions selected yet',
+  note:'Used when plans change.',
+  catalog:['Asthma','Bad knees','Motion sickness','Heat sensitivity','Migraine','Chronic eye stye','Food allergies','Back pain','Joint pain','Chronic pain','Fatigue','Respiratory sensitivity','Sun sensitivity','Dizziness','Low stamina','Diabetes','Epilepsy','Vertigo','Anxiety']
+ }
+};
+const profilePreferenceDraft=k=>Array.isArray(S.p[k+'Draft'])?S.p[k+'Draft']:S.p[k];
+const profilePreferenceChanged=k=>{
+ const draft=profilePreferenceDraft(k),saved=S.p[k];
+ return draft.length!==saved.length||draft.some(name=>!saved.includes(name));
+};
+const profilePreferenceSuggestions=k=>PROFILE_PREFERENCE_PICKERS[k].catalog.filter(name=>!S.p[k].includes(name)).slice(0,5);
+const ProfilePreferenceTag=(k,x)=>`<span class="tag2">${esc(x)}<button type="button" aria-label="Remove ${esc(x)}" data-a="prefRemove:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
+const profilePreferenceTagsHTML=k=>profilePreferenceDraft(k).length?profilePreferenceDraft(k).map(x=>ProfilePreferenceTag(k,x)).join(''):`<span class="cap sm interest-empty">${PROFILE_PREFERENCE_PICKERS[k].empty}</span>`;
+const profilePreferenceOptionsHTML=k=>{
+ const config=PROFILE_PREFERENCE_PICKERS[k],q=(S.prefSearch||'').trim().toLocaleLowerCase();
+ const available=config.catalog.filter(name=>!profilePreferenceDraft(k).includes(name));
+ const shown=(q?available.filter(name=>name.toLocaleLowerCase().includes(q)):(S.prefSuggestions||profilePreferenceSuggestions(k)).filter(name=>available.includes(name))).slice(0,5);
+ return `<div class="interest-option-heading"><span class="lb">${q?'Matching '+(k==='access'?'accessibility needs':'health conditions'):config.suggested}</span></div>${shown.length?`<div class="dd-list glass"><div class="dd-opts">${shown.map(name=>`<button type="button" class="dd-opt interest-choice" data-a="prefAdd:${encodeURIComponent(name)}" aria-label="Add ${esc(name)}"><span class="t">${esc(name)}</span>${ic('plus',16)}</button>`).join('')}</div></div>`:`<p class="cap interest-no-matches">${q?'No other options match your search.':'No more suggestions available.'}</p>`}`;
+};
+const refreshProfilePreferencePicker=k=>{
+ const tags=$('#preference-tags');
+ if(tags)tags.innerHTML=profilePreferenceTagsHTML(k);
+ const count=$('#preference-count');
+ if(count)count.textContent=profilePreferenceDraft(k).length+' selected';
+ const options=$('#preference-suggestions');
+ if(options)options.innerHTML=profilePreferenceOptionsHTML(k);
+ const changed=profilePreferenceChanged(k);
+ S.p.dirty=changed?1:0;
+ const save=$('#s-pdet .sv .btn');
+ if(save)save.disabled=!changed;
+};
+const ProfilePreferencePicker=k=>{
+ const config=PROFILE_PREFERENCE_PICKERS[k];
+ return `<div class="pad interest-picker">
+  <div class="glass invite-box tag-query interest-search-card">
+   <div class="tq-row">${ic('search',18)}<input id="preference-search" type="search" placeholder="${esc(config.search)}" aria-label="${esc(config.search)}" aria-controls="preference-suggestions" value="${esc(S.prefSearch||'')}" autocomplete="off" oninput="A.prefSearch(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();A.prefFirst()}"></div>
+  </div>
+  <section class="interest-selected-section" aria-labelledby="preference-selected-title">
+   <div class="interest-section-head"><span class="lb" id="preference-selected-title">${config.your}</span><span class="cap sm" id="preference-count" aria-live="polite">${profilePreferenceDraft(k).length} selected</span></div>
+   <div class="glass invite-box tag-query interest-selected-card"><div class="tags tq-tags" id="preference-tags">${profilePreferenceTagsHTML(k)}</div></div>
+   ${config.note?`<p class="cap sm preference-helper">${config.note}</p>`:''}
+  </section>
+  <section class="interest-suggestions" id="preference-suggestions" aria-label="${config.suggested}">${profilePreferenceOptionsHTML(k)}</section>
+ </div>`;
+};
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
@@ -159,8 +216,8 @@ ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Publ
 </div></div></div>`}},
  budget:{t:'Trip budget',i:'bag',c:'green',v:()=>'S$'+Number(S.p.budget).toLocaleString('en-SG'),b:()=>{const pc=S.p.budgetDraft ?? String(S.p.budget);return `<div class="pad budget-preference" style="margin-top:12px"><label class="lb" for="budget-input">Trip budget (SGD)</label><div class="fi budget-input-field"><input id="budget-input" type="text" inputmode="numeric" pattern="[0-9]*" value="${esc(pc)}" placeholder="Enter amount" aria-label="Trip budget in SGD" aria-describedby="budget-input-error" oninput="A.pbudgetInput(this)" autocomplete="off"></div><p id="budget-input-error" class="cap sm budget-input-error" role="alert" hidden>Enter a positive whole-dollar amount.</p></div>`}},
  diet:{nv:1,t:'Dietary needs',i:'coffee',c:'lime',v:()=>pSum(S.p.diet),b:()=>DietaryPicker()},
- access:{nv:1,t:'Accessibility',i:'user',c:'purple',v:()=>pSum(S.p.access),b:()=>pTags('access','Add an accessibility need…',['Step-free routes','Wheelchair access','Limited walking','Quiet spaces','Visual support','Hearing support'])},
- health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>pTags('health','Add something we should know…',['Chronic eye stye','Asthma','Bad knees','Motion sickness','Heat sensitivity'],'Used when plans change.')},
+ access:{nv:1,t:'Accessibility',i:'user',c:'purple',v:()=>pSum(S.p.access),b:()=>ProfilePreferencePicker('access')},
+ health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>ProfilePreferencePicker('health')},
  likes:{t:'Interests',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>InterestPicker()},
  notif:{t:'Notifications',i:'clock',c:'red',v:()=>Object.values(S.p.notif).filter(Boolean).length+' on',b:()=>{const n=S.p.notif;return `<div class="fl" style="margin-top:12px">${Switch('remind','Trip reminders','The day before, and on the morning',n.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',n.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',n.fork)}</div>`}},
  rate:{t:'My trip ratings',i:'star',c:'yellow',v:()=>'4 trips',b:()=>{const p=S.p;return `<div class="pad" style="margin-top:12px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><b>Sunrise at East Coast</b><div class="cap sm">${p.rate?p.rate+' out of 5':'Tap a star'}</div></div><div class="rate" role="group" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button aria-pressed="${n<=p.rate}" aria-label="${n} star${n>1?'s':''}" data-a="prate:${n}">${ic('star',26,n<=p.rate?'currentColor':'none')}</button>`).join('')}</div></div></div>`}},
