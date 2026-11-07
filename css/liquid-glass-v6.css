@@ -1078,13 +1078,17 @@ body{font-weight:500}
 #dev #s-pdet .travel-style-form{
   gap:24px;
 }
+/* Pace label and the three-option selector share one horizontal row. */
 #dev #s-pdet .travel-pace-field{
   display:grid;
-  gap:10px;
+  grid-template-columns:max-content minmax(0,1fr);
+  align-items:center;
+  column-gap:12px;
   min-width:0;
 }
 #dev #s-pdet .travel-pace-field .seg{
   width:100%;
+  min-width:0;
   box-sizing:border-box;
 }
 #dev #s-pdet .travel-style-form .seg button:not([aria-checked="true"]){
@@ -1142,6 +1146,8 @@ body{font-weight:500}
   font-weight:800;
 }
 @media(max-width:360px){
+  #dev #s-pdet .travel-pace-field{column-gap:8px}
+  #dev #s-pdet .travel-pace-field .seg button{padding-inline:3px}
   #dev #s-pdet .travel-group-size{column-gap:8px}
   #dev #s-pdet .travel-group-stepper{gap:5px;margin-top:0}
   #dev #s-pdet .travel-group-stepper button{width:32px;height:32px;flex-basis:32px}
