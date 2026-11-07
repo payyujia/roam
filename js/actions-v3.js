@@ -38,7 +38,14 @@ Object.assign(A,{
  /* profile */
  pdet:k=>{S.pd=k;S.p.dirty=0;go('pdet')},
  psave:()=>{S.p.dirty=0;A.back();toast('Changes saved')},
- ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{S.p.move=decodeURIComponent(k);pd();render('profile')},pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
+ ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{
+  k=decodeURIComponent(k);
+  if(!['Walk','MRT & bus','Car'].includes(k))return;
+  const selected=Array.isArray(S.p.move)?S.p.move:[S.p.move].filter(Boolean);
+  S.p.move=selected.includes(k)?selected.filter(x=>x!==k):[...selected,k];
+  pd();
+  render('pdet');
+},pgroup:d=>{S.p.group=Math.max(1,Math.min(12,S.p.group+ +d));pd();render('profile')},
  pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:n=>{S.p.rate=+n;pd();render('profile')}});
 /* send keeps working with the new message shape */
 A.send=()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v,null,null,null,Date.now()]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length],null,null,null,Date.now()]);if(S.th==th)S.typing=0;render('thread');bottom();tabbar()},1500)};
