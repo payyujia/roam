@@ -1480,27 +1480,3 @@ body{font-weight:500}
 
 /* Reels screen: keep every h1 heading white, including nested reel states. */
 #dev #s-reels h1{color:#fff!important}
-
-
-/* Reel info control: keep its original 44px flow position and hit area,
-   but render only the icon with no pill, fill, or shadow. */
-#dev #s-reels .rinfo{
-  box-sizing:border-box;
-  display:inline-flex!important;
-  align-items:center;
-  justify-content:center;
-  width:44px!important;
-  min-width:44px;
-  height:44px!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:50%!important;
-  background:transparent!important;
-  color:#fff!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-}
-#dev #s-reels .rinfo svg{display:block;width:20px;height:20px;pointer-events:none}
-#dev #s-reels .rinfo:hover:not(:disabled),
-#dev #s-reels .rinfo:active:not(:disabled){background:transparent!important;box-shadow:none!important}
