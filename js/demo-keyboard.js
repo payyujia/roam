@@ -159,7 +159,7 @@
   popup.setAttribute('aria-label','Choose skin tone');
   popup.innerHTML=[emoji,...tones].map((variant,i)=>
    '<button type="button" class="dk-skin-option" data-kb-key="'+escapeText(variant)+
-   '" aria-label="'+(i?'Skin tone '+i:'Default skin tone')+'">'+variant+'</button>'
+   '" aria-label="'+(i?'Skin tone '+i:'Default skin tone')+'">'+(window.RoamAppleEmoji?.renderEmoji(variant)||escapeText(variant))+'</button>'
   ).join('');
   const rect=button.getBoundingClientRect(),outer=keyboard.getBoundingClientRect();
   const x=Math.max(8,Math.min(outer.width-236,rect.left-outer.left-100));
