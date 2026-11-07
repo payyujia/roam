@@ -3,9 +3,11 @@ const IDS=['trips','trip','form','map','reels','chat','thread','profile','all','
 const cur=()=>S.stack[S.tab],topId=()=>cur()[cur().length-1];
 const render=id=>{if(id=='profile'&&S.pd&&topId()=='pdet')render('pdet');const e=$('#s-'+id);if(!e||!V[id])return;const y=e.scrollTop,h=V[id]();e.innerHTML=RAW[id]?h:`<div class="pg">${h}</div>`;e.scrollTop=y;if(id=='map'&&typeof mapAfter=='function')mapAfter();if(id=='reels'&&typeof reelsAfter=='function')reelsAfter()};
 IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.dataset.id=id;s.className='scr'+(id=='map'?' nos':id=='reels'?' rls':id=='thread'?' flex':'');$('#app').append(s)});
-const rr=()=>{IDS.forEach(id=>id!='reels'&&render(id));upd()};
-function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','film'],['trips','Trips'],['map','Map','map'],['chat','Chats','message-circle']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
- return id=='trips'?`<button class="ctr${on?' on':''}" data-t="trips" ${al}><span class="circ">${ic('plane',30,'currentColor')}</span>Trips</button>`:`<button class="${on?'on':''}" data-t="${id}" ${al}><span class="ti">${id=='profile'?Av('P','tab'):ic(i)}${id=='reels'&&S.newReel?'<i class="bdg dot"></i>':''}${id=='chat'&&u?`<i class="bdg">${u}</i>`:''}</span>${l}</button>`}).join('')}
+/* Render the visible screen only. Navigation already renders its destination;
+   rebuilding every hidden page (especially the map) on each update stalls taps. */
+const rr=()=>{const id=topId();if(id!=='reels')render(id);upd()};
+function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','film'],['trips','Trips'],['map','Map','tab-map'],['chat','Chats','tab-chat']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
+ return id=='trips'?`<button class="ctr${on?' on':''}" data-t="trips" ${al}><span class="circ">${ic('plane',30)}</span>Trips</button>`:`<button class="${on?'on':''}" data-t="${id}" ${al}><span class="ti">${id=='profile'?Av('P','tab'):ic(i)}${id=='reels'&&S.newReel?'<i class="bdg dot"></i>':''}${id=='chat'&&u?`<i class="bdg">${u}</i>`:''}</span>${l}</button>`}).join('')}
 /* Share one app-level button for both actions so their clearance above the
    Trips navigation icon is identical, regardless of scroll position. */
 function chrome(){
@@ -32,7 +34,14 @@ const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;e
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
 function tab(t){const same=S.tab==t;$('#app').classList.add('nt');if(same)S.stack[t]=[t];else{S.prev=S.tab;S.tab=t}if(t=='reels')S.newReel=0;render(t);upd();requestAnimationFrame(()=>requestAnimationFrame(()=>$('#app').classList.remove('nt')))}
-function toast(m,undo){const t=$('#toast');t.innerHTML=`<span>${m}</span>${undo?'<button data-a="undo">Undo</button>':''}`;S.undo=undo||null;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),undo?5500:2800)}
+function toast(message,undo,icon){
+ const t=$('#toast'),canUndo=typeof undo==='function';
+ t.innerHTML=`<span>${icon?ic(icon,20):''}<span>${message}</span></span>${canUndo?'<button data-a="undo">Undo</button>':''}`;
+ S.undo=canUndo?undo:null;
+ t.classList.add('on');
+ clearTimeout(toast.h);
+ toast.h=setTimeout(()=>t.classList.remove('on'),canUndo?5500:2800);
+}
 function pd(){S.p.dirty=1;$$('#s-pdet .sv .btn').forEach(b=>b.disabled=false)}
 const bottom=()=>setTimeout(()=>{const m=$('#msgs');m&&(m.scrollTop=m.scrollHeight)},60);
 const addStop=(t,p)=>{const n=t.stops.length;t.stops.push({n:p.n,t:'15:00',i:p.i,s:p.s||'Added by you',k:p.k||'Do',x:25+n*19%52,y:26+n*13%24,tr:'15 min by car',u:1,d:0,m:1});t.stops.sort((a,b)=>a.t.localeCompare(b.t))};

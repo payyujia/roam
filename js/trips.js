@@ -11,8 +11,16 @@ const tasksSorted=()=>tasks().map((id,i)=>[id,i]).sort((a,b)=>taskDue2(a[0])-tas
    Used on Home (first TOP rows) and on the "View all" page. */
 /* status line under a task: urgent ("Overdue", "Due today", "Due tomorrow") when the deadline is close, otherwise who the task is waiting on.
    The deadline itself is shown once, on the date tile. */
-const tdue=(wait,d)=>{if(!d)return `<span class="due">${ic('calendar',12)}No due date</span>`;const n=dd(d);return n<=1?`<span class="due hot">${ic('clock',12)}${n<0?'Overdue':n==0?'Due today':'Due tomorrow'}</span>`:`<span class="due">${ic('vote',12)}${wait}</span>`};
-const DTile=d=>{if(!d)return `<div class="dtile" aria-hidden="true">${ic('calendar',22)}</div>`;const x=toDate(d),hot=dd(d)<=2;return `<div class="dtile${hot?' hot':''}" aria-hidden="true"><i>DUE</i><b>${x.getDate()}</b><span>${MN[x.getMonth()]}</span></div>`};
+const tdue=(wait,d)=>{
+ if(!d)return '<span class="due undated">No due date</span>';
+ const n=dd(d);
+ return n<=1?`<span class="due hot">${n<0?'Overdue':n==0?'Due today':'Due tomorrow'}</span>`:`<span class="due">${wait}</span>`;
+};
+const DTile=d=>{
+ if(!d)return `<div class="dtile" aria-hidden="true">${ic('calendar',22)}</div>`;
+ const date=toDate(d);
+ return `<div class="dtile" aria-hidden="true"><i>DUE</i><b>${String(date.getDate()).padStart(2,'0')}</b><span>${MN[date.getMonth()]}</span></div>`;
+};
 const TaskRow3=id=>{
  if(id=='inv'){const t=trip('read');return `<div class="trow task tier t${tier(null)}"><div class="tmain">${DTile(null)}<div class="gr"><b>Move ${t.n}?</b><div class="cap sm">Raymond · ${fd(REQ)}</div>${tdue('Waiting for your reply',null)}</div></div><div class="tact"><button class="ib f" data-a="inv:n" aria-label="Decline reschedule">${ic('x',18)}</button><button class="ib p" data-a="inv:y" aria-label="Accept reschedule">${ic('check',18)}</button></div></div>`}
  const t=trip(id),n=needs(t);
