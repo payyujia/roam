@@ -351,6 +351,67 @@ body{font-weight:500}
 }
 #dev :is(.seg,.rtg) button::after{content:none!important}
 
+/* Reels feed: Sunrise Frost floating segmented control (matching the v7 HTML
+   component sheet). Keep the video full-bleed under this compact glass pill. */
+#dev #s-reels .rtg{
+  position:absolute;
+  top:66px;
+  left:50%;
+  right:auto;
+  width:min(280px,calc(100% - 32px));
+  transform:translateX(-50%);
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  padding:4px;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.76)!important;
+  background:rgba(243,248,255,.76)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(160%);
+  backdrop-filter:blur(22px) saturate(160%);
+  box-shadow:0 8px 24px rgba(14,37,82,.20),inset 0 1px 0 rgba(255,255,255,.7)!important;
+  isolation:isolate;
+}
+#dev #s-reels .rtg::before{
+  z-index:0;
+  background:var(--glass-rim);
+}
+#dev #s-reels .rtg button{
+  position:relative;
+  z-index:1;
+  flex:1;
+  min-width:0;
+  height:38px;
+  padding:0 12px;
+  background:transparent!important;
+  color:var(--muted)!important;
+  opacity:1;
+  text-align:center;
+  text-shadow:none!important;
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:700;
+  line-height:1;
+  border-radius:999px!important;
+  box-shadow:none!important;
+  transition:background .16s ease,color .16s ease;
+}
+#dev #s-reels .rtg button[aria-selected=true]{
+  background:#fff!important;
+  color:var(--ink)!important;
+  box-shadow:0 2px 8px rgba(70,105,140,.12)!important;
+}
+#dev #s-reels .rtg button:focus-visible{
+  outline:2px solid var(--sky-600)!important;
+  outline-offset:1px;
+}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  #dev #s-reels .rtg{background:rgba(243,248,255,.96)!important}
+}
+
+
 /* Opaque progress states and their connecting line. */
 #dev .stp{gap:8px;color:var(--muted);font-size:10px;font-weight:700}
 #dev .stp::before,#dev .stp.lock::before{top:21px;height:2px;background:rgba(109,182,255,.35)}
