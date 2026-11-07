@@ -606,3 +606,56 @@ body{font-weight:500}
   margin:0;
   flex:none;
 }
+
+
+/* iOS-style flat chat screen and unobstructed composer.
+   Keep the Sunrise Frost controls; remove the colored canvas behind chats. */
+#dev:has(#s-thread.on){
+  background:#F3F8FF!important;
+}
+#dev #app #s-thread.scr{
+  background:#F3F8FF!important;
+}
+/* Apple's flat, high-contrast status treatment on a light screen:
+   system font, solid ink, no glow/gradient or text effects. */
+#dev #sb{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;
+  font-weight:600;
+  text-shadow:none!important;
+}
+#dev:has(#s-thread.on) #sb{color:#0E1116!important}
+#dev:has(#s-thread.on) #sb svg{color:#0E1116!important;fill:currentColor}
+#dev:has(#s-thread.on) #sb .sbb{
+  background:#30343B;
+  box-shadow:none;
+}
+#dev:has(#s-thread.on) #sb .sbb::after{background:#30343B}
+#dev:has(#s-thread.on) #sb .sbb i{background:#30343B}
+#dev:has(#s-thread.on) #sb .sbb b{color:#fff}
+/* The tab bar's raised Trips circle protrudes 27px above the bar.
+   Reserve enough vertical space so it never covers the composer. */
+#dev #s-thread.flex{padding-bottom:142px}
+#dev #s-thread .comp{
+  grid-template-columns:minmax(0,1fr) 50px;
+  gap:10px;
+  align-items:center;
+  padding:8px 16px;
+}
+#dev #s-thread .comp #cin,
+#dev #s-thread .comp button[data-a="send"]{
+  height:50px!important;
+  min-height:50px;
+  margin:0;
+  align-self:center;
+}
+#dev #s-thread .comp button[data-a="send"]{
+  width:50px!important;
+  min-width:50px;
+  display:grid;
+  place-items:center;
+  padding:0;
+}
+@media(max-height:650px){
+  #dev #s-thread.flex{padding-bottom:136px}
+}
