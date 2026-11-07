@@ -28,10 +28,9 @@ const PD={
 const PG=[
  {h:'Preferences',g:[['style','move','budget','likes']]},
  {h:'Health & accessibility',g:[['diet','access','health']]},
- {h:'Your activity',g:[['saved','rate']]},
- {h:'Settings',g:[['notif']]}
+ {h:'Your activity',g:[['saved','rate']]}
 ];
-V.profile=()=>{const p=S.p;return `<div class="hd"><h1>Profile</h1></div>
+V.profile=()=>{const p=S.p;return `<div class="hd profile-hd"><button class="btn round profile-notif" data-a="pdet:notif" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7zM10 20a2 2 0 0 0 4 0"/></svg></button><h1>Profile</h1></div>
 <div class="sg"><button class="srow acct" data-a="pdet:acct">${Av('P','profile')}<span class="gr"><b>${esc(p.name)||'You'}</b><span class="cap" style="display:block">${esc(p.home)} · Joined 2025</span></span>${ic('chevron-right',20)}</button></div>
 ${PG.map(sec=>`<h2 class="ph">${sec.h}</h2>${sec.g.map(g=>`<div class="sg">${g.map(k=>{const d=PD[k];return `<button class="srow" data-a="pdet:${k}"><span class="sic l-${d.c}">${ic(d.i,18)}</span><span class="stt">${d.t}</span>${d.nv?'':`<span class="sval">${esc(d.v())}</span>`}${ic('chevron-right',20)}</button>`}).join('')}</div>`).join('')}`).join('')}`};
 /* Subpage: content + a Save bar fixed at the end (not on read-only pages). Disabled until something changes. */
