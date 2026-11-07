@@ -1076,11 +1076,11 @@ body{font-weight:500}
 }
 /* Use the same left gutter and predictable vertical rhythm for both fields. */
 #dev #s-pdet .travel-style-form{
-  gap:20px;
+  gap:24px;
 }
 #dev #s-pdet .travel-pace-field{
   display:grid;
-  gap:8px;
+  gap:10px;
   min-width:0;
 }
 #dev #s-pdet .travel-pace-field .seg{
@@ -1093,7 +1093,7 @@ body{font-weight:500}
 #dev #s-pdet .travel-group-size{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
-  align-items:start;
+  align-items:center;
   column-gap:12px;
 }
 #dev #s-pdet .travel-group-copy{
@@ -1110,7 +1110,7 @@ body{font-weight:500}
 }
 #dev #s-pdet .travel-group-copy .cap{
   display:block;
-  margin-top:2px;
+  margin-top:4px;
   font-family:var(--roam-card-title-family,var(--font));
   font-size:var(--roam-card-detail-size,12px);
   font-weight:var(--roam-card-detail-weight,500);
@@ -1119,9 +1119,9 @@ body{font-weight:500}
 }
 #dev #s-pdet .travel-group-stepper{
   display:inline-flex;
-  align-self:start;
-  /* 36px controls centred against the 22px title line, not both text lines. */
-  margin-top:-7px;
+  align-self:center;
+  /* Centre the minus, count and plus against the entire two-line setting. */
+  margin-top:0;
   flex:0 0 auto;
   align-items:center;
   gap:8px;
@@ -1143,7 +1143,7 @@ body{font-weight:500}
 }
 @media(max-width:360px){
   #dev #s-pdet .travel-group-size{column-gap:8px}
-  #dev #s-pdet .travel-group-stepper{gap:5px;margin-top:-5px}
+  #dev #s-pdet .travel-group-stepper{gap:5px;margin-top:0}
   #dev #s-pdet .travel-group-stepper button{width:32px;height:32px;flex-basis:32px}
   #dev #s-pdet .travel-group-stepper output{min-width:24px;line-height:32px}
 }
