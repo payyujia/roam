@@ -41,13 +41,13 @@
   keyboard.classList.toggle('theme-light',!darkKeys);
  }
  const shiftIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 13h5v8h8v-8h5L12 3Z" fill="currentColor" stroke="none"/></svg>';
- const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H21v16H9L2 12l7-8Z"/><path d="m12 9 6 6m0-6-6 6"/></svg>';
+ const deleteIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 4.8h10.3a1.5 1.5 0 0 1 1.5 1.5v11.4a1.5 1.5 0 0 1-1.5 1.5H9.5L2.8 12l6.7-7.2Z"/><path d="m12.1 9.4 5.4 5.2m0-5.2-5.4 5.2"/></svg>';
  const globeIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/></svg>';
  const micIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4m-4 0h8"/></svg>';
  /* Monochrome icons match the supplied iPhone screenshots. The display
     differs by skin; both bottom action icons still send the chat message. */
- const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.7" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><circle cx="15.3" cy="9.2" r="1.25" fill="var(--dk-emoji-cutout)"/><path d="M6.5 13.2c.7 3.1 3.1 5 5.5 5s4.8-1.9 5.5-5" fill="none" stroke="var(--dk-emoji-cutout)" stroke-width="1.7" stroke-linecap="round"/></svg>';
- const returnIcon='<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 6v11a4 4 0 0 1-4 4H6m0 0 6-6m-6 6 6 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const emojiIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><circle cx="8.6" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><circle cx="15.4" cy="9.5" r="1.2" fill="var(--dk-emoji-cutout)"/><path d="M7.3 13.2c.65 3.05 2.3 4.65 4.7 4.65s4.05-1.6 4.7-4.65c-2.4 1.05-7 1.05-9.4 0Z" fill="var(--dk-emoji-cutout)"/><path d="M8.5 14.4c2.3.5 4.8.5 7 0" fill="none" stroke="currentColor" stroke-width=".85" stroke-linecap="round"/></svg>';
+ const returnIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5.5v8.6a4 4 0 0 1-4 4H4.5"/><path d="M9.8 13.2 4.5 18.1l5.3 4.4"/></svg>';
  /* Use the same Return glyph in both themes: this field sends chat messages,
     so a magnifying-glass Search icon would be misleading. */
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
@@ -433,14 +433,14 @@
        '<button type="button" class="dk-key dk-special dk-shift'+(shifted?' is-on':'')+
         '" data-kb-action="shift" aria-label="'+shiftLabel+'" aria-pressed="'+shifted+'">'+shiftContent+'</button>'+
        chars(layout[2])+
-       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete">'+deleteIcon+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-delete" data-kb-action="delete" aria-label="Delete"><span class="dk-key-icon">'+deleteIcon+'</span></button>'+
      '</div>'+
      '<div class="dk-row dk-bottom">'+
        '<button type="button" class="dk-key dk-special dk-mode" data-kb-action="mode" aria-label="Switch to '+(numbers?'letters':'numbers and symbols')+'">'+bottomLabel+'</button>'+
-       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-action="emoji" aria-label="Open emoji keyboard">'+emojiIcon+'</button>'+
+       '<button type="button" class="dk-key dk-special dk-emoji" data-kb-action="emoji" aria-label="Open emoji keyboard"><span class="dk-key-icon">'+emojiIcon+'</span></button>'+
        '<button type="button" class="dk-key dk-space" data-kb-key=" " aria-label="Space"><span class="dk-en">EN</span></button>'+
        '<button type="button" class="dk-key dk-return" data-kb-action="send" aria-label="Send message">'+
-         '<span class="dk-return-icon">'+returnIcon+'</span></button>'+
+         '<span class="dk-key-icon dk-return-icon">'+returnIcon+'</span></button>'+
      '</div>'+
    '</div>'+
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
