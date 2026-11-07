@@ -616,23 +616,23 @@ body{font-weight:500}
 #dev #app #s-thread.scr{
   background:#F3F8FF!important;
 }
-/* Apple's flat, high-contrast status treatment on a light screen:
-   system font, solid ink, no glow/gradient or text effects. */
+/* Clean iOS-style status indicators: Apple system font, 15px,
+   solid white on all screens, with no gradient or text glow. */
 #dev #sb{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
   font-size:15px;
   font-weight:600;
+  color:#fff!important;
   text-shadow:none!important;
 }
-#dev:has(#s-thread.on) #sb{color:#0E1116!important}
-#dev:has(#s-thread.on) #sb svg{color:#0E1116!important;fill:currentColor}
-#dev:has(#s-thread.on) #sb .sbb{
+#dev #sb svg{color:#fff!important;fill:currentColor}
+#dev #sb .sbb{
   background:#30343B;
   box-shadow:none;
 }
-#dev:has(#s-thread.on) #sb .sbb::after{background:#30343B}
-#dev:has(#s-thread.on) #sb .sbb i{background:#30343B}
-#dev:has(#s-thread.on) #sb .sbb b{color:#fff}
+#dev #sb .sbb::after{background:rgba(255,255,255,.9)}
+#dev #sb .sbb i{background:#30343B}
+#dev #sb .sbb b{color:#fff;text-shadow:none}
 /* The tab bar's raised Trips circle protrudes 27px above the bar.
    Reserve enough vertical space so it never covers the composer. */
 #dev #s-thread.flex{padding-bottom:142px}
