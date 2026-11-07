@@ -1,0 +1,3 @@
+# Keep third-party emoji artwork on your own computer.
+# The Roam prototype can load files from this folder locally.
+/assets/apple-emojis/
