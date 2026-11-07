@@ -1469,3 +1469,27 @@ body{font-weight:500}
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
   mask-composite:exclude;
 }
+
+
+/* Shared primary-action geometry: Create trip, form Next, and Profile Save. */
+#dev :is(.btn[data-a="formnext"],.btn[data-a="submit"],.btn[data-a="psave"],#fab,#psave){
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  width:max-content!important;
+  min-width:0!important;
+  max-width:calc(100% - 48px);
+  height:46px!important;
+  padding:0 22px!important;
+  border:0!important;
+  border-radius:999px!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  white-space:nowrap;
+}
+#dev :is(.btn[data-a="formnext"],.btn[data-a="submit"],.btn[data-a="psave"]){position:relative}
+#dev #fab,#dev #psave{width:max-content!important}
+#dev #fab[data-s="trips"]{font-size:13px!important}
+#dev #s-reels .rv h1{color:#fff!important}
