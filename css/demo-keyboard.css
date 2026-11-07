@@ -193,6 +193,169 @@
 }
 #dev .dk-accessories .dk-globe svg{width:26px;height:26px}
 
+/* iOS-inspired Emoji keyboard. Uses the same desktop keyboard surface and
+   colour tokens as the letter/number modes; emoji glyphs render using the
+   user's operating-system colour-emoji font. */
+#dev .dk-emoji-search-row{
+  flex:0 0 49px;
+  display:flex;
+  align-items:center;
+  padding:7px 11px 5px;
+}
+#dev .dk-emoji-search-wrap{
+  display:flex;
+  align-items:center;
+  box-sizing:border-box;
+  width:100%;
+  height:37px;
+  padding:0 11px;
+  gap:7px;
+  border-radius:11px;
+  background:rgba(138,138,145,.21);
+  color:var(--dk-sub);
+}
+#dev .theme-light .dk-emoji-search-wrap{
+  background:rgba(100,111,130,.15);
+}
+#dev .dk-emoji-search-icon{
+  flex:0 0 auto;
+  font-size:24px;
+  line-height:1;
+  transform:rotate(-20deg);
+}
+#dev .dk-emoji-search{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--dk-ink);
+  font:400 15px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  box-shadow:none;
+}
+#dev .dk-emoji-search::placeholder{
+  color:var(--dk-sub);
+  opacity:1;
+}
+#dev .dk-emoji-search::-webkit-search-cancel-button{
+  -webkit-appearance:searchfield-cancel-button;
+}
+#dev .dk-emoji-grid{
+  flex:1 1 auto;
+  min-height:0;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  grid-auto-rows:43px;
+  align-content:start;
+  gap:5px 1px;
+  padding:5px 9px 7px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+#dev .dk-emoji-grid::-webkit-scrollbar{display:none}
+#dev .dk-emoji-choice{
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  min-width:0;
+  height:43px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:var(--dk-ink);
+  font:normal 29px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+#dev .dk-emoji-choice:active{background:rgba(150,155,167,.21)}
+#dev .dk-emoji-choice:focus-visible,
+#dev .dk-emoji-category:focus-visible,
+#dev .dk-emoji-abc:focus-visible{
+  outline:2px solid #75B7FF;
+  outline-offset:-2px;
+}
+#dev .dk-emoji-empty{
+  grid-column:1/-1;
+  display:grid;
+  place-items:center;
+  padding:16px;
+  color:var(--dk-sub);
+  font-size:13px;
+}
+#dev .dk-emoji-categories{
+  flex:0 0 46px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-width:0;
+  box-sizing:border-box;
+  gap:2px;
+  padding:3px 5px 2px;
+  border-top:1px solid var(--dk-divider);
+}
+#dev .dk-emoji-category,
+#dev .dk-emoji-abc{
+  flex:1 1 0;
+  display:grid;
+  place-items:center;
+  box-sizing:border-box;
+  min-width:0;
+  height:33px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--dk-sub);
+  font:500 20px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  cursor:pointer;
+}
+#dev .dk-emoji-abc{
+  flex:1.35 1 0;
+  font-size:12px;
+  color:var(--dk-ink);
+  background:var(--dk-control);
+}
+#dev .dk-emoji-category.active{
+  background:rgba(155,158,170,.20);
+  color:var(--dk-ink);
+}
+#dev .dk-emoji-footer{
+  flex:0 0 29px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-sizing:border-box;
+  padding:0 26px 4px;
+  color:var(--dk-sub);
+  font-size:16px;
+}
+#dev .dk-emoji-title{
+  font-size:11px;
+  font-weight:500;
+}
+@media(max-height:700px){
+  #dev .dk-emoji-search-row{flex-basis:42px;padding-top:3px}
+  #dev .dk-emoji-search-wrap{height:33px}
+  #dev .dk-emoji-grid{
+    grid-auto-rows:38px;
+    gap:3px 1px;
+  }
+  #dev .dk-emoji-choice{height:38px;font-size:26px}
+  #dev .dk-emoji-categories{flex-basis:40px}
+  #dev .dk-emoji-footer{flex-basis:24px}
+}
+
 /* Soften only the active chat composer ring during desktop keyboard use.
    Keep a subtle visible focus indicator for keyboard accessibility. */
 #dev.demo-keyboard-open #s-thread .comp #cin:focus,
