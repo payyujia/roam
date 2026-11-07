@@ -20,9 +20,9 @@
   box-sizing:border-box;
   height:var(--demo-keyboard-height);
   width:100%;
-  padding:0 5px;
+  padding:6px 3px 5px;
   border:0;
-  border-radius:28px 28px 28px 28px;
+  border-radius:16px 16px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
@@ -49,7 +49,7 @@
 #dev .demo-keyboard.theme-dark{--dk-bg:#202020}
 #dev .demo-keyboard[hidden]{display:none!important}
 #dev .dk-predict{
-  flex:0 0 15%;
+  flex:0 0 38px;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   align-items:center;
@@ -70,10 +70,10 @@
 }
 #dev .dk-predict span+span{border-left:1px solid var(--dk-divider)}
 #dev .dk-rows{
-  flex:0 0 62%;
+  flex:1 1 auto;
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:6px;
   padding:0;
   min-height:0;
 }
@@ -82,10 +82,10 @@
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:5px;
+  gap:3px;
   min-height:0;
 }
-#dev .dk-offset{padding-inline:24px}
+#dev .dk-offset{padding-inline:14px}
 #dev .dk-key{
   flex:1 1 0;
   display:grid;
@@ -100,7 +100,7 @@
   background:var(--dk-key);
   color:var(--dk-ink);
   font-family:inherit;
-  font-size:20px;
+  font-size:23px;
   font-weight:400;
   line-height:1;
   text-align:center;
@@ -118,7 +118,7 @@
 #dev .dk-bottom{margin-top:0}
 #dev .dk-bottom .dk-mode,
 #dev .dk-bottom .dk-emoji{
-  flex:0 0 11%;
+  flex:0 0 12.5%;
   font-size:18px;
   font-weight:400;
 }
@@ -140,22 +140,23 @@
   font-weight:500;
 }
 #dev .dk-bottom .dk-return{
-  flex:0 0 24%;
+  flex:0 0 23%;
   background:var(--dk-key);
 }
 #dev .dk-return svg{width:27px;height:27px;display:block}
-#dev .dk-return-dark{color:#59595D}
-#dev .dk-return.has-text .dk-return-dark{color:#E6E6E8}
+#dev .dk-return-dark{color:#929296}
+#dev .theme-dark .dk-return.has-text{background:#327FFC}
+#dev .dk-return.has-text .dk-return-dark{color:#FFFFFF}
 #dev .dk-return-light{display:none}
 #dev .theme-light .dk-return{background:#3076F6;color:white}
 #dev .theme-light .dk-return-dark{display:none}
 #dev .theme-light .dk-return-light{display:block;color:white}
 #dev .dk-accessories{
-  flex:1 1 0;
+  flex:0 0 43px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:0 23px 2px;
+  padding:0 23px 0;
   color:var(--dk-ink);
 }
 #dev .dk-accessories svg{
@@ -169,6 +170,16 @@
   stroke-width:1.8;
 }
 #dev .dk-accessories .dk-globe svg{width:27px;height:27px}
+
+/* Soften only the active chat composer ring during desktop keyboard use.
+   Keep a subtle visible focus indicator for keyboard accessibility. */
+#dev.demo-keyboard-open #s-thread .comp #cin:focus,
+#dev.demo-keyboard-open #s-thread .comp #cin:focus-visible{
+  outline:1px solid rgba(109,182,255,.35)!important;
+  outline-offset:0!important;
+  border-color:rgba(109,182,255,.35)!important;
+  box-shadow:var(--glass-shadow),0 0 0 1px rgba(109,182,255,.30)!important;
+}
 
 /* Let the thread's existing flex layout resize naturally when the
    keyboard opens. An earlier absolute composer + .msgs margin could overlap
@@ -208,9 +219,11 @@
 @media(max-height:700px){
   #dev{--demo-keyboard-height:272px}
   #dev .dk-predict{font-size:15px}
-  #dev .dk-rows{gap:8px}
-  #dev .dk-offset{padding-inline:20px}
-  #dev .dk-key{font-size:18px}
+  #dev .dk-predict{flex-basis:34px}
+  #dev .dk-rows{gap:5px}
+  #dev .dk-offset{padding-inline:12px}
+  #dev .dk-key{font-size:21px}
+  #dev .dk-accessories{flex-basis:38px}
   #dev .dk-bottom .dk-mode{font-size:15px}
   #dev .dk-bottom .dk-emoji svg{width:21px;height:21px}
   #dev .dk-return svg{width:24px;height:24px}
