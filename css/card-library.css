@@ -652,3 +652,22 @@
   margin-top:8px;
   color:var(--red);
 }
+
+/* Profile > Interests: searchable fixed options use ROAM glass field, tags
+   and the same dropdown rows as the latest Components Library. */
+#dev #s-pdet .interest-picker{display:flex;flex-direction:column;gap:18px;margin-top:12px}
+#dev #s-pdet .interest-search-card{padding:12px}
+#dev #s-pdet .interest-search-card .tq-row{min-height:34px}
+#dev #s-pdet .interest-search-card .tq-row>svg{width:18px;height:18px;flex:none;color:var(--muted)}
+#dev #s-pdet .interest-search-card input{height:34px;min-width:0;width:100%}
+#dev #s-pdet #interest-tags:empty{display:none}
+#dev #s-pdet .interest-option-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
+#dev #s-pdet .interest-option-heading .lb{margin:0}
+#dev #s-pdet .interest-browse{font:700 12px/16px var(--font);color:var(--sky-600);padding:4px 0;white-space:nowrap}
+#dev #s-pdet .interest-browse:focus-visible{outline:2px solid var(--sky-600);outline-offset:3px;border-radius:5px}
+#dev #s-pdet .interest-suggestions .dd-list{margin-top:0}
+#dev #s-pdet .interest-suggestions .dd-opts{max-height:288px;overflow-y:auto;overscroll-behavior:contain}
+#dev #s-pdet .interest-choice .t{font-size:14px;font-weight:600;line-height:20px}
+#dev #s-pdet .interest-choice>svg{width:18px;height:18px;flex:none;color:var(--sky-600)}
+#dev #s-pdet .interest-no-matches{padding:10px 0}
+@media(prefers-reduced-motion:reduce){#dev #s-pdet .interest-choice{transition:none}}
