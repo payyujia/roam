@@ -47,7 +47,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* profile: section headers + Save bar fixed at the end of a subpage */
 .ph{padding:28px 30px 0}.ph+.sg{margin-top:10px}
 .pg:has(>.dock.sv){padding-bottom:92px}
-.dock.sv{padding-bottom:38px}
+.dock.sv{display:flex;justify-content:center;padding-bottom:62px}
 /* Long vote-status messages must not get cut off by shared one-line row styles. */
 #s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
 
@@ -55,6 +55,8 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    the home indicator. The footer stays sticky as the form scrolls on small screens. */
 #s-form .pg{min-height:100%;padding-bottom:0}
 #s-form .dock.low{
+  display:flex;
+  justify-content:center;
   margin-top:auto;
   bottom:0;
   padding:16px 24px 62px;
