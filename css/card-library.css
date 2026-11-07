@@ -675,6 +675,21 @@
 
 /* Profile > Interests: searchable fixed options use ROAM glass field, tags
    and the same dropdown rows as the latest Components Library. */
+/* Profile preferences: Card Components 'Multiselect · with query input'.
+   All four settings share its 17px inline SVG, mini Sky add button, glass
+   query surface and tags directly beneath the query input. */
+#dev #s-pdet .profile-query-section{display:flex;flex-direction:column;gap:10px;min-width:0}
+#dev #s-pdet .profile-query-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+#dev #s-pdet .profile-query-heading .lb{margin:0}
+#dev #s-pdet .profile-query-heading .cap{white-space:nowrap;color:var(--muted)}
+#dev #s-pdet .profile-multi-card{padding:10px;border-radius:20px;min-width:0}
+#dev #s-pdet .profile-multi-card .tq-row{display:flex;align-items:center;gap:10px;min-height:34px}
+#dev #s-pdet .profile-multi-card .tq-ic{width:17px;height:17px;flex:none}
+#dev #s-pdet .profile-multi-card .tq-row input{height:34px;min-width:0;flex:1;font:500 14px/21px var(--font)}
+#dev #s-pdet .profile-multi-card .profile-multi-add{width:34px;height:34px;padding:0;flex:none}
+#dev #s-pdet .profile-multi-card .profile-multi-add:disabled{opacity:.45;cursor:not-allowed}
+#dev #s-pdet .profile-multi-card .profile-multi-tags{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px;padding-top:0}
+#dev #s-pdet .profile-multi-card:focus-within{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
 #dev #s-pdet .interest-picker{display:flex;flex-direction:column;gap:18px;margin-top:12px}
 #dev #s-pdet .interest-search-card{padding:10px 14px;min-height:50px}
 #dev #s-pdet .interest-search-card .tq-row{min-height:30px;height:30px}
@@ -683,7 +698,7 @@
 #dev #s-pdet .interest-selected-section{display:flex;flex-direction:column;gap:10px;min-width:0}
 #dev #s-pdet .interest-section-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 #dev #s-pdet .interest-section-head .lb{margin:0}
-#dev #s-pdet .interest-section-head :is(#interest-count,#dietary-count){color:var(--muted);white-space:nowrap}
+#dev #s-pdet .interest-section-head :is(#interest-count,#dietary-count,#preference-count){color:var(--muted);white-space:nowrap}
 #dev #s-pdet .interest-selected-card{min-height:56px;padding:14px}
 #dev #s-pdet .interest-selected-card .tq-tags{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 #dev #s-pdet .interest-selected-card .interest-empty{color:var(--muted)}
