@@ -27,7 +27,7 @@
   height:var(--demo-keyboard-height);
   padding:7px 5px 4px;
   border:0;
-  border-radius:16px 16px 0 0;
+  border-radius:28px 28px 0 0;
   overflow:hidden;
   background:var(--dk-bg);
   color:var(--dk-ink);
