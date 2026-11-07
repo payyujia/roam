@@ -3,7 +3,9 @@ const IDS=['trips','trip','form','map','reels','chat','thread','profile','all','
 const cur=()=>S.stack[S.tab],topId=()=>cur()[cur().length-1];
 const render=id=>{if(id=='profile'&&S.pd&&topId()=='pdet')render('pdet');const e=$('#s-'+id);if(!e||!V[id])return;const y=e.scrollTop,h=V[id]();e.innerHTML=RAW[id]?h:`<div class="pg">${h}</div>`;e.scrollTop=y;if(id=='map'&&typeof mapAfter=='function')mapAfter();if(id=='reels'&&typeof reelsAfter=='function')reelsAfter()};
 IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.dataset.id=id;s.className='scr'+(id=='map'?' nos':id=='reels'?' rls':id=='thread'?' flex':'');$('#app').append(s)});
-const rr=()=>{IDS.forEach(id=>id!='reels'&&render(id));upd()};
+/* Render the visible screen only. Navigation already renders its destination;
+   rebuilding every hidden page (especially the map) on each update stalls taps. */
+const rr=()=>{const id=topId();if(id!=='reels')render(id);upd()};
 function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','film'],['trips','Trips'],['map','Map','tab-map'],['chat','Chats','tab-chat']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
  return id=='trips'?`<button class="ctr${on?' on':''}" data-t="trips" ${al}><span class="circ">${ic('plane',30)}</span>Trips</button>`:`<button class="${on?'on':''}" data-t="${id}" ${al}><span class="ti">${id=='profile'?Av('P','tab'):ic(i)}${id=='reels'&&S.newReel?'<i class="bdg dot"></i>':''}${id=='chat'&&u?`<i class="bdg">${u}</i>`:''}</span>${l}</button>`}).join('')}
 /* Share one app-level button for both actions so their clearance above the
