@@ -27,12 +27,18 @@ function chrome(){
  }
 }
 function upd(){const st=cur(),tp=topId();$$('.scr').forEach(s=>{const id=s.dataset.id,i=st.indexOf(id);s.classList.toggle('on',id==tp);s.classList.toggle('under',i>-1&&id!=tp);s.inert=id!=tp});tabbar();chrome();sbSync();typeof reelsSync=='function'&&reelsSync()}
-/* iPhone-style status bar: blurs once the visible screen has scrolled */
+/* iOS-style status bar: adapt foreground to the visible screen surface.
+   Blue headers and full-screen reels use white glyphs; light pages use dark.
+   A scrolled screen gets the existing light frosted scrim and dark glyphs. */
 function sbSync(){
- const e=$('#s-'+topId());
+ const id=topId(),e=$('#s-'+id),dev=$('#dev');
  const nested=e?.querySelector('.msgs');
  const scrolled=!!e&&(e.scrollTop>2||(nested&&nested.scrollTop>2));
- $('#dev').classList.toggle('sbb',scrolled&&!e.classList.contains('nos')&&!e.classList.contains('rls'));
+ const frosted=scrolled&&!e.classList.contains('nos')&&!e.classList.contains('rls');
+ const blueHeader=['trips','trip','chat','profile'].includes(id);
+ const whiteIcons=id==='reels'||(blueHeader&&!frosted);
+ dev.classList.toggle('sbb',frosted);
+ dev.classList.toggle('sb-dark-ink',!whiteIcons);
 }
 document.addEventListener('scroll',e=>{
  const t=e.target;
