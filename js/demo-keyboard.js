@@ -72,8 +72,10 @@
    [['q','w','e','r','t','y','u','i','o','p'],
     ['a','s','d','f','g','h','j','k','l'],
     ['z','x','c','v','b','n','m']];
+  /* Like iOS "Show Lowercase Keys" turned off: uppercase keycap labels
+     stay visually stable; Shift still controls the actual typed character. */
   const chars=row=>row.map(ch=>key(!numbers&&shifted?ch.toUpperCase():ch,
-    numbers?ch:(shifted?ch.toUpperCase():ch),'dk-char')).join('');
+    numbers?ch:ch.toUpperCase(),'dk-char')).join('');
   const shiftLabel=numbers?(shifted?'123':'#+='):'Shift';
   const shiftContent=numbers?(shifted?'123':'#+='):shiftIcon;
   const bottomLabel=numbers?'ABC':'123';
