@@ -1035,6 +1035,8 @@ body{font-weight:500}
   color:var(--sky-600)!important;
   border-color:transparent!important;
 }
+/* Match connector row height to the 44px node column so the line reaches the next node. */
+#dev .tl.nv .tc{height:44px;flex:none}
 #dev .tl.nv .tc .ln{width:44px;flex:0 0 44px}
 #dev .tl.nv .tc .ln::after{
   left:19px;
