@@ -36,6 +36,7 @@ const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${w
 
 Object.assign(A,{
  ddadd:id=>{S.dd=null;DDP['+'+id]&&DDP['+'+id]();rr()},
+ finv:(k,v)=>{v=(v||'').trim();if(!v)return;const q=v.toLowerCase(),f=FR.find(y=>y[0].toLowerCase()==q)||(FR.filter(y=>y[0].toLowerCase().startsWith(q)).length==1?FR.find(y=>y[0].toLowerCase().startsWith(q)):null);S.f.coll=S.f.coll||[];if(!f){toast('No friend named “'+v.slice(0,30)+'”');return}if(S.f.coll.includes(f[1])){toast(f[0]+' is already invited');return}S.f.coll.push(f[1]);render('form');const i=document.getElementById('tq-'+k);i&&i.focus()},
  trm:(k,x)=>{x=decodeURIComponent(x);if(k=='coll'){const f=FR.find(y=>y[0]==x);S.f.coll=(S.f.coll||[]).filter(c=>!f||c!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(y=>y!=x);pd();rr()}},
  /* Keep the open trigger focused so the selected option shows the single soft
     selection highlight from the component sheet, not an extra focus outline.
