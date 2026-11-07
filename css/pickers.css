@@ -14,11 +14,11 @@
 #dev .dd-trigger{display:flex;align-items:center;gap:10px;width:100%;padding:0 16px;border:0;text-align:left;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
 #dev .dd-trigger>svg{flex:none;color:var(--muted)}
 #dev .dd-trigger>.dd-val{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#dev .dd-trigger>.dd-val.ph{color:var(--muted);font-weight:500}
+#dev .dd-trigger>.dd-val.nov{color:var(--muted);font-weight:500}
 #dev .dd-trigger>svg:last-child:not(:first-child){margin-left:auto}
-#dev .dd-trigger>svg:last-child{transition:transform .2s}
+
 #dev .dd-trigger.open{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
-#dev .dd[class] .dd-trigger.open>svg:last-child{transform:rotate(180deg)}
+
 #dev .dd-trigger:focus-visible{box-shadow:var(--glass-shadow),0 0 0 2px var(--sky-400)!important}
 #dev .dd-dot{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55);flex:none}
 #dev .dd-list{margin-top:8px;padding:6px;border-radius:22px}
@@ -62,3 +62,8 @@
 #dev .cal-f .btn{width:auto;flex:none;min-width:0;height:34px;padding:0 14px;font-size:11px}
 #dev .cal-f .btn.sec{--action-fill:var(--glass-control-bg)}
 #dev .cal-act .btn.sec{background:rgba(255,255,255,.55)!important}
+/* library .chev inside the trigger: plain chevron, not the legacy round button */
+#dev .dd-trigger .chev{width:18px;height:18px;border-radius:0;background:none!important;box-shadow:none!important;color:var(--muted);margin-left:auto;transition:transform .2s;display:block}
+#dev .dd-trigger.open .chev{transform:rotate(180deg)}
+#dev .dd-opt.add{min-height:44px;color:var(--sky-600)}
+#dev .dd-opt.add svg{width:16px;height:16px;flex:none}

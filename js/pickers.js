@@ -8,11 +8,11 @@ const TRIPDOT=['var(--sky-500)','var(--coral-500)','var(--amber)','var(--rose)']
 /* Dropdown({id,label,aria,value,ph,opts:[{v,t,sub,dot}],pick}) — one open at a time (S.dd) */
 const Dropdown=o=>{
  const open=S.dd===o.id,cur=o.opts.find(x=>x.v==o.value),lid='ddl-'+o.id;
- DDP[o.id]=o.pick;
+ DDP[o.id]=o.pick;DDP['+'+o.id]=o.add&&o.add.fn;
  const dot=x=>x&&x.dot?`<i class="dd-dot" style="--g:${x.dot}"></i>`:'';
  return `<div class="dd fw">${o.label?`<span class="lb" id="${lid}">${o.label}</span>`:''}
-<button type="button" class="fld glass dd-trigger${open?' open':''}" data-dd="${o.id}" data-a="ddt:${o.id}" aria-haspopup="listbox" aria-expanded="${open}"${open?` aria-controls="ddo-${o.id}"`:''} ${o.label?`aria-labelledby="${lid}"`:`aria-label="${esc(o.aria||o.ph||'')}"`}>${dot(cur)}<span class="dd-val${cur?'':' ph'}">${esc(cur?cur.t:(o.ph||''))}</span>${ic('chevron-down',18)}</button>
-${open?`<div class="dd-list"><div class="dd-opts" id="ddo-${o.id}" role="listbox"${o.label?` aria-labelledby="${lid}"`:` aria-label="${esc(o.aria||o.ph||'')}"`}>${o.opts.map(x=>{const on=x.v==o.value;return `<button type="button" role="option" class="dd-opt" aria-selected="${on}" data-a="ddp:${o.id}:${encodeURIComponent(x.v)}">${dot(x)}<span class="t">${esc(x.t)}${x.sub?`<small>${esc(x.sub)}</small>`:''}</span>${on?ic('check',16,'none').replace('<svg','<svg class="tick"'):''}</button>`}).join('')}</div></div>`:''}</div>`};
+<button type="button" class="fld glass dd-trigger${open?' open':''}" data-dd="${o.id}" data-a="ddt:${o.id}" aria-haspopup="listbox" aria-expanded="${open}"${open?` aria-controls="ddo-${o.id}"`:''} ${o.label?`aria-labelledby="${lid}"`:`aria-label="${esc(o.aria||o.ph||'')}"`}>${dot(cur)}<span class="dd-val${cur?'':' nov'}">${esc(cur?cur.t:(o.ph||''))}</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+${open?`<div class="dd-list glass"><div class="dd-opts" id="ddo-${o.id}" role="listbox"${o.label?` aria-labelledby="${lid}"`:` aria-label="${esc(o.aria||o.ph||'')}"`}>${o.opts.map(x=>{const on=x.v==o.value;return `<button type="button" role="option" class="dd-opt" aria-selected="${on}" data-a="ddp:${o.id}:${encodeURIComponent(x.v)}">${dot(x)}<span class="t">${esc(x.t)}${x.sub?`<small>${esc(x.sub)}</small>`:''}</span>${on?'<svg class="tick" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':''}</button>`}).join('')}</div>${o.add?`<div class="rule" style="margin:6px 8px"></div><button type="button" class="dd-opt add" data-a="ddadd:${o.id}"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>${esc(o.add.t)}</button>`:''}</div>`:''}</div>`};
 
 /* ----- Calendar (range) ----- */
 const MFULL=['January','February','March','April','May','June','July','August','September','October','November','December'],DFULL=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -32,9 +32,11 @@ const Calendar=c=>{
 <div class="cal-f"><div><div class="s">${calHint(c)}</div><div class="micro">${calSub(c)}</div></div><div class="cal-act"><button type="button" class="btn sec sm2" data-a="calclear">Clear</button><button type="button" class="btn sm2" data-a="calset"${c.a?'':' disabled'}>Set dates</button></div></div></div>`};
 
 /* Date field: a button that opens the calendar. which = 'start' | 'end' */
-const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal}" aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' ph'}">${val?fd(p8(val),1):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
+const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal}" aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' nov'}">${val?fd(p8(val),1):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
 
 Object.assign(A,{
+ ddadd:id=>{S.dd=null;DDP['+'+id]&&DDP['+'+id]();rr()},
+ trm:(k,x)=>{x=decodeURIComponent(x);if(k=='coll'){const f=FR.find(y=>y[0]==x);S.f.coll=(S.f.coll||[]).filter(c=>!f||c!=f[1]);render('form')}else{S.p[k]=S.p[k].filter(y=>y!=x);pd();rr()}},
  ddt:id=>{S.dd=S.dd===id?null:id;rr();const el=S.dd&&$(`#dev .dd-opt[aria-selected=true]`)||$(`[data-dd="${id}"]`);el&&el.focus()},
  ddp:(id,v)=>{S.dd=null;DDP[id]&&DDP[id](decodeURIComponent(v));const t=$(`[data-dd="${id}"]`);t&&t.focus()},
  calopen:w=>{if(S.cal&&S.cal.on===w){S.cal=null}else{const f=S.f,s=f.start&&p8(f.start);S.cal={on:w,a:f.start||null,b:f.end||null,m:new Date((s||NOW).getFullYear(),(s||NOW).getMonth(),1)}}render('form')},
