@@ -851,3 +851,25 @@ body{font-weight:500}
 }
 #dev #sb .ios-battery rect,
 #dev #sb .ios-battery path{fill:#fff;stroke:none!important}
+
+
+/* Adaptive iOS status-bar foreground; never change the background or blur layer. */
+/* Defaults above remain white for blue headers and video reels.
+   The router adds sb-dark-ink on light screens and over the light frosted scrim. */
+#dev.sb-dark-ink #sb{color:#0E1116!important}
+#dev.sb-dark-ink #sb .status-cellular,
+#dev.sb-dark-ink #sb .status-wifi{
+  color:#0E1116!important;
+  fill:#0E1116!important;
+}
+#dev.sb-dark-ink #sb .ios-battery rect,
+#dev.sb-dark-ink #sb .ios-battery path{
+  fill:#0E1116!important;
+  stroke:none!important;
+}
+#dev.sb-dark-ink #sb .ios-battery text{
+  fill:#fff!important;
+  stroke:none!important;
+}
+/* Respect the user's native contrast preference while retaining the app's
+   explicit light and blue screen surfaces. No solid status-bar background. */
