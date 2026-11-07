@@ -27,9 +27,13 @@
   escapeText(label||value)+'</button>';
  function draw(){
   const a=numbers?
-   [['1','2','3','4','5','6','7','8','9','0'],
-    ['@','#','$','%','&','-','+','(',')','/'],
-    ['*','"',"'",':',';','!','?',',','.']]:
+   (shifted?
+    [['[',']','{','}','#','%','^','*','+','='],
+     ['~','<','>','€','£','¥','•','_','|'],
+     ['.',',','?',':',';','!','/','@',"'"]]:
+    [['1','2','3','4','5','6','7','8','9','0'],
+     ['@','#','$','%','&','-','+','(',')','/'],
+     ['*','"',"'",':',';','!','?',',','.']]):
    ['qwertyuiop'.split(''),'asdfghjkl'.split(''),'zxcvbnm'.split('')];
   const letters=arr=>arr.map(x=>key(shifted&&!numbers?x.toUpperCase():x)).join('');
   keyboard.innerHTML='<div class="dk-toolbar">'+
@@ -39,7 +43,7 @@
     '<div class="dk-row">'+letters(a[0])+'</div>'+
     '<div class="dk-row dk-offset">'+letters(a[1])+'</div>'+
     '<div class="dk-row">'+
-     '<button type="button" class="dk-key dk-special" data-kb-action="shift" aria-label="Shift">'+(numbers?'=\\<':'⇧')+'</button>'+
+     '<button type="button" class="dk-key dk-special" data-kb-action="shift" aria-label="Shift">'+(numbers?(shifted?'123':'#+='):'⇧')+'</button>'+
      letters(a[2])+
      '<button type="button" class="dk-key dk-special" data-kb-action="delete" aria-label="Delete">⌫</button>'+
     '</div>'+
