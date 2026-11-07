@@ -51,7 +51,7 @@ const TagBox=(k,vals,ph,sg=[],suggestions=true)=>`<div class="tbx"><div class="t
 const RVID=['videos/shark.mp4','videos/burger.mp4','videos/dimsum.mp4','videos/skyline.mp4','videos/pixel.mp4'];
 const Reel=(gi,seed)=>`${Pic(RP[gi],seed,800)}${RVID[gi]?`<video class="rvid" src="${RVID[gi]}" muted loop playsinline preload="metadata" disablepictureinpicture aria-hidden="true" onerror="this.remove()"></video>`:''}`;
 /* Reels the user saved, as [reel, index] pairs. */
-const savedReels=()=>R.map((r,i)=>[r,i]).filter(([,i])=>S.saved[i]);
+const savedReels=(f=S.colf||'all')=>R.map((r,i)=>[r,i]).filter(([,i])=>f=='all'?(S.saved[i]||inCol(i)):f=='likes'?!!S.saved[i]:!!(S.col.find(c=>c.id==f)||{r:[]}).r.includes(i));
 /* Social approval: friends who also saved this reel. Avatar + gradient heart badge (top right). */
 const Sap=gi=>{const f=(R[gi].sv||[]).slice(0,3);if(!f.length)return '';const nm=f.map(k=>PE[k][2]).join(', ');return `<div class="sap" role="img" aria-label="Also saved by ${nm}">${f.map((k,i)=>`<span class="sa" style="z-index:${9-i}">${Av(k)}<span class="hrt">${ic('heart',10)}</span></span>`).join('')}</div>`};
 let _rio;

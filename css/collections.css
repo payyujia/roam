@@ -1,0 +1,42 @@
+/* ===== COLLECTIONS ===== */
+
+/* Reel rail: bookmark (collections) above heart (likes). White outline; filled states below. */
+#dev .rv .rail .ib:is(.heart,.coll){color:#fff!important}
+#dev .rv .rail .ib:is(.heart,.coll) svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;filter:drop-shadow(0 1px 3px rgba(14,17,22,.35))}
+/* Collected: white fill */
+#dev .rv .rail .ib.coll[aria-pressed="true"] svg,
+#dev .rv .rail .ib.coll[aria-pressed="true"] svg path{fill:#fff!important;stroke:#fff}
+/* Liked: rose -> coral-500 diagonal gradient (#heart-g in index.html), same white outline */
+#dev .rv .rail .ib.heart[aria-pressed="true"] svg,
+#dev .rv .rail .ib.heart[aria-pressed="true"] svg path{fill:url(#heart-g)!important;stroke:#fff}
+
+/* .fi.sel: liquid-glass dropdown. The select fills the whole field so the whole control opens it. */
+#dev .fi.sel{padding:0 9px 0 16px;cursor:pointer}
+#dev .fi.sel select{
+  position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:0 56px 0 16px;
+  -webkit-appearance:none;appearance:none;background:transparent!important;border:0;outline:0;
+  color:var(--ink);font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  text-overflow:ellipsis;white-space:nowrap;
+}
+#dev .fi.sel select option{color:var(--ink);background:#fff;font-weight:600}
+#dev .fi.sel .chev{
+  position:relative;z-index:3;margin-left:auto;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;flex:none;pointer-events:none;
+  background:rgba(255,255,255,.55)!important;color:var(--ink)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:0 3px 10px rgba(40,100,180,.14),inset 0 1px 4px rgba(255,255,255,.5)!important;
+  transition:transform .2s;
+}
+#dev .fi.sel .chev::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:var(--glass-rim);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
+}
+#dev .fi.sel:focus-within .chev{transform:rotate(180deg)}
+#dev .fi.sel select:focus-visible{outline:none}
+
+/* Create-trip collection picker */
+#dev #s-form .pills{display:flex;flex-wrap:wrap;gap:8px}
+#dev #s-form .pills .pill svg{width:14px;height:14px}
+#dev #s-form .pills{margin:0;padding:0}
