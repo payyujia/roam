@@ -13,6 +13,8 @@
   --roam-card-padding-x-compact:8px;
   --roam-card-radius:22px;
   --roam-card-gap:10px;
+  --roam-icon-button-size:34px;
+  --roam-card-action-inset:12px;
   --roam-card-media-width:56px;
   --roam-card-media-height:60px;
   --roam-card-media-radius:14px;
@@ -62,8 +64,25 @@
   object-fit:cover;
 }
 
-/* Shared internal rhythm. Rescheduling keeps its two icon actions and
-   compact title text; voting and trips keep their own trailing controls. */
+/* One shared icon-button size and card-edge alignment for trailing card actions.
+   The card's right padding is the single source of truth for edge distance. */
+#dev :is(.trow.tier,.row.tier,.chat-row,.srow.acct) .tact{
+  flex:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:0;
+  padding:0;
+}
+#dev :is(.trow.tier,.row.tier,.chat-row,.srow.acct) .tact .ib{
+  box-sizing:border-box;
+  width:var(--roam-icon-button-size);
+  height:var(--roam-icon-button-size);
+  min-width:var(--roam-icon-button-size);
+  min-height:var(--roam-icon-button-size);
+  flex:0 0 var(--roam-icon-button-size);
+  padding:0;
+}
 #dev .trow.tier .tmain{gap:var(--roam-card-gap)}
 #dev .reschedule-row .tmain{gap:var(--roam-card-gap)}
 
@@ -345,9 +364,9 @@
 #dev .trow.reschedule-row .tact{gap:6px}
 #dev .trow.reschedule-row .tact .ib{
   box-sizing:border-box;
-  width:34px;
-  height:34px;
-  flex:0 0 34px;
+  width:var(--roam-icon-button-size);
+  height:var(--roam-icon-button-size);
+  flex:0 0 var(--roam-icon-button-size);
   border-radius:50%;
   box-shadow:0 3px 10px rgba(40,100,180,.12)!important;
 }
