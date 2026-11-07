@@ -1476,3 +1476,7 @@ body{font-weight:500}
 /* Hidden app-level floating actions must stay hidden even though their
    shared button geometry uses display:inline-flex!important. */
 #dev :is(#fab,#psave)[hidden]{display:none!important;pointer-events:none!important}
+
+
+/* Reels screen: keep every h1 heading white, including nested reel states. */
+#dev #s-reels h1{color:#fff!important}
