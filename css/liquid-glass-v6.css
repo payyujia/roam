@@ -1857,8 +1857,10 @@ body{font-weight:500}
 #dev .rate button svg{fill:none;stroke:currentColor}
 #dev .rate button[aria-pressed=true] svg{fill:currentColor;stroke:currentColor}
 #dev .rate button[aria-pressed=true] svg :is(path,circle,rect,polygon,polyline,ellipse){fill:currentColor}
-/* Toast readability: use a more opaque white glass surface for clear text contrast. */
-#dev #toast{background:rgba(255,255,255,.78)!important}
+/* Toast: opaque white like the active segmented-control tab (library .seg button[aria-selected=true]). */
+#dev #toast#toast{background:#fff!important;color:var(--ink)!important;box-shadow:0 2px 8px rgba(70,105,140,.12),0 12px 34px rgba(40,100,180,.18)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#dev #toast,#dev #toast>span,#dev #toast>span>span{color:var(--ink)!important}
+#dev #toast button{color:var(--sky-600)!important}
 
 /* Trip detail Navigate: H2 type in every state (card-components.html: 23/800/1.2/-.03em);
    enabled fill matches the Profile notification button (--glass-control-bg), ink text. */
@@ -1879,7 +1881,7 @@ body{font-weight:500}
 #dev #toast.toast-contrast-light,
 #dev #toast.toast-contrast-light > span,
 #dev #toast.toast-contrast-light > span > span,
-#dev #toast.toast-contrast-light button{color:#fff!important}
+#dev #toast.toast-contrast-light button{color:var(--ink)!important}
 
 /* Trip detail + trip options menu (.lyb): snap off-scale text to the card-components.html type scale.
    Subheader 16/700/22 · Regular 14/500/1.5. Menu items stay 13/700 (library .menu button). */
