@@ -4,7 +4,7 @@ The following **real photographs** are loaded for the MacRitchie Hike demo trip,
 
 | Activity | Photographer | Original photograph | Licence |
 | --- | --- | --- | --- |
-| MacRitchie Reservoir Park | Calvin Teo | [MacRitchie Reservoir.jpg](https://commons.wikimedia.org/wiki/File:MacRitchie_Reservoir.jpg) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
+| MacRitchie Reservoir Park (including the MacRitchie Hike trip cover and map pin) | Erwin Soo | [MacRitchie Reservoir, Singapore, at sunset – 20121028.jpg](https://commons.wikimedia.org/wiki/File:MacRitchie_Reservoir,_Singapore,_at_sunset_-_20121028.jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
 | TreeTop Walk | Elisa.rolle | [HSBC TreeTop Walk 2012 1012.jpg](https://commons.wikimedia.org/wiki/File:HSBC_TreeTop_Walk_2012_1012.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 
 Photos: © their respective authors, reused under the licences linked above. Provide attribution and abide by the licences when publishing a modified or distributed ROAM prototype.
