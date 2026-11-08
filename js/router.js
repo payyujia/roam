@@ -8,23 +8,18 @@ IDS.forEach(id=>{const s=document.createElement('section');s.id='s-'+id;s.datase
 const rr=()=>{const id=topId();if(id!=='reels')render(id);upd()};
 function tabbar(){const u=unread();$('#tb').innerHTML=[['profile','Profile'],['reels','Reels','play'],['trips','Trips'],['map','Map','tab-map'],['chat','Chats','tab-chat']].map(([id,l,i])=>{const on=S.tab==id,al=`aria-label="${l}${id=='chat'&&u?`, ${u} unread`:''}"${on?' aria-current="page"':''}`;
  return id=='trips'?`<button class="ctr${on?' on':''}" data-t="trips" ${al}><span class="circ"><svg class="trip-plane" width="25" height="25" viewBox="0 0 25 25" fill="none" aria-hidden="true"><path d="M24.413 1.85968C25.4543 2.901 24.9915 4.52082 23.9502 5.56213L18.9751 10.5373L21.4048 21.1818L19.0908 23.4959L14.4627 15.0497L9.37183 19.7934L9.71893 23.2645L7.98341 25L5.32227 19.6777L0 17.0166L1.73552 15.2811L5.20657 15.6282L9.95034 10.5373L1.50412 5.90924L3.81815 3.59521L14.4627 6.02494L19.4379 1.04977C20.4792 0.00845782 22.099 -0.454348 23.1403 0.586966L24.413 1.85968Z" fill="none" stroke="#2F8CFF" stroke-width="2" stroke-linejoin="round"/></svg></span>Trips</button>`:`<button class="${on?'on':''}" data-t="${id}" ${al}><span class="ti">${id=='profile'?Av('P','tab'):id=='map'&&on?ic('tab-map-filled',22):ic(i,22,on?'currentColor':'none')}${id=='chat'&&u?`<i class="bdg">${u}</i>`:''}</span>${l}</button>`}).join('')}
-/* Share one app-level button for both actions so their clearance above the
-   Trips navigation icon is identical, regardless of scroll position. */
+/* Keep Create trip as an app-level floating action. The Vote screen
+   renders Add a new activity in its list so it sits just below the final
+   card, with sticky clearance above the navigation bar on long lists. */
 function chrome(){
- const tp=topId(),create=(!S.nav&&S.tab=='map'&&tp=='map')||(S.tab=='trips'&&tp=='trips'),add=tp=='trip'&&S.step==1;
+ const tp=topId(),create=(!S.nav&&S.tab=='map'&&tp=='map')||(S.tab=='trips'&&tp=='trips');
  const fab=$('#fab');
  $('#tb').classList.toggle('off',['form'].includes(tp));
- fab.hidden=!(create||add);
- fab.dataset.s=add?'vote':S.tab;
- fab.dataset.a=add?'addact':'newtrip';
- if(add){
-  const label=downvoted(trip(S.cur))?'Suggest someplace new':'Add a new activity';
-  fab.innerHTML=`${ic('plus',20)}<span>${label}</span>`;
-  fab.setAttribute('aria-label',label);
- }else{
-  fab.innerHTML=`${ic('plus',20)}<span>Create trip</span>`;
-  fab.setAttribute('aria-label','Create trip');
- }
+ fab.hidden=!create;
+ fab.dataset.s=S.tab;
+ fab.dataset.a='newtrip';
+ fab.innerHTML=`${ic('plus',20)}<span>Create trip</span>`;
+ fab.setAttribute('aria-label','Create trip');
 }
 function upd(){const st=cur(),tp=topId();$$('.scr').forEach(s=>{const id=s.dataset.id,i=st.indexOf(id);s.classList.toggle('on',id==tp);s.classList.toggle('under',i>-1&&id!=tp);s.inert=id!=tp});tabbar();chrome();sbSync();typeof reelsSync=='function'&&reelsSync()}
 /* iOS-style status bar: adapt foreground to the visible screen surface.
