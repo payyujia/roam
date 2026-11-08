@@ -2087,7 +2087,7 @@ body{font-weight:500}
 #dev .mac-score-stars{margin-top:3px}
 #dev .mac-score-stars .stars{gap:0}
 #dev .mac-review-section .stars{color:#FFA23A!important}
-#dev .mac-review-section .stars svg{width:13px;height:13px;fill:currentColor;stroke:currentColor;filter:drop-shadow(0 0 3px rgba(255,162,58,.62))}
+#dev .mac-review-section .stars svg{width:13px;height:13px;fill:currentColor;stroke:currentColor;filter:none}
 #dev .mac-review-count{display:flex;align-items:center;gap:7px;margin:13px 0 10px;color:var(--muted);font-size:11px;font-weight:600}
 #dev .mac-review-count-dot{width:6px;height:6px;border-radius:50%;background:#FFA23A;box-shadow:0 0 8px rgba(255,162,58,.75)}
 #dev .mac-review-list{display:grid;gap:9px}
