@@ -53,6 +53,19 @@ const InviteRow=()=>{const t=trip('read');return `<div class="row wrap rq"><div 
 /* tag component */
 const Tag=(k,x)=>`<span class="tag2">${esc(x)}<button aria-label="Remove ${esc(x)}" data-a="trm:${k}:${encodeURIComponent(x)}">${ic('x',14)}</button></span>`;
 const TagBox=(k,vals,ph,sg=[],suggestions=true)=>suggestions?`<div class="tsl"><div class="glass invite-box tag-query"><div class="tq-row"><svg viewBox="0 0 24 24" class="tq-ic" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/></svg><input id="tq-${k}" list="tq-${k}-sg" aria-label="${esc(ph)}" placeholder="${esc(ph)}" autocomplete="off" maxlength="30" onkeydown="if(event.key=='Enter'){event.preventDefault();this.nextElementSibling.nextElementSibling.click()}"><datalist id="tq-${k}-sg">${sg.filter(x=>!vals.includes(x)).map(x=>`<option value="${esc(x)}"></option>`).join('')}</datalist><button type="button" class="btn mini sky" aria-label="Add ${esc(ph)}" onclick="A.tsel('${k}',document.getElementById('tq-${k}').value.trim().slice(0,30))"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>${vals.length?`<div class="tags tq-tags">${vals.map(x=>Tag(k,x)).join('')}</div>`:''}</div></div>`:`<div class="tsl"><div class="glass invite-box tag-query"><div class="tq-row"><svg viewBox="0 0 24 24" class="tq-ic" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-4 3.5-6 7-6s6.2 2 7 6M17 5a3.5 3.5 0 0 1 0 7"/></svg><input id="tq-${k}" list="tq-${k}-sg" aria-label="${esc(ph)}" placeholder="${esc(ph)}" autocomplete="off" maxlength="30" onkeydown="if(event.key=='Enter'){event.preventDefault();A.finv('${k}',this.value)}"><datalist id="tq-${k}-sg">${sg.filter(x=>!vals.includes(x)).map(x=>`<option value="${esc(x)}"></option>`).join('')}</datalist><button type="button" class="btn mini sky" aria-label="Add friend" onclick="A.finv('${k}',document.getElementById('tq-${k}').value)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>${vals.length?`<div class="tags tq-tags">${vals.map(x=>Tag(k,x)).join('')}</div>`:''}</div></div>`;
+/* New Trip: match friends only after typing, using an in-page list rather
+   than a browser datalist popup. Keep the shared invite-box / tag styling. */
+const FriendInvitePicker=()=>{
+ const chosen=(S.f.coll||[]).map(id=>Tag('coll',PE[id][2])).join('');
+ return `<div class="tsl invite-friends-picker"><div class="glass invite-box tag-query">
+  <div class="tq-row"><svg viewBox="0 0 24 24" class="tq-ic" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-4 3.5-6 7-6s6.2 2 7 6M17 5a3.5 3.5 0 0 1 0 7"/></svg>
+   <input id="tq-coll" type="text" role="combobox" aria-label="Type a friend's name" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="finv-matches" aria-expanded="false" placeholder="Type a friend’s name" autocomplete="off" spellcheck="false" maxlength="30" oninput="A.finvQuery(this.value)" onkeydown="A.finvKey(event)">
+   <button type="button" id="finv-add" class="btn mini sky" data-a="finvAdd" aria-label="Add matching friend" disabled>${ic('plus',15)}</button>
+  </div>
+  <div id="finv-matches" class="friend-suggestion-list" role="listbox" aria-label="Matching friends" hidden></div>
+  ${chosen?`<div class="tags tq-tags">${chosen}</div>`:''}
+ </div></div>`;
+};
 /* ===== REEL VIDEOS =====
    One short vertical clip per reel, same order as R in data.js.
    Drop the files in /videos. A missing/broken file silently falls back to the photo (RP). */
