@@ -509,7 +509,7 @@ body{font-weight:500}
 #dev #toast button{color:var(--sky-600);font-weight:800}
 #dev #toast > span{display:flex;align-items:center;gap:8px}
 #dev #toast svg{color:#1E7D5F;flex:none}
-#dev .bub{border-radius:20px 20px 20px 6px;color:var(--ink);font-size:12px;font-weight:600}
+#dev .bub{border-radius:20px 20px 20px 6px;color:var(--ink);font-size:14px;font-weight:600}
 #dev #s-thread .me .bub{background:rgba(109,182,255,.6)!important;border-radius:20px 20px 6px 20px;color:var(--ink)!important}
 
 /* Five fixed tabs and the raised, opaque Trips action. */
