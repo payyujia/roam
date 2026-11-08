@@ -9,4 +9,4 @@ The following **real photographs** are loaded for the MacRitchie Hike demo trip,
 
 Photos: © their respective authors, reused under the licences linked above. Provide attribution and abide by the licences when publishing a modified or distributed ROAM prototype.
 
-**The Roti Prata House:** The user has provided a specific image in conversation, but its original bytes have not yet been accessible for upload into the repository. The app still uses its previous illustrative image for this stop; do not represent it as a verified photo of the restaurant or replace the requested image with AI art.
+**The Roti Prata House:** Real photo uploaded by the user in conversation. A lightweight, resized WebP copy is embedded in [`assets/roti-prata-house.svg`](../assets/roti-prata-house.svg) for the map pin and activity cards. This is the supplied restaurant exterior photograph, not AI-generated. Its original photographer and licensing terms are not known; confirm reuse permission before public distribution.
