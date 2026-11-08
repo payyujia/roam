@@ -104,7 +104,16 @@ const PXs=p=>{let h=0;for(const ch of p.n)h=(h*31+ch.charCodeAt(0))%997;return{n
 const PXp=p=>{const gi=R.findIndex(x=>x.n==p.n);return gi>-1?PXr(gi):PXs(p)};
 const ana=x=>x.sc>=4.6?'This place is highly recommended!':x.sc>=4.4?'A well-rated pick that fits most trips.':'Mixed reviews. Worth comparing first.';
 const Stars=(sc,rv)=>`<span class="stars" role="img" aria-label="${sc} out of 5">${[1,2,3,4,5].map(n=>ic('star',16,n<=Math.round(sc)?'currentColor':'none')).join('')}<span class="c">${rv}</span></span>`;
-const Img=(x,dots=1)=>`<div class="iimg l-${x.c}">${Pic(x.ph,x.n,600)}<span class="loc">${ic('map-pin',14)}<span>${x.loc}</span></span>${dots?'<span class="dots"><i></i><i></i><i></i></span>':''}</div>`;
+/* Preserve the shared place-image layout while accepting photo URLs as
+   well as legacy Unsplash IDs. Broken remote imagery never leaves an icon
+   overlay or broken-image glyph in the photo slot. */
+const Img=(x,dots=1)=>{
+ const ph=String(x.ph||'');
+ const image=/^(?:https:\/\/|assets\/)/.test(ph)
+  ?`<img src="${esc(ph)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
+  :Pic(x.ph,x.n,600);
+ return `<div class="iimg l-${x.c}">${image}<span class="loc">${ic('map-pin',14)}<span>${x.loc}</span></span>${dots?'<span class="dots"><i></i><i></i><i></i></span>':''}</div>`;
+};
 const Chk=()=>`<div class="pad ck"><button class="fld" data-a="cmpick">${ic('search',20)}<span class="gr">Check against saved places</span>${ic('bookmark',20)}</button></div>`;
 const infoHTML=gi=>{const x=typeof gi==='number'?PXr(gi):gi,review=Number.isFinite(x.sc);return `<div class="mh"><h2 class="gr">${x.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${review?Stars(x.sc,x.rv):'Not available yet'}</dd><dt>Price</dt><dd>${x.pr||'Not available yet'}</dd><dt>ROAM says</dt><dd>${review?ana(x):'There is not enough review information for an analysis yet.'}</dd></dl></div><div style="height:24px"></div>${Chk()}`};
 const tripPlacePX=i=>{const t=trip(S.cur),s=t&&t.stops[+i];if(!s)return null;const ri=R.findIndex(r=>r.n.toLowerCase()===s.n.toLowerCase());if(ri>-1)return PXr(ri);const saved=SVL().find(p=>p.n.toLowerCase()===s.n.toLowerCase());if(saved)return PXp(saved);const mr=mockRating(s.n);return{ph:null,n:s.n,loc:s.s||'Location not listed',sc:+mr.sc,rv:mr.rv,pr:'$$',d:s.s||'Place details have not been added yet.',c:t.c,i:s.i}};
