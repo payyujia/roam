@@ -1298,3 +1298,19 @@
   letter-spacing:normal;
   color:var(--ink);
 }
+
+/* New Trip · Next: vote on activities.
+   Enabled: match Card Components Library Sky 400 / 62% primary button.
+   Disabled: use a readable neutral frost instead of fading the entire button
+   into the similarly coloured sticky footer. Keep disabled behaviour intact. */
+#dev #s-form .dock.low .btn[data-a="formnext"]:not(:disabled){
+  --action-fill:var(--sky-fill)!important;
+}
+#dev #s-form .dock.low .btn[data-a="formnext"]:disabled{
+  --action-fill:rgba(243,248,255,.74)!important;
+  --action-ink:var(--muted)!important;
+  --action-shadow:0 3px 12px rgba(40,100,180,.08),
+    inset 0 0 0 1px rgba(91,104,120,.20),
+    inset 0 1px 0 rgba(255,255,255,.70)!important;
+  opacity:1;
+}
