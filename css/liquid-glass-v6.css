@@ -275,6 +275,16 @@ body{font-weight:500}
   box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6)!important;
 }
 
+/* Anchor the unread count to the icon's top-right corner, not the tab label baseline. */
+#dev #tb .ti{position:relative;display:inline-flex;align-items:center;justify-content:center}
+#dev #tb .ti>.bdg{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  z-index:2;
+  pointer-events:none;
+}
+
 /* Input fields and selection controls. */
 #dev :is(.in,.fld,.fi){
   color:var(--ink);
