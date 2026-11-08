@@ -3,7 +3,6 @@
    .dd-trigger / .dd-list / .dd-opt  and  .cal-h / .cal-wd / .cal-g / .day. */
 const DDP={};                                   /* id -> pick handler, registered at render time */
 Object.assign(I,{'chevron-left':'<path d="M15 18l-6-6 6-6"/>'});
-const TRIPDOT=['var(--sky-500)','var(--coral-500)','var(--amber)','var(--rose)'];
 
 /* Dropdown({id,label,aria,value,ph,opts:[{v,t,sub,dot}],pick}) — one open at a time (S.dd) */
 const Dropdown=o=>{
