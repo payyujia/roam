@@ -1168,16 +1168,6 @@
   display:block;
   flex:none;
 }
-#dev #s-trip .tl:not(.nv) .itinerary-category-icon{
-  display:inline-flex;
-  align-items:center;
-  margin-right:6px;
-  vertical-align:-3px;
-  color:var(--sky-600);
-}
-#dev #s-trip .tl:not(.nv) .itinerary-category-icon svg{
-  display:block;
-}
 
 /* ACTIVITY VOTING CARDS — one horizontal row, built from Card Components
    tokens (84px min-height, 22px radius, 10x12px padding, 16/12 type).
