@@ -7,17 +7,26 @@ ${nx?Sec('Up next')+`<button class="feat l-${nx.c}" data-a="open:${nx.id}">${Cov
 ${Sec('Your trips',ViewAll(L.length,S.seg))}<div class="pills">${Pill('Upcoming','seg:up',S.seg=='up')}${Pill('Past','seg:past',S.seg=='past')}</div><div style="margin-top:8px">${L.length?L.slice(0,TOP).map(TripRow).join(''):Empty(S.seg=='up'?'No upcoming trips':'No past trips','Tap Create trip! to start one.')}</div>
 ${Sec('Tasks'+(tk.length?` · ${tk.length}`:''),ViewAll(tk.length,'tasks'))}${tk.length?tk.slice(0,TOP).map(TaskRow).join(''):Empty('You’re all caught up','Nothing needs your attention.')}`};
 V.all=()=>{const k=S.all,tk=k=='tasks',L=tk?tasksByDue():k=='up'?UP():PAST(),ttl=tk?'Tasks':k=='up'?'Upcoming trips':'Past trips';return `${Top(IBtn('arrow-left','back','Back'),ttl)}<div class="pad" style="margin-top:12px">${L.length?L.map(tk?TaskRow:TripRow).join(''):Empty(tk?'You’re all caught up':k=='up'?'No upcoming trips':'No past trips',tk?'Nothing needs your attention.':'Tap Create trip! to start one.')}</div>`};
+/* Use the same required fields as formnext so the sticky CTA reflects validity
+   without re-rendering (or stealing focus from) the text inputs. End is optional. */
+const canAdvanceNewTrip=()=>{
+ const f=S.f,s=f.start&&p8(f.start),end=f.end&&p8(f.end);
+ return !!(typeof f.dest==='string'&&f.dest.trim()
+   &&s&&dd(s)>=0
+   &&(!f.end||(end&&end>=s))
+   &&Number(f.budget)>0);
+};
 V.form=()=>{const f=S.f,e=S.fe,er=k=>e[k]?`<div class="err sm" id="f-err-${k}" role="alert">${e[k]}</div>`:'';
 const field=(k,input,icon='')=>`<div class="fld${e[k]?' bad':''}">${icon?ic(icon,17):''}${input}</div>${er(k)}`;
 const invalid=k=>e[k]?` aria-invalid="true" aria-describedby="f-err-${k}"`:'';
 return `${Top(IBtn('x','back','Close'),'New trip')}${Stepper(null,0,false)}
-<div class="pad" style="display:flex;flex-direction:column;gap:18px;margin-top:20px"><div><label class="lb" for="f-d">Destination</label>${field('dest',`<input class="in" id="f-d" value="${esc(f.dest||'')}" placeholder="Search a country or city" oninput="S.f.dest=this.value" autocomplete="off"${invalid('dest')}>`,'map-pin')}</div>
+<div class="pad" style="display:flex;flex-direction:column;gap:18px;margin-top:20px"><div><label class="lb" for="f-d">Destination</label>${field('dest',`<input class="in" id="f-d" value="${esc(f.dest||'')}" placeholder="Search a country or city" oninput="S.f.dest=this.value;A.refreshFormNext()" autocomplete="off"${invalid('dest')}>`,'map-pin')}</div>
 <div class="form-dates">${DateField('start','Start',f.start,er('start'),invalid('start'))}${DateField('end','End',f.end,er('end'),invalid('end'))}</div>${S.cal?Calendar(S.cal):''}
-<div><label class="lb" for="f-b">Budget per person (SGD)</label>${field('budget',`<input class="in" id="f-b" inputmode="numeric" value="${f.budget||''}" oninput="S.f.budget=this.value.replace(/\\D/g,'')"${invalid('budget')}>`)}</div>
+<div><label class="lb" for="f-b">Budget per person (SGD)</label>${field('budget',`<input class="in" id="f-b" inputmode="numeric" value="${f.budget||''}" oninput="S.f.budget=this.value.replace(/\\D/g,'');A.refreshFormNext()"${invalid('budget')}>`)}</div>
 <div><span class="lb">Invite friends</span>${TagBox('coll',(f.coll||[]).map(k=>PE[k][2]),'Type a friend’s name',FR.map(x=>x[0]),false)}</div>
 <div><span class="lb">Reel collections to include <span class="opt">(optional)</span></span><div class="cxg" role="group" aria-label="Reel collections to include">${S.col.map(c=>{const on=(f.cols||[]).includes(c.id);return `<button class="cx" role="checkbox" aria-checked="${on}" data-a="fcol:${c.id}"><span class="xic">${ic('bookmark',22)}</span><span class="gr"><b>${esc(c.n)}</b><span class="cap sm">${c.r.length} reel${c.r.length==1?'':'s'}</span></span><span class="cbx">${ic('check',16)}</span></button>`}).join('')}</div></div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div><b class="lb" style="margin:0">Recommend activities</b><div class="cap sm">We’ll suggest activities based on everyone’s saved preferences.</div></div><button class="sw ${f.auto?'on':''}" role="switch" aria-checked="${!!f.auto}" aria-label="Recommend activities" data-a="fsw"></button></div></div>
-<div class="dock low">${Btn('Next: vote on activities','formnext')}</div>`};
+<div class="dock low">${Btn('Next: vote on activities','formnext',{off:!canAdvanceNewTrip()})}</div>`};
 V.trip=()=>{const t=trip(S.cur);if(!t)return '';const lk=!fin(t),n=needs(t),ms=mstops(t),go=!lk&&dd(t.date)>=0&&ms.length,pn=pend(t).filter(k=>k!='P').map(k=>PE[k][2]);let b='';
 if(S.step==0)b=`${Sec('Trip details')}${Row({lead:`<div class="si">${ic('calendar',20)}</div>`,title:fd(t.date,1),sub:'Starts '+tt(t.t1)})}${Row({lead:`<div class="si">${ic('map-pin',20)}</div>`,title:t.origin,sub:'Meet-up point'})}${Row({lead:`<div class="si">${ic('info',20)}</div>`,title:t.budget,sub:'Budget per person'})}${t.note?Ban('Note',t.note):''}${Sec('Who’s going')}${Members(t)}`;
 else if(S.step==1){
