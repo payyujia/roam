@@ -63,4 +63,4 @@ R.forEach(r=>r.c=LN[r.c]);[['R'],['E','L'],['E','J','R'],['L','R'],[],[]].forEac
 const SAVED=[{n:'House of Gonjol',s:'Art centre · Jln Indera',i:'image',k:'Do',by:'RLE'},{n:'Paradigm Mall',s:'Mall · Skudai',i:'bag',k:'Shop',by:'RL'},{n:'Mid Valley Southkey',s:'Mall · Southkey',i:'bag',k:'Shop',by:'E'},{n:'Hutan Bandar Park',s:'Park · Larkin',i:'sun',k:'Do',by:'RL'},{n:'Jonker Street Night Market',s:'Market · Malacca',i:'bag',k:'Eat',by:'JE'},{n:'Books Actually',s:'Bookstore · Yong Siak St',i:'book',k:'Shop',by:'R'}];
 const MA={hike:[26,24],read:[74,23],game:[50,35],jb:[24,45],cn:[76,45],laz:[30,56],nan:[70,56]};
 const ov=(t,p)=>{const a=MA[t.id]||[20+T.indexOf(t)*23%60,30+T.indexOf(t)*13%22];return[a[0]+(p[0]-50)*.55,a[1]+(p[1]-38)*.7]};
-const newF=()=>({dest:'Malacca',start:iso(addD(NOW,14)),end:iso(addD(NOW,15)),budget:300,coll:['R','E'],auto:1});
+const newF=()=>({dest:'Malacca',start:calendarFreeRange().a,end:calendarFreeRange().b,budget:300,coll:['R','E'],auto:1});
