@@ -1916,13 +1916,12 @@
 #dev .pi.amber svg{fill:currentColor;stroke:currentColor}
 #dev #s-map .map-place .pi.amber svg,#dev #s-trip .vote-place .pi.amber svg{fill:currentColor;stroke:currentColor}
 
-/* ---- alternative options A-D: amber / coral / rose / sky ---- */
+/* ---- replacement alternatives A-C: rose / amber / sky-500 ---- */
 /* options carry their colour on the letter badge only: no ring around the pin */
 #dev .mp .route.faded{opacity:.28}
 #dev .mp .pn.alt .bg{background:var(--map-color);color:var(--ink)}
 #dev .mp .tone-sky5 .bg{color:#fff}
 #dev #s-map .map-place.alt-amber{--alt:var(--amber)}
-#dev #s-map .map-place.alt-coral{--alt:var(--coral-500)}
 #dev #s-map .map-place.alt-rose{--alt:var(--rose)}
 #dev #s-map .map-place.alt-sky5{--alt:var(--sky-500)}
 #dev #s-map .map-place .alt-ltr{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:var(--alt);color:var(--ink);font-size:10px;font-weight:800;letter-spacing:0}
