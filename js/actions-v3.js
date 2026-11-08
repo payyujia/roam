@@ -228,3 +228,11 @@ A.tab=t=>{
  if(t==='profile')S.stack.profile=['profile'];
  return tagEditorTab(t);
 };
+
+/* ---------- map: stop card (tap an itinerary pin) ---------- */
+Object.assign(A,{
+ pstop:i=>{S.pc=+i;S.fk||0;render('map');chrome()},
+ pback:()=>{S.pc=null;render('map');chrome()},
+ mpinfo:i=>{const t=trip(S.mapTrip),s=mstops(t)[+i];if(!s)return;const x=stopPX(t,s);S.ci=x;lay('sheet',infoHTML(x),'Place Info')}
+});
+['navigate','mload','endnav','opentrip','mvote','forkopen'].forEach(k=>{const f=A[k];if(f)A[k]=(...a)=>{S.pc=null;return f(...a)}});

@@ -37,6 +37,9 @@ const ACTIVITY_CATEGORY_ICONS=Object.freeze({
  Eat:'utensils',
  Shop:'bag'
 });
+/* Prototype-only: deterministic mock rating so every place shows the same stars each time */
+const mockRating=n=>{let h=0;for(const c of String(n))h=(h*31+c.charCodeAt(0))>>>0;const r=[310,520,820,1200,1600,2300,640,980,1400][h%9];return{sc:(4.1+(h%9)/10).toFixed(1),rv:r>=1000?(r/1000).toFixed(1)+'k':String(r)}};
+const travelMins=tr=>{const m=String(tr||'').match(/\d+\s*(?:min|hr|h)\b/i);return m?m[0]:(tr||'Travel time unavailable')};
 const activityIcon=s=>ACTIVITY_CATEGORY_ICONS[s?.k]||s?.i||'map-pin';
 const ActivityFilterPill=(category,on)=>`<button type="button" class="pill activity-category-pill${on?' on':''}" aria-pressed="${!!on}" data-a="cat:${category}">${ic(ACTIVITY_CATEGORY_ICONS[category]||'layout-grid',14)}<span>${category}</span></button>`;
 const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
@@ -111,7 +114,8 @@ const VoteRow=(s,i,t=trip(S.cur))=>{
     <span class="pi ${categoryColor}" title="${esc(s.k||'Activity')}">${ic(activityIcon(s),15)}</span>
     <span>${esc(s.s||s.k||'Activity')}</span>
     <span class="pi sky" title="Travel">${ic(modeIcon,15)}</span>
-    <span>${esc(s.tr?String(s.tr).replace(/\s*(?:by\s+\w+|walk)\s*$/i,''):'Travel time unavailable')}</span>
+    <span>${esc(travelMins(s.tr))}</span>
+    <span class="pi amber" title="Rating">${ic('star',15,'currentColor')}</span><span>${mockRating(s.n).sc}<small> (${mockRating(s.n).rv})</small></span>
     <button type="button" class="pinfo" data-a="activity:${i}" aria-label="More about ${esc(s.n)}" title="View activity details">${ic('info',22)}</button>
    </div>
   </div>

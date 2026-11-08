@@ -1792,3 +1792,126 @@
   #dev #s-trip .vote-place .place-foot{gap:6px}
   #dev #s-trip .vote-place .pv{min-width:48px;padding-inline:5px}
 }
+
+/* ---- map stop card: same place card as voting, no vote row ---- */
+#dev #s-map .map-place{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  min-width:0;
+  padding:0;
+  border:0;
+  border-radius:26px;
+  overflow:hidden;
+  text-align:left;
+  color:var(--ink);
+}
+#dev #s-map .map-place .place-media{
+  position:relative;
+  aspect-ratio:2/1;
+  overflow:hidden;
+  background:linear-gradient(160deg,#FFC9BC,#6DB6FF);
+}
+#dev #s-map .map-place .place-media img{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+#dev #s-map .map-place .place-media-fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:var(--sky-600);
+}
+#dev #s-map .map-place .place-media.has-photo .place-media-fallback{visibility:hidden}
+#dev #s-map .map-place .place-body{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  min-width:0;
+  padding:12px 14px 0;
+}
+#dev #s-map .map-place .place-kick{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:var(--sky-600);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.18em;
+  line-height:14px;
+  text-transform:uppercase;
+}
+#dev #s-map .map-place .place-body>b{
+  display:block;
+  overflow:hidden;
+  color:var(--ink);
+  font-size:16px;
+  font-weight:700;
+  line-height:22px;
+  letter-spacing:-.02em;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#dev #s-map .map-place .pmeta{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  white-space:nowrap;
+}
+#dev #s-map .map-place .pmeta>span{flex:none}
+#dev #s-map .map-place .pmeta>span:nth-child(2){
+  flex:0 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#dev #s-map .map-place .pi{
+  display:inline-flex;
+  flex:none;
+}
+#dev #s-map .map-place .pi svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+}
+#dev #s-map .map-place .pi.sky{color:var(--sky-500)}
+#dev #s-map .map-place .pi.coral{color:var(--coral-500)}
+#dev #s-map .map-place .pi.rose{color:var(--rose)}
+#dev #s-map .map-place .pinfo{
+  display:grid;
+  flex:none;
+  place-items:center;
+  width:44px;
+  height:44px;
+  margin:-14px -12px -14px auto;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--sky-600);
+}
+#dev #s-map .map-place .pinfo svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+}
+#dev #s-map .map-place .place-body{padding-bottom:12px}
+#dev #s-map .map-place.on-map{background:rgba(243,248,255,.9)!important}
+#dev #s-map .mpc{position:absolute;left:12px;right:12px;bottom:128px;z-index:16;animation:up .25s ease both}
+#dev .pi.amber{color:var(--amber,#FFB020)}
+#dev .pi.amber svg{fill:currentColor;stroke:currentColor}
+#dev #s-map .map-place .pi.amber svg,#dev #s-trip .vote-place .pi.amber svg{fill:currentColor;stroke:currentColor}

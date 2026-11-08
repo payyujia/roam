@@ -58,7 +58,7 @@ function scene(){
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'amber',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='sel'}
   else if(S.fk=='alts')o.cls='dim';
-  else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel'}
+  else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel';o.a='pstop:'+i;if(S.pc===i)o.cls='sel'}
   pins.push(o)});
  if(lv&&!S.fk)pins.push({lab:esc(mine[cu].n),ll:cur[cu]});
  if(fk&&!S.fk){const ch=Object.keys(fk.ch).map(Number).sort((a,b)=>a-b)[0];
