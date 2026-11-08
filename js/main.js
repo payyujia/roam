@@ -14,7 +14,14 @@ const fitRoamPhonePreview=()=>{
  }
  const margin=32;
  const scale=Math.min(1,(window.innerWidth-margin)/402,(window.innerHeight-margin)/874);
- frame.style.zoom=String(Math.max(.1,scale));
+ const next=String(Math.max(.1,scale));
+ if(frame.style.zoom!==next){
+  frame.style.zoom=next;
+  /* The map camera uses the viewport geometry; refit it after a zoom
+     change so paths and the navigation drawer remain aligned. */
+  if(document.querySelector('#s-map.on')&&typeof mapReframe==='function')
+   requestAnimationFrame(()=>mapReframe(false));
+ }
 };
 fitRoamPhonePreview();
 window.addEventListener('resize',fitRoamPhonePreview,{passive:true});
