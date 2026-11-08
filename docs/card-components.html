@@ -388,24 +388,6 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
 .rc .cap svg{width:14px;height:14px}
 
 
-/* Route change card: Sunrise Frost branch comparison component. */
-.route-change-card{border-radius:22px;padding:14px 16px 16px;min-width:0}
-.route-change-card .route-change-head b{display:block;font-size:16px;font-weight:700;line-height:22px}
-.route-change-card .route-change-head .cap{display:block;margin-top:2px;font-size:12px;font-weight:500;line-height:16px}
-.route-change-card .route-change-fork{width:120px;height:85px;margin:8px auto -2px}
-.route-change-card .route-change-fork svg{display:block;width:100%;height:100%;overflow:visible}
-.route-change-card .route-change-fork path{fill:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
-.route-change-card .route-change-stem{stroke:var(--sky-300)}
-.route-change-card .route-change-main{stroke:var(--sky-500)}
-.route-change-card .route-change-alt{stroke:var(--coral-500)}
-.route-change-card .route-change-path-labels,.route-change-card .route-change-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.route-change-card .route-change-path-labels{text-align:center;padding:3px 0 10px;font-size:12px;font-weight:700;line-height:16px;color:var(--muted)}
-.route-change-card .route-change-pairs{border-top:1px solid rgba(31,99,181,.14)}
-.route-change-card .route-change-pair{padding-top:10px}
-.route-change-card .route-change-cell{min-width:0}
-.route-change-card .route-change-stop-label{display:block;margin-bottom:2px;font-size:10px;font-weight:800;line-height:14px;color:var(--muted)}
-.route-change-card .route-change-cell b{display:block;font-size:14px;font-weight:700;line-height:20px;overflow-wrap:anywhere}
-
 /* ---------- LAYOUT HELPERS ---------- */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start}
 .card-group{min-width:0}
@@ -848,30 +830,6 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
         </div>
       </div>
 
-
-      <!-- 08 Route change -->
-      <div class="card-group">
-        <h3>08 · Route change card</h3>
-        <p class="spec-description">Visible when the alternative itinerary replaces one or more confirmed stops.</p>
-        <div class="card-stack">
-          <section class="route-change-card glass" aria-label="Route changed, one replacement">
-            <div class="route-change-head"><b>Route changed</b><span class="cap sm">1 stop differs from the main path</span></div>
-            <div class="route-change-fork" role="img" aria-label="Original route branches into two paths">
-              <svg viewBox="0 0 120 104" aria-hidden="true">
-                <path class="route-change-stem" d="M60 94V55"/>
-                <path class="route-change-main" d="M60 55C60 30 45 24 26 24H18M32 12L18 24L32 36"/>
-                <path class="route-change-alt" d="M60 55C60 30 75 24 94 24H102M88 12L102 24L88 36"/>
-              </svg>
-            </div>
-            <div class="route-change-path-labels"><span>Main path</span><span>Your path</span></div>
-            <div class="route-change-pairs"><div class="route-change-pair">
-              <div class="route-change-cell"><span class="route-change-stop-label">Stop 4</span><b>Clown Show</b></div>
-              <div class="route-change-cell"><span class="route-change-stop-label">Replacement</span><b>Books Actually</b></div>
-            </div></div>
-          </section>
-        </div>
-        <p class="spec-description" style="margin-top:10px">22px radius · 16/700 title · 12/500 subtitle · 14/700 stop names · blue main / coral alternative</p>
-      </div>
 
     </div>
   </section>
