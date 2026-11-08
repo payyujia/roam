@@ -25,7 +25,10 @@
 .row{display:flex;align-items:center;gap:12px;width:100%;padding:8px 24px;text-align:left;min-height:64px}.row:active{background:var(--s1)}div.row:active{background:none}
 .row .gr b,.row .gr .cap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.row.wrap .gr b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 div.sec{display:flex;justify-content:space-between;align-items:baseline;padding:28px 24px 12px}div.sec button{font-size:12px;font-weight:500;line-height:16px;color:var(--muted)}
-.top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:4px 12px 0;min-height:50px}.top .tt{text-align:center}.hd{padding:8px 24px 4px}
+/* Shared page headers: align the left action (X / Back) with the 24px
+   content gutter used by form fields and cards. Symmetric padding keeps
+   the middle title visually centred without changing icon button size. */
+.top{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:4px 24px 0;min-height:50px}.top .tt{text-align:center}.hd{padding:8px 24px 4px}
 .empty{margin:0 24px;padding:24px 16px;border-radius:var(--r2);background:var(--s1);text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
 .ban{margin:16px 24px 0;padding:16px;border-radius:var(--r2);background:var(--s1);display:flex;flex-direction:column;gap:12px}.ban .r{display:flex;gap:12px;align-items:center}
 .sign{display:flex;align-items:center;gap:12px;background:var(--black);color:var(--white);border-radius:var(--r2);padding:12px 14px}.sign .cap{color:#CFCFCF}.sign .ib{color:var(--white)}.sign .ib:active{background:#2A2A2A}
