@@ -16,6 +16,9 @@ Object.assign(I,{'git-branch':'<line x1="6" y1="3" x2="6" y2="15"/><circle cx="1
    Scoped to this new icon key; existing route and branch icons stay intact. */
 I['route-split']='<path d="M5.77,1.12L5.34,1.31L2.06,4.59L1.88,5.02L1.88,5.44L2.06,5.86L5.48,9.23L5.77,9.33L6.47,9.23L6.89,8.86L7.08,8.44L6.98,7.73L5.72,6.33L7.03,6.42L8.53,7.03L9.05,7.41L10.17,8.67L10.55,9.42L10.88,10.78L10.88,21.94L10.97,22.22L11.34,22.64L11.77,22.83L12.19,22.83L12.56,22.69L12.89,22.36L13.08,21.94L13.08,10.78L13.22,9.98L13.55,9.09L14.48,7.78L15.42,7.03L16.73,6.47L18.23,6.33L16.97,7.73L16.88,8.44L17.06,8.86L17.48,9.23L17.77,9.33L18.47,9.23L21.89,5.86L22.08,5.44L22.08,5.02L21.89,4.59L18.61,1.31L18.19,1.12L17.77,1.12L17.48,1.22L17.06,1.59L16.88,2.02L16.88,2.44L17.06,2.86L18.28,4.08L16.27,4.31L14.58,4.97L13.41,5.77L11.95,7.36L11.44,6.66L10.55,5.77L9.38,4.97L7.69,4.31L5.67,4.08L6.89,2.86L7.08,2.44L7.08,2.02L6.89,1.59L6.47,1.22Z" fill="currentColor" stroke="none"/>';
 
+/* Full-width X for the Map trip pill: visually balanced with route-split
+   at the same 20px icon size, without changing close icons elsewhere. */
+I['map-close']='<path d="M2.5 2.5L21.5 21.5M21.5 2.5L2.5 21.5"/>';
 const ic=(n,s=24,f='none')=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${f}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]||''}</svg>`;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 
