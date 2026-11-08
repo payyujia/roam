@@ -632,6 +632,24 @@
 }
 
 
+/* Saved reels > Collection: the shared dropdown floats over the reel grid.
+   Scope this to the Saved reels filter so other dropdowns keep their layout. */
+#dev #s-pdet .saved-reels-filter{
+  position:relative;
+  z-index:6;
+}
+#dev #s-pdet .saved-reels-filter .dd{position:relative}
+#dev #s-pdet .saved-reels-filter .dd-list{
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  box-sizing:border-box;
+  width:100%;
+  margin-top:8px;
+  z-index:10;
+}
+
 /* ---------- PROFILE SUBPAGES ----------
    Field labels are the library Subheader (16px / 700 / 22px / -.01em) on
    every nested page; field values are Regular 14; helper text is Subtitle 12. */
