@@ -210,7 +210,7 @@ body{font-weight:500}
   --rim:linear-gradient(135deg,rgba(255,255,255,.6),transparent 46%,
     transparent 54%,rgba(255,255,255,.5));
 }
-#dev :is(.btn,.gob,.vbtn,#fab,#psave){border-radius:999px;font-size:13px;font-weight:700}
+#dev :is(.btn,.gob,.vbtn,#fab,#psave){border-radius:999px;font-size:14px;font-weight:700}
 /* Home Trips Create trip button: Body 700 at 14px, without altering Map or other actions. */
 #dev .btn{padding:0 22px}
 #dev .btn.sm2{height:34px;padding:0 14px;font-size:11px}
@@ -1952,3 +1952,27 @@ body{font-weight:500}
 #dev .mp .mpl{z-index:0;isolation:isolate}
 #dev .mp .mp-fade{z-index:5;pointer-events:none}
 #dev .mp .mtop2{z-index:6}
+
+/* Trip page + its sheets: snap to the card-components.html type scale.
+   Button 14/700 (small 12/700) · Subheader 16/700/22 · Regular 14/500/1.5 · Subtitle 12/500/16 · Kicker 10/800. */
+#dev :is(.btn,.gob,.vbtn,#fab,#psave){font-size:14px!important}
+#dev :is(.btn.sm2,.btn.sm,.btn.xs,.cal-f .btn){font-size:12px!important}
+#dev #lyc.menu .mi{font-size:14px!important;font-weight:700!important}
+/* names and values in list rows (stops, members, dates, sheet headings) */
+#dev :is(#s-trip,#lyc) .row .gr>b,
+#dev :is(#s-trip,#lyc) button.row .gr>b,
+#dev #lyc .mh .gr>b{font-size:16px!important;font-weight:700!important;line-height:22px!important}
+/* explanatory sentences */
+#dev :is(#s-trip .lockc>.cap,#lyc p.cap,#lyc .note>span){font-size:14px!important;font-weight:500!important;line-height:1.5!important}
+/* small captions */
+#dev #lyc .gr.cap{font-size:12px!important;font-weight:500!important;line-height:16px!important}
+/* big avatar initials + stepper numerals + vote counts */
+#dev #s-trip .av.big{font-size:14px!important;font-weight:800!important}
+#dev #s-trip .sd{font-size:12px!important}
+#dev #s-trip .vote-row .vote-count{font-size:12px!important;line-height:16px!important}
+/* activity details key/value list + field text */
+#dev #lyc dl.kv dt{font-size:12px!important;font-weight:500!important;line-height:16px!important}
+#dev #lyc dl.kv dd{font-size:14px!important;font-weight:700!important;line-height:1.5!important}
+#dev #lyc button.fld .gr{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
+#dev :is(#s-trip,#lyc) .ban>div>b,#dev #lyc .pad>b,#dev #lyc button.cx .gr>b{font-size:16px!important;font-weight:700!important;line-height:22px!important}
+#dev :is(#s-trip,#lyc) .ban>div>.cap{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
