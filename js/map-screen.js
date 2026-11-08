@@ -12,7 +12,7 @@ const navSheet=()=>{
   pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
  if(lv){
   const c=ms[cu],g=LEG(c),meet=g.start,
-   hike=t.id==='hike',hikeDistance=hike?HIKE_LEG_DISTANCE[cu]:null,
+   hike=isMacRitchieTrip(t),hikeDistance=hike?HIKE_LEG_DISTANCE[cu]:null,
    hikeToLunch=hike&&cu===2,
    rawDistance=hikeDistance?.label||g.km,
    distParts=rawDistance?rawDistance.split(' '):null,
