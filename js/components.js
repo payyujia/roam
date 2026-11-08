@@ -1,8 +1,8 @@
 /* ===== COMPONENTS (each has one builder of the same name) ===== */
 const Bullet=(t,z='')=>`<span class="bl ${z} l-${t.c}" aria-hidden="true">${t.b}</span>`;
 const PH={hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b7833e8f5570',game:'photo-1511512578047-dfb367046420',jb:'photo-1519501025264-65ba15a82390',cn:'photo-1508804185872-d7badad00f7d',laz:'photo-1507525428034-b723cf961d3e',nan:'photo-1544025162-d76694265947',sun:'photo-1470252649378-9c29740c9fa8'};
-const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f','url:https://images.pexels.com/videos/20711643/monk-walking-2-20711643.jpeg?auto=compress&dpr=1&h=750&w=1260'];
-const Pic=(id,seed,w=600)=>`<img src="${id?(id.startsWith("url:")?id.slice(4):`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`):`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
+const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f','photo-1441974231531-c6227db76b6e'];
+const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
 const Cover=(t,z='m')=>`<div class="cover z-${z} l-${t.c}" aria-hidden="true">${Pic(PH[t.id],t.n,z=='l'||z=='xl'?600:240)}</div>`;
 /* Local illustrated profile pictures: shared by trip members, friends, and the profile tab. */
 /* Photographic demo profiles. Photos are loaded from Unsplash, not AI illustrations. */
@@ -116,7 +116,7 @@ const FriendInvitePicker=()=>{
 /* ===== REEL VIDEOS =====
    One short vertical clip per reel, same order as R in data.js.
    Drop the files in /videos. A missing/broken file silently falls back to the photo (RP). */
-const RVID=['videos/shark.mp4','videos/burger.mp4','videos/dimsum.mp4','videos/skyline.mp4','videos/pixel.mp4','https://videos.pexels.com/video-files/20711643/20711643-hd_1920_1080_25fps.mp4'];
+const RVID=['videos/shark.mp4','videos/burger.mp4','videos/dimsum.mp4','videos/skyline.mp4','videos/pixel.mp4','videos/bridge.mp4'];
 const Reel=(gi,seed)=>`${Pic(RP[gi],seed,800)}${RVID[gi]?`<video class="rvid" src="${RVID[gi]}" muted loop playsinline preload="metadata" disablepictureinpicture aria-hidden="true" onerror="this.remove()"></video>`:''}`;
 /* Reels the user saved, as [reel, index] pairs. */
 const savedReels=(f=S.colf||'all')=>R.map((r,i)=>[r,i]).filter(([,i])=>f=='all'?(S.saved[i]||inCol(i)):f=='likes'?!!S.saved[i]:!!(S.col.find(c=>c.id==f)||{r:[]}).r.includes(i));
