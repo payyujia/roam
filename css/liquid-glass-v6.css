@@ -642,6 +642,26 @@ body{font-weight:500}
   transition:none!important;
 }
 
+/* Chat conversations and Trip details: one identical page-push animation.
+   The new screen travels from right to left, while the current page remains
+   painted underneath. Their shared Back animation still slides right. */
+@keyframes roam-detail-push-left{
+  from{transform:translate3d(100%,0,0)}
+  to{transform:translate3d(0,0,0)}
+}
+#dev #app .scr.detail-enter-parent.under{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+  z-index:1;
+}
+#dev #app .scr.detail-enter.on{
+  visibility:visible!important;
+  z-index:3;
+  transition:none!important;
+  animation:roam-detail-push-left .3s cubic-bezier(.22,.72,.26,1) both!important;
+}
+
 /* Chat and Trip detail Back share the same visible parent surface. */
 #dev #app .scr.back-reveal{
   visibility:visible!important;
@@ -665,6 +685,7 @@ body{font-weight:500}
   transition:none!important;
 }
 @media(prefers-reduced-motion:reduce){
+  #dev #app .scr.detail-enter.on{animation:none!important}
   #dev #app .scr.back-exit{
     animation:none!important;
     visibility:hidden!important;
