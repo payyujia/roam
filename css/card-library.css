@@ -1473,7 +1473,7 @@
   #dev #s-trip .vote-row .vb{width:36px}
 }
 
-/* Vote list action: 16px from the last activity card on short lists.
+/* Vote list action: 24px from the last activity card on short lists.
    With more activities, sticky bottom keeps the action above the iPhone
    tab bar; on reaching the list end it returns to the natural flow. */
 #dev #s-trip .vote-add-button{
@@ -1486,7 +1486,7 @@
   width:max-content;
   max-width:calc(100% - 48px);
   min-height:46px;
-  margin:16px auto 0;
+  margin:24px auto 0;
 }
 #dev #s-trip .vote-add-button:focus-visible{
   outline:2px solid var(--sky-600);
