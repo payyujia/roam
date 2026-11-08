@@ -1157,6 +1157,28 @@
   border-radius:4px;
 }
 
+/* CATEGORY ICONS — consistent with ROAM's activity icon tokens.
+   No changes to pill selection or the numbered itinerary route rail. */
+#dev #s-trip .activity-category-filters .activity-category-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+#dev #s-trip .activity-category-filters .activity-category-pill svg{
+  display:block;
+  flex:none;
+}
+#dev #s-trip .tl:not(.nv) .itinerary-category-icon{
+  display:inline-flex;
+  align-items:center;
+  margin-right:6px;
+  vertical-align:-3px;
+  color:var(--sky-600);
+}
+#dev #s-trip .tl:not(.nv) .itinerary-category-icon svg{
+  display:block;
+}
+
 /* ACTIVITY VOTING CARDS — one horizontal row, built from Card Components
    tokens (84px min-height, 22px radius, 10x12px padding, 16/12 type).
    Each row contains: activity icon | name + subtitle | Info + vote controls.
