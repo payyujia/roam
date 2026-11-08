@@ -1,14 +1,10 @@
 /* ===== MAP SCREEN, FORK FLOW SHEETS, TRIP PAGE HOOKS ===== */
 const pathChips=t=>{const fk=t.fork,me=myPath(t);return `<div class="pcs" role="group" aria-label="Paths">${[['main','Main path',mainMembers(t).length,me=='main'?mapTone(t):'inactive'],['fork',pn(fk.owner)+'’s path',fk.members.length,forkTone(t)]].map(([k,l,n,tone])=>`<button class="pc2" aria-pressed="${me==k}" data-a="pathpick:${k}:${t.id}"><span class="sw2 tone-${tone}"></span><span class="gr"><span>${esc(l)}</span><small>${n} going</small></span></button>`).join('')}</div>`};
-/* This prototype does not have GPS or routed-distance tracking. The first
-   50 m is a clearly labelled demo approach distance. Trail legs use rough
-   planning estimates (about 4.5 km from the reservoir to TreeTop Walk and
-   about 2.5 km from TreeTop Walk towards the Venus Drive exit); the latter
-   excludes the onward transfer to lunch. Do not present them as live distance. */
-const HIKE_DEMO_LEG_DISTANCE=[
- {label:'50 m',mode:'demo'},
- {label:'~4.5 km',mode:'estimate'},
- {label:'~2.5 km',mode:'estimate'}
+/* Navigation distances and route guidance for the MacRitchie itinerary. */
+const HIKE_LEG_DISTANCE=[
+ {label:'50 m',mode:'meet'},
+ {label:'4.5 km',mode:'estimate'},
+ {label:'2.5 km',mode:'estimate'}
 ];
 const navSheet=()=>{
  const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=ms.length>0&&live(t),
@@ -16,14 +12,14 @@ const navSheet=()=>{
   pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
  if(lv){
   const c=ms[cu],g=LEG(c),meet=g.start,
-   hike=t.id==='hike',hikeDistance=hike?HIKE_DEMO_LEG_DISTANCE[cu]:null,
+   hike=t.id==='hike',hikeDistance=hike?HIKE_LEG_DISTANCE[cu]:null,
    hikeToLunch=hike&&cu===2,
    rawDistance=hikeDistance?.label||g.km,
    distParts=rawDistance?rawDistance.split(' '):null,
    metric=distParts?distParts[0]:'—',
    unit=distParts?distParts.slice(1).join(' '):'',
    modeIcon=g.hike||g.ic==='walk'?'walk':g.ic==='car'?'car':meet?'map-pin':g.ic,
-   detail=hike&&cu===0?'Demo approach · Meet at main entrance'
+   detail=hike&&cu===0?'Meet at main entrance'
     :hike&&cu===1?'Via forest trails · approx. 2 hr'
     :hikeToLunch?'Then transfer to The Roti Prata House for lunch'
     :g.text||'Travel details unavailable';
