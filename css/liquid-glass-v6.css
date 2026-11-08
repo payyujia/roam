@@ -642,11 +642,11 @@ body{font-weight:500}
   transition:none!important;
 }
 
-/* Trip detail: the entering screen moves right from the left edge,
+/* Trip detail: the entering screen moves left from the right edge,
    with its originating Trips page visible beneath it during the animation.
    All other page entry transitions remain as they were. */
-@keyframes roam-trip-enter-right{
-  from{transform:translate3d(-100%,0,0)}
+@keyframes roam-trip-enter-left{
+  from{transform:translate3d(100%,0,0)}
   to{transform:translate3d(0,0,0)}
 }
 #dev #app .scr.trip-enter-parent.under{
@@ -659,7 +659,7 @@ body{font-weight:500}
   visibility:visible!important;
   z-index:3;
   transition:none!important;
-  animation:roam-trip-enter-right .3s cubic-bezier(.22,.72,.26,1) both!important;
+  animation:roam-trip-enter-left .3s cubic-bezier(.22,.72,.26,1) both!important;
 }
 /* Show the returning page before the exiting trip swipes right. */
 #dev #app .scr.back-reveal{
