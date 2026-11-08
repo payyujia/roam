@@ -53,11 +53,14 @@ function scene(){
   routes.push({pts:mp,walk:mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
   routes.push({pts:fp,walk:fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
- /* Keep the selected stop visible above either navigation sheet state.
-    The complete route and all interactive pins are still drawn. */
- const fit=[...cur],focusStop=!!S.nav&&!S.fk&&S.pc==null&&cur.length>0;
- if(focusStop)fit.splice(0,fit.length,cur[cu]);
- if(fk&&!focusStop)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
+ /* Collapsed: fit the whole itinerary as in the original compact map.
+    Expanded: focus on the active leg without removing other pins. */
+ const fit=[...cur],focusLeg=!!S.nav&&!S.fk&&S.pc==null&&!!S.mx&&cur.length>0;
+ if(focusLeg){
+  const a=Math.max(0,cu-1),b=Math.min(cur.length,Math.max(cu+1,2));
+  fit.splice(0,fit.length,...cur.slice(a,b));
+ }
+ if(fk&&!focusLeg)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='hike'?activityPhotoSource(s,t):RP[reel],photoFallback:t.id==='hike'?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
@@ -85,7 +88,7 @@ function mapTarget(W,H){
  const drawer=$('#msh');
  if(S.nav&&!S.fk&&S.pc==null&&drawer){
   const mapRect=$('#mp').getBoundingClientRect(),header=$('#mp .mtop2');
-  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+64):120);
+  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+18):120);
   const contents=$('#mc'),maxSheet=Math.max(0,Math.min(S.mx?600:400,H-150));
   const sheetHeight=Math.min(maxSheet,20+(contents?contents.scrollHeight:0));
   pad.t=top;
