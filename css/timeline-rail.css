@@ -28,3 +28,93 @@
 #dev #mc .tl.nv .tc.done .ln::after{background:var(--sky-400)!important}
 #dev #mc .tl.nv .tc .cap{display:flex;align-items:center;gap:6px;color:var(--muted)}
 #dev #mc .tl.nv .tdone{padding:0 0 8px 0}
+
+
+/* S-TRIP ITINERARY · official Sunrise Frost rail
+   Mirrors the 36px node / 12px body gap / 2px dashed connector used by
+   the replacement swap card and the map itinerary. Stop bodies stay plain. */
+#dev #s-trip .tl.official{padding:0 24px;gap:0}
+#dev #s-trip .tl.official .tn{
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  min-height:36px;
+  padding:0;
+  position:relative;
+  text-align:left;
+}
+#dev #s-trip .tl.official .tn .gr{min-width:0;margin:0}
+#dev #s-trip .tl.official .nd{
+  box-sizing:border-box;
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  flex:none;
+  margin:0;
+  border:0!important;
+  border-radius:50%;
+  background:rgba(255,255,255,.55)!important;
+  color:var(--ink)!important;
+  box-shadow:inset 0 0 0 1.5px rgba(47,140,255,.45)!important;
+  font-size:13px;
+  font-weight:800;
+  transform:none!important;
+}
+#dev #s-trip .tl.official .tn.cur .nd{
+  background:var(--sky-400)!important;
+  color:var(--ink)!important;
+  box-shadow:0 8px 22px rgba(40,100,180,.2),0 0 0 5px rgba(109,182,255,.28)!important;
+}
+#dev #s-trip .tl.official .tn.done .nd{
+  background:var(--sky-300)!important;
+  color:var(--sky-600)!important;
+  box-shadow:0 4px 12px rgba(40,100,180,.14)!important;
+}
+#dev #s-trip .tl.official .tn.org .nd{
+  width:36px;
+  height:36px;
+  margin:0;
+  background:rgba(255,255,255,.55)!important;
+}
+#dev #s-trip .tl.official .tc{
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  height:auto;
+  min-height:44px;
+}
+#dev #s-trip .tl.official .tc .ln{
+  position:relative;
+  width:36px;
+  height:100%;
+  flex:none;
+}
+#dev #s-trip .tl.official .tc .ln::after{
+  content:"";
+  position:absolute;
+  left:17px;
+  top:3px;
+  bottom:3px;
+  width:2px;
+  border-radius:2px;
+  background:repeating-linear-gradient(180deg,rgba(47,140,255,.45) 0 4px,transparent 4px 8px);
+}
+#dev #s-trip .tl.official .tc.done .ln::after{background:var(--sky-400)}
+#dev #s-trip .tl.official .tc .cap{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  margin:0;
+  color:var(--muted);
+}
+#dev #s-trip .tl.official .tc .tl-leg-copy{
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
