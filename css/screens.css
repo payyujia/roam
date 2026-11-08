@@ -60,8 +60,11 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    44px below it (including the home-indicator clearance). Keep the same
    button position, sticky navigation and scroll clearance. */
 #s-form .pg{min-height:100%;padding-bottom:0}
+/* The sticky footer is already part of the form's normal flow.
+   Keep just a small gap after Recommend activities instead of reserving
+   another footer-height spacer (which caused an oversized gap at scroll end). */
 #s-form .pg > .pad{
-  padding-bottom:calc(140px + env(safe-area-inset-bottom,0px));
+  padding-bottom:24px;
 }
 #s-form .dock.low{
   position:sticky;
