@@ -18,7 +18,7 @@ Object.assign(A,{
  fagain:()=>setLy(exiHTML()),
  fsel:i=>{S.fi=Math.max(0,S.fl.indexOf(+i));render('map')},fnav:d=>{const n=S.fl.length;S.fi=(S.fi+(+d)+n)%n;render('map')},
  ffind:()=>{const t=trip(S.mapTrip);S.alts=altsFor(t,S.fl[S.fi]);S.ap=null;S.fk='alts';render('map')},
- fpick:j=>{S.ap=+j;render('map')},fback:()=>{S.fk='flag';S.ap=null;render('map')},
+ fpick:j=>{S.ap=+j;S.fk='alts';render('map')},fback:()=>{S.fk='flag';S.ap=null;render('map')},
  fexit:()=>{S.fk=null;S.fl=[];S.ap=null;render('map')},
  finfo:()=>lay('sheet',altInfoHTML(),'Place info'),
  fconfirm:()=>{const t=trip(S.mapTrip),i=S.fl[S.fi],al=S.alts[S.ap];if(!al)return;if($('#ly').classList.contains('open'))A.closeLy();

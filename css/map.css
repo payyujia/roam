@@ -11,6 +11,7 @@
 .mp .tone-coral{--map-color:var(--coral-500);--map-badge-ink:var(--ink)}
 .mp .tone-amber{--map-color:var(--amber);--map-badge-ink:var(--ink)}
 .mp .tone-rose{--map-color:var(--rose)}
+.mp .tone-sky5{--map-color:var(--sky-500)}
 .mp .tone-duo{--map-badge:linear-gradient(135deg,var(--coral-300),var(--sky-500))}
 .mp .tone-inactive{--map-color:#A9B1C0;--map-badge-ink:var(--ink)}
 .mp .tone-done{--map-color:var(--ink)}
