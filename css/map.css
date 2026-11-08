@@ -161,6 +161,7 @@
   box-shadow:var(--control-shadow);
   cursor:pointer;
 }
+#dev #s-map .mtop2:has(.pcs)~.map-recenter{top:178px}
 #dev #s-map .map-recenter[hidden]{display:none!important}
 #dev #s-map .map-recenter:focus-visible{
   outline:2px solid var(--sky-500);
