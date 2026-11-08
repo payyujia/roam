@@ -55,8 +55,8 @@ const ACTIVITY_PHOTO_BY_NAME={
  'Tea & Tales Café':'https://images.unsplash.com/photo-1749214136520-38365aa2027d?auto=format&fit=crop&w=960&q=75',
  'The Little Gallery':'https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=960&q=75',
  'MacRitchie Reservoir':PH.hike,
- 'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/640px-MacRitchie_Reservoir.jpg',
- 'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HSBC_TreeTop_Walk_2012_1012.jpg/640px-HSBC_TreeTop_Walk_2012_1012.jpg',
+ 'MacRitchie Reservoir Park':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
+ 'TreeTop Walk':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hero-tree-walk.jpg',
  'Lornie Trail':PH.hike,
  // Real photo supplied by the user; stored locally as a lightweight thumbnail.
  'The Roti Prata House':'assets/roti-prata-house.svg',
@@ -73,6 +73,18 @@ const ACTIVITY_PHOTO_BY_NAME={
  'Marina South Pier':PH.laz,'Lazarus Beach':PH.laz,
  'Nando’s Plaza Singapura':PH.nan,'East Coast Park':PH.sun
 };
+/* MacRitchie images: primary photos from Singapore NParks; Commons backups
+   are genuine venue images (photo credit in source file pages).
+   The previous hardcoded thumbnails contained broken URLs. */
+const ACTIVITY_PHOTO_BACKUP_BY_NAME={
+ 'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/960px-MacRitchie_Reservoir.jpg',
+ 'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg/960px-Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg'
+};
+const activityPhotoBackup=s=>ACTIVITY_PHOTO_BACKUP_BY_NAME[s.n]||'';
+const photoLoadFallback=(img,backup)=>{
+ if(backup&&!img.dataset.photoBackup){img.dataset.photoBackup='1';img.src=backup;return}
+ img.remove();
+};
 const activityPhotoSource=(s,t)=>{
  const val=ACTIVITY_PHOTO_BY_NAME[s.n]||PH[t.id]||null;
  if(!val)return null;
@@ -86,7 +98,7 @@ const ActivityPhoto=(s,t)=>{
  if(!src)return '';
  return `<figure class="activity-photo l-${esc(t.c)}">
   <div class="activity-photo-fallback" aria-hidden="true">${ic(activityIcon(s),32)}</div>
-  <img src="${esc(src)}" alt="Illustrative photo for ${esc(s.n)}" loading="lazy" decoding="async" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+  <img src="${esc(src)}" alt="Photo of ${esc(s.n)}" loading="lazy" decoding="async" onload="this.parentElement.classList.add('has-photo')" onerror="photoLoadFallback(this,'${esc(activityPhotoBackup(s))}')">
   <figcaption class="cap sm">Illustrative photo</figcaption>
  </figure>`;
 };
