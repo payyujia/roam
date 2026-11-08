@@ -727,6 +727,77 @@
   z-index:10;
 }
 
+/* Create Trip: compact reel collections selector using the ROAM glass card.
+   It keeps form height constant regardless of the collection count. */
+#dev #s-form .form-collections-trigger{
+  width:100%;
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.65);
+  border-radius:20px;
+  background:var(--glass-control-bg);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-shadow);
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+}
+#dev #s-form .form-collections-trigger>.si{
+  width:40px;height:40px;border-radius:14px;flex:none;
+}
+#dev #s-form .form-collections-trigger>.gr{flex:1;min-width:0}
+#dev #s-form .form-collections-trigger .gr>b{
+  font-family:var(--font);font-size:14px;font-weight:700;line-height:21px;
+}
+#dev #s-form .form-collections-trigger .cap{
+  display:block;margin-top:2px;font-size:12px;font-weight:500;
+  line-height:16px;color:var(--muted);
+}
+#dev #s-form .form-collections-trigger>svg:last-child{
+  flex:none;width:20px;height:20px;color:var(--muted);
+}
+#dev #s-form .form-collections-trigger:focus-visible{
+  outline:2px solid var(--sky-500);outline-offset:2px;
+}
+/* Reuse the existing ROAM sheet, checkbox rows and button. The list scrolls,
+   while the title and Done control remain visible with large collections. */
+#dev #lyc.sheet.form-collections-sheet .lyb{
+  display:flex;flex-direction:column;overflow:hidden;
+  max-height:min(78dvh,680px);padding:0;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-header{
+  flex:none;margin-bottom:0;padding:16px 20px 12px;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-header .gr{min-width:0}
+#dev #lyc.form-collections-sheet .form-collection-sheet-header h2{
+  font-family:var(--font);font-size:20px;line-height:25px;font-weight:800;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-header .cap{
+  display:block;margin-top:4px;font-size:12px;font-weight:500;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-body{
+  flex:1;min-height:0;max-height:min(52dvh,448px);
+  overflow-y:auto;overscroll-behavior:contain;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-list{margin:0}
+#dev #lyc.form-collections-sheet .form-collection-sheet-list .cx{
+  min-height:64px;padding:10px 24px;
+}
+#dev #lyc.form-collections-sheet .form-collection-empty{
+  padding:16px 24px;color:var(--muted);font-size:12px;line-height:18px;
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-footer{
+  flex:none;padding:14px 20px calc(18px + env(safe-area-inset-bottom,0px));
+  border-top:1px solid rgba(255,255,255,.55);
+  background:rgba(243,248,255,.96);
+}
+#dev #lyc.form-collections-sheet .form-collection-sheet-footer .btn{
+  width:100%;min-height:46px;
+}
 /* Saved reels > Collection: the shared dropdown floats over the reel grid.
    Scope this to the Saved reels filter so other dropdowns keep their layout. */
 #dev #s-pdet .saved-reels-filter{
