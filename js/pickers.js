@@ -49,6 +49,67 @@ Object.assign(A,{
  calclear:()=>{S.cal.a=S.cal.b=null;render('form')},
  calset:()=>{const c=S.cal;if(!c.a)return;S.f.start=c.a;S.f.end=c.b||'';delete S.fe.start;delete S.fe.end;S.cal=null;render('form')}
 });
+/* Custom Invite friends typeahead: no native datalist or floating overlay.
+   Selected friends are excluded; results appear only when input has text. */
+const inviteFriendMatches=q=>{
+ const term=String(q||'').trim().toLocaleLowerCase();
+ return term?FR.filter(([name,id])=>!(S.f.coll||[]).includes(id)&&name.toLocaleLowerCase().includes(term)):[];
+};
+const hideFriendMatches=()=>{
+ const input=document.getElementById('tq-coll'),list=document.getElementById('finv-matches');
+ if(list)list.hidden=true;
+ if(input)input.setAttribute('aria-expanded','false');
+};
+Object.assign(A,{
+ finvQuery:query=>{
+  const input=document.getElementById('tq-coll'),list=document.getElementById('finv-matches'),plus=document.getElementById('finv-add');
+  if(!input||!list)return;
+  const matches=inviteFriendMatches(query);
+  list.innerHTML=matches.map(([name,id])=>`<button type="button" role="option" aria-selected="false" class="dd-opt friend-suggestion" data-a="finvPick:${id}" onkeydown="A.finvKey(event)">${Av(id)}<span class="t">${esc(name)}</span></button>`).join('');
+  list.hidden=!matches.length;
+  input.setAttribute('aria-expanded',String(!!matches.length));
+  const term=String(query||'').trim().toLocaleLowerCase();
+  const exact=matches.find(([name])=>name.toLocaleLowerCase()===term);
+  if(plus)plus.disabled=!(exact||matches.length===1);
+ },
+ finvPick:id=>{
+  const friend=FR.find(([,key])=>key===id);
+  if(!friend||(S.f.coll||[]).includes(id))return;
+  S.f.coll=[...(S.f.coll||[]),id];
+  render('form');
+  const input=document.getElementById('tq-coll');
+  if(input)input.focus();
+ },
+ finvAdd:()=>{
+  const input=document.getElementById('tq-coll');
+  if(!input)return;
+  const matches=inviteFriendMatches(input.value),term=input.value.trim().toLocaleLowerCase();
+  const match=matches.find(([name])=>name.toLocaleLowerCase()===term)||(matches.length===1?matches[0]:null);
+  if(match)A.finvPick(match[1]);
+  else document.querySelector('#finv-matches .friend-suggestion')?.focus();
+ },
+ finvKey:e=>{
+  const input=document.getElementById('tq-coll'),list=document.getElementById('finv-matches');
+  if(!input||!list)return;
+  const opts=[...list.querySelectorAll('.friend-suggestion')];
+  if(e.key==='Escape'&&!list.hidden){
+   e.preventDefault();e.stopPropagation();hideFriendMatches();input.focus();return;
+  }
+  if((e.key==='ArrowDown'||e.key==='ArrowUp')&&opts.length&&!list.hidden){
+   e.preventDefault();
+   const active=opts.indexOf(document.activeElement);
+   const index=active<0?(e.key==='ArrowDown'?0:opts.length-1):(active+(e.key==='ArrowDown'?1:-1)+opts.length)%opts.length;
+   opts[index].focus();return;
+  }
+  if(e.key==='Enter'&&e.target===input){
+   e.preventDefault();A.finvAdd();
+  }
+ }
+});
+document.addEventListener('click',e=>{
+ if(!e.target.closest('#s-form .invite-friends-picker'))hideFriendMatches();
+});
+
 /* click outside an open dropdown closes it; Esc and arrow keys behave like a native listbox */
 document.addEventListener('click',e=>{if(S.dd&&!e.target.closest('.dd')){S.dd=null;rr()}});
 document.addEventListener('keydown',e=>{
