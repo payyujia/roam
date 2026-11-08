@@ -6,6 +6,14 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
   if(stack.length<2||app.classList.contains('back-pending'))return;
   const exitingId=topId(),returningId=stack[stack.length-2];
   const fromForm=exitingId==='form';
+  /* Back may be pressed before the page finishes entering. Cancel the
+     entrance first so the existing rightward Back animation is uninterrupted. */
+  if(exitingId==='thread'||exitingId==='trip'){
+    $('#s-'+exitingId)?.classList.remove('detail-enter');
+    document.querySelectorAll('#app .scr.detail-enter-parent').forEach(
+      s=>s.classList.remove('detail-enter-parent')
+    );
+  }
   const animatedBack=exitingId==='thread'||exitingId==='pdet'||exitingId==='trip';
   const exiting=animatedBack?$('#s-'+exitingId):null;
   const returning=animatedBack?$('#s-'+returningId):null;
