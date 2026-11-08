@@ -59,7 +59,7 @@ const ACTIVITY_PHOTO_BY_NAME={
  'TreeTop Walk':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hero-tree-walk.jpg',
  'Lornie Trail':PH.hike,
  // Real photo supplied by the user; stored locally as a lightweight thumbnail.
- 'The Roti Prata House':'assets/roti-prata-house.svg',
+ 'The Roti Prata House':'assets/roti-prata-house-new.webp',
  'Books Actually':PH.read,'Tiong Bahru Bakery':RP[4],
  'Arcade at Bugis+':PH.game,'Burger Shot':RP[1],
  'The Loneliest Robot in Great Britain':'unsplash:Lv5o-Xixi4c',
