@@ -1372,6 +1372,9 @@ body{font-weight:500}
 }
 #dev #s-trip .vote-row .vb:is(.up,.dn) svg{fill:none}
 #dev #s-trip .vote-row .vb:is(.up,.dn)[aria-pressed="true"] svg{fill:currentColor!important}
+/* Filled vote glyphs: up = Sky 500, down = Coral 500 (existing tokens); the count stays ink. */
+#dev #s-trip .vote-row .vb.up[aria-pressed="true"] svg{color:var(--sky-500)}
+#dev #s-trip .vote-row .vb.dn[aria-pressed="true"] svg{color:var(--coral-500)}
 
 
 /* Reschedule row: match the voting cards' visual rhythm while leaving
