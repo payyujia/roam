@@ -38,7 +38,7 @@ function scene(){
    if(!ms.length)return;
    const pp=pathPts(t,ms),tone=mapTone(t),alert=badgeOf(t);
    fit.push(...pp);
-   routes.push({pts:pp,tone,dash:!fin(t),a:'mload:'+t.id});
+   routes.push({pts:pp,tone,walk:legWalk(ms),a:'mload:'+t.id});
    pp.slice(2).forEach(ll=>pins.push({dot:1,ll,tone}));
    pins.push({ll:pp[1],tone,icon:t.i,photo:PH[t.id],mark:t.b,alert,a:'mload:'+t.id,
     label:t.n+(alert?', needs your attention':'')});
@@ -50,9 +50,10 @@ function scene(){
   lv=mine.length>0&&live(t),cu=Math.min(S.leg,mine.length-1);
  const remaining=lv&&cu>0&&!S.fk?cur.slice(cu):null;
  if(fk){
-  routes.push({pts:me=='main'&&remaining?remaining:mp,tone:me=='main'?tone:'inactive',muted:me!='main',dash:me!='main'||!fin(t),a:`pathpick:main:${t.id}`});
-  routes.push({pts:me=='fork'&&remaining?remaining:fp,tone:forkTone(t),muted:me!='fork',dash:me!='fork',a:`pathpick:fork:${t.id}`});
- }else routes.push({pts:remaining||mp,tone,dash:!fin(t)});
+  const mw=legWalk(baseStops(t)),fw=legWalk(fk.stops),cw=me=='fork'?fw:mw;
+  routes.push({pts:me=='main'&&remaining?remaining:mp,walk:me=='main'&&remaining?cw.slice(cu):mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
+  routes.push({pts:me=='fork'&&remaining?remaining:fp,walk:me=='fork'&&remaining?cw.slice(cu):fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
+ }else{const cw=legWalk(mine);routes.push({pts:remaining||mp,walk:remaining?cw.slice(cu):cw,tone})}
  const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{const ll=cur[i+1],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
@@ -75,6 +76,10 @@ const mapKey=()=>{const t=S.nav?trip(S.mapTrip):null;return[t?t.id:'ov',S.fk||''
 function mapTarget(W,H){const sc=scene(),pts=sc.fit,pad=sc.pad;if(!pts.length||!W||!H)return null;let z=17;
  for(;z>3;z-=.25){const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]);if(Math.max(...xs)-Math.min(...xs)<=W-pad.l-pad.r&&Math.max(...ys)-Math.min(...ys)<=H-pad.t-pad.b)break}
  z=Math.min(z,sc.maxZ);const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]),bx=(Math.min(...xs)+Math.max(...xs))/2,by=(Math.min(...ys)+Math.max(...ys))/2,[lat,lng]=UNMERC(bx-(pad.l-pad.r)/2,by-(pad.t-pad.b)/2,z);return{lat,lng,z}}
+/* Walking legs are dotted, every other mode (drive, ride) is solid. */
+const legWalk=stops=>stops.map(st=>LEG(st).ic=='walk');
+/* Cubic for one leg i->i+1 using the same Catmull-Rom tangents as the full curve, so split pieces join seamlessly. */
+function pathRange(P,a,b){const f=n=>n.toFixed(1),q=p=>f(p[0])+' '+f(p[1]);if(P.length==2)return pathD(P);let d=`M${q(P[a])}`;for(let i=a;i<b;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;d+=`C${f(p1[0]+(p2[0]-p0[0])/6)} ${f(p1[1]+(p2[1]-p0[1])/6)} ${f(p2[0]-(p3[0]-p1[0])/6)} ${f(p2[1]-(p3[1]-p1[1])/6)} ${q(p2)}`}return d}
 function pathD(P){if(P.length<2)return '';const f=n=>n.toFixed(1),q=p=>f(p[0])+' '+f(p[1]);
  if(P.length==2){const[a,b]=P,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],dy=b[1]-a[1];return `M${q(a)}Q${f(mx-dy*.16)} ${f(my+dx*.16)} ${q(b)}`}
  let d=`M${q(P[0])}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;d+=`C${f(p1[0]+(p2[0]-p0[0])/6)} ${f(p1[1]+(p2[1]-p0[1])/6)} ${f(p2[0]-(p3[0]-p1[0])/6)} ${f(p2[1]-(p3[1]-p1[1])/6)} ${q(p2)}`}return d}
@@ -93,13 +98,12 @@ function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
  </${g}>`;
 }
 function routeH(r,project){
- const d=pathD(r.pts.map(project));
+ const P=r.pts.map(project),d=pathD(P);
  if(!d)return '';
- const width=r.muted?12:16, dash=r.dash?` stroke-dasharray="0.1 ${width+10}"`:'';
- return `<g class="route tone-${r.tone}">
-  <path class="route-edge" d="${d}" stroke-width="${width}"${dash}/>
-  <path class="route-main" d="${d}" stroke-width="${r.muted?8:11}"${dash}/>
- </g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
+ const width=r.muted?12:16,dots=` stroke-dasharray="0.1 ${width+10}"`,runs=[];
+ for(let i=0;i<P.length-1;i++){const w=!!(r.walk&&r.walk[i]),L=runs[runs.length-1];if(L&&L.w==w)L.b=i+1;else runs.push({a:i,b:i+1,w})}
+ const seg=(cls,sw)=>runs.map(u=>`<path class="${cls}" d="${pathRange(P,u.a,u.b)}" stroke-width="${sw}"${u.w?dots:''}/>`).join('');
+ return `<g class="route tone-${r.tone}">${seg('route-edge',width)}${seg('route-main',r.muted?8:11)}</g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
 }
 function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clientHeight;if(!W||!H)return;
  const zi=Math.max(2,Math.min(18,Math.round(M.z))),sc=2**(M.z-zi),[cx,cy]=MERC(M.lat,M.lng,zi),n=2**zi,ts=256*sc,x0=Math.floor((cx-W/2/sc)/256)-1,x1=Math.floor((cx+W/2/sc)/256)+1,y0=Math.floor((cy-H/2/sc)/256)-1,y1=Math.floor((cy+H/2/sc)/256)+1,want=new Set(),C=TILEBOX._t;
