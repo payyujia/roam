@@ -2,6 +2,14 @@
 Object.assign(S,{fx:[],fr:{},fl:[],fi:0,fk:null,ap:null,alts:[],cq:'',pv:null});
 Object.assign(S.p,{bio:'Always down for a hike or a hawker run.',home:'Singapore',pace:'Balanced',move:['MRT & bus'],group:4,health:['Chronic eye stye'],notif:{remind:1,vote:1,fork:1},rate:4});
 
+/* Profile photo is stored only in this browser; the original demo avatar
+   remains the fallback until the user explicitly changes or removes it. */
+try{
+ const savedAvatar=localStorage.getItem('roam-profile-avatar-v1');
+ if(savedAvatar==='none'||(savedAvatar&&savedAvatar.length<350000&&/^data:image\/jpeg;base64,[a-z0-9+/=]+$/i.test(savedAvatar)))
+  S.p.avatar=savedAvatar;
+}catch(e){/* Storage can be unavailable in private/embedded previews. */}
+
 const Seg=(items,cur,act,label)=>`<div class="seg" role="radiogroup" aria-label="${label}">${items.map(([k,l])=>`<button role="radio" aria-checked="${cur==k}" data-a="${act}:${k}">${l}</button>`).join('')}</div>`;
 const Radio=(k,l,sub,cur,act)=>`<button class="rd" role="radio" aria-checked="${cur==k}" data-a="${act}:${encodeURIComponent(k)}"><span class="rdo"></span><span class="gr"><b>${l}</b>${sub?`<span class="cap sm">${sub}</span>`:''}</span></button>`;
 const Switch=(k,l,sub,on)=>`<div class="rowx"><div><b>${l}</b><div class="cap sm">${sub}</div></div><button class="sw${on?' on':''}" role="switch" aria-checked="${!!on}" aria-label="${l}" data-a="pnotif:${k}"></button></div>`;
