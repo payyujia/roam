@@ -556,22 +556,35 @@
 #dev .tag-query .tag2 button{width:20px;height:20px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;position:relative;z-index:3}
 #dev .tag-query .tag2 button svg{width:11px;height:11px}
 
-/* New Trip > Invite friends: hide the browser-provided datalist arrow
-   that appears on hover/focus. Keep its type-ahead suggestions and the
-   component-library plus button, selected chips and keyboard Enter flow. */
-#dev #s-form #tq-coll{
-  -webkit-appearance:none;
-  appearance:none;
+/* New Trip > Invite friends: typeahead is hidden until typing.
+   Matches expand INSIDE the existing glass multiselect, rather than
+   appearing in a browser-owned popup over the rest of the form. */
+#dev #s-form .friend-suggestion-list[hidden]{display:none!important}
+#dev #s-form .friend-suggestion-list{
+ display:flex;flex-direction:column;gap:2px;
+ margin-top:10px;padding-top:8px;
+ border-top:1px solid rgba(91,104,120,.18);
+ max-height:206px;overflow-y:auto;overscroll-behavior:contain;
 }
-#dev #s-form #tq-coll::-webkit-calendar-picker-indicator,
-#dev #s-form #tq-coll::-webkit-list-button{
-  display:none!important;
-  visibility:hidden!important;
-  opacity:0!important;
-  width:0!important;
-  padding:0!important;
+#dev #s-form .friend-suggestion{
+ width:100%;min-height:46px;padding:7px 10px;
+ display:flex;align-items:center;gap:10px;
+ background:transparent;border:0;border-radius:12px;
+ color:var(--ink);font-size:14px;font-weight:700;line-height:20px;
 }
-#dev #s-form #tq-coll::-moz-list-button{display:none!important}
+#dev #s-form .friend-suggestion:hover,
+#dev #s-form .friend-suggestion:focus-visible{
+ background:rgba(109,182,255,.24);
+ outline:none;
+}
+#dev #s-form .friend-suggestion .av{
+ width:30px;height:30px;flex:none;font-size:11px;
+}
+#dev #s-form .friend-suggestion .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#dev #s-form .invite-friends-picker .btn.mini:disabled{opacity:.38;cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){
+ #dev #s-form .friend-suggestion{transition:none}
+}
 
 /* ---------- PILL ACTIONS · REGULAR 14 ----------
    Create trip (#fab), Add a new activity (#fab on the vote step) and
