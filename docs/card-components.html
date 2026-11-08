@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ROAM · SUNRISE FROST · MASTER COMPONENTS LIBRARY v12
+/* ROAM · SUNRISE FROST · MASTER COMPONENTS LIBRARY v13
    Typography: h1 36 · h2 23 · h3 20 · subheader 16 · regular 14 · subtitle 12
    DUE label 8 · DUE month 9 · DUE day 20
    Cards: master card foundation (min 84px, radius 22, media 56×60 radius 14) */
@@ -323,6 +323,75 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
 .legend .chip{height:32px;padding:0 12px;font-size:12px}
 .legend i{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:inset 0 1px 1px rgba(255,255,255,.55)}
 
+/* ---------- PLACE CARD (07) · photo-first · vote + map ---------- */
+/* One vertical card for any single place. Outer radius 26 = photo radius 20 + 6px inset.
+   Info lives ON the photo (frosted circle, 44px hit area) so every place can be opened. */
+.place{display:flex;flex-direction:column;width:100%;min-width:0;padding:6px;border-radius:26px;text-align:left;color:var(--ink)}
+.place-media{position:relative;height:132px;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,#FFC9BC,#6DB6FF)}
+.place-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.place-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(14,17,22,.2),rgba(14,17,22,0) 40%,rgba(14,17,22,0) 58%,rgba(14,17,22,.3))}
+.place-top,.place-bot{position:absolute;left:8px;right:8px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.place-top{top:8px}.place-bot{bottom:8px}
+.pfrost{position:relative;display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 11px;border-radius:999px;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);font-size:12px;font-weight:700;line-height:16px;box-shadow:0 3px 10px rgba(14,17,22,.14)}
+.pfrost svg{width:14px;height:14px}
+.pfrost small{font-size:12px;font-weight:500;color:var(--muted)}
+.pfrost .star{color:var(--amber)}.pfrost .star svg{fill:currentColor;stroke:currentColor}
+.pfrost::before,.pinfo::before,.pv::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:var(--rim);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.pnode{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;line-height:1;color:var(--ink);background:linear-gradient(rgba(255,255,255,.32),rgba(255,255,255,0) 60%),var(--g,var(--sky-400));box-shadow:0 3px 8px rgba(40,60,100,.25),inset 0 1px 1px rgba(255,255,255,.55)}
+.pinfo{position:relative;width:36px;height:36px;border:0;border-radius:50%;padding:0;display:grid;place-items:center;color:var(--ink);background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:0 3px 10px rgba(14,17,22,.14)}
+.pinfo::after{content:"";position:absolute;inset:-4px}
+.pinfo svg{width:18px;height:18px}
+.place-body{display:flex;flex-direction:column;gap:1px;padding:12px 10px 0;min-width:0}
+.place-kick{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--sky-ink)}
+.place-kick svg{width:12px;height:12px}
+.place-body>b{display:block;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 10px 0;padding-top:10px;border-top:1px solid rgba(31,99,181,.14)}
+.pstats>div{min-width:0;padding-right:8px}
+.pstats>div+div{padding-left:12px;border-left:1px solid rgba(31,99,181,.14)}
+.pstats dt{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.pstats dd{margin:2px 0 0;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap}
+.ptally{display:flex;align-items:center;gap:10px;margin:12px 10px 0}
+.ptally-bar{flex:1;height:6px;border-radius:999px;background:rgba(91,104,120,.16);overflow:hidden;display:flex}
+.ptally-bar i{display:block;height:100%}
+.ptally-bar .in{background:var(--sky-400)}.ptally-bar .out{background:var(--coral-300)}
+.ptally small{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+.place-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 4px 4px 10px}
+.place-foot>.btn{flex:1}
+.pwho{display:flex;align-items:center;gap:8px;min-width:0}
+.pwho .cap{min-width:0}
+.pvote{display:flex;gap:6px;flex:none}
+.pv{position:relative;min-width:64px;height:44px;padding:0 14px;border:0;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink);background:var(--glass-hi);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);box-shadow:0 4px 12px rgba(40,100,180,.12),inset 0 1px 4px rgba(255,255,255,.25);transition:transform .15s}
+.pv:active{transform:scale(.97)}
+.pv svg{width:18px;height:18px}
+.pv[aria-pressed=true].up{background:rgba(109,182,255,.62)}
+.pv[aria-pressed=true].dn{background:rgba(255,201,188,.85)}
+.place.sel{box-shadow:var(--shadow),0 0 0 2px var(--sky-400)}
+.place.on-map{background:rgba(243,248,255,.88)}
+.place.dim .place-media{filter:saturate(.7)}
+.pcar{position:absolute;left:0;right:0;bottom:12px;z-index:3;display:flex;gap:10px;overflow-x:auto;padding:4px 12px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pcar::-webkit-scrollbar{display:none}
+.pcar>.place{flex:0 0 min(284px,80%);scroll-snap-align:center;-webkit-backdrop-filter:none;backdrop-filter:none}
+.ctxmap{height:620px}
+.pin.dim{opacity:.6}
+
+/* ---------- STOP RAIL · info on every node ---------- */
+.rail{list-style:none;margin:0;padding:0}
+.rn{display:grid;grid-template-columns:36px minmax(0,1fr) 44px;gap:12px;align-items:center;min-height:44px}
+.rnode{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--ink);background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1.5px rgba(47,140,255,.45)}
+.rnode svg{width:16px;height:16px;stroke-width:2.6}
+.rn.done .rnode{background:var(--sky-300);color:var(--sky-ink);box-shadow:0 4px 12px rgba(40,100,180,.14)}
+.rn.now .rnode{background:var(--sky-400);box-shadow:var(--shadow),0 0 0 5px rgba(109,182,255,.28)}
+.rn .gr b{font-size:16px}
+.rn .cap{white-space:normal}
+.rinfo{width:44px;height:44px;margin-right:-10px;border:0;padding:0;background:none;color:var(--sky-ink);display:grid;place-items:center}
+.rinfo svg{width:22px;height:22px}
+.rc{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:stretch;min-height:44px}
+.rln{position:relative}
+.rln::after{content:"";position:absolute;left:17px;top:3px;bottom:3px;width:2px;border-radius:2px;background:repeating-linear-gradient(180deg,rgba(47,140,255,.45) 0 4px,transparent 4px 8px)}
+.rc.done .rln::after{background:var(--sky-400)}
+.rc .cap{display:flex;align-items:center;gap:6px;align-self:center}
+.rc .cap svg{width:14px;height:14px}
+
 /* ---------- LAYOUT HELPERS ---------- */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start}
 .card-group{min-width:0}
@@ -363,7 +432,7 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
     </div>
   </div>
   <h1>Plan together.<br>Roam together.</h1>
-  <div class="hero-meta">Master Components Library · Sunrise Frost · v12</div>
+  <div class="hero-meta">Master Components Library · Sunrise Frost · v13</div>
 </header>
 
 <i class="orb" style="width:340px;height:340px;left:6%;top:38%;background:#6DB6FF;opacity:.55"></i>
@@ -613,7 +682,7 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
 
   <!-- ============ MASTER CARDS ============ -->
   <section class="panel glass wide">
-    <h2 class="ph">Cards <span>master foundation · six variants</span></h2>
+    <h2 class="ph">Cards <span>master foundation · seven variants</span></h2>
 
     <table class="spec-tokens" style="margin-bottom:20px">
       <tr><td>Minimum height</td><td>84px</td></tr>
@@ -627,6 +696,7 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
       <tr><td>Middle detail</td><td>12px / Medium 500 · 16px</td></tr>
       <tr><td>Bottom status</td><td>12px / Semi Bold 600 · 16px</td></tr>
     </table>
+    <p class="note" style="margin:-8px 0 20px">Cards 01–06 are horizontal rows. Card 07 (Place) is the one vertical, photo-first layout: it keeps the same glass material, type scale and 12px rhythm, with a 26px outer radius around a 20px photo.</p>
 
     <div class="card-grid">
 
@@ -740,6 +810,101 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
         </div>
       </div>
 
+      <!-- 07 Place -->
+      <div class="card-group">
+        <h3>07 · Place card</h3>
+        <p class="spec-description">Photo-first · info on the photo · one card for voting, the map and replacements</p>
+        <div class="card-stack">
+          <span class="lbl" style="margin:0">Vote</span>
+          <article class="place glass" aria-label="Dim Sum Ting, vote card">
+            <div class="place-media">
+              <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+              <div class="place-top">
+                <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M18 22V2c-3 2.7-5 6.8-5 11h5"/></svg>Eat</span>
+                <button type="button" class="pinfo" aria-label="More about Dim Sum Ting"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+              </div>
+              <div class="place-bot">
+                <span class="pnode" style="--g:var(--t3g)">2</span>
+                <span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.6<small>(820)</small></span>
+              </div>
+            </div>
+            <div class="place-body"><span class="place-kick">Stop 2 · 12:00</span><b>Dim Sum Ting</b><div class="cap">Lunch · $$ · 12 min by car</div></div>
+            <div class="ptally"><div class="ptally-bar" role="img" aria-label="3 in, 0 out"><i class="in" style="width:100%"></i></div><small>3 in · 0 out</small></div>
+            <div class="place-foot">
+              <div class="pwho">
+                <span class="st" aria-hidden="true">
+                  <span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+                  <span class="av l-green">E<img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+                </span>
+                <div class="cap">2 friends in</div>
+              </div>
+              <div class="pvote" role="group" aria-label="Vote on Dim Sum Ting">
+                <button type="button" class="pv up" aria-pressed="true" aria-label="Thumbs up, 3 votes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>3</button>
+                <button type="button" class="pv dn" aria-pressed="false" aria-label="Thumbs down, 0 votes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>0</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="place glass" aria-label="Clown Show, vote card">
+            <div class="place-media">
+              <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+              <div class="place-top">
+                <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>Do</span>
+                <button type="button" class="pinfo" aria-label="More about Clown Show"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+              </div>
+              <div class="place-bot">
+                <span class="pnode" style="--g:var(--t3g)">4</span>
+                <span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.1<small>(310)</small></span>
+              </div>
+            </div>
+            <div class="place-body"><span class="place-kick">Stop 4 · 20:00</span><b>Clown Show</b><div class="cap">Live show · 90 min · 25 min by car</div></div>
+            <div class="ptally"><div class="ptally-bar" role="img" aria-label="0 in, 3 out"><i class="out" style="width:100%"></i></div><span class="status err"><i></i>Not in itinerary</span></div>
+            <div class="place-foot">
+              <div class="pwho">
+                <span class="st" aria-hidden="true">
+                  <span class="av l-blue">P<img src="https://images.unsplash.com/photo-1758691737605-69a0e78bd193?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+                  <span class="av l-orange">R<img src="https://images.unsplash.com/photo-1651684215020-f7a5b6610f23?auto=format&amp;fit=crop&amp;crop=faces&amp;w=256&amp;h=256&amp;q=75" alt=""></span>
+                </span>
+                <div class="cap">You &amp; Raymond</div>
+              </div>
+              <div class="pvote" role="group" aria-label="Vote on Clown Show">
+                <button type="button" class="pv up" aria-pressed="false" aria-label="Thumbs up, 0 votes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>0</button>
+                <button type="button" class="pv dn" aria-pressed="true" aria-label="Thumbs down, 3 votes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>3</button>
+              </div>
+            </div>
+          </article>
+
+          <span class="lbl" style="margin:6px 0 0">Map · replacement</span>
+          <article class="place glass" aria-label="Books Actually, replacement card">
+            <div class="place-media">
+              <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+              <div class="place-top">
+                <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Shop</span>
+                <button type="button" class="pinfo" aria-label="More about Books Actually"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+              </div>
+              <div class="place-bot">
+                <span class="pnode" style="--g:var(--t3g)">A</span>
+                <span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.7<small>(1.2k)</small></span>
+              </div>
+            </div>
+            <div class="place-body"><span class="place-kick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>From your saved reels</span><b>Books Actually</b><div class="cap">Indie bookstore · Indoor</div></div>
+            <dl class="pstats"><div><dt>Rating</dt><dd>4.7</dd></div><div><dt>Price</dt><dd>$25–$45</dd></div><div><dt>Travel</dt><dd>6 min walk</dd></div></dl>
+            <div class="place-foot"><button type="button" class="btn sky"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Swap in</button></div>
+          </article>
+
+          <table class="spec-tokens" style="margin-top:10px">
+            <tr><td>Width</td><td>100% · carousel 284px</td></tr>
+            <tr><td>Padding · radius</td><td>6px · 26px</td></tr>
+            <tr><td>Photo</td><td>132px · radius 20px</td></tr>
+            <tr><td>Photo chips</td><td>28px frosted</td></tr>
+            <tr><td>Info button</td><td>36px · 44px hit area</td></tr>
+            <tr><td>Vote buttons</td><td>44px · thumbs + count</td></tr>
+            <tr><td>Title · detail</td><td>16/700 · 12/500</td></tr>
+            <tr><td>Kicker</td><td>10/800 · caps · sky 600</td></tr>
+          </table>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -830,6 +995,76 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
     <p class="note"><b>Routes</b> copy Google Maps: a thick line with a darker casing in the same hue. <b>Pins</b> are frosted-glass bubbles with a photo slot and a one-character badge in the trip colour. The selected pin scales up 14%.</p>
   </section>
 
+  <!-- ============ PLACE CARD ON THE MAP ============ -->
+  <section class="panel glass wide">
+    <h2 class="ph">Place card on the map <span>tap a pin · swipe the cards · i for full detail</span></h2>
+    <div class="map ctxmap" id="ctxmap" aria-label="Sample map choosing a replacement, three alternatives A to C">
+      <svg class="bg" viewBox="0 0 600 500" preserveAspectRatio="none">
+        <path d="M0 330C120 290 220 370 330 320S520 240 600 280V500H0z" fill="#D9E3E6"/>
+        <g fill="none" stroke="#F7F1E3" stroke-width="7" stroke-linecap="round"><path d="M-10 120L250 160 420 70 620 120"/><path d="M120 0L150 500M320 0L360 500M500 0L470 500"/></g>
+        <g fill="none" stroke-linecap="round" stroke-linejoin="round" style="vector-effect:non-scaling-stroke">
+          <path d="M110 90L240 125 330 75" stroke="#1E6FD6" stroke-width="16"/>
+          <path d="M110 90L240 125 330 75" stroke="#2F8CFF" stroke-width="11"/>
+        </g>
+      </svg>
+      <div class="pcar" role="group" aria-label="Alternatives, swipe">
+        <article class="place glass on-map sel" aria-label="A, Books Actually, selected">
+          <div class="place-media">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+            <div class="place-top">
+              <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Shop</span>
+              <button type="button" class="pinfo" aria-label="More about Books Actually"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </div>
+            <div class="place-bot"><span class="pnode" style="--g:var(--t3g)">A</span><span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.7<small>(1.2k)</small></span></div>
+          </div>
+          <div class="place-body"><span class="place-kick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>From your saved reels</span><b>Books Actually</b><div class="cap">Indie bookstore · Indoor</div></div>
+          <dl class="pstats"><div><dt>Rating</dt><dd>4.7</dd></div><div><dt>Price</dt><dd>$25–$45</dd></div><div><dt>Travel</dt><dd>6 min walk</dd></div></dl>
+          <div class="place-foot"><button type="button" class="btn sky"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Swap in</button></div>
+        </article>
+        <article class="place glass on-map" aria-label="B, Tiong Bahru Bakery">
+          <div class="place-media">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+            <div class="place-top">
+              <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M18 22V2c-3 2.7-5 6.8-5 11h5"/></svg>Eat</span>
+              <button type="button" class="pinfo" aria-label="More about Tiong Bahru Bakery"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </div>
+            <div class="place-bot"><span class="pnode" style="--g:var(--t3g)">B</span><span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.5<small>(2.1k)</small></span></div>
+          </div>
+          <div class="place-body"><span class="place-kick">Calmer nearby</span><b>Tiong Bahru Bakery</b><div class="cap">Café · Indoor</div></div>
+          <dl class="pstats"><div><dt>Rating</dt><dd>4.5</dd></div><div><dt>Price</dt><dd>$$</dd></div><div><dt>Travel</dt><dd>8 min walk</dd></div></dl>
+          <div class="place-foot"><button type="button" class="btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Swap in</button></div>
+        </article>
+        <article class="place glass on-map" aria-label="C, Arcade at Bugis+">
+          <div class="place-media">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&amp;fit=crop&amp;w=640&amp;q=70" alt="">
+            <div class="place-top">
+              <span class="pfrost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>Do</span>
+              <button type="button" class="pinfo" aria-label="More about Arcade at Bugis+"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </div>
+            <div class="place-bot"><span class="pnode" style="--g:var(--t3g)">C</span><span class="pfrost"><span class="star"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z"/></svg></span>4.3<small>(640)</small></span></div>
+          </div>
+          <div class="place-body"><span class="place-kick">Calmer nearby</span><b>Arcade at Bugis+</b><div class="cap">Arcade · Level 4</div></div>
+          <dl class="pstats"><div><dt>Rating</dt><dd>4.3</dd></div><div><dt>Price</dt><dd>$$</dd></div><div><dt>Travel</dt><dd>12 min</dd></div></dl>
+          <div class="place-foot"><button type="button" class="btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Swap in</button></div>
+        </article>
+      </div>
+    </div>
+    <p class="note"><b>Pin → card.</b> Tapping any pin selects it (+14%) and snaps the carousel to its Place card; swiping the carousel selects the matching pin. Other pins stay full colour, the affected route dims. <b>i → detail.</b> The info button on the photo opens the full place sheet from every card, in voting and on the map. The map card uses a 88% sky-50 surface instead of 26% glass so it stays legible over tiles. Photo chips are the one place frosted white sits over imagery, with the same diagonal rim.</p>
+  </section>
+
+  <!-- ============ STOP RAIL ============ -->
+  <section class="panel glass">
+    <h2 class="ph">Stop rail <span>info on every node</span></h2>
+    <ol class="rail" aria-label="MacRitchie Hike stops">
+      <li class="rn done"><span class="rnode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><div class="gr"><b>MacRitchie Reservoir</b><div class="cap">07:30 · Trailhead · Venus Drive</div></div><button type="button" class="rinfo" aria-label="More about MacRitchie Reservoir"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></li>
+      <li class="rc done"><span class="rln"></span><span class="cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg>35 min walk</span></li>
+      <li class="rn now"><span class="rnode">2</span><div class="gr"><b>TreeTop Walk</b><div class="cap">09:00 · Suspension bridge · 35 min</div></div><button type="button" class="rinfo" aria-label="More about TreeTop Walk"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></li>
+      <li class="rc"><span class="rln"></span><span class="cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg>40 min walk</span></li>
+      <li class="rn"><span class="rnode">3</span><div class="gr"><b>Lornie Trail</b><div class="cap">11:00 · Forest trail · 40 min</div></div><button type="button" class="rinfo" aria-label="More about Lornie Trail"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></li>
+    </ol>
+    <p class="note">Nodes follow the progress-node language: open (outline), now (sky 400 + ring), done (sky 300 + tick). The info button here is icon-only with no surface, sky 600, 44px hit area. Tapping the node row or its info opens the same Place sheet as the map card.</p>
+  </section>
+
 </main>
 
 <p class="foot">Roam · Sunrise Frost · master components library · light theme only</p>
@@ -880,6 +1115,55 @@ document.querySelectorAll('.checkcard').forEach(c=>{
     cb.classList.toggle('on',on);
     cb.innerHTML=on?'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':'';
   };
+});
+
+/* ---------- PLACE CARD ON THE MAP: pin <-> card selection ---------- */
+(function(){
+  const map=document.getElementById('ctxmap');
+  if(!map)return;
+  const car=map.querySelector('.pcar'),cards=[...car.querySelectorAll('.place')];
+  const rim='<svg class="rim" viewBox="0 0 46 54"><path d="M15 .6H31A14.4 14.4 0 0 1 45.4 15V31A14.4 14.4 0 0 1 31 45.4H27.3L24 51Q23 52.6 22 51L18.7 45.4H15A14.4 14.4 0 0 1 .6 31V15A14.4 14.4 0 0 1 15 .6Z"/></svg>';
+  const mk=(txt,t,x,y,cls,label)=>{
+    const d=document.createElement(cls.includes('alt')?'button':'div');
+    if(d.tagName==='BUTTON'){d.type='button';d.style.cssText='border:0;background:none;padding:0;cursor:pointer;';}
+    d.className='pin '+cls;
+    d.style.cssText+=`--g:var(--${t}g);left:${x}%;top:${y}%`;
+    d.setAttribute('aria-label',label);
+    d.innerHTML=`<div class="pb"></div><span class="ph2"></span>${rim}<span class="pbadge">${txt}</span>`;
+    map.insertBefore(d,car);
+    return d;
+  };
+  [['1',18,18],['2',40,25],['3',55,15]].forEach(([n,x,y])=>mk(n,'t1',x,y,'dim','Stop '+n+' on the affected route'));
+  const pins=[['A',50,34],['B',27,36],['C',68,28]].map(([n,x,y],i)=>{
+    const p=mk(n,'t3',x,y,'dk alt','Alternative '+n);
+    p.addEventListener('click',()=>select(i,true));
+    return p;
+  });
+  function select(i,scroll){
+    pins.forEach((p,j)=>p.classList.toggle('sel',j===i));
+    cards.forEach((c,j)=>{c.classList.toggle('sel',j===i);c.querySelector('.btn').classList.toggle('sky',j===i)});
+    if(scroll){const c=cards[i];car.scrollTo({left:c.offsetLeft-(car.clientWidth-c.offsetWidth)/2,behavior:'smooth'})}
+  }
+  let t;
+  car.addEventListener('scroll',()=>{
+    clearTimeout(t);
+    t=setTimeout(()=>{
+      const mid=car.scrollLeft+car.clientWidth/2;
+      let best=0,d=1e9;
+      cards.forEach((c,j)=>{const k=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(k<d){d=k;best=j}});
+      select(best,false);
+    },90);
+  },{passive:true});
+  select(0,false);
+})();
+
+/* ---------- PLACE CARD: vote buttons ---------- */
+document.querySelectorAll('.pvote').forEach(g=>{
+  g.querySelectorAll('.pv').forEach(b=>b.addEventListener('click',()=>{
+    const on=b.getAttribute('aria-pressed')==='true';
+    g.querySelectorAll('.pv').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed',on?'false':'true');
+  }));
 });
 
 /* ---------- INVITE FRIENDS ---------- */
