@@ -1385,6 +1385,15 @@
   height:36px;
 }
 #dev #s-trip .vote-row:last-child{margin-bottom:100px}
+
+/* Itinerary scroll end: the Vote step needs tall clearance for the floating
+   Add activity action, but the Itinerary step has no floating action.
+   Return to the standard page clearance (128px) so the last sentence stops
+   close to, rather than far above, the bottom navigation. */
+#dev #s-trip .pg:has(.stp[data-a="step:2"].on){
+  padding-bottom:128px;
+}
+
 @media(max-width:360px){
   #dev #s-trip .vote-row{
     grid-template-columns:36px minmax(0,1fr) auto;
