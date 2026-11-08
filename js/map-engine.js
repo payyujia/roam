@@ -33,30 +33,28 @@ const MAP_DEFS=`<defs>
 /* What is on the map right now. Returns routes, pins, points to fit, and padding for the cards. */
 function scene(){
  const routes=[],pins=[];
- if(!S.nav){const fit=[HOME];
+ if(!S.nav){const fit=[];
   geoTrips().forEach(t=>{
    const ms=mstops(t);
    if(!ms.length)return;
-   const pp=pathPts(t,ms),tone=mapTone(t),alert=badgeOf(t);
+   const pp=ms.map(s=>sll(t,s)),tone=mapTone(t),alert=badgeOf(t);
    fit.push(...pp);
-   routes.push({pts:pp,tone,walk:legWalk(ms),a:'mload:'+t.id});
-   pp.slice(2).forEach(ll=>pins.push({dot:1,ll,tone}));
-   pins.push({ll:pp[1],tone,icon:t.i,photo:PH[t.id],mark:t.b,alert,a:'mload:'+t.id,
+   routes.push({pts:pp,tone,walk:legWalk(ms).slice(1),a:'mload:'+t.id});
+   pp.slice(1).forEach(ll=>pins.push({dot:1,ll,tone}));
+   pins.push({ll:pp[0],tone,icon:t.i,photo:PH[t.id],mark:t.b,alert,a:'mload:'+t.id,
     label:t.n+(alert?', needs your attention':'')});
   });
-  pins.push({you:1,ll:HOME});
   return{routes,pins,fit,pad:{t:120,r:46,b:180,l:46},maxZ:13}}
  const t=trip(S.mapTrip),me=myPath(t),fk=t.fork,mine=mstops(t),tone=mapTone(t),
-  mp=pathPts(t,baseStops(t)),fp=fk?pathPts(t,fk.stops):null,cur=me=='fork'?fp:mp,
+  mp=baseStops(t).map(s=>sll(t,s)),fp=fk?fk.stops.map(s=>sll(t,s)):null,cur=me=='fork'?fp:mp,
   lv=mine.length>0&&live(t),cu=Math.min(S.leg,mine.length-1);
- const remaining=lv&&cu>0&&!S.fk?cur.slice(cu):null;
  if(fk){
-  const mw=legWalk(baseStops(t)),fw=legWalk(fk.stops),cw=me=='fork'?fw:mw;
-  routes.push({pts:me=='main'&&remaining?remaining:mp,walk:me=='main'&&remaining?cw.slice(cu):mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
-  routes.push({pts:me=='fork'&&remaining?remaining:fp,walk:me=='fork'&&remaining?cw.slice(cu):fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
- }else{const cw=legWalk(mine);routes.push({pts:remaining||mp,walk:remaining?cw.slice(cu):cw,tone})}
+  const mw=legWalk(baseStops(t)).slice(1),fw=legWalk(fk.stops).slice(1);
+  routes.push({pts:mp,walk:mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
+  routes.push({pts:fp,walk:fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
+ }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
  const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
- mine.forEach((s,i)=>{const ll=cur[i+1],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
+ mine.forEach((s,i)=>{const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'amber',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='sel'}
   else if(S.fk=='alts')o.cls='dim';
@@ -65,8 +63,8 @@ function scene(){
  if(lv&&!S.fk)pins.push({lab:esc(mine[cu].n),ll:cur[cu+1]});
  if(fk&&!S.fk){const ch=Object.keys(fk.ch).map(Number).sort((a,b)=>a-b)[0];
   if(ch!=null)pins.push({pill:esc(pn(fk.owner)),tone:forkTone(t),ll:[(fp[ch][0]+fp[ch+1][0])/2,(fp[ch][1]+fp[ch+1][1])/2],a:`pathpick:fork:${t.id}`});
-  Object.keys(fk.ch).forEach(i=>pins.push({dot:1,ll:(me=='fork'?mp:fp)[+i+1],tone:me=='fork'?'inactive':forkTone(t)}))}
- pins.push({you:1,ll:lv&&cu?cur[cu]:cur[0]});
+  Object.keys(fk.ch).forEach(i=>pins.push({dot:1,ll:(me=='fork'?mp:fp)[+i],tone:me=='fork'?'inactive':forkTone(t)}))}
+ pins.push({you:1,ll:cur[cu]});
  let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
  if(S.fk=='flag')pad.b=300;
  if(S.fk=='alts'){const i=S.fl[S.fi],c=cur[i+1];S.alts.forEach((a,j)=>{pins.push({ll:a.ll,tone:forkTone(t),cls:S.ap===j?'sel':'',icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Alternative: ${a.n}`});fit.push(a.ll)});
