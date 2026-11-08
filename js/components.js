@@ -30,16 +30,15 @@ const Row=o=>{const g=o.a?'button':'div';return `<${g} class="row ${o.x||''}"${o
 const Sec=(t,r='')=>`<div class="sec"><h2>${t}</h2>${r}</div>`,Top=(l,t='',r='')=>`<div class="top">${l}<b class="tt">${t}</b>${r||'<span></span>'}</div>`;
 const Empty=(h,p)=>`<div class="empty"><b>${h}</b><div class="cap">${p}</div></div>`,Ban=(h,p,act='')=>`<div class="ban"><div><b>${h}</b><div class="cap">${p}</div></div>${act}</div>`;
 const Sign=(t,sub,r='')=>`<div class="sign l-${t.c}">${Bullet(t,'l')}<div class="gr"><h2>${t.n}</h2><div class="cap">${sub}</div></div>${r}</div>`;
-/* Use recognizable category icons on compact vote cards; leave other StopIc
-   uses (itinerary, saved places, etc.) unchanged. */
-const activityIcon=s=>{
- const label=String(s.n||'').toLowerCase(),description=String(s.s||'').toLowerCase();
- if(/theme park|legoland|amusement park|funfair/.test(label+' '+description))return 'ticket';
- if(/clown|circus|live show|theatre|theater|performance/.test(label+' '+description))return 'theater';
- if(/mall|market|shopping center|shopping centre|retail/.test(label+' '+description))return 'store';
- if(s.k==='Eat'&&!/cafe|café|coffee|bakery|tea/.test(label+' '+description))return 'utensils';
- return s.i||'map-pin';
-};
+/* One category-to-icon mapping for every activity-related screen. */
+const ACTIVITY_CATEGORY_ICONS=Object.freeze({
+ All:'layout-grid',
+ Do:'compass',
+ Eat:'utensils',
+ Shop:'bag'
+});
+const activityIcon=s=>ACTIVITY_CATEGORY_ICONS[s?.k]||s?.i||'map-pin';
+const ActivityFilterPill=(category,on)=>`<button type="button" class="pill activity-category-pill${on?' on':''}" aria-pressed="${!!on}" data-a="cat:${category}">${ic(ACTIVITY_CATEGORY_ICONS[category]||'layout-grid',14)}<span>${category}</span></button>`;
 const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
 
 /* Activity sheet photos are illustrative, not claims about a venue's imagery.
@@ -76,10 +75,10 @@ const ActivityPhoto=(s,t)=>{
   <figcaption class="cap sm">Illustrative photo</figcaption>
  </figure>`;
 };
-const StopIc=s=>`<div class="si">${ic(s.i,20)}</div>`,Mi=(i,l,a,x='')=>`<button class="mi ${x}" data-a="${a}">${ic(i)}${l}</button>`;
+const StopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`,Mi=(i,l,a,x='')=>`<button class="mi ${x}" data-a="${a}">${ic(i)}${l}</button>`;
 const stxt=t=>fin(t)?(t.st=='done'?'<span class="dotc off"></span>Completed':'<span class="dotc ok"></span>Itinerary ready'):'<span class="dotc wait"></span>Voting open';
 const Stepper=(t,at,live)=>{const dn=t?[1,+!!t.vs.P,+fin(t)]:[0,0,0],g=live?'button':'div';return `<div class="step${t?' l-'+t.c:''}"${live?' role="tablist"':''}>${['Details','Vote','Itinerary'].map((n,i)=>{const lk=t&&i==2&&!fin(t),on=i==at;return `<${g} class="stp${dn[i]?' done':''}${on?' on':''}${lk?' lock':''}"${live?` role="tab" aria-selected="${on}" data-a="step:${i}"`:''}><span class="sd">${lk?ic('lock',12):dn[i]?ic('check',13):i+1}</span>${n}</${g}>`}).join('')}</div>`};
-const Timeline=(t,o)=>`<ol class="tl l-${t.c}">${o.origin?`<li class="tn org"><span class="nd"></span><div class="gr"><b>${o.origin}</b><div class="cap sm">Start</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}${s.tr}</span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div>${s.alt?'<span class="tag">Changed</span>':''}</div></li>`}).join('')}</ol>`;
+const Timeline=(t,o)=>`<ol class="tl l-${t.c}">${o.origin?`<li class="tn org"><span class="nd"></span><div class="gr"><b>${o.origin}</b><div class="cap sm">Start</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}${s.tr}</span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b><span class="itinerary-category-icon" aria-hidden="true">${ic(activityIcon(s),16)}</span>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div>${s.alt?'<span class="tag">Changed</span>':''}</div></li>`}).join('')}</ol>`;
 const Members=t=>[...t.m].map(k=>Row({lead:Av(k,'big'),title:PE[k][2],trail:t.vs[k]?'<span class="tag ok">Voted</span>':'<span class="tag">Voting…</span>'})).join('');
 /* Details and voting are sibling controls: tapping a vote never opens the details panel. */
 /* Only the small info button opens activity details; voting uses separate controls. */
