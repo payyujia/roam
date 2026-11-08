@@ -27,7 +27,7 @@ const Calendar=c=>{
   const cl=['day',k===nowIso?'today':'',dis&&out?'out':'',A_||B_?'sel':'',range&&A_?'start':'',range&&B_?'end':'',inr?'mid':''].filter(Boolean).join(' ');
   g+=`<button type="button" class="${cl}" aria-label="${DFULL[d.getDay()]} ${d.getDate()} ${MFULL[d.getMonth()]}"${k===nowIso?' aria-current="date"':''}${A_||B_?' aria-pressed="true"':''}${dis?' disabled':` data-a="calday:${k}"`}><span>${d.getDate()}${!out&&td[k]?`<i class="dot" style="--g:${td[k]}"></i>`:''}</span></button>`;
  }
- return `<div class="cal glass" role="group" aria-label="Choose trip dates"><div class="cal-h"><b aria-live="polite">${MFULL[mo]} ${y}</b><div class="cal-nav"><button type="button" class="btn mini" aria-label="Previous month" data-a="calmo:-1"${canPrev?'':' disabled'}>${ic('chevron-left',15)}</button><button type="button" class="btn mini" aria-label="Next month" data-a="calmo:1">${ic('chevron-right',15)}</button></div></div>
+ return `<div id="form-calendar" class="cal glass" role="dialog" aria-label="Choose trip dates" aria-modal="false"><div class="cal-h"><b aria-live="polite">${MFULL[mo]} ${y}</b><div class="cal-nav"><button type="button" class="btn mini" aria-label="Previous month" data-a="calmo:-1"${canPrev?'':' disabled'}>${ic('chevron-left',15)}</button><button type="button" class="btn mini" aria-label="Next month" data-a="calmo:1">${ic('chevron-right',15)}</button></div></div>
 <div class="cal-wd" aria-hidden="true">${['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${g}</div><div class="rule"></div>
 <div class="cal-f"><div><div class="s">${calHint(c)}</div><div class="micro">${calSub(c)}</div></div><div class="cal-act"><button type="button" class="btn sec sm2" data-a="calclear">Clear</button><button type="button" class="btn sm2" data-a="calset"${c.a?'':' disabled'}>Set dates</button></div></div></div>`};
 
@@ -35,7 +35,7 @@ const Calendar=c=>{
    screens keep ROAM's existing full-date formatter. */
 const formatTripFieldDate=val=>{const d=p8(val);return `${String(d.getDate()).padStart(2,'0')} ${MN[d.getMonth()]} ${String(d.getFullYear()).slice(-2)}`};
 /* Date field: a button that opens the calendar. which = 'start' | 'end' */
-const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal}" aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' nov'}">${val?formatTripFieldDate(val):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
+const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal&&S.cal.on===which}"${S.cal&&S.cal.on===which?' aria-controls="form-calendar"':''} aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' nov'}">${val?formatTripFieldDate(val):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
 
 Object.assign(A,{
  ddadd:id=>{S.dd=null;DDP['+'+id]&&DDP['+'+id]();rr()},
@@ -113,6 +113,30 @@ document.addEventListener('click',e=>{
  if(!e.target.closest('#s-form .invite-friends-picker'))hideFriendMatches();
 });
 
+/* Non-modal Create Trip calendar overlay: close without rebuilding the form,
+   so clicking an input behind it does not lose focus or typed values. */
+const dismissFormCalendar=(restoreFocus=false)=>{
+ if(!S.cal)return;
+ const active=S.cal.on;
+ S.cal=null;
+ const popup=$('#s-form #form-calendar');
+ if(popup)popup.remove();
+ $$('#s-form .form-dates .dd-trigger').forEach(button=>{
+  button.classList.remove('open');
+  button.setAttribute('aria-expanded','false');
+  button.removeAttribute('aria-controls');
+ });
+ if(restoreFocus){
+  const trigger=$('#s-form [data-a="calopen:'+active+'"]');
+  if(trigger)trigger.focus();
+ }
+};
+document.addEventListener('pointerdown',e=>{
+ if(S.cal&&topId()==='form'&&!e.target.closest('#s-form .form-date-picker')){
+  dismissFormCalendar();
+ }
+});
+
 /* click outside an open dropdown closes it; Esc and arrow keys behave like a native listbox */
 document.addEventListener('click',e=>{if(S.dd&&!e.target.closest('.dd')){S.dd=null;rr()}});
 document.addEventListener('keydown',e=>{
@@ -127,7 +151,7 @@ document.addEventListener('keydown',e=>{
     o[first].focus();
    }
   }
- }else if(S.cal&&e.key=='Escape'&&topId()=='form'){e.stopImmediatePropagation();S.cal=null;render('form')}
+ }else if(S.cal&&e.key=='Escape'&&topId()=='form'){e.preventDefault();e.stopImmediatePropagation();dismissFormCalendar(true)}
 },true);
 /* a fresh trip form always starts with the calendar closed */
 {const nt=A.newtrip;A.newtrip=(...a)=>{S.cal=null;S.dd=null;return nt(...a)}}

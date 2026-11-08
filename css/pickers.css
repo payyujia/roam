@@ -31,6 +31,29 @@
 #dev .dd-opt .tick{width:16px;height:16px;flex:none;color:var(--sky-600);stroke-width:2.6}
 
 /* ---------- CALENDAR ---------- */
+/* Create Trip: anchor the existing calendar to the Start / End fields.
+   The floating glass panel covers subsequent form controls instead of
+   adding height to the form or moving the sticky Next button. */
+#dev #s-form .form-date-picker{
+ position:relative;
+ z-index:12;
+ min-width:0;
+}
+#dev #s-form .form-date-picker>.cal{
+ position:absolute;
+ top:calc(100% + 10px);
+ left:0;
+ right:0;
+ width:100%;
+ box-sizing:border-box;
+ margin:0;
+ z-index:15;
+ max-height:min(460px,calc(100dvh - 280px));
+ overflow-y:auto;
+ overscroll-behavior:contain;
+ background:rgba(245,249,255,.96)!important;
+}
+
 #dev .form-dates+.cal{margin-top:10px}
 #dev .cal{padding:16px;border-radius:26px}
 #dev .cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
