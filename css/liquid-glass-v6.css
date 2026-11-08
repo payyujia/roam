@@ -184,7 +184,6 @@ body{font-weight:500}
   padding-inline:10px;
 }
 #dev #s-trip .vote-row .vote-heading b{font-size:14px}
-#dev #s-trip .vote-row:last-child{margin-bottom:100px}
 #dev .chat-row{width:calc(100% - 48px);margin:0 24px 10px;padding:10px 12px}
 
 /* Frosted pill actions, round controls and small card actions. */
