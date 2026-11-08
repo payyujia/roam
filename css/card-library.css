@@ -727,6 +727,18 @@
   z-index:10;
 }
 
+/* New trip title: H3 from docs/card-components.html, matching the
+   Profile detail-page heading while preserving the shared top-bar layout. */
+#dev #s-form .top h3.tt{
+  font-family:var(--font);
+  font-size:20px;
+  font-weight:800;
+  line-height:25px;
+  letter-spacing:-.02em;
+  margin:0;
+  min-width:0;
+}
+
 /* Create Trip: collection selector reuses the Component Library Settings Card
    measurements and icon treatment; title and count remain stacked. */
 #dev #s-form .form-collections-trigger{
