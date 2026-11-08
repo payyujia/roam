@@ -90,3 +90,25 @@
 #dev .dd-trigger.open .chev{transform:rotate(180deg)}
 #dev .dd-opt.add{min-height:44px;color:var(--sky-600)}
 #dev .dd-opt.add svg{width:16px;height:16px;flex:none}
+
+
+/* Calendar availability legend — compact, quiet and colour-coded. */
+#dev .cal-legend{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 16px;
+  padding:10px 2px 0;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:600;
+  line-height:14px;
+}
+#dev .cal-legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+#dev .cal-legend i{width:7px;height:7px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.45)}
+#dev .cal-legend .coral{background:var(--coral-500)}
+#dev .cal-legend .amber{background:var(--amber)}
+#dev .cal-legend .sky{background:var(--sky-500)}
+#dev .cal .day .dot{width:5px;height:5px;margin-left:-2.5px;bottom:4px}
+#dev .cal .day .dot.free{background:var(--sky-500)}
