@@ -1450,7 +1450,6 @@
   width:38px;
   height:36px;
 }
-#dev #s-trip .vote-row:last-child{margin-bottom:100px}
 
 /* Itinerary scroll end: the Vote step needs tall clearance for the floating
    Add activity action, but the Itinerary step has no floating action.
@@ -1473,12 +1472,11 @@
   #dev #s-trip .vote-row .vb{width:36px}
 }
 
-/* Vote list action: 24px from the last activity card on short lists.
-   With more activities, sticky bottom keeps the action above the iPhone
-   tab bar; on reaching the list end it returns to the natural flow. */
+/* Vote list action: fixed 24px gap to the final card, even when scrolled
+   fully down. It stays in normal flow instead of sticking and separating
+   from the activity list. Scroll clearance comes from the page footer. */
 #dev #s-trip .vote-add-button{
-  position:sticky;
-  bottom:var(--fab-b,136px);
+  position:relative;
   z-index:10;
   box-sizing:border-box;
   display:flex;
