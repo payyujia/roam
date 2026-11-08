@@ -791,22 +791,15 @@
   color:var(--ink);
   line-height:inherit;
   text-align:left;
+  text-decoration:none;
   cursor:pointer;
 }
-#dev #s-pdet .rating-trip-link b{font-weight:700}
-#dev #s-pdet .rating-trip-link svg{
-  display:inline-block;
-  width:14px;
-  height:14px;
-  margin-left:3px;
-  vertical-align:-2px;
-  color:var(--muted);
+#dev #s-pdet .rating-trip-link b{
+  font-weight:700;
+  text-decoration:none;
 }
 #dev #s-pdet .rating-trip-link:focus-visible{
   outline:2px solid var(--sky-600);
   outline-offset:3px;
   border-radius:4px;
-}
-@media(hover:hover){
-  #dev #s-pdet .rating-trip-link:hover b{text-decoration:underline;text-underline-offset:2px}
 }
