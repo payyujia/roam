@@ -52,8 +52,8 @@ const ACTIVITY_PHOTO_BY_NAME={
  'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/640px-MacRitchie_Reservoir.jpg',
  'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HSBC_TreeTop_Walk_2012_1012.jpg/640px-HSBC_TreeTop_Walk_2012_1012.jpg',
  'Lornie Trail':PH.hike,
- // Restaurant photo pending the user's original image file; do not substitute AI art.
- 'The Roti Prata House':'unsplash:VfL0rUT9bOU',
+ // Real photo supplied by the user; stored locally as a lightweight thumbnail.
+ 'The Roti Prata House':'assets/roti-prata-house.svg',
  'Books Actually':PH.read,'Tiong Bahru Bakery':RP[4],
  'Arcade at Bugis+':PH.game,'Burger Shot':RP[1],
  'The Loneliest Robot in Great Britain':'unsplash:Lv5o-Xixi4c',
@@ -70,7 +70,7 @@ const ACTIVITY_PHOTO_BY_NAME={
 const activityPhotoSource=(s,t)=>{
  const val=ACTIVITY_PHOTO_BY_NAME[s.n]||PH[t.id]||null;
  if(!val)return null;
- if(/^https:\/\//.test(val))return val;
+ if(/^https:\/\//.test(val)||val.startsWith('assets/'))return val;
  return val.startsWith('unsplash:')
   ?`https://unsplash.com/photos/${encodeURIComponent(val.slice(9))}/download?force=true&w=960`
   :`https://images.unsplash.com/${val}?auto=format&fit=crop&w=960&q=75`;
