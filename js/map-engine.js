@@ -41,7 +41,7 @@ function scene(){
    fit.push(...pp);
    routes.push({pts:pp,tone,walk:legWalk(ms).slice(1),a:'mload:'+t.id});
    pp.slice(1).forEach(ll=>pins.push({dot:1,ll,tone}));
-   pins.push({ll:pp[0],tone,icon:t.i,photo:PH[t.id],mark:t.b,alert,a:'mload:'+t.id,
+   pins.push({ll:pp[0],tone,icon:t.i,photo:t.id==='hike'?activityPhotoSource(ms[0],t):PH[t.id],mark:t.b,alert,a:'mload:'+t.id,
     label:t.n+(alert?', needs your attention':'')});
   });
   return{routes,pins,fit,pad:{t:120,r:46,b:180,l:46},maxZ:13}}
@@ -55,7 +55,7 @@ function scene(){
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
  const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
-  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
+  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='hike'?activityPhotoSource(s,t):RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
   else if(S.fk=='alts')o.cls='dim';
   else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel';o.a='pstop:'+i;if(S.pc===i)o.cls='sel'}
@@ -89,7 +89,7 @@ function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
  if(p.pill)return `<button class="pb tone-${p.tone}" style="${L}" data-a="${p.a}" aria-label="${p.pill}’s path">${p.pill}</button>`;
  if(p.lab)return `<span class="pl2" style="${L}">${p.lab}</span>`;
  const g=p.a?'button':'span',badge=p.alert||p.mark;
- const photo=p.photo?Pic(p.photo,p.label,96):'';
+ const photo=p.photo?(/^https:\/\//.test(p.photo)?`<img src="${esc(p.photo)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`:Pic(p.photo,p.label,96)):'';
  const accessible=p.a?`data-a="${p.a}"`:'role="img"';
  return `<${g} class="pn tone-${p.tone} ${p.cls||''}" style="${L};z-index:${Math.round(y)}" ${accessible} aria-label="${esc(p.label)}">
   <span class="pn-face" aria-hidden="true"></span>${PIN_RIM}
