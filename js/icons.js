@@ -25,5 +25,10 @@ Object.assign(I,{
  train:'<path d="M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1M15 15l1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5z"/><path d="M8 19l-2 3M16 19l2 3"/>'
 });
 
-/* Heart: path from the Components Library (Favourite button). Filled via CSS where used as a badge. */
-Object.assign(I,{heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.4-7 10-7 10z"/>'});
+/* Keep the Components Library heart for shared uses. The Reels Like action
+   uses a fuller silhouette so its 24px icon has the same visual weight as
+   the neighbouring bookmark and share icons. */
+Object.assign(I,{
+ heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.4-7 10-7 10z"/>',
+ 'reel-heart':'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
+});
