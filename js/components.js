@@ -48,7 +48,7 @@ const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
    Prefer photos already used elsewhere in ROAM and matching real-world
    categories; the fallback icon displays if the image cannot load. */
 const ACTIVITY_PHOTO_BY_NAME={
- 'MacRitchie Reservoir':PH.hike,'TreeTop Walk':PH.hike,'Lornie Trail':PH.hike,
+ 'MacRitchie Reservoir':PH.hike,'MacRitchie Reservoir Park':PH.hike,'TreeTop Walk':PH.hike,'Lornie Trail':PH.hike,'The Roti Prata House':'unsplash:VfL0rUT9bOU',
  'Books Actually':PH.read,'Tiong Bahru Bakery':RP[4],
  'Arcade at Bugis+':PH.game,'Burger Shot':RP[1],
  'The Loneliest Robot in Great Britain':'unsplash:Lv5o-Xixi4c',
