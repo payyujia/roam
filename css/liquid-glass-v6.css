@@ -1833,16 +1833,16 @@ body{font-weight:500}
 #dev .sap .sa{position:relative;display:inline-flex;margin-left:-8px}
 #dev .sap .sa .av{width:44px;height:44px;font-size:18px;color:var(--ink);}
 #dev .sap .sa .av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
-/* Reels friend approval badge: actual SVG shape is 36 x 25px.
-   Place it beside the avatar rather than covering the person's face. */
+/* Original compact Reels social-approval badge: 24 x 24px SVG,
+   positioned against the avatar's upper-right corner. */
 #dev .sap .hrt{
-  position:absolute;top:-10px;right:-25px;z-index:3;
-  width:36px;height:25px;display:block;pointer-events:none;
+  position:absolute;top:-6px;right:-6px;z-index:3;
+  width:24px;height:24px;display:block;pointer-events:none;
   background:none;clip-path:none;
   filter:drop-shadow(0 3px 4px rgba(40,60,100,.3));
 }
 #dev .sap .hrt::before{display:none}
-#dev .sap .hrt svg{display:block;width:36px;height:25px;overflow:visible}
+#dev .sap .hrt svg{display:block;width:24px;height:24px;overflow:visible}
 /* A smaller Like glyph in the existing accessible 44px action button. */
 #dev #s-reels .rv .rail .ib.heart svg{width:22px;height:22px}
 
