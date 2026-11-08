@@ -2022,6 +2022,7 @@ body{font-weight:500}
    Hero distance (.nvh-big b, 52px) is intentionally kept above the scale.
    Subheader 16/700/22 · Regular 14/500/1.5 · Subtitle 12/500/16 · H3 20/800 · Kicker 10/800. */
 #dev #mc .nvh-big span{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em}
+#dev #mc .nvh-big .nvh-to{align-self:center;flex:0 1 auto;padding:0;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;white-space:normal;min-width:0}
 #dev #mc .nvh-meta{font-size:12px;font-weight:500;line-height:16px;letter-spacing:0}
 #dev #mc .nvh-r .micro{font-size:12px;font-weight:500;line-height:16px}
 #dev #mc .nvt b,
