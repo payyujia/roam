@@ -61,7 +61,9 @@ const Reel=(gi,seed)=>`${Pic(RP[gi],seed,800)}${RVID[gi]?`<video class="rvid" sr
 /* Reels the user saved, as [reel, index] pairs. */
 const savedReels=(f=S.colf||'all')=>R.map((r,i)=>[r,i]).filter(([,i])=>f=='all'?(S.saved[i]||inCol(i)):f=='likes'?!!S.saved[i]:!!(S.col.find(c=>c.id==f)||{r:[]}).r.includes(i));
 /* Social approval: friends who also saved this reel. Avatar + gradient heart badge (top right). */
-const Sap=gi=>{const f=(R[gi].sv||[]).slice(0,3);if(!f.length)return '';const nm=f.map(k=>PE[k][2]).join(', ');return `<div class="sap" role="img" aria-label="Also saved by ${nm}">${f.map((k,i)=>`<span class="sa" style="z-index:${9-i}">${Av(k)}<span class="hrt">${ic('heart',10)}</span></span>`).join('')}</div>`};
+/* A true 36 x 25 heart graphic instead of a CSS clip-path sized separately
+   from its box. The badge sits at the avatar's outer upper-right edge. */
+const Sap=gi=>{const f=(R[gi].sv||[]).slice(0,3);if(!f.length)return '';const nm=f.map(k=>PE[k][2]).join(', ');return `<div class="sap" role="img" aria-label="Also saved by ${nm}">${f.map((k,i)=>`<span class="sa" style="z-index:${9-i}">${Av(k)}<span class="hrt"><svg viewBox="0 0 36 25" width="36" height="25" aria-hidden="true" focusable="false"><defs><linearGradient id="sap-heart-${gi}-${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--rose)"/><stop offset="1" style="stop-color:var(--coral-500)"/></linearGradient></defs><path d="M18 25 C15 22 0 17 0 9 C0 1 13 -1 18 7 C23 -1 36 1 36 9 C36 17 21 22 18 25 Z" fill="url(#sap-heart-${gi}-${i})"/></svg></span></span>`).join('')}</div>`};
 let _rio;
 const reelsOn=()=>S.tab=='reels'&&topId()=='reels';
 /* Play only the reel that is mostly on screen; pause the rest (and everything when off the Reels tab). */
