@@ -77,7 +77,10 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
  formnext:()=>{const f=S.f,e={};if(!f.dest.trim())e.dest='Add a destination';const s=f.start&&p8(f.start),en=f.end&&p8(f.end);if(!s)e.start='Pick a start date';else if(dd(s)<0)e.start='Can’t be in the past';if(s&&en&&en<s)e.end='Must be after the start';if(!(+f.budget>0))e.budget='Enter a budget above 0';
   S.fe=e;if(Object.keys(e).length){render('form');return}
   const days=Math.round(((en||s)-s)/864e5)+1,d=f.dest.trim(),id='n'+T.length,m='P'+(f.coll||[]).join(''),c=LINE[(T.length+3)%LINE.length];
-  T.push({id,dest:esc(d),n:days==1?`${esc(d)} Daytrip`:`${esc(d)} ${days}D${days-1}N`,date:s,t1:'08:30',c,b:esc(d[0].toUpperCase()),i:'map-pin',m,vs:Object.fromEntries([...m].map(k=>[k,0])),st:'voting',close:addD(NOW,7),budget:`SGD ${f.budget}`,origin:'Your location',o:[16,48],note:'',stops:f.auto?recs(d):[]});
+  /* Keep the MacRitchie demo's name intact for a single-day trip; retain
+     the original Daytrip / D-N naming for every other destination. */
+  const title=days===1&&/^macritchie(?:\s+hike)?$/i.test(d)?'MacRitchie Hike':days===1?`${esc(d)} Daytrip`:`${esc(d)} ${days}D${days-1}N`;
+  T.push({id,dest:esc(d),n:title,date:s,t1:'08:30',c,b:esc(d[0].toUpperCase()),i:'map-pin',m,vs:Object.fromEntries([...m].map(k=>[k,0])),st:'voting',close:addD(NOW,7),budget:`SGD ${f.budget}`,origin:'Your location',o:[16,48],note:'',stops:f.auto?recs(d):[]});
   cur().pop();S.cur=id;S.step=1;S.seg='up';tab('trips');rr();go('trip');toast('Trip created. Invites sent.',null,'check')},
  feed:k=>{S.fyp=+k;render('reels')},rsave:gi=>{S.saved[gi]=!S.saved[gi];render('reels');toast(S.saved[gi]?'Saved to your places':'Removed from saved')},rshare:gi=>{S.shared[gi]=!S.shared[gi];render('reels');toast(S.shared[gi]?'Shared':'Share cancelled')},
  addto:gi=>lay('sheet',tripPick(+gi),'Add to trip'),addtrip:(gi,id)=>{const t=trip(id),r=R[+gi];if(t.stops.some(s=>s.n==r.n)){A.closeLy();return toast(`${r.n} is already in ${t.n}`)}addStop(t,{n:r.n,i:r.i,s:r.loc,k:'Eat'});A.closeLy();rr();toast(`Added to ${t.n}'s vote list`)},
