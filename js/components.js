@@ -193,14 +193,16 @@ const savedReels=(f=S.colf||'all')=>R.map((r,i)=>[r,i]).filter(([,i])=>f=='all'?
    original small-badge proportions without a CSS clip-path. */
 const Sap=gi=>{const f=(R[gi].sv||[]).slice(0,3);if(!f.length)return '';const nm=f.map(k=>PE[k][2]).join(', ');return `<div class="sap" role="img" aria-label="Also saved by ${nm}">${f.map((k,i)=>`<span class="sa" style="z-index:${9-i}">${Av(k)}<span class="hrt"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><defs><linearGradient id="sap-heart-${gi}-${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--rose)"/><stop offset="1" style="stop-color:var(--coral-500)"/></linearGradient></defs><path d="${I['reel-heart'].match(/ d="([^"]+)"/)[1]}" fill="url(#sap-heart-${gi}-${i})"/></svg></span></span>`).join('')}</div>`};
 let _rio;
-const reelsOn=()=>S.tab=='reels'&&topId()=='reels';
+/* An open Info/Save sheet pauses its reel; closing it resumes at the same
+   position unless the viewer manually paused the clip. */
+const reelsOn=()=>S.tab==='reels'&&topId()==='reels'&&!$('#ly').classList.contains('open');
 /* Play only the reel that is mostly on screen; pause the rest (and everything when off the Reels tab). */
-function reelsSync(){$$('#s-reels video.rvid').forEach(v=>{const a=v.closest('.rv'),go=reelsOn()&&a&&a.dataset.vis=='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches;if(go){v.muted=true;const p=v.play();p&&p.catch(()=>{})}else v.pause()})}
+function reelsSync(){$('#s-reels video.rvid').forEach(v=>{const a=v.closest('.rv'),go=reelsOn()&&a&&a.dataset.vis==='1'&&!v.dataset.userPaused&&!matchMedia('(prefers-reduced-motion: reduce)').matches;if(go){v.muted=true;if(v.paused){const p=v.play();p&&p.catch(()=>{})}}else if(!v.paused)v.pause()})}
 function reelsAfter(){
  const feed=$('#s-reels .rfeed');if(_rio)_rio.disconnect();if(!feed)return;
  feed.querySelectorAll('video.rvid').forEach(v=>{v.muted=true;v.addEventListener('playing',()=>v.classList.add('on'))});
  _rio=new IntersectionObserver(es=>{es.forEach(en=>{en.target.dataset.vis=en.isIntersecting?'1':'0';const v=en.target.querySelector('video.rvid');if(v&&!en.isIntersecting)v.currentTime=0});reelsSync()},{root:feed,threshold:.6});
  feed.querySelectorAll('.rv').forEach(a=>_rio.observe(a));
  /* tap anywhere (not on a button) to pause / resume */
- feed.addEventListener('click',e=>{if(e.target.closest('button'))return;const v=e.target.closest('.rv')?.querySelector('video.rvid');if(!v)return;v.paused?v.play().catch(()=>{}):v.pause()});
+ feed.addEventListener('click',e=>{if(e.target.closest('button'))return;const v=e.target.closest('.rv')?.querySelector('video.rvid');if(!v)return;if(v.paused){delete v.dataset.userPaused;const p=v.play();p&&p.catch(()=>{})}else{v.dataset.userPaused='1';v.pause()}});
 }
