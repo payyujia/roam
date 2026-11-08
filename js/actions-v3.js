@@ -141,11 +141,15 @@ A.back=(...args)=>{
     &&!$('#app').classList.contains('back-pending'))discardProfileTagDraft();
  return tagEditorBack(...args);
 };
+/* Bottom navigation always returns to the root Profile page, even if
+   the user last visited a nested settings page without making changes.
+   Keep the existing unsaved-tag draft discard behaviour when leaving. */
 const tagEditorTab=A.tab;
 A.tab=t=>{
- if(S.tab==='profile'&&topId()==='pdet'&&profileTagEditorActive()){
-  discardProfileTagDraft();
+ if(S.tab==='profile'){
+  if(topId()==='pdet'&&profileTagEditorActive())discardProfileTagDraft();
   S.stack.profile=['profile'];
  }
+ if(t==='profile')S.stack.profile=['profile'];
  return tagEditorTab(t);
 };
