@@ -60,14 +60,14 @@ function scene(){
   else if(S.fk=='alts')o.cls='dim';
   else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel'}
   pins.push(o)});
- if(lv&&!S.fk)pins.push({lab:esc(mine[cu].n),ll:cur[cu+1]});
+ if(lv&&!S.fk)pins.push({lab:esc(mine[cu].n),ll:cur[cu]});
  if(fk&&!S.fk){const ch=Object.keys(fk.ch).map(Number).sort((a,b)=>a-b)[0];
-  if(ch!=null)pins.push({pill:esc(pn(fk.owner)),tone:forkTone(t),ll:[(fp[ch][0]+fp[ch+1][0])/2,(fp[ch][1]+fp[ch+1][1])/2],a:`pathpick:fork:${t.id}`});
+  if(ch!=null)pins.push({pill:esc(pn(fk.owner)),tone:forkTone(t),ll:[(mp[ch][0]+fp[ch][0])/2,(mp[ch][1]+fp[ch][1])/2],a:`pathpick:fork:${t.id}`});
   Object.keys(fk.ch).forEach(i=>pins.push({dot:1,ll:(me=='fork'?mp:fp)[+i],tone:me=='fork'?'inactive':forkTone(t)}))}
- pins.push({you:1,ll:cur[cu]});
+ 
  let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
  if(S.fk=='flag')pad.b=300;
- if(S.fk=='alts'){const i=S.fl[S.fi],c=cur[i+1];S.alts.forEach((a,j)=>{pins.push({ll:a.ll,tone:forkTone(t),cls:S.ap===j?'sel':'',icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Alternative: ${a.n}`});fit.push(a.ll)});
+ if(S.fk=='alts'){const i=S.fl[S.fi],c=cur[i];S.alts.forEach((a,j)=>{pins.push({ll:a.ll,tone:forkTone(t),cls:S.ap===j?'sel':'',icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Alternative: ${a.n}`});fit.push(a.ll)});
   if(S.ap!=null)pins.push({lab:esc(S.alts[S.ap].n),ll:S.alts[S.ap].ll});
   pad={t:150,r:50,b:430,l:50};maxZ=16;fit.length=0;fit.push(c,cur[i],...S.alts.map(a=>a.ll))}
  return{routes,pins,fit,pad,maxZ}}
