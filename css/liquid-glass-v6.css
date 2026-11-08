@@ -1882,10 +1882,14 @@ body{font-weight:500}
 #dev #toast,#dev #toast>span,#dev #toast>span>span{color:var(--ink)!important}
 #dev #toast button{color:var(--sky-600)!important}
 
-/* Trip detail Navigate: H2 type in every state (card-components.html: 23/800/1.2/-.03em);
-   enabled fill matches the Profile notification button (--glass-control-bg), ink text. */
+/* Trip detail Navigate: Card Components Library button typography
+   (14px / 700). Keep the existing icon, sizing, glass fill, and disabled state. */
 #dev #s-trip .th .tact .gob{
-  font-size:23px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important;
+  font-family:var(--font);
+  font-size:14px!important;
+  font-weight:700!important;
+  line-height:1.5!important;
+  letter-spacing:normal!important;
 }
 #dev #s-trip .th .tact .gob:not(:disabled){
   --action-fill:var(--glass-control-bg)!important;
