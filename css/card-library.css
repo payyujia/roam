@@ -682,6 +682,56 @@
   opacity:.45;
 }
 
+/* Trip itinerary: keep a clear 20px separation from the final stop while
+   connecting the alternatives action more closely with the route above. */
+#dev #s-trip .altrow{
+  padding-top:20px;
+}
+
+/* The vote review action is an accessible text link, secondary to the
+   View alternatives Sky pill. It reuses the existing step:1 navigation. */
+#dev #s-trip .itinerary-review-wrap{
+  margin-top:12px;
+}
+#dev #s-trip .itinerary-review-votes{
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+  max-width:100%;
+  min-height:44px;
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:700;
+  line-height:21px;
+  color:var(--sky-600);
+  text-align:left;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+#dev #s-trip .itinerary-review-votes svg{
+  display:block;
+  width:16px;
+  height:16px;
+  flex:none;
+}
+#dev #s-trip .itinerary-review-votes:focus-visible{
+  outline:2px solid var(--sky-600);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+/* Name the next stop without allowing long activity names to push the route
+   rail wider than the mobile viewport or change its connector heights. */
+#dev #s-trip .tl:not(.nv) .tc .cap{min-width:0}
+#dev #s-trip .tl:not(.nv) .tc .tl-leg-copy{
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
 
 /* PROFILE DETAIL SAVE POSITION — align the Save changes pill with the
    end of the form instead of pinning it near the bottom of the screen.
