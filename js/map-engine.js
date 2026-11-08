@@ -54,7 +54,7 @@ function scene(){
   routes.push({pts:fp,walk:fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
  const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
- mine.forEach((s,i)=>{const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
+ mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:RP[reel],mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'amber',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='sel'}
   else if(S.fk=='alts')o.cls='dim';
@@ -70,6 +70,7 @@ function scene(){
  if(S.fk=='flag'||S.fk=='alts'){const i=S.fl[S.fi],c=cur[i],al=S.alts||[],AT=['amber','coral','rose','sky5'];al.forEach((a,j)=>{pins.push({ll:a.ll,tone:AT[j%4],cls:'alt'+(S.ap===j&&S.fk=='alts'?' sel':''),icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Option ${String.fromCharCode(65+j)}: ${a.n}`})});
   if(S.fk=='alts'&&S.ap!=null&&al[S.ap])pins.push({lab:esc(al[S.ap].n),ll:al[S.ap].ll});
   pad=S.fk=='alts'?{t:150,r:50,b:470,l:50}:{t:150,r:50,b:290,l:50};maxZ=16;fit.length=0;fit.push(c,...al.map(a=>a.ll))}
+ if(S.fk=='flag'||S.fk=='alts')routes.forEach(r=>r.faded=1);
  return{routes,pins,fit,pad,maxZ}}
 const mapKey=()=>{const t=S.nav?trip(S.mapTrip):null;return[t?t.id:'ov',S.fk||'',S.fi,t&&t.fork?1:0,t?myPath(t):''].join('|')};
 function mapTarget(W,H){const sc=scene(),pts=sc.fit,pad=sc.pad;if(!pts.length||!W||!H)return null;let z=17;
@@ -102,7 +103,7 @@ function routeH(r,project){
  const width=r.muted?12:16,dots=` stroke-dasharray="0.1 ${width+10}"`,runs=[];
  for(let i=0;i<P.length-1;i++){const w=!!(r.walk&&r.walk[i]),L=runs[runs.length-1];if(L&&L.w==w)L.b=i+1;else runs.push({a:i,b:i+1,w})}
  const seg=(cls,sw)=>runs.map(u=>`<path class="${cls}" d="${pathRange(P,u.a,u.b)}" stroke-width="${sw}"${u.w?dots:''}/>`).join('');
- return `<g class="route tone-${r.tone}">${seg('route-edge',width)}${seg('route-main',r.muted?8:11)}</g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
+ return `<g class="route tone-${r.tone}${r.faded?' faded':''}">${seg('route-edge',width)}${seg('route-main',r.muted?8:11)}</g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
 }
 function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clientHeight;if(!W||!H)return;
  const zi=Math.max(2,Math.min(18,Math.round(M.z))),sc=2**(M.z-zi),[cx,cy]=MERC(M.lat,M.lng,zi),n=2**zi,ts=256*sc,x0=Math.floor((cx-W/2/sc)/256)-1,x1=Math.floor((cx+W/2/sc)/256)+1,y0=Math.floor((cy-H/2/sc)/256)-1,y1=Math.floor((cy+H/2/sc)/256)+1,want=new Set(),C=TILEBOX._t;
