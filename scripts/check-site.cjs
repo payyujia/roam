@@ -16,7 +16,7 @@ assert.match(html, /<html\b[^>]*>/i, 'index.html must contain an html element');
 assert.match(html, /<head\b[^>]*>/i, 'index.html must contain a head');
 assert.match(html, /<body\b[^>]*>/i, 'index.html must contain a body');
 assert.match(html, /<main\s+id="app"\s*>/, 'ROAM main #app root must remain present');
-assert.match(html, /<nav\s+id="tb"\b/, 'ROAM bottom navigation must remain present');
+assert.match(html, /<nav\b[^>]*\bid="tb"/, 'ROAM bottom navigation must remain present');
 assert.match(html, /<script\s+src="js\/main\.js"/, 'ROAM app bootstrap must remain linked');
 assert.doesNotMatch(html.slice(0, 300), /PICKERS\s*[·-]\s*Dropdown|^\s*#dev\s*\{/m, 'index.html contains CSS instead of HTML');
 
