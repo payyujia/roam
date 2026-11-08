@@ -2022,10 +2022,11 @@ body{font-weight:500}
    Hero distance (.nvh-big b, 36px) uses the component display scale.
    Subheader 16/700/22 · Regular 14/500/1.5 · Subtitle 12/500/16 · H3 20/800 · Kicker 10/800. */
 #dev #mc .nvh-big span{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em}
-/* Keep the number and distance unit together, even beside long stop names.
-   The destination label is the flexible part and may wrap instead. */
+/* Sunrise Frost navigation hero: keep the distance and destination on
+   separate lines so neither crowds the other on narrow phone screens. */
+#dev #mc .nvh-big{flex-wrap:nowrap;white-space:nowrap}
 #dev #mc .nvh-big b{flex:0 0 auto;white-space:nowrap}
-#dev #mc .nvh-big .nvh-to{align-self:flex-end;flex:1 1 0;padding:0 0 1px;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;white-space:normal;min-width:0}
+#dev #mc .nvh-eta>.nvh-to{display:block;margin:6px 0 4px;font-size:16px;font-weight:700;line-height:22px;letter-spacing:-.01em;white-space:normal;overflow-wrap:break-word}
 #dev #mc .nvh-meta{font-size:12px;font-weight:500;line-height:16px;letter-spacing:0}
 #dev #mc .nvh-r .micro{font-size:12px;font-weight:500;line-height:16px}
 #dev #mc .nvt b,
