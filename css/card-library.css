@@ -1175,18 +1175,15 @@
   margin:10px 24px 0;
   border-radius:var(--roam-card-radius);
 }
-/* Activity-only optical refinement: the shared glass rim is bright white,
-   which looks like a horizontal divider below the filter pills. Soften its
-   1px gradient while preserving the library card surface, size and shadow.
-   Target ::before, not --rim, so nested vote controls keep their own rims. */
+/* Activity voting cards: remove only the decorative white rim and
+   inset white glint that read as a divider beneath the category filters.
+   Keep the library glass fill, outer elevation, radius and row layout. */
+#dev #s-trip .vote-row{
+  --surface-shadow:0 12px 34px rgba(40,100,180,.18),
+    0 2px 6px rgba(40,100,180,.08);
+}
 #dev #s-trip .vote-row::before{
-  background:linear-gradient(135deg,
-    rgba(255,255,255,.38) 0%,
-    rgba(255,255,255,.18) 22%,
-    transparent 46%,
-    transparent 54%,
-    rgba(255,255,255,.18) 78%,
-    rgba(255,255,255,.38) 100%);
+  content:none!important;
 }
 #dev #s-trip .vote-row>.si{
   grid-column:1;
