@@ -7,7 +7,7 @@ const MAP_LAYERS={color:'World_Street_Map',light:'Canvas/World_Light_Gray_Base',
 const tileUrl=(z,x,y)=>`https://server.arcgisonline.com/ArcGIS/rest/services/${MAP_LAYERS[MAP_STYLE]}/MapServer/tile/${z}/${y}/${x}`;
 const MERC=(lat,lng,z)=>{const s=256*2**z,sn=Math.sin(lat*Math.PI/180);return[(lng+180)/360*s,(.5-Math.log((1+sn)/(1-sn))/(4*Math.PI))*s]};
 const UNMERC=(x,y,z)=>{const s=256*2**z,n=Math.PI-2*Math.PI*y/s;return[180/Math.PI*Math.atan(.5*(Math.exp(n)-Math.exp(-n))),x/s*360-180]};
-const M={lat:1.35,lng:103.83,z:11,key:null,ok:0,raf:0};
+const M={lat:1.35,lng:103.83,z:11,key:null,ok:0,raf:0,moved:false};
 const TILEBOX=document.createElement('div');TILEBOX.className='mp-t';TILEBOX._t={};
 const MAP_TONES=['sky','coral','amber','rose','duo'];
 // Use the trip's insertion order so filtering or rescheduling cannot change its colour.
@@ -53,7 +53,14 @@ function scene(){
   routes.push({pts:mp,walk:mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
   routes.push({pts:fp,walk:fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
- const fit=[...cur];if(fk)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
+ /* Expanded navigation follows the active leg; collapsed navigation fits
+    the whole itinerary. Route geometry and pins remain unchanged. */
+ const fit=[...cur],focusLeg=lv&&!S.fk&&S.pc==null&&!!S.mx;
+ if(focusLeg){
+  const a=Math.max(0,cu-1),b=Math.min(cur.length,Math.max(cu+1,2));
+  fit.splice(0,fit.length,...cur.slice(a,b));
+ }
+ if(fk&&!focusLeg)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='hike'?activityPhotoSource(s,t):RP[reel],photoFallback:t.id==='hike'?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
@@ -72,8 +79,24 @@ function scene(){
   pad=S.fk=='alts'?{t:150,r:50,b:470,l:50}:{t:150,r:50,b:290,l:50};maxZ=16;fit.length=0;fit.push(c,...al.map(a=>a.ll))}
  if(S.fk=='flag'||S.fk=='alts')routes.forEach(r=>r.faded=1);
  return{routes,pins,fit,pad,maxZ}}
-const mapKey=()=>{const t=S.nav?trip(S.mapTrip):null;return[t?t.id:'ov',S.fk||'',S.fi,t&&t.fork?1:0,t?myPath(t):''].join('|')};
-function mapTarget(W,H){const sc=scene(),pts=sc.fit,pad=sc.pad;if(!pts.length||!W||!H)return null;let z=17;
+const mapKey=()=>{const t=S.nav?trip(S.mapTrip):null;return[t?t.id:'ov',S.fk||'',S.fi,t&&t.fork?1:0,t?myPath(t):'',S.nav?+!!S.mx:0,S.nav?S.leg:0,S.pc==null?'':S.pc].join('|')};
+/* Fit to the visible map above the navigation drawer. The drawer's final
+   content-based height is used even while it animates between states. */
+function mapTarget(W,H){
+ const sc=scene(),pts=sc.fit,pad={...sc.pad};
+ if(!pts.length||!W||!H)return null;
+ const drawer=$('#msh');
+ if(S.nav&&!S.fk&&S.pc==null&&drawer){
+  const mapRect=$('#mp').getBoundingClientRect(),header=$('#mp .mtop2');
+  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+18):120);
+  const contents=$('#mc'),maxSheet=Math.max(0,Math.min(S.mx?600:400,H-150));
+  const sheetHeight=Math.min(maxSheet,20+(contents?contents.scrollHeight:0));
+  pad.t=top;
+  /* At short viewport heights, prioritise a usable map strip. */
+  pad.b=Math.min(94+sheetHeight+16,Math.max(0,H-top-88));
+  pad.l=50;pad.r=50;
+ }
+ let z=17;
  for(;z>3;z-=.25){const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]);if(Math.max(...xs)-Math.min(...xs)<=W-pad.l-pad.r&&Math.max(...ys)-Math.min(...ys)<=H-pad.t-pad.b)break}
  z=Math.min(z,sc.maxZ);const Q=pts.map(p=>MERC(p[0],p[1],z)),xs=Q.map(p=>p[0]),ys=Q.map(p=>p[1]),bx=(Math.min(...xs)+Math.max(...xs))/2,by=(Math.min(...ys)+Math.max(...ys))/2,[lat,lng]=UNMERC(bx-(pad.l-pad.r)/2,by-(pad.t-pad.b)/2,z);return{lat,lng,z}}
 /* Walking legs are dotted, every other mode (drive, ride) is solid. */
@@ -117,13 +140,34 @@ function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clien
  $('#mplabel').innerHTML=sc2.pins.filter(p=>p.lab).map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('')}
 function flyTo(tg){cancelAnimationFrame(M.raf);const a={lat:M.lat,lng:M.lng,z:M.z},t0=performance.now(),ez=x=>x<.5?4*x*x*x:1-(-2*x+2)**3/2;
  const f=now=>{const k=Math.min(1,(now-t0)/700),e=ez(k);M.lat=a.lat+(tg.lat-a.lat)*e;M.lng=a.lng+(tg.lng-a.lng)*e;M.z=a.z+(tg.z-a.z)*e;mapDraw();if(k<1)M.raf=requestAnimationFrame(f)};M.raf=requestAnimationFrame(f)}
-function mapAfter(){const h=$('#mp');if(!h)return;const l=$('#mpl');if(TILEBOX.parentNode!==l)l.prepend(TILEBOX);
- const key=mapKey();if(M.key!==key){const tg=mapTarget(h.clientWidth,h.clientHeight);if(tg){M.key=key;const vis=$('#s-map').classList.contains('on');if(M.ok&&vis&&!matchMedia('(prefers-reduced-motion:reduce)').matches){flyTo(tg);M.ok=1;return}cancelAnimationFrame(M.raf);Object.assign(M,tg);M.ok=1}}
- mapDraw()}
+/* Manual browsing never snaps back until a new leg/state is selected or the
+   user explicitly requests recenter. */
+function showMapRecenter(){const b=$('#map-recenter');if(b)b.hidden=!M.moved}
+function mapReframe(animate=true){
+ const h=$('#mp');if(!h)return;
+ const tg=mapTarget(h.clientWidth,h.clientHeight);
+ if(!tg)return;
+ M.key=mapKey();M.moved=false;showMapRecenter();
+ const vis=$('#s-map')?.classList.contains('on');
+ if(animate&&M.ok&&vis&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  flyTo(tg);
+ }else{
+  cancelAnimationFrame(M.raf);Object.assign(M,tg);M.ok=1;mapDraw();
+ }
+}
+function mapAfter(){
+ const h=$('#mp');if(!h)return;
+ const l=$('#mpl');if(TILEBOX.parentNode!==l)l.prepend(TILEBOX);
+ if(M.key!==mapKey()){mapReframe(true);return}
+ showMapRecenter();mapDraw();
+}
 /* drag to pan, wheel to zoom */
 const MD={on:0,x:0,y:0,dx:0,dy:0,moved:0,t:0};
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb')||(e.pointerType=='mouse'&&e.button))return;cancelAnimationFrame(M.raf);Object.assign(MD,{on:1,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0})});
 addEventListener('pointermove',e=>{if(!MD.on)return;MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`});
-addEventListener('pointerup',()=>{if(!MD.on)return;MD.on=0;if(MD.moved){const[cx,cy]=MERC(M.lat,M.lng,M.z);[M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);$('#mpl').style.transform='';$('#mp').classList.remove('drag');mapDraw();MD.t=Date.now()}});
+addEventListener('pointerup',()=>{if(!MD.on)return;MD.on=0;if(MD.moved){const[cx,cy]=MERC(M.lat,M.lng,M.z);[M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);$('#mpl').style.transform='';$('#mp').classList.remove('drag');M.moved=true;showMapRecenter();mapDraw();MD.t=Date.now()}});
 document.addEventListener('click',e=>{if(MD.moved&&Date.now()-MD.t<120){e.stopPropagation();e.preventDefault();MD.moved=0}},true);
-document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));mapDraw()},{passive:false});
+document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));M.moved=true;showMapRecenter();mapDraw()},{passive:false});
+
+/* Keep the camera fitted when the physical viewport changes size. */
+addEventListener('resize',()=>{if($('#s-map')?.classList.contains('on'))mapReframe(false)});
