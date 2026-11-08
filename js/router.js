@@ -44,7 +44,37 @@ document.addEventListener('scroll',e=>{
  const t=e.target;
  if(t?.closest?.('.scr.on'))sbSync();
 },true);
-const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;else st.push(id);upd();if(!ROOT[id])$('#s-'+id).scrollTop=0};
+/* Chat threads and Trip details share the same explicit push animation.
+   Paint the parent beneath the incoming page; do not animate tab switches. */
+const go=id=>{
+ const fromId=topId(),app=$('#app');
+ const entering=(id==='trip'||id==='thread')&&fromId!==id
+  &&!app.classList.contains('nt')&&!app.classList.contains('back-pending');
+ const parent=entering?$('#s-'+fromId):null,screen=entering?$('#s-'+id):null;
+ if(parent&&screen){
+  parent.classList.add('detail-enter-parent');
+  screen.classList.add('detail-enter');
+ }
+ render(id);
+ const st=cur(),i=st.indexOf(id);
+ if(i>-1)st.length=i+1;else st.push(id);
+ upd();
+ if(!ROOT[id])$('#s-'+id).scrollTop=0;
+ if(parent&&screen){
+  let finished=false;
+  const clean=()=>{
+   if(finished)return;
+   finished=true;
+   screen.removeEventListener('animationend',onEnd);
+   screen.classList.remove('detail-enter');
+   parent.classList.remove('detail-enter-parent');
+  };
+  const onEnd=e=>{if(e.target===screen)clean()};
+  screen.addEventListener('animationend',onEnd);
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)clean();
+  else setTimeout(clean,360);
+ }
+};
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
 function tab(t){const same=S.tab==t;$('#app').classList.add('nt');if(same)S.stack[t]=[t];else{S.prev=S.tab;S.tab=t}render(t);upd();requestAnimationFrame(()=>requestAnimationFrame(()=>$('#app').classList.remove('nt')))}
