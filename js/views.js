@@ -43,11 +43,29 @@ ${Stepper(t,S.step,true)}<div style="margin-top:8px">${b}</div></div>`};
 const MAPBG=`<svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="390" height="844" fill="#F5F4F0"/><path d="M0 590Q80 550 170 610T330 720T390 670V844H0Z" fill="#CFE6F2"/><rect x="236" y="104" width="120" height="76" rx="14" fill="#DDEFD3"/><rect x="24" y="300" width="80" height="96" rx="14" fill="#DDEFD3"/>${[[16,96,88,64],[120,84,64,56],[200,196,88,72],[304,172,72,96],[16,200,64,80],[112,300,88,64],[216,292,72,112],[304,296,72,60],[112,400,80,80],[304,400,72,120],[216,440,72,88],[16,432,72,70]].map(b=>`<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" rx="8" fill="#ECECEA"/>`).join('')}<g stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"><path d="M0 180H390M0 290H390M0 420H390M0 530H390M104 0V844M208 0V560M300 0V844"/><path d="M0 60L390 560" stroke-width="14"/></g></svg>`;
 const poly=(P,c)=>`<polyline class="${c}" points="${P.map(p=>p.join(',')).join(' ')}"/>`,at=p=>`style="left:${p[0]}%;top:${p[1]}%"`;
 /* Leg helpers for live navigation: mode, duration and an estimated distance from the "N min walk / by car" strings. */
-const LEG=s=>{const m=parseInt(s.tr)||0,w=/walk/i.test(s.tr),c=/car|taxi/i.test(s.tr),d=m*(w?80:c?600:500);return{m,d,ic:w?'walk':c?'car':'train',vb:w?'Walk':c?'Drive':'Ride',km:fkm(d)}},
-fkm=d=>d>=1000?(d/1000).toFixed(1)+' km':Math.max(50,Math.round(d/50)*50)+' m',
-fdur=m=>m>=60?`${Math.floor(m/60)} h${m%60?' '+m%60+' min':''}`:`${m} min`;
-const NavTL=(t,ms,cu,live)=>{const dn=live?cu:0;return `<ol class="tl nv l-${t.c}">${dn?`<li class="tdone">${ic('check',14)}${dn} stop${dn>1?'s':''} done</li>`:''}${ms.map((s,i)=>{if(i<dn)return '';const g=LEG(s),tr=i>dn?`<li class="tc"><span class="ln"></span><span class="cap sm">${ic(g.ic,14)}${s.tr} · ${g.km}</span></li>`:'',info=`<div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div>`;
- if(i==cu)return `${tr}<li class="tn cur"><span class="nd">${i+1}</span>${live?`<button class="cc" data-a="next" aria-label="Arrived at ${s.n}"><div class="gr"><span class="kick">Now heading here</span><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div></button>`:`<div class="cc">${info}</div>`}</li>`;
+const LEG=function(s){
+  const tr=String(s.tr||'').trim(),
+    start=/^(?:meet|start|gather|arrive)\b/i.test(tr),
+    hike=/\b(?:hike|hiking)\b/i.test(tr),
+    walk=hike||/\b(?:walk|walking|on foot)\b/i.test(tr),
+    car=/\b(?:car|taxi|drive|driving)\b/i.test(tr),
+    rail=/\b(?:MRT|metro|train)\b/i.test(tr),
+    ferry=/\bferry\b/i.test(tr),
+    hr=tr.match(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|hr|h)\b/i),
+    min=tr.match(/(\d+)\s*(?:minutes?|mins?|min)\b/i),
+    length=tr.match(/\b(\d+(?:\.\d+)?)\s*(km|m)\b/i),
+    m=hr?Math.round(Number(hr[1])*60):min?Number(min[1]):null,
+    d=length?Math.round(Number(length[1])*(length[2].toLowerCase()==='km'?1000:1)):null;
+  return {
+    m,d,start,hike,text:tr,
+    ic:start?'map-pin':walk?'walk':car?'car':rail?'train':ferry?'ship':'navigation',
+    vb:start?'Meet':hike?'Hike':walk?'Walk':car?'Drive':rail?'Take the train':ferry?'Take the ferry':'Travel',
+    km:d==null?'':fkm(d)
+  };
+},
+fkm=d=>d>=1000?+(d/1000).toFixed(1)+' km':Math.round(d)+' m';
+const NavTL=(t,ms,cu,live)=>{const dn=live?cu:0;return `<ol class="tl nv l-${t.c}">${dn?`<li class="tdone">${ic('check',14)}${dn} stop${dn>1?'s':''} done</li>`:''}${ms.map((s,i)=>{if(i<dn)return '';const g=LEG(s),tr=i>dn?`<li class="tc"><span class="ln"></span><span class="cap sm">${ic(g.ic,14)}${esc(s.tr)}${g.km?' · '+g.km:''}</span></li>`:'',info=`<div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div>`;
+ if(i==cu)return `${tr}<li class="tn cur"><span class="nd">${i+1}</span>${live?`<button class="cc" data-a="next" aria-label="Arrived at ${s.n}"><div class="gr"><span class="kick">Next stop</span><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div></div></button>`:`<div class="cc">${info}</div>`}</li>`;
  return `${tr}<li class="tn ${i==cu+1?'nx':'rest'}"><span class="nd">${i+1}</span>${info}<span class="tn-t">${tt(s.t)}</span></li>`}).join('')}</ol>`};
 V.map=()=>{const L=S.nav?trip(S.mapTrip):null;let svg='',pins='',top='',sh='';
 if(!L){OV().forEach(t=>{const ms=mstops(t),P=ms.map(s=>ov(t,[s.x,s.y])),c=!fin(t);svg+=`<g class="l-${t.c}" data-a="mload:${t.id}">${poly(P,'rc')}${poly(P,'rl'+(c?' dash':''))}${poly(P,'rh')}</g>`;pins+=P.map((p,i)=>i?`<button class="pin d l-${t.c}" ${at(p)} data-a="mload:${t.id}" aria-label="${t.n}, stop ${i+1}"></button>`:`<button class="pin b l-${t.c}${c?' cand':''}" ${at(p)} data-a="mload:${t.id}" aria-label="${t.n}">${t.b}</button>`).join('')});
