@@ -18,7 +18,7 @@ ${open?`<div class="dd-list glass"><div class="dd-opts" id="ddo-${o.id}" role="l
 const MFULL=['January','February','March','April','May','June','July','August','September','October','November','December'],DFULL=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const tripDays=()=>{const m={};T.filter(t=>!t.left).forEach((t,i)=>{m[iso(t.date)]=TRIPDOT[i%4]});return m};
 const calHint=c=>!c.a?'Pick a start date':!c.b?'Pick an end date (optional)':`${fd(p8(c.a))} – ${fd(p8(c.b))}`;
-const calSub=c=>c.a&&c.b?`${Math.round((p8(c.b)-p8(c.a))/864e5)} night${Math.round((p8(c.b)-p8(c.a))/864e5)==1?'':'s'}`:c.a?'Day trip, or tap an end date':'';
+const calSub=c=>{if(!c.a)return '';if(!c.b)return 'Day trip, or tap an end date';const nights=Math.round((p8(c.b)-p8(c.a))/864e5),days=nights+1;return `${days} day${days===1?'':'s'} ${nights} night${nights===1?'':'s'}`};
 const Calendar=c=>{
  const y=c.m.getFullYear(),mo=c.m.getMonth(),first=new Date(y,mo,1).getDay(),len=new Date(y,mo+1,0).getDate(),cells=Math.ceil((first+len)/7)*7,td=tripDays(),nowIso=iso(NOW),canPrev=y*12+mo>NOW.getFullYear()*12+NOW.getMonth();
  let g='';
