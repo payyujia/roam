@@ -139,3 +139,31 @@
   height:20px;
   flex:0 0 20px;
 }
+
+/* Floating recenter: Card Components frosted-glass icon action. Only shown
+   after the user pans or zooms, so normal map navigation stays uncluttered. */
+#dev #s-map .map-recenter{
+  position:absolute;
+  z-index:7;
+  right:16px;
+  top:116px;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--glass-control-bg);
+  color:var(--sky-600);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  box-shadow:var(--control-shadow);
+  cursor:pointer;
+}
+#dev #s-map .map-recenter[hidden]{display:none!important}
+#dev #s-map .map-recenter:focus-visible{
+  outline:2px solid var(--sky-500);
+  outline-offset:3px;
+}
+#dev #s-map .map-recenter svg{width:20px;height:20px}
