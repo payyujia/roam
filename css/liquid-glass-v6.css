@@ -1882,15 +1882,25 @@ body{font-weight:500}
 #dev #toast,#dev #toast>span,#dev #toast>span>span{color:var(--ink)!important}
 #dev #toast button{color:var(--sky-600)!important}
 
-/* Trip detail Navigate: Card Components Library button typography
-   (14px / 700). Keep the existing icon, sizing, glass fill, and disabled state. */
+/* Trip detail Navigate: Card Components Library button geometry and type.
+   Preserve flexible width, glass fill, and existing disabled state. */
 #dev #s-trip .th .tact .gob{
+  height:46px;
   font-family:var(--font);
   font-size:14px!important;
   font-weight:700!important;
   line-height:1.5!important;
   letter-spacing:normal!important;
 }
+/* Keep the existing three-dot button width while matching the 46px control
+   height and visually centring the 24px glyph beside Navigate. */
+#dev #s-trip .th .tact > button[data-a="menu"]{
+  height:46px;
+  display:grid;
+  place-items:center;
+  align-self:center;
+}
+#dev #s-trip .th .tact > button[data-a="menu"] svg{display:block}
 #dev #s-trip .th .tact .gob:not(:disabled){
   --action-fill:var(--glass-control-bg)!important;
   --action-ink:var(--ink)!important;
