@@ -47,6 +47,31 @@ document.addEventListener('scroll',e=>{
 const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;else st.push(id);upd();if(!ROOT[id])$('#s-'+id).scrollTop=0};
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
+/* Trip details: enter by moving right (from the left edge), keeping the
+   originating Trips page painted underneath. Back uses the existing
+   rightward exit animation. Respect reduced-motion preferences. */
+const goTripSwipeRight=()=>{
+ const fromId=topId();
+ if(fromId==='trip'){go('trip');return}
+ const parent=$('#s-'+fromId),screen=$('#s-trip');
+ if(!parent||!screen){go('trip');return}
+ parent.classList.add('trip-enter-parent');
+ screen.classList.add('trip-enter');
+ let finished=false;
+ const cleanup=()=>{
+  if(finished)return;
+  finished=true;
+  screen.removeEventListener('animationend',onEnd);
+  screen.classList.remove('trip-enter');
+  parent.classList.remove('trip-enter-parent');
+ };
+ const onEnd=e=>{if(e.target===screen)cleanup()};
+ screen.addEventListener('animationend',onEnd);
+ go('trip');
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)cleanup();
+ else setTimeout(cleanup,360);
+};
+
 function tab(t){const same=S.tab==t;$('#app').classList.add('nt');if(same)S.stack[t]=[t];else{S.prev=S.tab;S.tab=t}render(t);upd();requestAnimationFrame(()=>requestAnimationFrame(()=>$('#app').classList.remove('nt')))}
 /* Pick toast foreground from the actual rendered surface color.
    Alpha is composited over Roam's pale app canvas before luminance is measured. */
