@@ -556,6 +556,23 @@
 #dev .tag-query .tag2 button{width:20px;height:20px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;position:relative;z-index:3}
 #dev .tag-query .tag2 button svg{width:11px;height:11px}
 
+/* New Trip > Invite friends: hide the browser-provided datalist arrow
+   that appears on hover/focus. Keep its type-ahead suggestions and the
+   component-library plus button, selected chips and keyboard Enter flow. */
+#dev #s-form #tq-coll{
+  -webkit-appearance:none;
+  appearance:none;
+}
+#dev #s-form #tq-coll::-webkit-calendar-picker-indicator,
+#dev #s-form #tq-coll::-webkit-list-button{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  width:0!important;
+  padding:0!important;
+}
+#dev #s-form #tq-coll::-moz-list-button{display:none!important}
+
 /* ---------- PILL ACTIONS · REGULAR 14 ----------
    Create trip (#fab), Add a new activity (#fab on the vote step) and
    Profile > Save changes (#psave / .btn[data-a="psave"]) follow the
