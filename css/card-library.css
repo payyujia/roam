@@ -921,8 +921,8 @@
    controlled by aria-checked and its existing checkbox treatment. */
 @media (hover:hover) and (pointer:fine){
   #dev #lyc.form-collections-sheet .form-collection-sheet-list .cx:hover{
-    /* Deliberately different from the nearly-white frosted footer. */
-    background:rgba(109,182,255,.16);
+    /* Match ROAM menu hover; inset rows and footer gap keep it distinct. */
+    background:rgba(255,255,255,.45);
   }
 }
 @media (prefers-reduced-motion:reduce){
@@ -935,8 +935,8 @@
 }
 #dev #lyc.form-collections-sheet .form-collection-sheet-footer{
   flex:none;padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px));
-  /* A subtle boundary complements the inset Sky-tinted options and
-     the 12px list-to-footer gap, without changing the footer material. */
+  /* A subtle boundary and 12px spacing separate the inset white-hover
+     collection options from the fixed frosted Done footer. */
   border-top:1px solid rgba(91,104,120,.18);
   background:linear-gradient(
     to bottom,
