@@ -31,8 +31,11 @@ const Calendar=c=>{
 <div class="cal-wd" aria-hidden="true">${['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${g}</div><div class="rule"></div>
 <div class="cal-f"><div><div class="s">${calHint(c)}</div><div class="micro">${calSub(c)}</div></div><div class="cal-act"><button type="button" class="btn sec sm2" data-a="calclear">Clear</button><button type="button" class="btn sm2" data-a="calset"${c.a?'':' disabled'}>Set dates</button></div></div></div>`};
 
+/* The compact Create Trip fields use DD MMM YY, while the calendar and other
+   screens keep ROAM's existing full-date formatter. */
+const formatTripFieldDate=val=>{const d=p8(val);return `${String(d.getDate()).padStart(2,'0')} ${MN[d.getMonth()]} ${String(d.getFullYear()).slice(-2)}`};
 /* Date field: a button that opens the calendar. which = 'start' | 'end' */
-const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal}" aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' nov'}">${val?fd(p8(val),1):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
+const DateField=(which,label,val,err,invalid)=>`<div><span class="lb" id="dl-${which}">${label}</span><button type="button" class="fld glass dd-trigger${S.cal&&S.cal.on===which?' open':''}" data-a="calopen:${which}" aria-haspopup="dialog" aria-expanded="${!!S.cal}" aria-labelledby="dl-${which} dv-${which}"${invalid}><span id="dv-${which}" class="dd-val${val?'':' nov'}">${val?formatTripFieldDate(val):'Select date'}</span>${ic('calendar',17)}</button>${err}</div>`;
 
 Object.assign(A,{
  ddadd:id=>{S.dd=null;DDP['+'+id]&&DDP['+'+id]();rr()},
