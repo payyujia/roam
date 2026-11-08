@@ -3,7 +3,14 @@ const Bullet=(t,z='')=>`<span class="bl ${z} l-${t.c}" aria-hidden="true">${t.b}
 const PH={hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b7833e8f5570',game:'photo-1511512578047-dfb367046420',jb:'photo-1519501025264-65ba15a82390',cn:'photo-1508804185872-d7badad00f7d',laz:'photo-1507525428034-b723cf961d3e',nan:'photo-1544025162-d76694265947',sun:'photo-1470252649378-9c29740c9fa8'};
 const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f','photo-1441974231531-c6227db76b6e'];
 const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
-const Cover=(t,z='m')=>`<div class="cover z-${z} l-${t.c}" aria-hidden="true">${Pic(PH[t.id],t.n,z=='l'||z=='xl'?600:240)}</div>`;
+/* MacRitchie Hike uses the exact same photo source and backup as its first map pin.
+   All other trip covers retain their existing imagery. */
+const Cover=(t,z='m')=>{
+ const image=t.id==='hike'
+  ? `<img src="${esc(activityPhotoSource({n:'MacRitchie Reservoir Park'},t))}" alt="" decoding="async" onerror="photoLoadFallback(this,'${esc(activityPhotoBackup({n:'MacRitchie Reservoir Park'}))}')">`
+  : Pic(PH[t.id],t.n,z==='l'||z==='xl'?600:240);
+ return `<div class="cover z-${z} l-${t.c}" aria-hidden="true">${image}</div>`;
+};
 /* Local illustrated profile pictures: shared by trip members, friends, and the profile tab. */
 /* Photographic demo profiles. Photos are loaded from Unsplash, not AI illustrations. */
 const AVATAR={
