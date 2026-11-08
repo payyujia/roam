@@ -1,4 +1,14 @@
 /* ===== CHAT + PROFILE (v3 views, override the legacy ones in views.js) ===== */
+/* Shared colour dots for profile dropdown options. These are used by the
+   Account, Travel pace and Saved reels detail views. The undefined constant
+   previously threw during V.pdet() rendering, leaving the Account card
+   apparently unresponsive despite its valid pdet:acct action. */
+const TRIPDOT=[
+ 'var(--sky-500)',
+ 'var(--coral-500)',
+ 'var(--amber)',
+ 'var(--teal)'
+];
 /* Each message's real sent time lives at m[5]. Older demo conversations
    had only relative labels ("2m"/"1h"/"Mon"), not recorded timestamps.
    Estimate recent demo times once per page session for the sample UI; keep
