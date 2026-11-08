@@ -68,6 +68,8 @@ const TransportCheck=(key,label,subtitle,values)=>{
  <span class="checkbox${checked?' on':''}" aria-hidden="true">${checked?'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':''}</span>
  </button>`;
 };
+/* Count configured preference categories, not individual transport checkboxes. */
+const travelPreferenceCount=p=>Number(!!p.pace)+Number(Array.isArray(p.move)?p.move.length>0:!!p.move);
 const pTags=(k,ph,sg,note)=>`<div class="pad" style="margin-top:12px">${note?`<p class="cap" style="margin-bottom:12px">${note}</p>`:''}${TagBox(k,S.p[k],ph,sg)}</div>`;
 /* Dietary needs share the exact Interests screen components and layout.
    Unlike the fixed Interests catalogue, dietary needs also allow custom entries. */
@@ -189,7 +191,7 @@ const ProfilePreferencePicker=k=>{
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
- style:{t:'Travel preferences',i:'compass',c:'orange',v:()=> '2 preferences set',b:()=>{const p=S.p,selected=Array.isArray(p.move)?p.move:[p.move].filter(Boolean);return `<div class="fl travel-preferences-form" style="margin-top:12px">
+ style:{t:'Travel preferences',i:'compass',c:'orange',v:()=>{const count=travelPreferenceCount(S.p);return `${count} ${count===1?'preference':'preferences'} set`},b:()=>{const p=S.p,selected=Array.isArray(p.move)?p.move:[p.move].filter(Boolean);return `<div class="fl travel-preferences-form" style="margin-top:12px">
 <div class="travel-setting-group"><div class="travel-setting-label">Travel pace</div>
 <div class="travel-pace-dropdown">${Dropdown({id:'travel-pace',aria:'Travel pace',value:p.pace,opts:[{v:'Chill',t:'Chill',dot:TRIPDOT[0]},{v:'Balanced',t:'Balanced',dot:TRIPDOT[1]},{v:'Packed',t:'Packed',dot:TRIPDOT[2]}],pick:v=>{S.p.pace=v;pd();render('pdet')}})}</div></div>
 <div class="travel-setting-group"><div class="travel-setting-label" id="travel-transport-label">Transport preferences</div>
