@@ -1827,18 +1827,17 @@ body{font-weight:500}
 #dev #mc .nvh-big svg{flex:none;width:32px;height:32px;color:var(--ink)}
 #dev #mc .nvh-big span{align-self:flex-end;padding-bottom:6px}
 #dev #mc .nvh-big b{font-size:52px;line-height:.95;font-weight:800;letter-spacing:-.06em}
-/* At the first stop, this is a meeting-point label rather than a
-   distance metric. Use the Component Library H2 scale so it fits
-   beside route-preview metadata without changing subsequent ETA cards. */
-#dev #mc .nvh-big.meeting-point b{
-  font-family:var(--font);
-  font-size:23px;
+/* Keep the original large navigation metric layout for the scheduled
+   meet-up, without using an invented 50 m distance. */
+#dev #mc .nvh-big.meet-time{min-width:0;gap:8px}
+#dev #mc .nvh-big.meet-time b{
+  font-size:46px;
+  line-height:.95;
   font-weight:800;
-  line-height:1.2;
-  letter-spacing:-.03em;
+  letter-spacing:-.055em;
   white-space:nowrap;
 }
-#dev #mc .nvh-big.meeting-point{min-width:0}
+#dev #mc .nvh-big.meet-time span{font-size:18px}
 
 #dev #mc .nvh-big span{font-size:18px;font-weight:800;letter-spacing:-.02em}
 #dev #mc .nvh-meta{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted)}
