@@ -123,3 +123,19 @@
   background:var(--coral-200)!important;
   color:var(--ink)!important;
 }
+
+/* Map header actions: align Close trip and View alternatives to the same
+   44px pill height, 20px icon box and 8px icon/label spacing. This is
+   scoped to the map toolbar; Activity filter chips retain their library size. */
+#dev #s-map .mtop2 .mrow :is(.chip,.vbtn){
+  height:44px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+#dev #s-map .mtop2 .mrow :is(.chip,.vbtn)>svg{
+  display:block;
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+}
