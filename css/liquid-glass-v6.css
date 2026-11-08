@@ -2079,7 +2079,7 @@ body{font-weight:500}
 #dev :is(#s-trip,#lyc) .ban>div>.cap{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
 
 
-/* MACRITCHIE · visitor reviews — unboxed editorial list */
+/* PLACE DETAILS · reusable sample visitor reviews — unboxed editorial list */
 #dev .mac-review-section{
   margin:18px 24px 22px;
   padding:0;
@@ -2097,6 +2097,24 @@ body{font-weight:500}
 #dev .mac-review-score{flex:none;display:flex;align-items:baseline;gap:3px}
 #dev .mac-review-score>strong{font-size:23px;line-height:1.2;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
 #dev .mac-review-score>span{font-size:12px;line-height:16px;font-weight:500;color:var(--muted)}
+#dev .mac-review-count{
+ display:flex;
+ align-items:center;
+ gap:7px;
+ margin:0 0 5px;
+ font-size:12px;
+ font-weight:500;
+ line-height:16px;
+ color:var(--muted);
+}
+#dev .mac-review-count-dot{
+ display:inline-block;
+ flex:none;
+ width:6px;
+ height:6px;
+ border-radius:50%;
+ background:var(--sky-500);
+}
 #dev .mac-review-section .stars{color:var(--amber)!important}
 #dev .mac-review-section .stars svg{width:16px;height:16px;fill:currentColor;stroke:currentColor;filter:none}
 #dev .mac-review-list{display:grid;gap:0}
