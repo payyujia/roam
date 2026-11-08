@@ -44,13 +44,13 @@ const routeChangeCard=t=>{
  const otherName=esc(pn(fk.owner))+'’s path';
  const rows=changed.map(i=>{
   const next=fk.stops[i],prior=next.from||(baseStops(t)[i]&&baseStops(t)[i].n)||'Original stop';
-  return \`<div class="route-change-pair">
-   <div class="route-change-cell"><span class="route-change-stop-label">Stop \${i+1}</span><b title="\${esc(prior)}">\${esc(prior)}</b></div>
-   <div class="route-change-cell"><span class="route-change-stop-label">Replacement</span><b title="\${esc(next.n)}">\${esc(next.n)}</b></div>
-  </div>\`;
+  return `<div class="route-change-pair">
+   <div class="route-change-cell"><span class="route-change-stop-label">Stop ${i+1}</span><b title="${esc(prior)}">${esc(prior)}</b></div>
+   <div class="route-change-cell"><span class="route-change-stop-label">Replacement</span><b title="${esc(next.n)}">${esc(next.n)}</b></div>
+  </div>`;
  }).join('');
- return \`<section class="route-change-card glass-surface" aria-label="Alternate route with \${changed.length} changed \${changed.length==1?'stop':'stops'}">
-  <div class="route-change-head"><div class="gr"><b>Route changed</b><span class="cap sm">\${changed.length} \${changed.length==1?'stop differs':'stops differ'} from the main path</span></div></div>
+ return `<section class="route-change-card glass-surface" aria-label="Alternate route with ${changed.length} changed ${changed.length==1?'stop':'stops'}">
+  <div class="route-change-head"><div class="gr"><b>Route changed</b><span class="cap sm">${changed.length} ${changed.length==1?'stop differs':'stops differ'} from the main path</span></div></div>
   <div class="route-change-fork" role="img" aria-label="One route branches into the original path and an alternate path">
    <svg viewBox="0 0 120 104" focusable="false" aria-hidden="true">
     <path class="route-change-stem" d="M60 94V55"/>
@@ -58,9 +58,9 @@ const routeChangeCard=t=>{
     <path class="route-change-alt" d="M60 55C60 30 75 24 94 24H102M88 12L102 24L88 36"/>
    </svg>
   </div>
-  <div class="route-change-path-labels"><span>Main path</span><span>\${otherName}</span></div>
-  <div class="route-change-pairs">\${rows}</div>
- </section>\`;
+  <div class="route-change-path-labels"><span>Main path</span><span>${otherName}</span></div>
+  <div class="route-change-pairs">${rows}</div>
+ </section>`;
 };
 
 /* ---------- trip page hooks ---------- */
