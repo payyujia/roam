@@ -19,8 +19,8 @@ const navSheet=()=>{
    metric=distParts?distParts[0]:'—',
    unit=distParts?distParts.slice(1).join(' '):'',
    modeIcon=g.hike||g.ic==='walk'?'walk':g.ic==='car'?'car':meet?'map-pin':g.ic,
-   detail=hike&&cu===0?'Meet at main entrance'
-    :hike&&cu===1?'Via forest trails · approx. 2 hr'
+   detail=hike&&cu===0?'Meet at Lornie Road Entrance'
+    :hike&&cu===1?'Via forest trails'
     :hikeToLunch?'Then transfer to The Roti Prata House for lunch'
     :g.text||'Travel details unavailable';
   return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(modeIcon,32)}<b>${metric}${unit?' '+unit:''}</b></div><div class="nvh-to">to ${esc(c.n)}</div><div class="nvh-meta"><span>${esc(detail)}</span></div></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
