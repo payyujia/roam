@@ -161,13 +161,80 @@ function mapAfter(){
  if(M.key!==mapKey()){mapReframe(true);return}
  showMapRecenter();mapDraw();
 }
-/* drag to pan, wheel to zoom */
-const MD={on:0,x:0,y:0,dx:0,dy:0,moved:0,t:0};
-document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb,.map-recenter')||(e.pointerType=='mouse'&&e.button))return;cancelAnimationFrame(M.raf);Object.assign(MD,{on:1,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0})});
-addEventListener('pointermove',e=>{if(!MD.on)return;MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`});
-addEventListener('pointerup',()=>{if(!MD.on)return;MD.on=0;if(MD.moved){const[cx,cy]=MERC(M.lat,M.lng,M.z);[M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);$('#mpl').style.transform='';$('#mp').classList.remove('drag');M.moved=true;showMapRecenter();mapDraw();MD.t=Date.now()}});
+/* Pointer drag, iPhone two-finger pinch zoom, and desktop wheel zoom.
+   Pinching keeps the geographic point under the two fingers stationary. */
+const MD={on:0,id:null,x:0,y:0,dx:0,dy:0,moved:0,t:0};
+const MAP_TOUCH={points:new Map(),distance:0,z:0,anchor:null};
+const mapTouchPair=()=>[...MAP_TOUCH.points.values()].slice(0,2);
+const mapTouchMetric=()=>{
+ const [a,b]=mapTouchPair();
+ return {distance:Math.max(1,Math.hypot(b.x-a.x,b.y-a.y)),x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+};
+document.addEventListener('pointerdown',e=>{
+ if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb,.map-recenter')||(e.pointerType==='mouse'&&e.button))return;
+ cancelAnimationFrame(M.raf);
+ if(e.pointerType==='touch'){
+  MAP_TOUCH.points.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(MAP_TOUCH.points.size>=2){
+   if(MD.on&&MD.moved){
+    const [cx,cy]=MERC(M.lat,M.lng,M.z);
+    [M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);
+    $('#mpl').style.transform='';
+   }
+   MD.on=0;MD.moved=1;MD.t=Date.now();
+   $('#mp').classList.remove('drag');
+   const p=mapTouchMetric(),rect=$('#mp').getBoundingClientRect();
+   MAP_TOUCH.distance=p.distance;MAP_TOUCH.z=M.z;
+   const [cx,cy]=MERC(M.lat,M.lng,M.z);
+   MAP_TOUCH.anchor=UNMERC(cx+p.x-rect.left-rect.width/2,cy+p.y-rect.top-rect.height/2,M.z);
+   return;
+  }
+ }
+ Object.assign(MD,{on:1,id:e.pointerId,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0});
+});
+addEventListener('pointermove',e=>{
+ if(MAP_TOUCH.points.has(e.pointerId)){
+  MAP_TOUCH.points.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(MAP_TOUCH.points.size>=2&&MAP_TOUCH.distance>0&&MAP_TOUCH.anchor){
+   const p=mapTouchMetric(),rect=$('#mp').getBoundingClientRect();
+   M.z=Math.max(3,Math.min(17,MAP_TOUCH.z+Math.log2(p.distance/MAP_TOUCH.distance)));
+   const [x,y]=MERC(MAP_TOUCH.anchor[0],MAP_TOUCH.anchor[1],M.z);
+   [M.lat,M.lng]=UNMERC(x-(p.x-rect.left-rect.width/2),y-(p.y-rect.top-rect.height/2),M.z);
+   M.moved=true;showMapRecenter();mapDraw();
+   return;
+  }
+ }
+ if(!MD.on||MD.id!==e.pointerId)return;
+ MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;
+ if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}
+ if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`;
+});
+const mapPointerEnd=e=>{
+ if(MAP_TOUCH.points.has(e.pointerId)){
+  MAP_TOUCH.points.delete(e.pointerId);
+  if(MAP_TOUCH.distance){
+   MAP_TOUCH.distance=0;MAP_TOUCH.anchor=null;MD.on=0;MD.moved=1;MD.t=Date.now();
+   return;
+  }
+ }
+ if(!MD.on||MD.id!==e.pointerId)return;
+ MD.on=0;
+ if(MD.moved){
+  const [cx,cy]=MERC(M.lat,M.lng,M.z);
+  [M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);
+  $('#mpl').style.transform='';$('#mp').classList.remove('drag');
+  M.moved=true;showMapRecenter();mapDraw();MD.t=Date.now();
+ }
+};
+addEventListener('pointerup',mapPointerEnd);
+addEventListener('pointercancel',mapPointerEnd);
 document.addEventListener('click',e=>{if(MD.moved&&Date.now()-MD.t<120){e.stopPropagation();e.preventDefault();MD.moved=0}},true);
-document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.map-recenter'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));M.moved=true;showMapRecenter();mapDraw()},{passive:false});
+document.addEventListener('wheel',e=>{
+ if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.map-recenter'))return;
+ e.preventDefault();
+ M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));
+ M.moved=true;showMapRecenter();mapDraw();
+},{passive:false});
 
 /* Keep the camera fitted when the physical viewport changes size. */
 addEventListener('resize',()=>{if($('#s-map')?.classList.contains('on'))mapReframe(false)});
