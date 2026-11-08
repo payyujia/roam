@@ -15,7 +15,9 @@ const mapTone=t=>MAP_TONES[T.indexOf(t)%MAP_TONES.length];
 const forkTone=t=>mapTone(t)==='amber'?'rose':'amber';
 /* Overview map only plots trips that are confirmed with a solid itinerary (voting finished); drafts stay off the map. */
 const geoTrips=()=>OV().filter(t=>fin(t)&&allPts(t).every(p=>hav(p,HOME)<150));
-const live=t=>dd(t.date)<=1&&fin(t);
+/* Navigating is a deliberate user action: a ready itinerary starts immediately,
+   even when the trip date is more than one day away. No GPS is inferred. */
+const live=t=>fin(t);
 const PIN_RIM='<svg class="pn-rim" viewBox="0 0 46 54" aria-hidden="true"><path d="M15 .6H31A14.4 14.4 0 0 1 45.4 15V31A14.4 14.4 0 0 1 31 45.4H27.3L24 51Q23 52.6 22 51L18.7 45.4H15A14.4 14.4 0 0 1 .6 31V15A14.4 14.4 0 0 1 15 .6Z"/></svg>';
 const MAP_DEFS=`<defs>
  <linearGradient id="pin-rim" x1="0%" y1="0%" x2="100%" y2="100%">
