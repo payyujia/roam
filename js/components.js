@@ -197,7 +197,7 @@ let _rio;
    position unless the viewer manually paused the clip. */
 const reelsOn=()=>S.tab==='reels'&&topId()==='reels'&&!$('#ly').classList.contains('open');
 /* Play only the reel that is mostly on screen; pause the rest (and everything when off the Reels tab). */
-function reelsSync(){$('#s-reels video.rvid').forEach(v=>{const a=v.closest('.rv'),go=reelsOn()&&a&&a.dataset.vis==='1'&&!v.dataset.userPaused&&!matchMedia('(prefers-reduced-motion: reduce)').matches;if(go){v.muted=true;if(v.paused){const p=v.play();p&&p.catch(()=>{})}}else if(!v.paused)v.pause()})}
+function reelsSync(){$$('#s-reels video.rvid').forEach(v=>{const a=v.closest('.rv'),go=reelsOn()&&a&&a.dataset.vis==='1'&&!v.dataset.userPaused&&!matchMedia('(prefers-reduced-motion: reduce)').matches;if(go){v.muted=true;if(v.paused){const p=v.play();p&&p.catch(()=>{})}}else if(!v.paused)v.pause()})}
 function reelsAfter(){
  const feed=$('#s-reels .rfeed');if(_rio)_rio.disconnect();if(!feed)return;
  feed.querySelectorAll('video.rvid').forEach(v=>{v.muted=true;v.addEventListener('playing',()=>v.classList.add('on'))});
