@@ -55,7 +55,7 @@ function scene(){
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
  /* Expanded navigation follows the active leg; collapsed navigation fits
     the whole itinerary. Route geometry and pins remain unchanged. */
- const fit=[...cur],focusLeg=lv&&!S.fk&&S.pc==null&&!!S.mx;
+ const fit=[...cur],focusLeg=!!S.nav&&!S.fk&&S.pc==null&&!!S.mx&&cur.length>0;
  if(focusLeg){
   const a=Math.max(0,cu-1),b=Math.min(cur.length,Math.max(cu+1,2));
   fit.splice(0,fit.length,...cur.slice(a,b));
@@ -72,7 +72,7 @@ function scene(){
   if(ch!=null)pins.push({pill:esc(pn(fk.owner)),tone:forkTone(t),ll:[(mp[ch][0]+fp[ch][0])/2,(mp[ch][1]+fp[ch][1])/2],a:`pathpick:fork:${t.id}`});
   Object.keys(fk.ch).forEach(i=>pins.push({dot:1,ll:(me=='fork'?mp:fp)[+i],tone:me=='fork'?'inactive':forkTone(t)}))}
  
- let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
+ let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=focusLeg?16:15;
  if(S.fk=='flag')pad.b=300;
  if(S.fk=='flag'||S.fk=='alts'){const i=S.fl[S.fi],c=cur[i],al=S.alts||[],AT=['rose','amber','sky5'];al.forEach((a,j)=>{pins.push({ll:a.ll,tone:AT[j],cls:'alt'+(S.ap===j&&S.fk=='alts'?' sel':''),icon:a.i,photo:ACTIVITY_PHOTO_BY_NAME[a.n]||null,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Option ${String.fromCharCode(65+j)}: ${a.n}`})});
   if(S.fk=='alts'&&S.ap!=null&&al[S.ap])pins.push({lab:esc(al[S.ap].n),ll:al[S.ap].ll});
@@ -163,11 +163,11 @@ function mapAfter(){
 }
 /* drag to pan, wheel to zoom */
 const MD={on:0,x:0,y:0,dx:0,dy:0,moved:0,t:0};
-document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb')||(e.pointerType=='mouse'&&e.button))return;cancelAnimationFrame(M.raf);Object.assign(MD,{on:1,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0})});
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.mtop2,.pop,.pb,.map-recenter')||(e.pointerType=='mouse'&&e.button))return;cancelAnimationFrame(M.raf);Object.assign(MD,{on:1,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0})});
 addEventListener('pointermove',e=>{if(!MD.on)return;MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`});
 addEventListener('pointerup',()=>{if(!MD.on)return;MD.on=0;if(MD.moved){const[cx,cy]=MERC(M.lat,M.lng,M.z);[M.lat,M.lng]=UNMERC(cx-MD.dx,cy-MD.dy,M.z);$('#mpl').style.transform='';$('#mp').classList.remove('drag');M.moved=true;showMapRecenter();mapDraw();MD.t=Date.now()}});
 document.addEventListener('click',e=>{if(MD.moved&&Date.now()-MD.t<120){e.stopPropagation();e.preventDefault();MD.moved=0}},true);
-document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));M.moved=true;showMapRecenter();mapDraw()},{passive:false});
+document.addEventListener('wheel',e=>{if(!e.target.closest('#mp')||e.target.closest('.fcard,.msh,.map-recenter'))return;e.preventDefault();M.z=Math.max(3,Math.min(17,M.z-e.deltaY*.0018));M.moved=true;showMapRecenter();mapDraw()},{passive:false});
 
 /* Keep the camera fitted when the physical viewport changes size. */
 addEventListener('resize',()=>{if($('#s-map')?.classList.contains('on'))mapReframe(false)});
