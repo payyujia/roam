@@ -6,7 +6,13 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
   if(stack.length<2||app.classList.contains('back-pending'))return;
   const exitingId=topId(),returningId=stack[stack.length-2];
   const fromForm=exitingId==='form';
-  const slideRight=exitingId==='thread'||exitingId==='pdet';
+  /* If Back is tapped during the entry motion, stop that motion before
+     starting the rightward exit so the animations cannot compete. */
+  if(exitingId==='trip'){
+    $('#s-trip')?.classList.remove('trip-enter');
+    $('.scr.trip-enter-parent').forEach(s=>s.classList.remove('trip-enter-parent'));
+  }
+  const slideRight=exitingId==='thread'||exitingId==='pdet'||exitingId==='trip';
   const exiting=slideRight?$('#s-'+exitingId):null;
   const returning=slideRight?$('#s-'+returningId):null;
   if(exiting&&returning){
@@ -48,7 +54,7 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
   upd();
   if(fromForm)requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')));
 },
-  open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;go('trip')},votefor:id=>{S.cur=id;S.step=1;goInstant('trip')},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
+  open:id=>{S.cur=id;S.step=fin(trip(id))?2:1;goTripSwipeRight()},votefor:id=>{S.cur=id;S.step=1;goTripSwipeRight()},step:i=>{S.step=+i;render('trip');chrome()},cat:k=>{S.cat=k;render('trip')},seg:k=>{S.seg=k;render('trips')},viewall:k=>{S.all=k;go('all')},
  vt:(i,d)=>{const v=trip(S.cur).stops[i];d=+d;if(v.m==d){d==1?v.u--:v.d--;v.m=0}else{v.m==1&&v.u--;v.m==-1&&v.d--;d==1?v.u++:v.d++;v.m=d}rr()},
  submit:()=>{const t=trip(S.cur);if(!t||t.vs.P)return;const missing=t.stops.filter(s=>s.m===0).length;if(!t.stops.length||missing){toast(missing?`Vote on ${missing} more activit${missing==1?'y':'ies'} before submitting`:'Add activities before submitting');return}const id=t.id;t.vs.P=1;rr();toast('Votes submitted');pend(t).forEach((k,j)=>setTimeout(()=>{t.vs[k]=1;if(!pend(t).length){t.st='final';toast('Everyone’s voted. Your itinerary is ready.');if(S.cur==id&&topId()=='trip')S.step=2}rr()},1700*(j+1)))},
  nudge:()=>toast('Nudge sent to '+pend(trip(S.cur)).filter(k=>k!='P').map(k=>PE[k][2]).join(' & ')),
