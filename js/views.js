@@ -117,7 +117,7 @@ const addHTML=()=>`<div class="mh"><h2 class="gr">${downvoted(trip(S.cur))?'Sugg
 const tripPick=gi=>`<div class="mh"><div class="gr"><h2>Add to which trip?</h2><div class="cap sm">${R[gi].n}</div></div>${IBtn('x','closeLy','Close')}</div>${UP().map(t=>Row({a:`addtrip:${gi}:${t.id}`,lead:Cover(t,'m'),title:t.n,sub:fd(t.date),trail:ic('plus',20)})).join('')}`;
 /* place info + compare */
 const RV=['5.6k','3.8k','2.1k','1.2k','890'];
-const PXr=gi=>{const r=R[gi],mac=r.n==='MacRitchie Reservoir';return{ph:mac?'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/960px-MacRitchie_Reservoir.jpg':RP[gi],n:r.n,loc:r.loc,sc:mac?4.9:+r.sc,rv:mac?'2.8k':(RV[gi]||'1k'),pr:r.pr,d:mac?'A lush reservoir escape with calm water views, shaded forest trails and the famous TreeTop Walk nearby.':r.d,c:r.c,i:r.i}};
+const PXr=gi=>{const r=R[gi],mac=r.n==='MacRitchie Reservoir';return{ph:mac?'assets/treetop-walk.jpg':RP[gi],n:r.n,loc:r.loc,sc:mac?4.9:+r.sc,rv:mac?'2.8k':(RV[gi]||'1k'),pr:r.pr,d:mac?'A lush reservoir escape with calm water views, shaded forest trails and the famous TreeTop Walk nearby.':r.d,c:r.c,i:r.i}};
 const PXs=p=>{let h=0;for(const ch of p.n)h=(h*31+ch.charCodeAt(0))%997;return{n:p.n,loc:p.s,sc:+(4.2+(h%8)/10).toFixed(1),rv:(1+h%40/10).toFixed(1)+'k',pr:p.k=='Eat'?'$10–$30':p.k=='Shop'?'$0–$50':'$5–$25',d:`${p.s}. ${byTxt(p.by)}.`,c:LINE[h%LINE.length],i:p.i}};
 const PXp=p=>{const gi=R.findIndex(x=>x.n==p.n);return gi>-1?PXr(gi):PXs(p)};
 const ana=x=>x.sc>=4.6?'This place is highly recommended!':x.sc>=4.4?'A well-rated pick that fits most trips.':'Mixed reviews. Worth comparing first.';
@@ -133,15 +133,83 @@ const Img=(x,dots=1)=>{
  return `<div class="iimg l-${x.c}">${image}<span class="loc">${ic('map-pin',14)}<span>${x.loc}</span></span>${dots?'<span class="dots"><i></i><i></i><i></i></span>':''}</div>`;
 };
 const Chk=()=>`<div class="pad ck"><button class="fld" data-a="cmpick">${ic('search',20)}<span class="gr">Check against saved places</span>${ic('bookmark',20)}</button></div>`;
-const macRitchieReviews=()=>`<section class="mac-review-section" aria-label="MacRitchie visitor reviews">
-
- <div class="mac-review-list">
-  <article class="mac-review-card"><div class="mac-review-stars">${Stars(5,'')}</div><p>“The reservoir views are gorgeous. It feels like you’ve left the city without ever leaving Singapore.”</p><div class="mac-review-author"><span class="mac-review-avatar">A</span><span><b>Alicia</b><small>Weekend hiker</small></span></div></article>
-  <article class="mac-review-card"><div class="mac-review-stars">${Stars(5,'')}</div><p>“TreeTop Walk is absolutely worth it. Go early, take your time and enjoy the canopy from above.”</p><div class="mac-review-author"><span class="mac-review-avatar">M</span><span><b>Marcus</b><small>Nature lover</small></span></div></article>
-  <article class="mac-review-card"><div class="mac-review-stars">${Stars(5,'')}</div><p>“Beautiful trails, peaceful water and so much wildlife. One of my favourite places to reset.”</p><div class="mac-review-author"><span class="mac-review-avatar">J</span><span><b>Jia</b><small>First-time visitor</small></span></div></article>
- </div>
-</section>`;
-const infoHTML=gi=>{const x=typeof gi==='number'?PXr(gi):gi,isMacRitchie=/^MacRitchie Reservoir(?: Park)?$/i.test(x.n),score=isMacRitchie?4.9:x.sc,review=Number.isFinite(score);return `<div class="mh"><h2 class="gr">${x.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${review?Stars(score,isMacRitchie?'2.8k':x.rv):'Not available yet'}</dd><dt>Price</dt><dd>${x.pr||'Not available yet'}</dd><dt>ROAM says</dt><dd>${review?ana({sc:score}):'There is not enough review information for an analysis yet.'}</dd></dl></div>${isMacRitchie?macRitchieReviews():''}<div style="height:24px"></div>${Chk()}`};
+/* Demo visitor-review content shared across reel place-detail pop-ups.
+   Each review is [quote, name, visitor type, optional star rating].
+   They are illustrative reviews, not verified customer submissions. */
+const REVIEWS={
+ 'MacRitchie Reservoir':{
+  head:'A little escape, loved by many.',
+  blurb:'Fresh air, still water and shaded forest trails.',
+  list:[
+   ['The reservoir views are gorgeous. It feels like you’ve left the city without ever leaving Singapore.','Alicia','Weekend hiker'],
+   ['TreeTop Walk is absolutely worth it. Go early, take your time and enjoy the canopy from above.','Marcus','Nature lover'],
+   ['Beautiful trails, peaceful water and so much wildlife. One of my favourite places to reset.','Jia','First-time visitor']
+  ]
+ },
+ 'Shark Restaurant':{
+  head:'Dinner with a little bite.',
+  blurb:'Watch the sharks feed up close.',
+  list:[
+   ['Watching the feeding up close was unreal. Our guide kept everything calm and explained so much.','Daniel','Visitor'],
+   ['The staff were relaxed and clear on safety. Our kids are still talking about it.','Mia','Family traveller'],
+   ['A bit pricey for a meal, but it’s a story you’ll tell for years. Book the early slot.','Mel','Food explorer']
+  ]
+ },
+ 'Burger Shot':{
+  head:'Build it your way, every time.',
+  blurb:'Pick your patty, stack your toppings and make it your own.',
+  list:[
+   ['Loved building my own burger. The sauce bar alone is worth the trip to Bugis.','Kai','Burger fan'],
+   ['Great for a group night out. Every burger came out different and delicious.','Sara','Group traveller'],
+   ['Fair prices, quick service and super friendly staff. Easy to come back.','Wei Ling','Local foodie']
+  ]
+ },
+ 'Dim Sum Ting':{
+  head:'Steaming hot, at any hour.',
+  blurb:'Baskets stacked to the ceiling and plenty to share.',
+  list:[
+   ['Came at 2am after a night out and every basket was piping hot. The har gow is a must.','Hazel','Night owl'],
+   ['So much choice and the prices are hard to beat. We ordered way too much.','Grace','Dim sum lover'],
+   ['Busy and loud, but brilliant. Go with friends so you can try more baskets.','Ethan','Weekend visitor']
+  ]
+ },
+ 'Skyline Terrace':{
+  head:'Golden hour, high above the city.',
+  blurb:'Rooftop views and a relaxed atmosphere.',
+  list:[
+   ['We arrived just before sunset and the whole sky turned gold. Magical.','Nadia','Sunset chaser'],
+   ['Relaxed vibe, friendly staff and drinks that are fairly priced for the view.','Tom','Date-night visitor'],
+   ['Perfect for photos. Arrive early to grab a spot by the edge.','Aisha','Travel photographer']
+  ]
+ },
+ 'Pour & Co':{
+  head:'Coffee with a little craft.',
+  blurb:'Hand-poured latte art and a cosy break.',
+  list:[
+   ['The latte art was almost too pretty to drink, and the flat white was silky smooth.','Lena','Coffee lover'],
+   ['Tiny spot, but the baristas make you feel at home. Great for people-watching.','Raj','Café regular'],
+   ['Reasonably priced and consistently good. My go-to stop before wandering Haji Lane.','Chloe','Local']
+  ]
+ }
+};
+const reviewsHTML=(x,score,count)=>{
+ const key=/^MacRitchie Reservoir(?: Park)?$/i.test(x.n)?'MacRitchie Reservoir':x.n;
+ const r=REVIEWS[key];
+ if(!r)return '';
+ const rating=Number(score),valid=Number.isFinite(rating);
+ return `<section class="mac-review-section" aria-label="Sample visitor reviews for ${esc(x.n)}">
+  <div class="mac-review-head">
+   <div class="mac-review-intro"><span class="mac-review-eyebrow">${ic('star',13)} COMMUNITY REVIEWS</span><h3>${esc(r.head)}</h3><p>${esc(r.blurb)}</p></div>
+   ${valid?`<div class="mac-review-score" aria-label="Average rating ${rating.toFixed(1)} out of 5"><strong>${rating.toFixed(1)}</strong><span>/ 5</span></div>`:''}
+  </div>
+  ${count?`<div class="mac-review-count"><span class="mac-review-count-dot" aria-hidden="true"></span>${esc(String(count))} visitor reviews</div>`:''}
+  <div class="mac-review-list">${r.list.map(([quote,name,who,stars=5])=>`<article class="mac-review-card">
+   <div class="mac-review-stars">${Stars(stars,'')}</div>
+   <p>“${esc(quote)}”</p><div class="mac-review-author"><span class="mac-review-avatar">${esc(name.slice(0,1))}</span><span><b>${esc(name)}</b><small>${esc(who)}</small></span></div>
+  </article>`).join('')}</div>
+ </section>`;
+};
+const infoHTML=gi=>{const x=typeof gi==='number'?PXr(gi):gi,isMacRitchie=/^MacRitchie Reservoir(?: Park)?$/i.test(x.n),score=isMacRitchie?4.9:x.sc,review=Number.isFinite(score);return `<div class="mh"><h2 class="gr">${x.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${review?Stars(score,isMacRitchie?'2.8k':x.rv):'Not available yet'}</dd><dt>Price</dt><dd>${x.pr||'Not available yet'}</dd><dt>ROAM says</dt><dd>${review?ana({sc:score}):'There is not enough review information for an analysis yet.'}</dd></dl></div>${reviewsHTML(x,score,isMacRitchie?'2.8k':x.rv)}<div style="height:24px"></div>${Chk()}`};
 const tripPlacePX=i=>{const t=trip(S.cur),s=t&&t.stops[+i];if(!s)return null;const ri=R.findIndex(r=>r.n.toLowerCase()===s.n.toLowerCase());if(ri>-1)return PXr(ri);const saved=SVL().find(p=>p.n.toLowerCase()===s.n.toLowerCase());if(saved)return PXp(saved);const mr=mockRating(s.n);return{ph:null,n:s.n,loc:s.s||'Location not listed',sc:+mr.sc,rv:mr.rv,pr:'$$',d:s.s||'Place details have not been added yet.',c:t.c,i:s.i}};
 const pickHTML=gi=>{const me=(typeof gi==='number'?PXr(gi):gi).n;return `<div class="mh">${IBtn('arrow-left','cmpback','Back')}<div class="gr"><h2>Check against</h2><div class="cap sm">From your saved places</div></div>${IBtn('x','closeLy','Close')}</div>${SVL().map((p,j)=>[p,j]).filter(([p])=>p.n!=me).map(([p,j])=>Row({a:'cmpto:'+j,lead:StopIc(p),title:p.n,sub:p.s,sub2:byTxt(p.by),trail:ic('chevron-right',20)})).join('')}`};
 const Col=(x,w)=>`<div class="cp l-${x.c}">${w?`<span class="win" role="img" aria-label="Higher rated">${ic('star',18,'currentColor')}</span>`:''}<b class="n">${x.n}</b>${Img(x,0)}<div><div class="cap sm">Review</div>${Number.isFinite(x.sc)?Stars(x.sc,x.rv):'<span class="cap sm">Not available yet</span>'}</div><div><div class="cap sm">Price</div><b>${x.pr||'Not available yet'}</b></div><div><div class="cap sm">Description</div><div class="ds">${x.d}</div></div></div>`;
