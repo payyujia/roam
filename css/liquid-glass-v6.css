@@ -1843,13 +1843,19 @@ body{font-weight:500}
 }
 #dev .sap .hrt::before{display:none}
 #dev .sap .hrt svg{display:block;width:24px;height:24px;overflow:visible}
-/* A smaller Like glyph in the existing accessible 44px action button. */
-#dev #s-reels .rv .rail .ib.heart svg{width:22px;height:22px}
+/* Match the Save and Share glyphs: 24px inside the existing 44px tap area. */
+#dev #s-reels .rv .rail .ib.heart svg{width:24px;height:24px}
 
 
-/* Reels typography follows docs/card-components.html (master type scale). */
+/* Reels typography follows docs/card-components.html (master type scale).
+   Headline uses H2 (23px) to keep more of the video visible. */
 #dev #s-reels .rtg button{font-family:var(--font)!important;font-size:16px!important;font-weight:700!important;line-height:22px!important}
-#dev #s-reels .rv h1{font-family:var(--font)!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important}
+#dev #s-reels .rv h1{font-family:var(--font)!important;font-size:23px!important;font-weight:800!important;line-height:1.2!important;letter-spacing:-.03em!important}
+/* Only the title/name/description gaps shrink to 8px. Preserve existing
+   avatar-to-title, description-to-pills, and pills-to-Info spacing. */
+#dev #s-reels .rv{gap:8px}
+#dev #s-reels .rv>.sap{margin-bottom:2px}
+#dev #s-reels .rv>.pills,#dev #s-reels .rv>.rinfo{margin-top:4px}
 #dev #s-reels .rv>div:not(.sap):not(.cap):not(.pills):not(.rail){font-size:14px!important;font-weight:500!important;line-height:1.5!important}
 #dev #s-reels .rv>div:not(.sap):not(.cap):not(.pills):not(.rail) b{font-size:16px!important;font-weight:700!important}
 #dev #s-reels .rv .cap{font-size:12px!important;font-weight:500!important;line-height:16px!important}
