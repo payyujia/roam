@@ -48,7 +48,12 @@ const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
    Prefer photos already used elsewhere in ROAM and matching real-world
    categories; the fallback icon displays if the image cannot load. */
 const ACTIVITY_PHOTO_BY_NAME={
- 'MacRitchie Reservoir':PH.hike,'MacRitchie Reservoir Park':PH.hike,'TreeTop Walk':PH.hike,'Lornie Trail':PH.hike,'The Roti Prata House':'unsplash:VfL0rUT9bOU',
+ 'MacRitchie Reservoir':PH.hike,
+ 'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/640px-MacRitchie_Reservoir.jpg',
+ 'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HSBC_TreeTop_Walk_2012_1012.jpg/640px-HSBC_TreeTop_Walk_2012_1012.jpg',
+ 'Lornie Trail':PH.hike,
+ // Restaurant photo pending the user's original image file; do not substitute AI art.
+ 'The Roti Prata House':'unsplash:VfL0rUT9bOU',
  'Books Actually':PH.read,'Tiong Bahru Bakery':RP[4],
  'Arcade at Bugis+':PH.game,'Burger Shot':RP[1],
  'The Loneliest Robot in Great Britain':'unsplash:Lv5o-Xixi4c',
@@ -65,6 +70,7 @@ const ACTIVITY_PHOTO_BY_NAME={
 const activityPhotoSource=(s,t)=>{
  const val=ACTIVITY_PHOTO_BY_NAME[s.n]||PH[t.id]||null;
  if(!val)return null;
+ if(/^https:\/\//.test(val))return val;
  return val.startsWith('unsplash:')
   ?`https://unsplash.com/photos/${encodeURIComponent(val.slice(9))}/download?force=true&w=960`
   :`https://images.unsplash.com/${val}?auto=format&fit=crop&w=960&q=75`;
