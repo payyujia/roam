@@ -287,7 +287,7 @@ ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Publ
     ${completed.length?`<div style="display:flex;flex-direction:column;gap:20px">${completed.map(t=>{
       const rating=Number(p.ratings?.[t.id]??(t.id==='sun'?p.rate:0))||0;
       return `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <div style="min-width:0"><button type="button" class="rating-trip-link" data-a="open:${t.id}" aria-label="View trip details for ${esc(t.n)}"><b>${esc(t.n)}</b><span class="cap sm">${rating?rating+' out of 5':'Tap a star'}</span></button></div>
+        <div class="rating-trip-info"><button type="button" class="rating-trip-link" data-a="open:${t.id}" aria-label="View trip details for ${esc(t.n)}"><b>${esc(t.n)}</b><span class="cap sm">${rating?rating+' out of 5':'Tap a star'}</span></button></div>
         <div class="rate" role="group" aria-label="Rate ${esc(t.n)}">${[1,2,3,4,5].map(n=>`<button type="button" aria-pressed="${n<=rating}" aria-label="Rate ${esc(t.n)} ${n} star${n===1?'':'s'}" data-a="prate:${t.id}:${n}">${ic('star',26,n<=rating?'currentColor':'none')}</button>`).join('')}</div>
       </div>`;
     }).join('')}</div>`:Empty('No completed trips yet','Finish a trip to rate it here.')}
