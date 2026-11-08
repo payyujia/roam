@@ -205,7 +205,6 @@ const profilePhotoMenuHTML=()=>`<div class="profile-photo-content">
   <button type="button" class="profile-photo-option" data-a="profilePhotoCamera">${ic('camera',20)}<span>Take Photo</span></button>
   <button type="button" class="profile-photo-option danger" data-a="profilePhotoRemove">${ic('trash',20)}<span>Remove Current Photo</span></button>
  </div>
- <p class="cap sm profile-photo-hint">Your profile photo changes when you tap Save changes.</p>
  <button type="button" class="btn sec profile-photo-cancel" data-a="profilePhotoCancel">Cancel</button>
  <input id="profile-photo-library" type="file" accept="image/*" hidden onchange="A.profilePhotoRead(this)">
  <input id="profile-photo-camera" type="file" accept="image/*" capture="user" hidden onchange="A.profilePhotoRead(this)">
