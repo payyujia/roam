@@ -62,7 +62,7 @@ const ACTIVITY_PHOTO_BY_NAME={
  'Tea & Tales Café':'https://images.unsplash.com/photo-1749214136520-38365aa2027d?auto=format&fit=crop&w=960&q=75',
  'The Little Gallery':'https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=960&q=75',
  'MacRitchie Reservoir':PH.hike,
- 'MacRitchie Reservoir Park':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
+ 'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/f/fb/MacRitchie_Reservoir.jpg',
  'TreeTop Walk':'assets/treetop-walk.jpg',
  'Lornie Trail':PH.hike,
  // Real photo supplied by the user; stored locally as a lightweight thumbnail.
@@ -80,11 +80,11 @@ const ACTIVITY_PHOTO_BY_NAME={
  'Marina South Pier':PH.laz,'Lazarus Beach':PH.laz,
  'Nando’s Plaza Singapura':PH.nan,'East Coast Park':PH.sun
 };
-/* MacRitchie images: primary photos from Singapore NParks; Commons backups
-   are genuine venue images (photo credit in source file pages).
-   The previous hardcoded thumbnails contained broken URLs. */
+/* MacRitchie Reservoir Park: restore the actual reservoir and boardwalk photo
+   from Wikimedia Commons (Calvin Teo, CC BY-SA 3.0); NParks forest photo is
+   now only a fallback. The shared source also powers its map pin and trip cover. */
 const ACTIVITY_PHOTO_BACKUP_BY_NAME={
- 'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/960px-MacRitchie_Reservoir.jpg',
+ 'MacRitchie Reservoir Park':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
  'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg/960px-Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg'
 };
 const activityPhotoBackup=s=>ACTIVITY_PHOTO_BACKUP_BY_NAME[s.n]||'';
