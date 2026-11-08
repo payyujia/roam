@@ -8,7 +8,7 @@ const navSheet=function(){
     const c=ms[cu],g=LEG(c),remaining=ms.length-cu,
       value=g.start?'Start':g.km?g.km.split(' ')[0]:g.m!=null?(g.m>=60?'~'+ +(g.m/60).toFixed(1):String(g.m)):'Next',
       unit=g.start?'':g.km?g.km.split(' ').slice(1).join(' '):g.m!=null?(g.m>=60?(g.hike?'hr hike':'hr'):'min'):'stop',
-      move=g.start?'Meet at '+c.n:g.vb+' to '+c.n,
+      move=g.start?'Meet at '+c.n:/then.*(?:travel|transport)/i.test(g.text)?'Exit trail, then travel to '+c.n:g.vb+' to '+c.n,
       detail=g.text||'Travel details not available',
       when=(g.start?'Meet ':'Planned arrival ')+tt(c.t);
     return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(g.ic,32)}<b>${value}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${when}</span></div></div><div class="nvh-r"><span class="status"><i></i>Route preview</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
