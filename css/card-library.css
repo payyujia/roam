@@ -817,6 +817,20 @@
 #dev #lyc.form-collections-sheet .form-collection-sheet-list{margin:0}
 #dev #lyc.form-collections-sheet .form-collection-sheet-list .cx{
   min-height:64px;padding:10px 24px;
+  border-radius:14px;
+  transition:background-color .15s ease;
+}
+/* Hover feedback is limited to pointer devices; touch selection stays
+   controlled by aria-checked and its existing checkbox treatment. */
+@media (hover:hover) and (pointer:fine){
+  #dev #lyc.form-collections-sheet .form-collection-sheet-list .cx:hover{
+    background:rgba(255,255,255,.45);
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  #dev #lyc.form-collections-sheet .form-collection-sheet-list .cx{
+    transition:none;
+  }
 }
 #dev #lyc.form-collections-sheet .form-collection-empty{
   padding:16px 24px;color:var(--muted);font-size:12px;line-height:18px;
