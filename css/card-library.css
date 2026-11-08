@@ -1137,19 +1137,18 @@
   border-radius:4px;
 }
 
-/* ACTIVITY VOTING CARDS — Card Components sizing and type hierarchy.
-   Keep info and vote controls in their own grid positions instead of
-   squeezing the 16px title into the narrow voting-controls column.
-   Rows share 24px gutters / 22px radius / 10x12px padding / min-height 84px.
-   Long activity titles may expand to two lines without overlapping controls. */
+/* ACTIVITY VOTING CARDS — one horizontal row, built from Card Components
+   tokens (84px min-height, 22px radius, 10x12px padding, 16/12 type).
+   Each row contains: activity icon | name + subtitle | Info + vote controls.
+   Long names can wrap within their column; actions never drop below it. */
 #dev #s-trip .vote-row{
   box-sizing:border-box;
   display:grid;
-  grid-template-columns:40px minmax(0,1fr) 92px;
-  grid-template-rows:auto 16px 36px;
-  column-gap:10px;
-  row-gap:2px;
+  grid-template-columns:40px minmax(0,1fr) auto;
+  grid-template-rows:auto;
   align-items:center;
+  column-gap:10px;
+  row-gap:0;
   width:calc(100% - 48px);
   min-height:var(--roam-card-min-height);
   padding:var(--roam-card-padding-y) var(--roam-card-padding-x);
@@ -1158,54 +1157,54 @@
 }
 #dev #s-trip .vote-row>.si{
   grid-column:1;
-  grid-row:1 / span 2;
-  align-self:center;
+  grid-row:1;
   justify-self:center;
+  align-self:center;
   box-sizing:border-box;
   width:40px;
   height:40px;
   border-radius:14px;
 }
 #dev #s-trip .vote-row .vote-content{
-  grid-column:2 / 4;
+  grid-column:2;
   grid-row:1;
-  align-self:center;
   min-width:0;
   width:100%;
-  padding-right:34px;
-  box-sizing:border-box;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;
 }
 #dev #s-trip .vote-row .vote-heading{
   display:block;
-  min-width:0;
   width:100%;
+  min-width:0;
 }
 #dev #s-trip .vote-row .vote-heading b{
   display:-webkit-box;
   -webkit-box-orient:vertical;
   -webkit-line-clamp:2;
-  width:100%;
   max-width:none;
   min-width:0;
   overflow:hidden;
+  overflow-wrap:anywhere;
   white-space:normal;
   text-overflow:ellipsis;
-  overflow-wrap:anywhere;
   font-family:var(--roam-card-title-family);
-  font-size:var(--roam-card-title-size);
+  font-size:var(--roam-card-title-size)!important;
   font-weight:var(--roam-card-title-weight);
   line-height:var(--roam-card-title-line-height);
   letter-spacing:var(--roam-card-title-letter-spacing);
 }
-#dev #s-trip .vote-row>.vote-subtitle{
-  grid-column:2 / 4;
-  grid-row:2;
-  align-self:center;
-  display:block;
-  min-width:0;
+#dev #s-trip .vote-row .vote-content>.vote-subtitle{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
   overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  white-space:normal;
+  overflow-wrap:break-word;
+  min-width:0;
   font-family:var(--roam-card-title-family);
   font-size:var(--roam-card-detail-size);
   font-weight:var(--roam-card-detail-weight);
@@ -1213,54 +1212,56 @@
   letter-spacing:0;
   color:var(--muted);
 }
-#dev #s-trip .vote-row>.vote-warning{
-  grid-column:2;
-  grid-row:3;
-  align-self:center;
+#dev #s-trip .vote-row .vote-content>.vote-warning{
+  display:block;
   min-width:0;
   font-family:var(--roam-card-title-family);
   font-size:var(--roam-card-status-size);
   font-weight:var(--roam-card-status-weight);
   line-height:var(--roam-card-status-line-height);
 }
-#dev #s-trip .vote-row .vote-info-btn{
+#dev #s-trip .vote-row .vote-actions{
   grid-column:3;
   grid-row:1;
-  align-self:center;
-  justify-self:end;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex:none;
+  gap:4px;
+}
+#dev #s-trip .vote-row .vote-info-btn{
+  flex:0 0 28px;
   box-sizing:border-box;
   width:28px;
-  height:28px;
+  height:36px;
   padding:0;
   display:grid;
   place-items:center;
 }
 #dev #s-trip .vote-row .vt{
-  grid-column:3;
-  grid-row:3;
-  align-self:center;
-  justify-self:end;
+  flex:none;
   box-sizing:border-box;
-  width:92px;
+  width:80px;
   display:grid;
-  grid-template-columns:repeat(2,44px);
+  grid-template-columns:repeat(2,38px);
   gap:4px;
   align-items:center;
 }
 #dev #s-trip .vote-row .vb{
   box-sizing:border-box;
-  width:44px;
+  width:38px;
   height:36px;
 }
 #dev #s-trip .vote-row:last-child{margin-bottom:100px}
 @media(max-width:360px){
   #dev #s-trip .vote-row{
-    grid-template-columns:36px minmax(0,1fr) 88px;
+    grid-template-columns:36px minmax(0,1fr) auto;
     column-gap:8px;
     padding:var(--roam-card-padding-y) var(--roam-card-padding-x-compact);
   }
   #dev #s-trip .vote-row>.si{width:36px;height:36px}
-  #dev #s-trip .vote-row .vt{width:88px;grid-template-columns:repeat(2,42px)}
-  #dev #s-trip .vote-row .vb{width:42px}
+  #dev #s-trip .vote-row .vote-actions{gap:2px}
+  #dev #s-trip .vote-row .vote-info-btn{width:26px;flex-basis:26px}
+  #dev #s-trip .vote-row .vt{width:76px;grid-template-columns:repeat(2,36px)}
+  #dev #s-trip .vote-row .vb{width:36px}
 }
-
