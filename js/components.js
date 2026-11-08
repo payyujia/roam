@@ -48,6 +48,12 @@ const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
    Prefer photos already used elsewhere in ROAM and matching real-world
    categories; the fallback icon displays if the image cannot load. */
 const ACTIVITY_PHOTO_BY_NAME={
+ // Genuine photo supplied by the real Studio Asobi pottery studio.
+ 'Studio Asobi':'https://i0.wp.com/studioasobi.com/wp-content/uploads/2014/09/Studio_Asobi_1_BTS_LowRes-102a-revised-e1573138075922.jpg?ssl=1',
+ // These are fictional demo venues: category-matched, royalty-free Unsplash
+ // illustrations, not photos claiming to show those exact businesses.
+ 'Tea & Tales Café':'https://images.unsplash.com/photo-1749214136520-38365aa2027d?auto=format&fit=crop&w=960&q=75',
+ 'The Little Gallery':'https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=960&q=75',
  'MacRitchie Reservoir':PH.hike,
  'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/MacRitchie_Reservoir.jpg/640px-MacRitchie_Reservoir.jpg',
  'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HSBC_TreeTop_Walk_2012_1012.jpg/640px-HSBC_TreeTop_Walk_2012_1012.jpg',
