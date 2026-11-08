@@ -729,9 +729,10 @@ body{font-weight:500}
 #dev #sb .sbb::after{background:rgba(255,255,255,.9)}
 #dev #sb .sbb i{background:#30343B}
 #dev #sb .sbb b{color:#fff;text-shadow:none}
-/* The tab bar's raised Trips circle protrudes 27px above the bar.
-   Reserve enough vertical space so it never covers the composer. */
-#dev #s-thread.flex{padding-bottom:142px}
+/* Align the composer controls' bottom edge with the shared Create trip button.
+   The composer has 8px bottom padding, so reserve 128px here to place the
+   input and send button at the same 136px bottom offset as #fab. */
+#dev #s-thread.flex{padding-bottom:128px}
 #dev #s-thread .comp{
   grid-template-columns:minmax(0,1fr) 50px;
   gap:10px;
@@ -753,7 +754,7 @@ body{font-weight:500}
   padding:0;
 }
 @media(max-height:650px){
-  #dev #s-thread.flex{padding-bottom:136px}
+  #dev #s-thread.flex{padding-bottom:128px}
 }
 
 
