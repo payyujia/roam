@@ -11,7 +11,7 @@ const navSheet=function(){
       move=g.start?'Meet at '+c.n:g.vb+' to '+c.n,
       detail=g.text||'Travel details not available',
       when=(g.start?'Meet ':'Planned arrival ')+tt(c.t);
-    return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big${g.start?' meeting-point':''}">${ic(g.ic,32)}<b>${value}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${when}</span></div></div><div class="nvh-r"><span class="status"><i></i>Route preview</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
+    return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big${g.start?' meeting-point':''}">${ic(g.ic,32)}<b>${value}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${when}</span></div></div><div class="nvh-r"><span class="status"><i></i>${S.nav?"Navigation mode":"Route preview"}</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
 <div class="nvt"><span class="nvt-ic">${ic(g.ic,22)}</span><div class="gr"><b>${esc(move)}</b><div class="cap sm">${esc(detail)}${t.id==='hike'&&g.hike?' · Follow marked trails':''}</div></div></div>
 ${NavTL(t,ms,cu,lv)}`;
   }
