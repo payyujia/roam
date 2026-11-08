@@ -837,9 +837,9 @@
 }
 #dev #lyc.form-collections-sheet .form-collection-sheet-footer{
   flex:none;padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px));
-  /* Let the scrollable list blend into the sticky action area. Keep the
-     same Sunrise Frost blue as the sheet, only gradually more opaque. */
-  border-top:0;
+  /* Keep the Sunrise Frost footer, with a subtle separator so the last
+     collection's hover highlight does not blend into the Done area. */
+  border-top:1px solid rgba(91,104,120,.12);
   background:linear-gradient(
     to bottom,
     rgba(243,248,255,.04) 0%,
