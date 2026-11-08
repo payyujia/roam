@@ -43,6 +43,8 @@
 /* New Trip: compact Destination → Invite friends spacing with the library's
    12px stack gap; retain 20px between subsequent independent sections. */
 #dev #s-form .new-trip-core-fields{display:flex;flex-direction:column;gap:12px}
+/* Outer form gap is 20px; add 4px only above Recommend activities for a 24px gap. */
+#dev #s-form .new-trip-recommend-activities{margin-top:4px}
 /* Collections use the .cx checkbox rows from the alternatives tray; cancel the form's side padding so rows align with the fields */
 #dev #s-form .cxg{margin:0 -24px}
 
