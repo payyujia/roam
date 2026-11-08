@@ -1831,15 +1831,18 @@ body{font-weight:500}
 
 #dev .sap{display:flex;align-items:center;padding:0 0 0 10px;margin-bottom:-2px}
 #dev .sap .sa{position:relative;display:inline-flex;margin-left:-8px}
-#dev .sap .sa .av{width:var(--roam-card-media-width,56px);height:var(--roam-card-media-width,56px);font-size:22px;color:var(--ink);}
+#dev .sap .sa .av{width:44px;height:44px;font-size:18px;color:var(--ink);}
 #dev .sap .sa .av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
-#dev .sap .hrt{position:absolute;top:-10px;right:-10px;z-index:3;width:36px;height:36px;display:grid;place-items:center;
-  clip-path:path("M 18 34 C 14 31 2 23 2 13 C 2 3 14 0 18 9 C 22 0 34 3 34 13 C 34 23 22 31 18 34 Z");
+#dev .sap .hrt{position:absolute;top:-6px;right:-6px;z-index:3;width:24px;height:24px;display:grid;place-items:center;
+  /* Scale the heart silhouette along with its container (CSS path is absolute pixels). */
+  clip-path:path("M12 22.7 C9.3 20.7 1.3 15.3 1.3 8.7 C1.3 2 9.3 0 12 6 C14.7 0 22.7 2 22.7 8.7 C22.7 15.3 14.7 20.7 12 22.7 Z");
   background:linear-gradient(135deg,var(--rose),var(--coral-500));
   filter:drop-shadow(0 3px 4px rgba(40,60,100,.3))}
 #dev .sap .hrt::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0) 58%)}
 #dev .sap .hrt svg{display:none}
+/* A smaller Like glyph in the existing accessible 44px action button. */
+#dev #s-reels .rv .rail .ib.heart svg{width:22px;height:22px}
 
 
 /* Reels typography follows docs/card-components.html (master type scale). */
