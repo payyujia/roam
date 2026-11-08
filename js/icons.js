@@ -33,9 +33,10 @@ Object.assign(I,{
  'reel-heart':'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
 });
 
-/* Activity category icons for compact voting rows and the details header.
-   Keep the existing 24px outline and 2px stroke from the ROAM icon system. */
+/* Activity category icons shared by filters, voting, saved places, itineraries,
+   and activity details. Keep the existing 24px outline/2px stroke system. */
 Object.assign(I,{
+ 'layout-grid':'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
  utensils:'<path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M18 22V2c-3 2.7-5 6.8-5 11h5"/>',
  store:'<path d="M3 10v11h18V10M3 4h18l2 6H1l2-6zM9 21v-7h6v7"/>',
  ticket:'<path d="M3 7a2 2 0 0 0-2 2v2a2.5 2.5 0 0 1 0 5v2a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-2a2.5 2.5 0 0 1 0-5V9a2 2 0 0 0-2-2H3zM14 7v13" />',
