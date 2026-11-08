@@ -1332,3 +1332,18 @@
     inset 0 1px 0 rgba(255,255,255,.70)!important;
   opacity:1;
 }
+
+/* Vote step · disabled Submit votes.
+   Keep the native disabled behaviour, but visually separate the inactive
+   action from its translucent banner with cool neutral glass and a fine rim.
+   Scoped to the voting banner; other disabled buttons are unaffected. */
+#dev #s-trip .ban .btn[data-a="submit"]:disabled{
+  --action-fill:rgba(229,236,245,.82)!important;
+  --action-ink:var(--muted)!important;
+  --action-shadow:0 3px 10px rgba(40,100,180,.08),
+    inset 0 0 0 1px rgba(91,104,120,.24),
+    inset 0 1px 0 rgba(255,255,255,.70)!important;
+  color:var(--muted)!important;
+  opacity:1!important;
+  cursor:not-allowed;
+}
