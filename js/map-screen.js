@@ -21,9 +21,10 @@ const navSheet=()=>{
    modeIcon=g.hike||g.ic==='walk'?'walk':g.ic==='car'?'car':meet?'map-pin':g.ic,
    detail=hike&&cu===0?'Meet at Lornie Road Entrance'
     :hike&&cu===1?'Via forest trails'
-    :hikeToLunch?'Then transfer to The Roti Prata House for lunch'
-    :g.text||'Travel details unavailable';
-  return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(modeIcon,32)}<b>${metric}${unit?' '+unit:''}</b></div><div class="nvh-to">to ${esc(c.n)}</div><div class="nvh-meta"><span>${esc(detail)}</span></div></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
+    :hikeToLunch?'Then walk to The Roti Prata House for lunch'
+    :g.text||'Travel details unavailable',
+   targetName=hikeToLunch?'Venus Drive exit':c.n;
+  return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(modeIcon,32)}<b>${metric}${unit?' '+unit:''}</b></div><div class="nvh-to">to ${esc(targetName)}</div><div class="nvh-meta"><span>${esc(detail)}</span></div></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
  ${NavTL(t,ms,cu,lv)}`;
  }
  const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`${ms.length?'Preview · opens the day before':'No stops in the itinerary.'} <button class="lk" data-a="opentrip">Open trip</button>`;
@@ -45,7 +46,7 @@ const swapCard=t=>{const i=S.fl[S.fi],s=mstops(t)[i],rs=S.fr[i]||[],n=S.fl.lengt
 const flagCard=swapCard,altCard=swapCard;
 /* ---------- stop card on the map: the library "Map · replacement" place card minus Swap in ---------- */
 const stopPX=(t,s)=>{const ri=R.findIndex(r=>r.n.toLowerCase()===s.n.toLowerCase());if(ri>-1)return PXr(ri);const saved=SVL().find(p=>p.n.toLowerCase()===s.n.toLowerCase());if(saved)return PXp(saved);const mr=mockRating(s.n);return{ph:null,n:s.n,loc:s.s||'Location not listed',sc:+mr.sc,rv:mr.rv,pr:'$$',d:s.s||'Place details have not been added yet.',c:t.c,i:s.i}};
-const StopCard=(s,i,t)=>{const photo=activityPhotoSource(s,t),backup=activityPhotoBackup(s),cc=s.k==='Eat'?'coral':s.k==='Shop'?'rose':'sky',mi=/walk/i.test(s.tr||'')?'walk':/car|taxi/i.test(s.tr||'')?'car':'train',rt=mockRating(s.n),cat=String(s.s||s.k||'Activity'),
+const StopCard=(s,i,t)=>{const photo=activityPhotoSource(s,t),backup=activityPhotoBackup(s),cc=s.k==='Eat'?'coral':s.k==='Shop'?'rose':'sky',mi=/walk|hike/i.test(s.tr||'')?'walk':/car|taxi/i.test(s.tr||'')?'car':'train',rt=mockRating(s.n),cat=String(s.s||s.k||'Activity'),
  ph=photo?'<img src="'+esc(photo)+'" alt="" loading="eager" decoding="async" onload="this.parentElement.classList.add(\'has-photo\')" onerror="photoLoadFallback(this,\''+esc(backup)+'\')">':'';
  return `<div class="mpc"><article class="place glass on-map map-place" aria-label="${esc(s.n)}"><div class="place-media"><div class="place-media-fallback" aria-hidden="true">${ic(activityIcon(s),32)}</div>${ph}</div><div class="place-body"><span class="place-kick">Stop ${i+1} · ${s.t?tt(s.t):'Time TBD'}</span><b>${esc(s.n)}</b><div class="pmeta"><span class="pi ${cc}" title="${esc(s.k||'Activity')}">${ic(activityIcon(s),15)}</span><span>${esc(cat)}</span><span class="pi sky" title="Travel">${ic(mi,15)}</span><span>${esc(travelMins(s.tr))}</span><span class="pi amber" title="Rating">${ic('star',15,'currentColor')}</span><span>${rt.sc}<small> (${rt.rv})</small></span><button type="button" class="pinfo" data-a="mpinfo:${i}" aria-label="More about ${esc(s.n)}">${ic('info',22)}</button></div></div></article></div>`};
 /* ---------- alternative place card: library "Map · replacement" card, with Swap in ---------- */
