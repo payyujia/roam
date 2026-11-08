@@ -306,7 +306,7 @@
   display:inline-flex;align-items:center;gap:6px;margin-top:1px;color:var(--sky-600);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-#dev .trow.task.tier .tmain .gr > .due.awaiting{color:var(--rose)}
+#dev .trow.task.tier .tmain .gr > .due.awaiting{color:var(--coral-500)}
 #dev .trow.task.tier .tmain .gr > .due.hot{color:var(--coral-500)}
 /* The reference card has plain status text, not the app's additional dot. */
 #dev .trow.task.tier .due::before{content:none}
@@ -360,7 +360,7 @@
   font-size:var(--roam-card-status-size);
   font-weight:var(--roam-card-status-weight);
   line-height:var(--roam-card-status-line-height);
-  color:var(--rose);
+  color:var(--coral-500);
 }
 #dev .trow.reschedule-row .tact{gap:6px}
 #dev .trow.reschedule-row .tact .ib{
