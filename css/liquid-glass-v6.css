@@ -500,6 +500,20 @@ body{font-weight:500}
 #dev .segs i.on,#dev .tc.done .ln::after{background:var(--sky-400)}
 #dev .tc .ln::after{background:rgba(109,182,255,.35)}
 
+/* Itinerary timeline: the station dots are 32px, so connector columns
+   must also be 32px. Centre the 4px rule in that column to keep every
+   segment exactly aligned with the origin and numbered stops. Scoped
+   to the trip itinerary; live navigation has its own 44px geometry. */
+#dev #s-trip .tl:not(.nv) .tc .ln{
+  width:32px;
+  flex:0 0 32px;
+}
+#dev #s-trip .tl:not(.nv) .tc .ln::after{
+  left:50%;
+  transform:translateX(-50%);
+}
+
+
 /* Overlays and feedback. Denser sheet glass keeps long content readable over the scrim. */
 #dev :is(#lyc.sheet,#lyc.menu,#lyc.dlg,.msh,.fcard,.pop){background:rgba(243,248,255,.85)!important}
 #dev #lyc.dlg{border-radius:22px}
