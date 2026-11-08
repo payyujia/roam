@@ -30,6 +30,52 @@ const Row=o=>{const g=o.a?'button':'div';return `<${g} class="row ${o.x||''}"${o
 const Sec=(t,r='')=>`<div class="sec"><h2>${t}</h2>${r}</div>`,Top=(l,t='',r='')=>`<div class="top">${l}<b class="tt">${t}</b>${r||'<span></span>'}</div>`;
 const Empty=(h,p)=>`<div class="empty"><b>${h}</b><div class="cap">${p}</div></div>`,Ban=(h,p,act='')=>`<div class="ban"><div><b>${h}</b><div class="cap">${p}</div></div>${act}</div>`;
 const Sign=(t,sub,r='')=>`<div class="sign l-${t.c}">${Bullet(t,'l')}<div class="gr"><h2>${t.n}</h2><div class="cap">${sub}</div></div>${r}</div>`;
+/* Use recognizable category icons on compact vote cards; leave other StopIc
+   uses (itinerary, saved places, etc.) unchanged. */
+const activityIcon=s=>{
+ const label=String(s.n||'').toLowerCase(),description=String(s.s||'').toLowerCase();
+ if(/theme park|legoland|amusement park|funfair/.test(label+' '+description))return 'ticket';
+ if(/clown|circus|live show|theatre|theater|performance/.test(label+' '+description))return 'theater';
+ if(/mall|market|shopping center|shopping centre|retail/.test(label+' '+description))return 'store';
+ if(s.k==='Eat'&&!/cafe|café|coffee|bakery|tea/.test(label+' '+description))return 'utensils';
+ return s.i||'map-pin';
+};
+const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
+
+/* Activity sheet photos are illustrative, not claims about a venue's imagery.
+   Prefer photos already used elsewhere in ROAM and matching real-world
+   categories; the fallback icon displays if the image cannot load. */
+const ACTIVITY_PHOTO_BY_NAME={
+ 'MacRitchie Reservoir':PH.hike,'TreeTop Walk':PH.hike,'Lornie Trail':PH.hike,
+ 'Books Actually':PH.read,'Tiong Bahru Bakery':RP[4],
+ 'Arcade at Bugis+':PH.game,'Burger Shot':RP[1],
+ 'The Loneliest Robot in Great Britain':'unsplash:Lv5o-Xixi4c',
+ 'Dim Sum Ting':RP[2],
+ 'Super Mall':'unsplash:s4rZ1gG9qgM',
+ 'Legoland Malaysia':'unsplash:71srBJyS5gg',
+ 'Clown Show':'unsplash:qEas1jFgZu4',
+ 'Chengdu Panda Base':'unsplash:hRALOfpQyZY',
+ 'Jinli Ancient Street':PH.cn,
+ 'Hotpot dinner':'unsplash:Oo5PXEEkIMg',
+ 'Marina South Pier':PH.laz,'Lazarus Beach':PH.laz,
+ 'Nando’s Plaza Singapura':PH.nan,'East Coast Park':PH.sun
+};
+const activityPhotoSource=(s,t)=>{
+ const val=ACTIVITY_PHOTO_BY_NAME[s.n]||PH[t.id]||null;
+ if(!val)return null;
+ return val.startsWith('unsplash:')
+  ?`https://unsplash.com/photos/${encodeURIComponent(val.slice(9))}/download?force=true&w=960`
+  :`https://images.unsplash.com/${val}?auto=format&fit=crop&w=960&q=75`;
+};
+const ActivityPhoto=(s,t)=>{
+ const src=activityPhotoSource(s,t);
+ if(!src)return '';
+ return `<figure class="activity-photo l-${esc(t.c)}">
+  <div class="activity-photo-fallback" aria-hidden="true">${ic(activityIcon(s),32)}</div>
+  <img src="${esc(src)}" alt="Illustrative photo for ${esc(s.n)}" loading="lazy" decoding="async" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+  <figcaption class="cap sm">Illustrative photo</figcaption>
+ </figure>`;
+};
 const StopIc=s=>`<div class="si">${ic(s.i,20)}</div>`,Mi=(i,l,a,x='')=>`<button class="mi ${x}" data-a="${a}">${ic(i)}${l}</button>`;
 const stxt=t=>fin(t)?(t.st=='done'?'<span class="dotc off"></span>Completed':'<span class="dotc ok"></span>Itinerary ready'):'<span class="dotc wait"></span>Voting open';
 const Stepper=(t,at,live)=>{const dn=t?[1,+!!t.vs.P,+fin(t)]:[0,0,0],g=live?'button':'div';return `<div class="step${t?' l-'+t.c:''}"${live?' role="tablist"':''}>${['Details','Vote','Itinerary'].map((n,i)=>{const lk=t&&i==2&&!fin(t),on=i==at;return `<${g} class="stp${dn[i]?' done':''}${on?' on':''}${lk?' lock':''}"${live?` role="tab" aria-selected="${on}" data-a="step:${i}"`:''}><span class="sd">${lk?ic('lock',12):dn[i]?ic('check',13):i+1}</span>${n}</${g}>`}).join('')}</div>`};
@@ -47,7 +93,7 @@ const voteSubtitle=s=>{
  return [time,category,duration].filter(Boolean).join(' · ');
 };
 /* Two compact vote controls preserve room for the title and info button. */
-const VoteRow=(s,i)=>`<div class="row wrap vote-row">${StopIc(s)}<div class="gr vote-content"><div class="vote-heading"><b title="${esc(s.n)}">${esc(s.n)}</b></div></div><button type="button" class="vote-info-btn" data-a="activity:${i}" aria-label="View details for ${esc(s.n)}" title="View activity details">${ic('info',16)}</button><div class="vt" role="group" aria-label="Vote on ${esc(s.n)}"><button type="button" class="vb up" aria-pressed="${s.m==1}" aria-label="Thumbs up for ${esc(s.n)}, ${s.u} votes" data-a="vt:${i}:1">${ic('thumbs-up',17)}<span class="vote-count" aria-hidden="true">${s.u}</span></button><button type="button" class="vb dn" aria-pressed="${s.m==-1}" aria-label="Thumbs down for ${esc(s.n)}, ${s.d} votes" data-a="vt:${i}:-1">${ic('thumbs-down',17)}<span class="vote-count" aria-hidden="true">${s.d}</span></button></div><div class="cap sm vote-subtitle">${esc(voteSubtitle(s))}</div>${s.d>s.u?'<div class="cap sm vote-warning"><span class="err">Not in itinerary</span></div>':''}</div>`;
+const VoteRow=(s,i)=>`<div class="row wrap vote-row">${VoteStopIc(s)}<div class="gr vote-content"><div class="vote-heading"><b title="${esc(s.n)}">${esc(s.n)}</b></div></div><button type="button" class="vote-info-btn" data-a="activity:${i}" aria-label="View details for ${esc(s.n)}" title="View activity details">${ic('info',16)}</button><div class="vt" role="group" aria-label="Vote on ${esc(s.n)}"><button type="button" class="vb up" aria-pressed="${s.m==1}" aria-label="Thumbs up for ${esc(s.n)}, ${s.u} votes" data-a="vt:${i}:1">${ic('thumbs-up',17)}<span class="vote-count" aria-hidden="true">${s.u}</span></button><button type="button" class="vb dn" aria-pressed="${s.m==-1}" aria-label="Thumbs down for ${esc(s.n)}, ${s.d} votes" data-a="vt:${i}:-1">${ic('thumbs-down',17)}<span class="vote-count" aria-hidden="true">${s.d}</span></button></div><div class="cap sm vote-subtitle">${esc(voteSubtitle(s))}</div>${s.d>s.u?'<div class="cap sm vote-warning"><span class="err">Not in itinerary</span></div>':''}</div>`;
 const TripRow=t=>Row({x:`tier t${dd(t.date)<0?0:tier(t.date)}`,a:`open:${t.id}`,label:`${t.n}, ${fd(t.date)}`,lead:Cover(t,'m'),title:t.n,sub:`${fd(t.date)} · ${rel(t.date)}`,sub2:stxt(t),trail:Stack(t.m)});const REQ=D(11,14);
 const InviteRow=()=>{const t=trip('read');return `<div class="row wrap rq"><div class="si">${ic('calendar',20)}</div><div class="gr"><b>Raymond wants to move ${t.n}</b><div class="cap sm">${fd(t.date)} to ${fd(REQ)}</div></div><div class="rqa"><button class="btn sm2" data-a="inv:y">Accept</button><button class="btn sm2 sec" data-a="inv:n">Decline</button></div></div>`};
 /* tag component */

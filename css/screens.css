@@ -138,6 +138,53 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 }
 /* Activity information sheet */
 .activity-details{padding-top:12px;padding-bottom:28px;display:flex;flex-direction:column;gap:20px}
+/* Activity details: a photo belongs in the info sheet, not in compact vote rows.
+   Keep an icon fallback if illustrative stock imagery fails to load. */
+#dev #lyc .activity-photo{
+  position:relative;
+  display:grid;
+  place-items:center;
+  aspect-ratio:16/9;
+  width:100%;
+  margin:0;
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--glass-control-bg);
+  box-shadow:var(--glass-shadow);
+}
+#dev #lyc .activity-photo img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+#dev #lyc .activity-photo-fallback{
+  color:var(--sky-600);
+  display:grid;
+  place-items:center;
+}
+#dev #lyc .activity-photo.has-photo .activity-photo-fallback{visibility:hidden}
+#dev #lyc .activity-photo::after{
+  content:'';
+  position:absolute;
+  inset:50% 0 0;
+  background:linear-gradient(transparent,rgba(14,17,22,.43));
+  pointer-events:none;
+  opacity:0;
+}
+#dev #lyc .activity-photo.has-photo::after{opacity:1}
+#dev #lyc .activity-photo figcaption{
+  display:none;
+  position:absolute;
+  z-index:1;
+  bottom:10px;
+  left:14px;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(14,17,22,.45);
+}
+#dev #lyc .activity-photo.has-photo figcaption{display:block}
 .activity-facts{display:flex;flex-direction:column;gap:0}
 .activity-facts>div{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--s2)}
 .activity-facts dt{flex:0 0 42%;font-size:13px;color:var(--tx2)}
