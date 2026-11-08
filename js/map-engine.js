@@ -53,14 +53,11 @@ function scene(){
   routes.push({pts:mp,walk:mw,tone:me=='main'?tone:'inactive',muted:me!='main',a:`pathpick:main:${t.id}`});
   routes.push({pts:fp,walk:fw,tone:forkTone(t),muted:me!='fork',a:`pathpick:fork:${t.id}`});
  }else{routes.push({pts:mp,walk:legWalk(mine).slice(1),tone})}
- /* Expanded navigation follows the active leg; collapsed navigation fits
-    the whole itinerary. Route geometry and pins remain unchanged. */
- const fit=[...cur],focusLeg=!!S.nav&&!S.fk&&S.pc==null&&!!S.mx&&cur.length>0;
- if(focusLeg){
-  const a=Math.max(0,cu-1),b=Math.min(cur.length,Math.max(cu+1,2));
-  fit.splice(0,fit.length,...cur.slice(a,b));
- }
- if(fk&&!focusLeg)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
+ /* Keep the selected stop visible above either navigation sheet state.
+    The complete route and all interactive pins are still drawn. */
+ const fit=[...cur],focusStop=!!S.nav&&!S.fk&&S.pc==null&&cur.length>0;
+ if(focusStop)fit.splice(0,fit.length,cur[cu]);
+ if(fk&&!focusStop)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
   o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='hike'?activityPhotoSource(s,t):RP[reel],photoFallback:t.id==='hike'?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
@@ -72,7 +69,7 @@ function scene(){
   if(ch!=null)pins.push({pill:esc(pn(fk.owner)),tone:forkTone(t),ll:[(mp[ch][0]+fp[ch][0])/2,(mp[ch][1]+fp[ch][1])/2],a:`pathpick:fork:${t.id}`});
   Object.keys(fk.ch).forEach(i=>pins.push({dot:1,ll:(me=='fork'?mp:fp)[+i],tone:me=='fork'?'inactive':forkTone(t)}))}
  
- let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=focusLeg?16:15;
+ let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
  if(S.fk=='flag')pad.b=300;
  if(S.fk=='flag'||S.fk=='alts'){const i=S.fl[S.fi],c=cur[i],al=S.alts||[],AT=['rose','amber','sky5'];al.forEach((a,j)=>{pins.push({ll:a.ll,tone:AT[j],cls:'alt'+(S.ap===j&&S.fk=='alts'?' sel':''),icon:a.i,photo:ACTIVITY_PHOTO_BY_NAME[a.n]||null,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Option ${String.fromCharCode(65+j)}: ${a.n}`})});
   if(S.fk=='alts'&&S.ap!=null&&al[S.ap])pins.push({lab:esc(al[S.ap].n),ll:al[S.ap].ll});
@@ -88,7 +85,7 @@ function mapTarget(W,H){
  const drawer=$('#msh');
  if(S.nav&&!S.fk&&S.pc==null&&drawer){
   const mapRect=$('#mp').getBoundingClientRect(),header=$('#mp .mtop2');
-  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+18):120);
+  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+64):120);
   const contents=$('#mc'),maxSheet=Math.max(0,Math.min(S.mx?600:400,H-150));
   const sheetHeight=Math.min(maxSheet,20+(contents?contents.scrollHeight:0));
   pad.t=top;
