@@ -32,3 +32,12 @@ Object.assign(I,{
  heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.4-7 10-7 10z"/>',
  'reel-heart':'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
 });
+
+/* Activity category icons for compact voting rows and the details header.
+   Keep the existing 24px outline and 2px stroke from the ROAM icon system. */
+Object.assign(I,{
+ utensils:'<path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M18 22V2c-3 2.7-5 6.8-5 11h5"/>',
+ store:'<path d="M3 10v11h18V10M3 4h18l2 6H1l2-6zM9 21v-7h6v7"/>',
+ ticket:'<path d="M3 7a2 2 0 0 0-2 2v2a2.5 2.5 0 0 1 0 5v2a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-2a2.5 2.5 0 0 1 0-5V9a2 2 0 0 0-2-2H3zM14 7v13" />',
+ theater:'<path d="M4 3h16v8c0 6-3.5 10-8 10S4 17 4 11V3zM8 9h.01M16 9h.01M8.5 14c2 2 5 2 7 0"/>'
+});
