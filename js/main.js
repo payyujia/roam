@@ -1,6 +1,26 @@
 /* ===== BOOT: render once, then keep only the live UI clock in sync. ===== */
 /* Initial page load is not navigation: show the first screen without the
    horizontal slide, then restore transitions for subsequent page changes. */
+/* Desktop only: preserve the iPhone 17's 402 × 874 internal layout and
+   shrink the virtual device as a whole when browser zoom or a short window
+   would otherwise crop the bottom navigation or home indicator.
+   This changes preview size only; iPhone/touch fullscreen mode is unchanged. */
+const fitRoamPhonePreview=()=>{
+ const frame=document.getElementById('dev');
+ if(!frame)return;
+ if(window.matchMedia('(max-width:480px)').matches){
+  frame.style.zoom='';
+  return;
+ }
+ const margin=32;
+ const scale=Math.min(1,(window.innerWidth-margin)/402,(window.innerHeight-margin)/874);
+ frame.style.zoom=String(Math.max(.1,scale));
+};
+fitRoamPhonePreview();
+window.addEventListener('resize',fitRoamPhonePreview,{passive:true});
+if(window.visualViewport)
+ window.visualViewport.addEventListener('resize',fitRoamPhonePreview,{passive:true});
+
 const bootApp=$('#app');
 bootApp.classList.add('nt');
 rr();
