@@ -60,7 +60,7 @@ const CH=[{n:'MacRitchie Hike',i:'sun',c:'cg',t:'Mon',u:2,u2:'PJR',r:['Maybe nex
 const FR=[['Raymond','R'],['Eustace','E'],['Ling Ling','L'],['Jason','J']];
 
 R.forEach(r=>r.c=LN[r.c]);[['R'],['E','L'],['E','J','R'],['L','R'],[],[]].forEach((s,i)=>R[i].sv=s);['hike','cn','jb'].forEach((id,i)=>CH[i].tid=id);
-const SAVED=[{n:'House of Gonjol',s:'Art centre · Jln Indera',i:'image',k:'Do',by:'RLE'},{n:'The Roti Prata House',s:'Restaurant · Upper Thomson Rd',i:'coffee',k:'Eat',by:'P'},{n:'Paradigm Mall',s:'Mall · Skudai',i:'bag',k:'Shop',by:'RL'},{n:'Mid Valley Southkey',s:'Mall · Southkey',i:'bag',k:'Shop',by:'E'},{n:'Hutan Bandar Park',s:'Park · Larkin',i:'sun',k:'Do',by:'RL'},{n:'Jonker Street Night Market',s:'Market · Malacca',i:'bag',k:'Eat',by:'JE'},{n:'Books Actually',s:'Bookstore · Yong Siak St',i:'book',k:'Shop',by:'R'}];
+const SAVED=[{n:'House of Gonjol',s:'Art centre · Jln Indera',i:'image',k:'Do',by:'RLE'},{n:'The Roti Prata House',s:'Restaurant · Upper Thomson Rd',i:'coffee',k:'Eat',by:'RLJ'},{n:'Paradigm Mall',s:'Mall · Skudai',i:'bag',k:'Shop',by:'RL'},{n:'Mid Valley Southkey',s:'Mall · Southkey',i:'bag',k:'Shop',by:'E'},{n:'Hutan Bandar Park',s:'Park · Larkin',i:'sun',k:'Do',by:'RL'},{n:'Jonker Street Night Market',s:'Market · Malacca',i:'bag',k:'Eat',by:'JE'},{n:'Books Actually',s:'Bookstore · Yong Siak St',i:'book',k:'Shop',by:'R'}];
 const MA={hike:[26,24],read:[74,23],game:[50,35],jb:[24,45],cn:[76,45],laz:[30,56],nan:[70,56]};
 const ov=(t,p)=>{const a=MA[t.id]||[20+T.indexOf(t)*23%60,30+T.indexOf(t)*13%22];return[a[0]+(p[0]-50)*.55,a[1]+(p[1]-38)*.7]};
 /* Initial form state runs before pickers.js loads. Keep the shared date
