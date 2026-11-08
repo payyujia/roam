@@ -39,7 +39,7 @@
 /* Create-trip form: one header style (matches home card titles: 15/22 bold ink) */
 /* Create Trip labels follow the Card Component Library Subheader · 16. */
 #dev #s-form .lb{font-family:var(--font);font-size:16px;line-height:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
-#dev #s-form .lb .opt{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
+#dev #s-form .lb .opt{font-size:12px;font-weight:500;line-height:16px;color:var(--muted);margin-left:4px}
 /* New Trip: compact Destination → Invite friends spacing with the library's
    12px stack gap; retain 20px between subsequent independent sections. */
 #dev #s-form .new-trip-core-fields{display:flex;flex-direction:column;gap:12px}
