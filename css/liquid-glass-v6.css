@@ -469,6 +469,16 @@ body{font-weight:500}
   background:#fff!important;
   color:var(--ink)!important;
 }
+/* Meeting point shares the itinerary's 32px frosted circle, with the
+   location glyph distinguished from the numbered activity stops. */
+#dev #s-trip .tl:not(.nv) .tn.org .nd svg{
+  display:block;
+  width:16px;
+  height:16px;
+  color:var(--sky-600);
+  stroke-width:2.2;
+}
+
 #dev .tn.done .nd{
   background:var(--sky-300)!important;
   color:var(--sky-600)!important;
