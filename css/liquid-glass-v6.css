@@ -642,11 +642,11 @@ body{font-weight:500}
   transition:none!important;
 }
 
-/* Trip detail: the entering screen moves left from the right edge,
+/* Trip detail: the entering screen moves right from the left edge,
    with its originating Trips page visible beneath it during the animation.
    All other page entry transitions remain as they were. */
-@keyframes roam-trip-enter-left{
-  from{transform:translate3d(100%,0,0)}
+@keyframes roam-trip-enter-right{
+  from{transform:translate3d(-100%,0,0)}
   to{transform:translate3d(0,0,0)}
 }
 #dev #app .scr.trip-enter-parent.under{
@@ -659,18 +659,17 @@ body{font-weight:500}
   visibility:visible!important;
   z-index:3;
   transition:none!important;
-  animation:roam-trip-enter-left .3s cubic-bezier(.22,.72,.26,1) both!important;
+  animation:roam-trip-enter-right .3s cubic-bezier(.22,.72,.26,1) both!important;
 }
-/* Show the returning page before the exiting trip swipes right. */
+/* Paint the returning page beneath the exiting trip as it swipes left. */
 #dev #app .scr.back-reveal{
   visibility:visible!important;
   transform:translate3d(0,0,0)!important;
   transition:none!important;
 }
 
-/* Rightward exit for Chat threads, Profile details and Trip details.
-   Keep the departing page visible during the swipe, with the parent
-   painted underneath. Other inactive screens remain hidden. */
+/* Keep Chat and Profile back transitions rightward.
+   Trip details has a separate leftward exit below. */
 @keyframes roam-back-slide-right{
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(100%,0,0)}
@@ -681,12 +680,22 @@ body{font-weight:500}
   pointer-events:none;
   animation:roam-back-slide-right .3s cubic-bezier(.22,.72,.26,1) both!important;
 }
+/* Trip back: reverse the entry motion, sliding left out of the viewport.
+   The parent is already revealed by the shared Back handler. */
+@keyframes roam-trip-back-slide-left{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-100%,0,0)}
+}
+#dev #app #s-trip.scr.back-exit{
+  animation:roam-trip-back-slide-left .3s cubic-bezier(.22,.72,.26,1) both!important;
+}
 #dev #app .scr.back-reveal.on{
   z-index:2;
   transition:none!important;
 }
 @media(prefers-reduced-motion:reduce){
   #dev #app #s-trip.scr.trip-enter{animation:none!important}
+  #dev #app #s-trip.scr.back-exit{animation:none!important;visibility:hidden!important}
   #dev #app .scr.back-exit{
     animation:none!important;
     visibility:hidden!important;
