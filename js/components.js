@@ -13,7 +13,16 @@ const AVATAR={
  L:'https://images.unsplash.com/photo-1745434159123-5b99b94206ca?auto=format&fit=crop&crop=faces&w=256&h=256&q=75',
  J:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&crop=faces&w=256&h=256&q=75'
 };
-const Av=(k,z='')=>{const p=PE[k];if(!p)return '';return `<span class="av ${z} l-${p[1]}" title="${esc(k==='P'?(S.p.name||'You'):p[2])}">${esc(p[0])}<img src="${AVATAR[k]}" alt="" decoding="async" onerror="this.remove()"></span>`},Stack=s=>`<span class="st" aria-hidden="true">${[...s].map(k=>Av(k)).join('')}</span>`;
+const Av=(k,z='')=>{
+ const p=PE[k];if(!p)return '';
+ /* Only the expanded account avatar previews an unsaved photo. Everywhere
+    else continues to show the committed image until Save changes. */
+ const avatar=k==='P'
+   ?(z==='xl'&&S.p.avatarDraft!==undefined?S.p.avatarDraft:S.p.avatar)
+   :undefined;
+ const src=avatar==='none'?'':(typeof avatar==='string'&&/^data:image\/jpeg;base64,[a-z0-9+/=]+$/i.test(avatar)?avatar:AVATAR[k]);
+ return `<span class="av ${z} l-${p[1]}" title="${esc(k==='P'?(S.p.name||'You'):p[2])}">${esc(p[0])}${src?`<img src="${esc(src)}" alt="" decoding="async" onerror="this.remove()">`:''}</span>`;
+},Stack=s=>`<span class="st" aria-hidden="true">${[...s].map(k=>Av(k)).join('')}</span>`;
 const Btn=(l,a,o={})=>`<button class="btn ${o.v||''}" data-a="${a}"${o.off?' disabled':''}>${o.i?ic(o.i,20):''}${l}</button>`;
 const IBtn=(i,a,l,v='',s=24)=>`<button class="ib ${v}" data-a="${a}" aria-label="${l}">${ic(i,s)}</button>`;
 const Pill=(l,a,on)=>`<button class="pill${on?' on':''}" aria-pressed="${!!on}" data-a="${a}">${l}</button>`;
