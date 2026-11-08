@@ -18,7 +18,6 @@ const MFULL=['January','February','March','April','May','June','July','August','
 /* Calendar dots: booked trips = coral, pending trips = amber.
    Keep a small, fixed set of blue recommendations for dates all friends can make. */
 const tripDays=()=>{const m={};T.filter(t=>!t.left).forEach(t=>{m[iso(t.date)]=t.st==='voting'?'var(--amber)':'var(--coral-500)'});return m};
-const calendarFreeRange=()=>({a:iso(addD(NOW,7)),b:iso(addD(NOW,8))});
 const calendarFreeDays=()=>{const r=calendarFreeRange();return new Set([r.a,r.b])};
 const isRecommendedRange=c=>{const r=calendarFreeRange();return c.a===r.a&&c.b===r.b};
 const calHint=c=>!c.a?'Pick a start date':!c.b?'Pick an end date (optional)':`${fd(p8(c.a))} – ${fd(p8(c.b))}`;
