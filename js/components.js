@@ -130,7 +130,7 @@ const voteSubtitle=s=>{
 const VoteRow=(s,i,t=trip(S.cur))=>{
  const photo=activityPhotoSource(s,t);
  const categoryColor=s.k==='Eat'?'coral':s.k==='Shop'?'rose':'sky';
- const modeIcon=/walk/i.test(s.tr||'')?'walk':/car|taxi/i.test(s.tr||'')?'car':'train';
+ const modeIcon=/walk|hike/i.test(s.tr||'')?'walk':/car|taxi/i.test(s.tr||'')?'car':'train';
  const up=Math.max(0,Number(s.u)||0),down=Math.max(0,Number(s.d)||0),total=up+down;
  const upWidth=total?up/total*100:0,downWidth=total?down/total*100:0;
  const friendsIn=Math.max(0,up-(s.m===1?1:0)),voters=[...String(t.m||'')].filter(k=>k!=='P').slice(0,Math.min(friendsIn,3)).join(''),
