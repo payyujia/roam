@@ -1842,15 +1842,16 @@ body{font-weight:500}
 #dev .sap .sa{position:relative;display:inline-flex;margin-left:-8px}
 #dev .sap .sa .av{width:44px;height:44px;font-size:18px;color:var(--ink);}
 #dev .sap .sa .av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
-/* Floating-avatar heart glyph: 23 × 23px, centred on its existing anchor. */
+/* Floating-avatar heart = the Reels Like icon: same `reel-heart` path, 24px, rose→coral gradient, same 1.1 fill scale. */
 #dev .sap .hrt{
   position:absolute;top:-10px;right:-10px;z-index:3;
-  width:23px;height:23px;display:grid;place-items:center;pointer-events:none;
+  width:24px;height:24px;display:grid;place-items:center;pointer-events:none;
   background:none;clip-path:none;
   filter:drop-shadow(0 3px 4px rgba(40,60,100,.3));
 }
 #dev .sap .hrt::before{display:none}
-#dev .sap .hrt svg{display:block;width:23px;height:23px;overflow:visible}
+#dev .sap .hrt svg{display:block;width:24px;height:24px;overflow:visible}
+#dev .sap .hrt svg path{stroke:transparent;stroke-width:2;scale:1.1;transform-origin:center center}
 /* Match the Save and Share glyphs: 24px inside the existing 44px tap area. */
 #dev #s-reels .rv .rail .ib.heart svg{width:24px;height:24px}
 
