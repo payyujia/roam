@@ -195,8 +195,77 @@ const ratedPastTripCount=()=>PAST().filter(t=>{
  const rating=Number(S.p.ratings?.[t.id]??(t.id==='sun'?S.p.rate:0));
  return Number.isInteger(rating)&&rating>=1&&rating<=5;
 }).length;
+/* Profile photo editor: use the existing ROAM bottom-sheet layer. The selected
+   picture remains a draft until Account > Save changes is pressed. */
+let profilePhotoCrop={image:null,zoom:1,dx:0,dy:0};
+const profilePhotoMenuHTML=()=>`<div class="profile-photo-content">
+ <h3 class="profile-photo-title">Change profile photo</h3>
+ <div class="profile-photo-options glass">
+  <button type="button" class="profile-photo-option" data-a="profilePhotoLibrary">${ic('image',20)}<span>Choose from Photos</span></button>
+  <button type="button" class="profile-photo-option" data-a="profilePhotoCamera">${ic('camera',20)}<span>Take Photo</span></button>
+  <button type="button" class="profile-photo-option danger" data-a="profilePhotoRemove">${ic('trash',20)}<span>Remove Current Photo</span></button>
+ </div>
+ <p class="cap sm profile-photo-hint">Your profile photo changes when you tap Save changes.</p>
+ <button type="button" class="btn sec profile-photo-cancel" data-a="profilePhotoCancel">Cancel</button>
+ <input id="profile-photo-library" type="file" accept="image/*" hidden onchange="A.profilePhotoRead(this)">
+ <input id="profile-photo-camera" type="file" accept="image/*" capture="user" hidden onchange="A.profilePhotoRead(this)">
+</div>`;
+const profilePhotoCropHTML=()=>`<div class="profile-photo-content photo-crop-content">
+ <div class="profile-photo-titlebar">
+  <button type="button" class="profile-photo-back" data-a="profilePhotoMenu" aria-label="Back to photo options">${ic('arrow-left',20)}</button>
+  <h3 class="profile-photo-title">Adjust photo</h3>
+  <span aria-hidden="true" class="profile-photo-title-spacer"></span>
+ </div>
+ <div class="profile-photo-crop-frame">
+  <canvas id="profile-photo-canvas" width="256" height="256" tabindex="0" role="img" aria-label="Drag or use arrow keys to reposition your profile photo"></canvas>
+ </div>
+ <p class="cap sm profile-photo-hint">Drag to reposition your photo inside the circle.</p>
+ <label class="profile-photo-zoom-label" for="profile-photo-zoom">Zoom</label>
+ <input id="profile-photo-zoom" type="range" min="1" max="3" step=".05" value="${profilePhotoCrop.zoom}" oninput="A.profilePhotoZoom(this.value)" aria-label="Zoom profile photo">
+ <button type="button" class="btn sky profile-photo-use" data-a="profilePhotoUse">Use photo</button>
+ <button type="button" class="btn sec profile-photo-cancel" data-a="profilePhotoCancel">Cancel</button>
+</div>`;
+const profilePhotoDrawCrop=()=>{
+ const canvas=$('#profile-photo-canvas'),img=profilePhotoCrop.image;
+ if(!canvas||!img||!img.naturalWidth||!img.naturalHeight)return;
+ const sz=canvas.width,scale=Math.max(sz/img.naturalWidth,sz/img.naturalHeight)*profilePhotoCrop.zoom;
+ const w=img.naturalWidth*scale,h=img.naturalHeight*scale;
+ profilePhotoCrop.dx=Math.max((sz-w)/2,Math.min((w-sz)/2,profilePhotoCrop.dx));
+ profilePhotoCrop.dy=Math.max((sz-h)/2,Math.min((h-sz)/2,profilePhotoCrop.dy));
+ const ctx=canvas.getContext('2d');
+ if(!ctx)return;
+ ctx.clearRect(0,0,sz,sz);
+ ctx.drawImage(img,(sz-w)/2+profilePhotoCrop.dx,(sz-h)/2+profilePhotoCrop.dy,w,h);
+};
+const profilePhotoInitCrop=()=>{
+ const canvas=$('#profile-photo-canvas');
+ if(!canvas)return;
+ profilePhotoDrawCrop();
+ let dragging=null;
+ canvas.onpointerdown=e=>{
+  if(e.button!==0&&e.pointerType!=='touch')return;
+  dragging={id:e.pointerId,x:e.clientX,y:e.clientY,dx:profilePhotoCrop.dx,dy:profilePhotoCrop.dy};
+  canvas.setPointerCapture(e.pointerId);
+ };
+ canvas.onpointermove=e=>{
+  if(!dragging||e.pointerId!==dragging.id)return;
+  const rect=canvas.getBoundingClientRect(),ratio=canvas.width/rect.width;
+  profilePhotoCrop.dx=dragging.dx+(e.clientX-dragging.x)*ratio;
+  profilePhotoCrop.dy=dragging.dy+(e.clientY-dragging.y)*ratio;
+  profilePhotoDrawCrop();
+ };
+ canvas.onpointerup=canvas.onpointercancel=()=>{dragging=null};
+ canvas.onkeydown=e=>{
+  const d={ArrowLeft:[-6,0],ArrowRight:[6,0],ArrowUp:[0,-6],ArrowDown:[0,6]}[e.key];
+  if(!d)return;
+  e.preventDefault();
+  profilePhotoCrop.dx+=d[0];profilePhotoCrop.dy+=d[1];
+  profilePhotoDrawCrop();
+ };
+};
+
 const PD={
- acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
+ acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="profilePhotoOpen" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div class="profile-home-city"><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
  style:{t:'Travel preferences',i:'compass',c:'orange',v:()=>{const count=travelPreferenceCount(S.p);return `${count} ${count===1?'preference':'preferences'} set`},b:()=>{const p=S.p,selected=Array.isArray(p.move)?p.move:[p.move].filter(Boolean);return `<div class="fl travel-preferences-form" style="margin-top:12px">
 <div class="travel-setting-group"><div class="travel-setting-label">Travel pace</div>
