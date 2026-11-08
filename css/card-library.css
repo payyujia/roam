@@ -1929,3 +1929,27 @@
 #dev #s-map .map-place .place-kick{display:flex;align-items:center}
 #dev #s-map .map-place .place-foot{display:flex;padding:6px 14px 12px}
 #dev #s-map .map-place .place-foot>.btn{flex:1;margin-top:6px}
+
+/* MAP NAVIGATION SHEET — prevent itinerary stops from hiding under tabs.
+   The old 600px panel used translateY to expose a 300px peek, leaving
+   its scroller 600px tall and allowing text to be drawn off-screen.
+   Give collapsed and expanded states their actual visible heights instead. */
+#dev #s-map .msh.nav{
+  bottom:94px;
+  height:min(300px, calc(100% - 150px));
+  min-height:0;
+  transform:none;
+  transition:height .35s var(--ease);
+}
+#dev #s-map .msh.nav.x{
+  height:min(600px, calc(100% - 150px));
+}
+#dev #s-map .msh.nav>.grab{flex:0 0 auto}
+#dev #s-map .msh.nav #mc{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  padding-bottom:32px;
+  -webkit-overflow-scrolling:touch;
+}
