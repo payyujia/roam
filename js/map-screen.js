@@ -27,7 +27,7 @@ const navSheet=()=>{
   return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(modeIcon,32)}<b>${metric}${unit?' '+unit:''}</b></div><div class="nvh-to">to ${esc(targetName)}</div><div class="nvh-meta"><span>${esc(detail)}</span></div></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
  ${NavTL(t,ms,cu,lv)}`;
  }
- const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`${ms.length?'Preview · opens the day before':'No stops in the itinerary.'} <button class="lk" data-a="opentrip">Open trip</button>`;
+ const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`No stops in the itinerary. <button class="lk" data-a="opentrip">Open trip</button>`;
  return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,lv)}`;
 };
 /* ---------- fork flow: ONE swap card for both steps (.fcard.fswap) ----------
