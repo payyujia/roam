@@ -212,9 +212,13 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    and provide a clear gap between the arrow and cover photo. */
 #s-trip .th .top{padding-left:24px;padding-right:24px}
 #s-trip .th .thd{padding-top:20px}
-/* Voting scrolls only until the final Add action clears the 94px bottom
-   tab bar by 24px. No extra blank area after the button. */
+/* On Vote, cap the scroll range with the last card 24px above the fixed
+   46px #fab, which sits 136px above the phone's bottom edge. This keeps
+   Add a new activity attached visually to the Trips tab on every scroll. */
 #s-trip .pg{padding-bottom:118px}
+#dev #s-trip .pg:has(.stp[data-a="step:1"].on){
+  padding-bottom:calc(var(--fab-b,136px) + 46px + 24px);
+}
 
 
 
