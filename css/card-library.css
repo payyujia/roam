@@ -632,11 +632,11 @@
 }
 
 /* ---------- PILL ACTIONS · REGULAR 14 ----------
-   Create trip (#fab), Vote > Add a new activity (.vote-add-button) and
+   Create trip / Vote > Add a new activity (#fab) and
    Profile > Save changes (#psave / .btn[data-a="psave"]) follow the
    library's .btn.sky: 46px high, 0 22px padding, 14px / 700, 8px gap,
    20px icon, frosted Sky fill. */
-#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button,#s-trip .altrow > .btn){
+#dev :is(#fab,#psave,.btn[data-a="psave"],#s-trip .altrow > .btn){
   height:46px;
   padding:0 22px;
   border-radius:999px;
@@ -647,7 +647,7 @@
   letter-spacing:0;
   gap:8px;
 }
-#dev :is(#fab,.vote-add-button,.btn[data-a="psave"],#s-trip .altrow > .btn):not(:disabled){
+#dev :is(#fab,.btn[data-a="psave"],#s-trip .altrow > .btn):not(:disabled){
   --action-fill:var(--sky-fill)!important;
   --action-shadow:var(--control-shadow)!important;
 }
@@ -664,8 +664,8 @@
   cursor:not-allowed;
   transform:none!important;
 }
-#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button,#s-trip .altrow > .btn) svg{width:20px;height:20px;flex:none}
-#dev :is(#fab,.vote-add-button) span{font-size:14px;font-weight:700;line-height:1}
+#dev :is(#fab,#psave,.btn[data-a="psave"],#s-trip .altrow > .btn) svg{width:20px;height:20px;flex:none}
+#dev #fab span{font-size:14px;font-weight:700;line-height:1}
 
 /* View alternatives shares the Create trip button component, but remains
    centred in the itinerary instead of floating above the bottom tab bar. */
@@ -1486,24 +1486,8 @@
   #dev #s-trip .vote-row .vb{width:36px}
 }
 
-/* Vote list action: fixed 24px gap to the final card, even when scrolled
-   fully down. It stays in normal flow instead of sticking and separating
-   from the activity list. Scroll clearance comes from the page footer. */
-#dev #s-trip .vote-add-button{
-  position:relative;
-  z-index:10;
-  box-sizing:border-box;
-  display:flex;
-  justify-content:center;
-  width:max-content;
-  max-width:calc(100% - 48px);
-  min-height:46px;
-  margin:24px auto 0;
-}
-#dev #s-trip .vote-add-button:focus-visible{
-  outline:2px solid var(--sky-600);
-  outline-offset:3px;
-}
+/* Vote is scrollable below the fixed action. The last card's normal
+   margin is untouched; trailing clearance is controlled on the page. */
 /* New Trip · textbox values: Card Components Library Regular · 14. */
 /* Field labels and card titles retain their existing component styles. */
 #dev #s-form .fld > input.in,
