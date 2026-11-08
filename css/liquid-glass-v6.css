@@ -1362,22 +1362,16 @@ body{font-weight:500}
   --action-ink:var(--ink)!important;
 }
 
-/* Voting: the upvote communicates its selected state through a filled glyph,
-   not a tinted button surface. Keep the downvote's existing coral treatment. */
-#dev #s-trip .vote-row .vb.up{
+/* Voting: both directions communicate selection through a filled glyph,
+   not a tinted button surface. The control stays transparent in either state. */
+#dev #s-trip .vote-row .vb:is(.up,.dn){
   --action-fill:transparent!important;
   --action-shadow:none!important;
   background:transparent!important;
   box-shadow:none!important;
 }
-#dev #s-trip .vote-row .vb.up svg{fill:none}
-#dev #s-trip .vote-row .vb.up[aria-pressed="true"] svg{fill:currentColor!important}
-
-/* A selected downvote uses the softer coral-300 from the Sunrise Frost palette. */
-#dev #s-trip .vote-row .vb.dn[aria-pressed="true"]{
-  --action-fill:var(--coral-300)!important;
-  --action-ink:var(--ink)!important;
-}
+#dev #s-trip .vote-row .vb:is(.up,.dn) svg{fill:none}
+#dev #s-trip .vote-row .vb:is(.up,.dn)[aria-pressed="true"] svg{fill:currentColor!important}
 
 
 /* Reschedule row: match the voting cards' visual rhythm while leaving
@@ -1844,15 +1838,15 @@ body{font-weight:500}
 #dev .sap .sa{position:relative;display:inline-flex;margin-left:-8px}
 #dev .sap .sa .av{width:44px;height:44px;font-size:18px;color:var(--ink);}
 #dev .sap .sa .av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
-/* Floating-avatar heart uses the same 44px control footprint as the Reels like button. */
+/* Floating-avatar heart glyph: 23 × 23px, centred on its existing anchor. */
 #dev .sap .hrt{
   position:absolute;top:-10px;right:-10px;z-index:3;
-  width:44px;height:44px;display:grid;place-items:center;pointer-events:none;
+  width:23px;height:23px;display:grid;place-items:center;pointer-events:none;
   background:none;clip-path:none;
   filter:drop-shadow(0 3px 4px rgba(40,60,100,.3));
 }
 #dev .sap .hrt::before{display:none}
-#dev .sap .hrt svg{display:block;width:24px;height:24px;overflow:visible}
+#dev .sap .hrt svg{display:block;width:23px;height:23px;overflow:visible}
 /* Match the Save and Share glyphs: 24px inside the existing 44px tap area. */
 #dev #s-reels .rv .rail .ib.heart svg{width:24px;height:24px}
 
