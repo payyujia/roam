@@ -31,37 +31,9 @@ V.map=()=>{const L=S.nav?trip(S.mapTrip):null;let top='',card='';
 const exiHTML=()=>{const t=trip(S.mapTrip);return `<div class="mh"><div class="gr"><h2>What’s changed?</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-intro')}</div><p class="cap pad" style="margin:12px 0 4px">Pick what’s going on. We’ll flag the stops you can’t do and suggest calmer places nearby.</p><div role="group" aria-label="What changed">${EXI.map(e=>`<button class="cx" role="checkbox" aria-checked="${S.fx.includes(e.id)}" data-a="fx:${e.id}"><span class="xic">${ic(e.ic,22)}</span><span class="gr"><b>${e.n}${e.prof&&S.p.health.includes(e.prof)?' <span class="tag">On your profile</span>':''}</b><span class="cap sm">${e.s}</span></span><span class="cbx">${ic('check',16)}</span></button>`).join('')}</div><div class="note">${ic('git-branch',16)}<span>Your group stays on the main path. A trip can have one extra path, and anyone can join it from the map.</span></div><div class="pad" style="margin-top:16px">${Btn('Flag affected stops','fapply',{off:!S.fx.length})}</div>`};
 const clearHTML=()=>`<div class="mh"><div class="gr"><h2>Nothing’s affected</h2><div class="cap sm">Your plan still works</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-clear')}</div><p class="cap pad" style="margin:12px 0 16px">None of the stops on your path clash with what you picked, so there’s nothing to swap.</p><div class="fl">${Btn('Change my answer','fagain',{v:'sec'})}${Btn('Done','closeLy')}</div>`;
 const altInfoHTML=()=>{const al=S.alts[S.ap],x={ph:null,n:al.n,loc:al.s,sc:al.sc,rv:al.rv,pr:al.pr,c:'green',i:al.i};return `<div class="mh"><h2 class="gr">${al.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${Stars(al.sc,al.rv)}</dd><dt>Price</dt><dd>${al.pr}</dd><dt>Distance</dt><dd>${al.leg}</dd><dt>Why this</dt><dd>${al.why}</dd></dl></div><div class="pad" style="margin-top:20px">${Btn('Confirm selection','fconfirm')}</div>`};
-const doneHTML=t=>{const fk=t.fork,ch=Object.keys(fk.ch).map(Number),oth=mainMembers(t).map(pn).join(' and ');return `<div class="mh"><div class="gr"><h2>You’re on ${esc(pn('P'))}’s path</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${routeChangeCard(t)}</div><div class="fl" style="margin-top:16px"><p class="cap">${oth||'Everyone else'} stay on the main path. Share yours and they can join it by tapping its route on the map.</p>${Btn('Invite the group','finvite',{i:'send'})}${Btn('Back to the map','closeLy',{v:'sec'})}</div>`};
+const doneHTML=t=>{const fk=t.fork,ch=Object.keys(fk.ch).map(Number),oth=mainMembers(t).map(pn).join(' and ');return `<div class="mh"><div class="gr"><h2>You’re on ${esc(pn('P'))}’s path</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-done')}</div><div class="fl" style="margin-top:16px">${ch.map(i=>`<div class="chg"><span class="xic">${ic('git-branch',20)}</span><div class="gr"><b>${fk.stops[i].n}</b><div class="cap sm">replaces ${fk.stops[i].from}</div></div></div>`).join('')}<p class="cap">${oth||'Everyone else'} stay on the main path. Share yours and they can join it by tapping its route on the map.</p>${Btn('Invite the group','finvite',{i:'send'})}${Btn('Back to the map','closeLy',{v:'sec'})}</div>`};
 const joinHTML=(t,w)=>{const fk=t.fork,mem=w=='fork'?fk.members:mainMembers(t),nm=w=='fork'?pn(fk.owner)+'’s path':'the main path',ch=Object.keys(fk.ch).map(Number);return `<div class="mh"><div class="gr"><h2>${w=='fork'?'Join '+esc(nm):'Back to the main path'}</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="fl"><div class="chg">${Stack(mem.join(''))}<div class="gr"><b>${mem.length} going</b><div class="cap sm">${mem.map(pn).join(', ')||'No one yet'}</div></div></div>${w=='fork'?ch.map(i=>`<div class="chg"><span class="xic">${ic('git-branch',20)}</span><div class="gr"><b>${esc(fk.stops[i].n)}</b><div class="cap sm">replaces ${esc(fk.stops[i].from)}</div></div></div>`).join(''):`<p class="cap">Follow the group’s original plan. Your changes stay saved if you want to switch back.</p>`}<p class="cap">You can switch paths any time until the trip ends. A trip can have one main path and one extra path.</p>${Btn(w=='fork'?'Join '+esc(nm):'Switch to main path','pathjoin:'+w+':'+t.id)}${Btn('Cancel','closeLy',{v:'sec'})}</div>`};
 const blockedHTML=t=>`<div class="mh"><div class="gr"><h2>This trip already has an extra path</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="fl"><p class="cap">To keep plans simple, a trip can have one main path and one extra path. You can join ${esc(pn(t.fork.owner))}’s path instead of making a new one.</p>${Btn('See '+esc(pn(t.fork.owner))+'’s path','pathpick:fork:'+t.id)}${Btn('Stay on main','closeLy',{v:'sec'})}</div>`;
-
-/* A confirmed alternative is a fork from the existing itinerary, not a
-   replacement for the group's main path. Only render when stops differ. */
-const routeChangeCard=t=>{
- const fk=t&&t.fork;
- const changed=fk?Object.keys(fk.ch||{}).map(Number).filter(i=>Number.isInteger(i)&&fk.stops&&fk.stops[i]):[];
- if(!changed.length)return '';
- const otherName=esc(pn(fk.owner))+'’s path';
- const rows=changed.map(i=>{
-  const next=fk.stops[i],prior=next.from||(baseStops(t)[i]&&baseStops(t)[i].n)||'Original stop';
-  return `<div class="route-change-pair">
-   <div class="route-change-cell"><span class="route-change-stop-label">Stop ${i+1}</span><b title="${esc(prior)}">${esc(prior)}</b></div>
-   <div class="route-change-cell"><span class="route-change-stop-label">Replacement</span><b title="${esc(next.n)}">${esc(next.n)}</b></div>
-  </div>`;
- }).join('');
- return `<section class="route-change-card glass-surface" aria-label="Alternate route with ${changed.length} changed ${changed.length==1?'stop':'stops'}">
-  <div class="route-change-head"><div class="gr"><b>Route changed</b><span class="cap sm">${changed.length} ${changed.length==1?'stop differs':'stops differ'} from the main path</span></div></div>
-  <div class="route-change-fork" role="img" aria-label="One route branches into the original path and an alternate path">
-   <svg viewBox="0 0 120 104" focusable="false" aria-hidden="true">
-    <path class="route-change-stem" d="M60 94V55"/>
-    <path class="route-change-main" d="M60 55C60 30 45 24 26 24H18M32 12L18 24L32 36"/>
-    <path class="route-change-alt" d="M60 55C60 30 75 24 94 24H102M88 12L102 24L88 36"/>
-   </svg>
-  </div>
-  <div class="route-change-path-labels"><span>Main path</span><span>${otherName}</span></div>
-  <div class="route-change-pairs">${rows}</div>
- </section>`;
-};
 
 /* ---------- trip page hooks ---------- */
 const altRow=t=>{if(!fin(t)||!baseStops(t).length||dd(t.date)<0)return '';const w=forkWin(t),bl=t.fork&&!t.fork.members.includes('P');return `<div class="altrow">${Btn(bl?'See paths':'View alternatives','forkopen',{v:'y',i:'route',off:!w})}<div class="cap sm">${w?(bl?'This trip already has an extra path.':'Your changes won’t affect the group’s plan.'):'Opens 24 hours before the trip starts'}</div></div>`};
