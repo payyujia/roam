@@ -581,7 +581,16 @@
  width:30px;height:30px;flex:none;font-size:11px;
 }
 #dev #s-form .friend-suggestion .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#dev #s-form .invite-friends-picker .btn.mini:disabled{opacity:.38;cursor:not-allowed}
+/* Match the disabled multiselect Add buttons in Interests and Health:
+   keep the Sky-blue surface visible with the same .45 opacity. */
+#dev #s-form .invite-friends-picker #finv-add:disabled{
+  --action-fill:rgba(109,182,255,.62)!important;
+  --action-ink:var(--ink)!important;
+  background:rgba(109,182,255,.62)!important;
+  color:var(--ink)!important;
+  opacity:.45!important;
+  cursor:not-allowed;
+}
 @media(prefers-reduced-motion:reduce){
  #dev #s-form .friend-suggestion{transition:none}
 }
