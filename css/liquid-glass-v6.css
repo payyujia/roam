@@ -264,7 +264,9 @@ body{font-weight:500}
   min-width:20px;
   height:20px;
   padding:0 6px;
-  background:var(--coral-200);
+  border-radius:999px;
+  position:relative;
+  background:var(--coral-500);
   color:var(--ink);
   font-size:10px;
   font-weight:800;
@@ -272,8 +274,6 @@ body{font-weight:500}
   place-items:center;
   box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6)!important;
 }
-#dev .bd2{position:relative}
-#dev .bdg.dot{width:9px;height:9px;min-width:0;padding:0;background:var(--coral-300)}
 
 /* Input fields and selection controls. */
 #dev :is(.in,.fld,.fi){
