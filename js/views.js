@@ -20,7 +20,7 @@ V.form=()=>{const f=S.f,e=S.fe,er=k=>e[k]?`<div class="err sm" id="f-err-${k}" r
 const field=(k,input,icon='')=>`<div class="fld${e[k]?' bad':''}">${icon?ic(icon,17):''}${input}</div>${er(k)}`;
 const invalid=k=>e[k]?` aria-invalid="true" aria-describedby="f-err-${k}"`:'';
 return `${Top(IBtn('x','back','Close'),'New trip')}${Stepper(null,0,false)}
-<div class="pad" style="display:flex;flex-direction:column;gap:18px;margin-top:20px"><div><label class="lb" for="f-d">Destination</label>${field('dest',`<input class="in" id="f-d" value="${esc(f.dest||'')}" placeholder="Search a country or city" oninput="S.f.dest=this.value;A.refreshFormNext()" autocomplete="off"${invalid('dest')}>`,'map-pin')}</div>
+<div class="pad" style="display:flex;flex-direction:column;gap:24px;margin-top:20px"><div><label class="lb" for="f-d">Destination</label>${field('dest',`<input class="in" id="f-d" value="${esc(f.dest||'')}" placeholder="Search a country or city" oninput="S.f.dest=this.value;A.refreshFormNext()" autocomplete="off"${invalid('dest')}>`,'map-pin')}</div>
 <div class="form-dates">${DateField('start','Start',f.start,er('start'),invalid('start'))}${DateField('end','End',f.end,er('end'),invalid('end'))}</div>${S.cal?Calendar(S.cal):''}
 <div><label class="lb" for="f-b">Budget per person (SGD)</label>${field('budget',`<input class="in" id="f-b" inputmode="numeric" value="${f.budget||''}" oninput="S.f.budget=this.value.replace(/\\D/g,'');A.refreshFormNext()"${invalid('budget')}>`)}</div>
 <div><span class="lb">Invite friends</span>${FriendInvitePicker()}</div>

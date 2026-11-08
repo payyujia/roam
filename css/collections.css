@@ -37,7 +37,7 @@
 #dev .fi.sel select:focus-visible{outline:none}
 
 /* Create-trip form: one header style (matches home card titles: 15/22 bold ink) */
-#dev #s-form .lb{font-size:15px;line-height:22px;font-weight:700;color:var(--ink);margin-bottom:6px}
+#dev #s-form .lb{font-size:15px;line-height:22px;font-weight:700;color:var(--ink);margin-bottom:8px}
 #dev #s-form .lb .opt{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
 /* Collections use the .cx checkbox rows from the alternatives tray; cancel the form's side padding so rows align with the fields */
 #dev #s-form .cxg{margin:0 -24px}
