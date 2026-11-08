@@ -54,17 +54,32 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* Long vote-status messages must not get cut off by shared one-line row styles. */
 #s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
 
-/* New trip: place the primary action midway through the available space above
-   the home indicator. The footer stays sticky as the form scrolls on small screens. */
+/* New Trip: keep the primary action visible in a sticky frosted footer.
+   The form has scroll clearance equivalent to the footer so the final reel
+   collection and Recommend activities controls can scroll fully above it. */
 #s-form .pg{min-height:100%;padding-bottom:0}
+#s-form .pg > .pad{
+  padding-bottom:calc(140px + env(safe-area-inset-bottom,0px));
+}
 #s-form .dock.low{
+  position:sticky;
+  z-index:8;
   display:flex;
   justify-content:center;
+  flex-shrink:0;
   margin-top:auto;
   bottom:0;
-  padding:16px 24px 62px;
-  background:linear-gradient(to bottom,rgba(255,255,255,0),var(--white) 20%);
+  padding:16px 24px calc(62px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(
+    to bottom,
+    rgba(243,248,255,0) 0%,
+    rgba(243,248,255,.90) 25%,
+    rgba(243,248,255,.98) 60%
+  );
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
 }
+#s-form .dock.low .btn{width:100%;max-width:100%}
 
 /* Align activity icons with the All filter's 24px left inset.
    Four columns keep the full-height info button separate from the text and votes. */
