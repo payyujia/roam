@@ -4,6 +4,8 @@
 /* Bullet + Cover: the route bullet is the brand mark */
 .bl{display:inline-grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:var(--lc);color:var(--lt);font-weight:700;font-size:15px;line-height:1}.bl.s{width:20px;height:20px;font-size:11px}.bl.l{width:40px;height:40px;font-size:22px}
 .cover{--cz:52px;width:var(--cz);height:var(--cz);flex:none;background:var(--black);display:grid;place-items:center;border-radius:6px}.cover .bl{width:62%;height:62%;font-size:calc(var(--cz)*.34)}
+/* Reusable diagonal fallback for image slots without a photo (also visible beneath failed images). */
+#dev .img-fallback{background:linear-gradient(135deg,var(--rose) 0%,var(--coral-500) 52%,var(--amber) 100%)}
 .z-xs{--cz:40px}.z-s{--cz:56px;border-radius:6px 0 0 6px}.z-m{--cz:52px}.z-l{--cz:128px;border-radius:10px}.z-xl{--cz:188px;border-radius:12px;box-shadow:var(--shadow)}
 /* Avatar + Stack */
 .av{width:32px;height:32px;flex:none;border-radius:50%;display:inline-grid;place-items:center;font-weight:700;font-size:12px;background:var(--lc);color:var(--lt)}.av.big{width:40px;height:40px;font-size:15px}.av.xl{width:104px;height:104px;font-size:44px}.av.tab{width:24px;height:24px;font-size:10px}
