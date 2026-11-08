@@ -118,9 +118,8 @@ const Chk=()=>`<div class="pad ck"><button class="fld" data-a="cmpick">${ic('sea
 const macRitchieReviews=()=>`<section class="mac-review-section" aria-label="MacRitchie visitor reviews">
  <div class="mac-review-head">
   <div class="mac-review-intro"><span class="mac-review-eyebrow">${ic('sparkles',13)} COMMUNITY LOVE</span><h3>A little escape, loved by many.</h3><p>Fresh air, still water and miles of green right in the heart of Singapore.</p></div>
-  <div class="mac-review-score"><strong>4.9</strong><span>/ 5</span><div class="mac-score-stars">${Stars(5,'')}</div></div>
+  <div class="mac-review-score"><strong>4.9</strong><span>/ 5</span></div>
  </div>
- <div class="mac-review-count"> <span class="mac-review-count-dot"></span> 2.8k visitor reviews</div>
  <div class="mac-review-list">
   <article class="mac-review-card"><div class="mac-review-stars">${Stars(5,'')}</div><p>“The reservoir views are gorgeous. It feels like you’ve left the city without ever leaving Singapore.”</p><div class="mac-review-author"><span class="mac-review-avatar">A</span><span><b>Alicia</b><small>Weekend hiker</small></span></div></article>
   <article class="mac-review-card"><div class="mac-review-stars">${Stars(5,'')}</div><p>“TreeTop Walk is absolutely worth it. Go early, take your time and enjoy the canopy from above.”</p><div class="mac-review-author"><span class="mac-review-avatar">M</span><span><b>Marcus</b><small>Nature lover</small></span></div></article>
