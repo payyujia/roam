@@ -668,12 +668,13 @@
 #dev :is(#fab,#psave,.btn[data-a="psave"],#s-trip .altrow > .btn) svg{width:20px;height:20px;flex:none}
 #dev #fab span{font-size:14px;font-weight:700;line-height:1}
 
-/* View alternatives shares the Create trip button component, but remains
-   centred in the itinerary instead of floating above the bottom tab bar. */
+/* View alternatives uses the shared Sky button component and stretches
+   to the itinerary's 24px side gutters, matching the stop list width. */
 #dev #s-trip .altrow > .btn{
-  align-self:center;
-  width:max-content;
+  align-self:stretch;
+  width:100%;
   max-width:100%;
+  box-sizing:border-box;
   white-space:nowrap;
 }
 #dev #s-trip .altrow > .btn:disabled{
