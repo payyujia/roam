@@ -1940,6 +1940,14 @@ body{font-weight:500}
 #dev #s-reels .rv>div:not(.sap):not(.cap):not(.pills):not(.rail) b{font-size:16px!important;font-weight:700!important}
 #dev #s-reels .rv .cap{font-size:12px!important;font-weight:500!important;line-height:16px!important}
 #dev #s-reels .rv .pills .pill{font-size:12px!important;font-weight:700!important}
+/* Reel rating and price are read-only facts, not controls.
+   Preserve the existing Component Library pill appearance but remove
+   the shared pill's pressed animation and interactive cursor. Do not
+   disable pointer events: the feed's click handler must recognise the
+   .pills region so tapping these labels cannot pause the video. */
+#dev #s-reels .rv .pills,
+#dev #s-reels .rv .pills .pill{cursor:default}
+#dev #s-reels .rv .pills .pill:active{transform:none!important}
 
 /* Amber star states: info ratings and Profile > Your activity > Reviews. */
 #dev .stars{color:var(--amber)!important}
