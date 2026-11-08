@@ -212,9 +212,9 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
    and provide a clear gap between the arrow and cover photo. */
 #s-trip .th .top{padding-left:24px;padding-right:24px}
 #s-trip .th .thd{padding-top:20px}
-/* The vote list now contains its own sticky Add action, which sits close
-   to the last card and still has scroll clearance above the tab bar. */
-#s-trip .pg{padding-bottom:calc(var(--fab-b) + 24px)}
+/* Voting scrolls only until the final Add action clears the 94px bottom
+   tab bar by 24px. No extra blank area after the button. */
+#s-trip .pg{padding-bottom:118px}
 
 
 
