@@ -41,7 +41,7 @@ function scene(){
    fit.push(...pp);
    routes.push({pts:pp,tone,walk:legWalk(ms).slice(1),a:'mload:'+t.id});
    pp.slice(1).forEach(ll=>pins.push({dot:1,ll,tone}));
-   pins.push({ll:pp[0],tone,icon:t.i,photo:t.id==='hike'?activityPhotoSource(ms[0],t):PH[t.id],photoFallback:t.id==='hike'?activityPhotoBackup(ms[0]):'',mark:t.b,alert,a:'mload:'+t.id,
+   pins.push({ll:pp[0],tone,icon:t.i,photo:isMacRitchieTrip(t)?activityPhotoSource(ms[0],t):PH[t.id],photoFallback:isMacRitchieTrip(t)?activityPhotoBackup(ms[0]):'',mark:t.b,alert,a:'mload:'+t.id,
     label:t.n+(alert?', needs your attention':'')});
   });
   return{routes,pins,fit,pad:{t:120,r:46,b:180,l:46},maxZ:13}}
@@ -62,7 +62,7 @@ function scene(){
  }
  if(fk&&!focusLeg)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
-  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='hike'?activityPhotoSource(s,t):RP[reel],photoFallback:t.id==='hike'?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
+  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:isMacRitchieTrip(t)?activityPhotoSource(s,t):RP[reel],photoFallback:isMacRitchieTrip(t)?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
   else if(S.fk=='alts')o.cls='dim';
   else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel';o.a='pstop:'+i;if(S.pc===i)o.cls='sel'}
