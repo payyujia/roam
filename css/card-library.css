@@ -858,6 +858,84 @@
 #dev #lyc.form-collections-sheet .form-collection-sheet-footer .btn{
   width:100%;min-height:46px;
 }
+
+/* Trip options uses the animated Select collections sheet presentation. */
+#dev #lyc.sheet.trip-options-sheet .lyb{
+  padding:0 0 calc(24px + env(safe-area-inset-bottom,0px));
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-header{
+  flex:none;
+  margin-bottom:0;
+  padding:16px 20px 12px;
+  gap:12px;
+  justify-content:space-between;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+  min-width:0;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-title .cover{
+  flex:none;
+  border-radius:10px;
+  overflow:hidden;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-title .gr{
+  flex:1;
+  min-width:0;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-title h2{
+  margin:0;
+  font-family:var(--font);
+  font-size:20px;
+  font-weight:800;
+  line-height:25px;
+  overflow-wrap:anywhere;
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-title .cap{
+  display:block;
+  margin-top:4px;
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  color:var(--muted);
+}
+#dev #lyc.trip-options-sheet .trip-options-sheet-header>.ib{
+  flex:none;
+}
+#dev #lyc.trip-options-sheet .trip-options-actions{
+  display:flex;
+  flex-direction:column;
+  padding:6px 8px 0;
+}
+#dev #lyc.trip-options-sheet .trip-options-actions .mi{
+  width:auto;
+  min-height:42px;
+  margin-inline:8px;
+  padding:0 16px;
+  gap:10px;
+  border-radius:16px;
+  font-size:14px;
+  font-weight:700;
+}
+#dev #lyc.trip-options-sheet .trip-options-actions .mi.dg{
+  color:var(--red);
+}
+@media (hover:hover) and (pointer:fine){
+  #dev #lyc.trip-options-sheet .trip-options-actions .mi:hover{
+    background:rgba(255,255,255,.45);
+  }
+}
+#dev #lyc.trip-options-sheet .trip-options-actions .mi:focus-visible{
+  outline:2px solid var(--sky-500);
+  outline-offset:2px;
+}
+
 /* Saved reels > Collection: the shared dropdown floats over the reel grid.
    Scope this to the Saved reels filter so other dropdowns keep their layout. */
 #dev #s-pdet .saved-reels-filter{
