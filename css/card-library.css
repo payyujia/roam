@@ -1713,8 +1713,8 @@
   display:block;
   height:100%;
 }
-#dev #s-trip .vote-place .ptally-bar .in{background:var(--sky-500)}
-#dev #s-trip .vote-place .ptally-bar .out{background:var(--coral-500)}
+#dev #s-trip .vote-place .ptally-bar .tally-up{background:var(--sky-500)}
+#dev #s-trip .vote-place .ptally-bar .tally-down{background:var(--coral-500)}
 #dev #s-trip .vote-place .ptally small{
   color:var(--muted);
   font-size:12px;
@@ -1777,7 +1777,8 @@
 }
 #dev #s-trip .vote-place .pv[aria-pressed=true].up{color:var(--sky-500)}
 #dev #s-trip .vote-place .pv[aria-pressed=true].dn{color:var(--coral-500)}
-#dev #s-trip .vote-place .pv[aria-pressed=true] svg{fill:currentColor}
+/* legacy `#dev button > svg{fill:none !important}` would keep the thumb hollow */
+#dev #s-trip .vote-place .pv[aria-pressed=true] svg{fill:currentColor !important}
 #dev #s-trip .vote-place .pv:focus-visible,
 #dev #s-trip .vote-place .pinfo:focus-visible{
   outline:2px solid var(--sky-600);

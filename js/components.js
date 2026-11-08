@@ -99,27 +99,28 @@ const VoteRow=(s,i,t=trip(S.cur))=>{
  const modeIcon=/walk/i.test(s.tr||'')?'walk':/car|taxi/i.test(s.tr||'')?'car':'train';
  const up=Math.max(0,Number(s.u)||0),down=Math.max(0,Number(s.d)||0),total=up+down;
  const upWidth=total?up/total*100:0,downWidth=total?down/total*100:0;
- const voteLabel=s.m===1?'You voted yes':s.m===-1?'You voted no':'Your vote';
+ const friendsIn=Math.max(0,up-(s.m===1?1:0)),voters=[...String(t.m||'')].filter(k=>k!=='P').slice(0,Math.min(friendsIn,3)).join(''),
+  friendLabel=friendsIn?`${friendsIn} friend${friendsIn===1?'':'s'} in`:'No friends in yet';
  const photoMarkup=photo?'<img src="'+esc(photo)+'" alt="" loading="lazy" decoding="async" onload="this.parentElement.classList.add(\'has-photo\')" onerror="this.remove()">':'';
  return `<article class="place glass vote-place" aria-label="${esc(s.n)}">
   <div class="place-media"><div class="place-media-fallback" aria-hidden="true">${ic(activityIcon(s),32)}</div>${photoMarkup}</div>
   <div class="place-body">
-   <span class="place-kick">Stop ${i+1} · ${esc(s.t?t12(s.t):'Time TBD')}</span>
+   <span class="place-kick">Stop ${i+1} · ${esc(s.t?tt(s.t):'Time TBD')}</span>
    <b>${esc(s.n)}</b>
    <div class="pmeta">
     <span class="pi ${categoryColor}" title="${esc(s.k||'Activity')}">${ic(activityIcon(s),15)}</span>
     <span>${esc(s.s||s.k||'Activity')}</span>
     <span class="pi sky" title="Travel">${ic(modeIcon,15)}</span>
-    <span>${esc(s.tr||'Travel time unavailable')}</span>
+    <span>${esc(s.tr?String(s.tr).replace(/\s*(?:by\s+\w+|walk)\s*$/i,''):'Travel time unavailable')}</span>
     <button type="button" class="pinfo" data-a="activity:${i}" aria-label="More about ${esc(s.n)}" title="View activity details">${ic('info',22)}</button>
    </div>
   </div>
   <div class="ptally">
-   <div class="ptally-bar" role="img" aria-label="${up} in, ${down} out"><i class="in" style="width:${upWidth}%"></i><i class="out" style="width:${downWidth}%"></i></div>
+   <div class="ptally-bar" role="img" aria-label="${up} in, ${down} out"><i class="tally-up" style="width:${upWidth}%"></i><i class="tally-down" style="width:${downWidth}%"></i></div>
    ${down>up?'<span class="status err"><i></i>Not in itinerary</span>':`<small>${up} in · ${down} out</small>`}
   </div>
   <div class="place-foot">
-   <div class="pwho">${Av('P')}<div class="cap">${voteLabel}</div></div>
+   <div class="pwho">${voters?Stack(voters):''}<div class="cap">${friendLabel}</div></div>
    <div class="pvote" role="group" aria-label="Vote on ${esc(s.n)}">
     <button type="button" class="pv up" aria-pressed="${s.m==1}" aria-label="Thumbs up, ${up} votes" data-a="vt:${i}:1">${ic('thumbs-up',22)}<span>${up}</span></button>
     <button type="button" class="pv dn" aria-pressed="${s.m==-1}" aria-label="Thumbs down, ${down} votes" data-a="vt:${i}:-1">${ic('thumbs-down',22)}<span>${down}</span></button>
