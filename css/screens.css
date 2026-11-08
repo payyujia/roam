@@ -54,10 +54,11 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
 /* Long vote-status messages must not get cut off by shared one-line row styles. */
 #s-trip .vote-row .gr .cap:has(.err){white-space:normal;overflow:visible;text-overflow:clip;line-height:16px}
 
-/* New Trip: keep the primary action visible in a sticky frosted footer.
-   Visually centre the 46px button with 20px above and below it, plus a
-   separate 24px home-indicator clearance (and device safe area). The form
-   retains scroll clearance so its final controls remain accessible. */
+/* New Trip: give the sticky CTA a true visually centred frosted footer.
+   The background extends 24px above the container: 20px internal top
+   padding + 24px extension = 44px above the 46px button, matching the
+   44px below it (including the home-indicator clearance). Keep the same
+   button position, sticky navigation and scroll clearance. */
 #s-form .pg{min-height:100%;padding-bottom:0}
 #s-form .pg > .pad{
   padding-bottom:calc(140px + env(safe-area-inset-bottom,0px));
@@ -71,6 +72,20 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   margin-top:auto;
   bottom:0;
   padding:20px 24px calc(44px + env(safe-area-inset-bottom,0px));
+  isolation:isolate;
+  background:transparent;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+/* Extra frosted space above the CTA makes the visible footer symmetrical.
+   An independent, non-interactive layer avoids shifting the button toward
+   the home indicator or stealing taps from the form. */
+#s-form .dock.low::before{
+  content:"";
+  position:absolute;
+  inset:-24px 0 0;
+  z-index:0;
+  pointer-events:none;
   background:linear-gradient(
     to bottom,
     rgba(243,248,255,0) 0%,
@@ -80,7 +95,7 @@ mark{background:var(--teal-t,#BFF5EE);color:inherit;border-radius:4px;padding:0 
   -webkit-backdrop-filter:blur(12px);
   backdrop-filter:blur(12px);
 }
-#s-form .dock.low .btn{width:100%;max-width:100%}
+#s-form .dock.low .btn{position:relative;z-index:1;width:100%;max-width:100%}
 
 /* Align activity icons with the All filter's 24px left inset.
    Four columns keep the full-height info button separate from the text and votes. */
