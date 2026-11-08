@@ -124,6 +124,19 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
 .chip[aria-pressed=true]{background:var(--sky-wash);color:var(--ink)}
 .chip[aria-pressed=true]::before{background:linear-gradient(135deg,var(--sky-deep),rgba(109,182,255,.15) 50%,var(--sky-deep))}
 .chip svg{width:14px;height:14px}
+/* Activity category chips match the live Vote filters. Other chip variants
+   retain their own frost treatment. */
+.chip.category-chip{
+  background:rgba(255,255,255,.40);
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+.chip.category-chip[aria-pressed=true]{
+  background:rgba(109,182,255,.35);
+  color:var(--ink);
+}
+.chip.category-chip svg{display:block;flex:none}
 .badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--coral-500);color:var(--ink);font-size:10px;font-weight:800;display:inline-grid;place-items:center;box-shadow:0 2px 6px rgba(217,140,110,.45),inset 0 1px 1px rgba(255,255,255,.6);position:relative}
 .status{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:600;line-height:16px}
 .status i{width:7px;height:7px;border-radius:50%;background:var(--sky-deep);flex:none}
@@ -414,12 +427,12 @@ h3,.t-h3{font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.02em;m
   <!-- ============ FILTERS / TAGS / STATUS ============ -->
   <section class="panel glass">
     <h2 class="ph">Filters, tags &amp; status</h2>
-    <span class="lbl">Filter chips · selected = blue rim</span>
-    <div class="row" data-g="f" style="margin-bottom:6px">
-      <button class="chip" aria-pressed="true">All</button>
-      <button class="chip" aria-pressed="false">Do</button>
-      <button class="chip" aria-pressed="false">Eat</button>
-      <button class="chip" aria-pressed="false">Shop</button>
+    <span class="lbl">Activity category chips · 36px height · 14px icons · selected = blue rim</span>
+    <div class="row" data-g="f" style="margin-bottom:6px" role="group" aria-label="Activity category filters">
+      <button type="button" class="chip category-chip" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>All</span></button>
+      <button type="button" class="chip category-chip" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg><span>Do</span></button>
+      <button type="button" class="chip category-chip" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M18 22V2c-3 2.7-5 6.8-5 11h5"/></svg><span>Eat</span></button>
+      <button type="button" class="chip category-chip" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span>Shop</span></button>
     </div>
     <div class="rule"></div>
     <span class="lbl">Removable tags</span>
@@ -848,6 +861,9 @@ document.querySelectorAll('[data-g]').forEach(g=>{
 });
 
 document.querySelectorAll('.chip[aria-pressed]').forEach(b=>{
+  /* Radio-like filter groups already handle exclusive selection above.
+     Don't overwrite that handler with a second independent toggle. */
+  if(b.closest('[data-g]'))return;
   b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
 });
 
