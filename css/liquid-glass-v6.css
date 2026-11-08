@@ -1896,6 +1896,19 @@ body{font-weight:500}
   --action-ink:var(--ink)!important;
   color:var(--ink)!important;
 }
+/* Improve disabled Navigate legibility on the solid Sky header.
+   Preserve the rounded glass control and the native disabled attribute,
+   but do not fade its text and icon to 45% opacity. */
+#dev #s-trip .th .tact .gob:disabled{
+  --action-fill:rgba(243,248,255,.62)!important;
+  --action-ink:var(--muted)!important;
+  --action-shadow:0 3px 12px rgba(31,99,181,.10),
+    inset 0 0 0 1px rgba(255,255,255,.48),
+    inset 0 1px 0 rgba(255,255,255,.65)!important;
+  color:var(--muted)!important;
+  opacity:1!important;
+  cursor:not-allowed;
+}
 
 /* Toast copy follows the luminance of its rendered surface. */
 #dev #toast.toast-contrast-dark,
