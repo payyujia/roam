@@ -16,19 +16,27 @@ ${open?`<div class="dd-list glass"><div class="dd-opts" id="ddo-${o.id}" role="l
 
 /* ----- Calendar (range) ----- */
 const MFULL=['January','February','March','April','May','June','July','August','September','October','November','December'],DFULL=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const tripDays=()=>{const m={};T.filter(t=>!t.left).forEach((t,i)=>{m[iso(t.date)]=TRIPDOT[i%4]});return m};
+/* Calendar dots: booked trips = coral, pending trips = amber.
+   Keep a small, fixed set of blue recommendations for dates all friends can make. */
+const tripDays=()=>{const m={};T.filter(t=>!t.left).forEach(t=>{m[iso(t.date)]=t.st==='voting'?'var(--amber)':'var(--coral-500)'});return m};
+const calendarFreeRange=()=>({a:iso(addD(NOW,7)),b:iso(addD(NOW,8))});
+const calendarFreeDays=()=>{const r=calendarFreeRange();return new Set([r.a,r.b])};
+const isRecommendedRange=c=>{const r=calendarFreeRange();return c.a===r.a&&c.b===r.b};
 const calHint=c=>!c.a?'Pick a start date':!c.b?'Pick an end date (optional)':`${fd(p8(c.a))} – ${fd(p8(c.b))}`;
-const calSub=c=>{if(!c.a)return '';if(!c.b)return 'Day trip, or tap an end date';const nights=Math.round((p8(c.b)-p8(c.a))/864e5),days=nights+1;return `${days} day${days===1?'':'s'} ${nights} night${nights===1?'':'s'}`};
+const calSub=c=>{if(isRecommendedRange(c))return 'Everyone’s free · Recommended dates';if(!c.a)return '';if(!c.b)return 'Day trip, or tap an end date';const nights=Math.round((p8(c.b)-p8(c.a))/864e5),days=nights+1;return `${days} day${days===1?'':'s'} ${nights} night${nights===1?'':'s'}`};
 const Calendar=c=>{
- const y=c.m.getFullYear(),mo=c.m.getMonth(),first=new Date(y,mo,1).getDay(),len=new Date(y,mo+1,0).getDate(),cells=Math.ceil((first+len)/7)*7,td=tripDays(),nowIso=iso(NOW),canPrev=y*12+mo>NOW.getFullYear()*12+NOW.getMonth();
+ const y=c.m.getFullYear(),mo=c.m.getMonth(),first=new Date(y,mo,1).getDay(),len=new Date(y,mo+1,0).getDate(),cells=Math.ceil((first+len)/7)*7,td=tripDays(),free=calendarFreeDays(),nowIso=iso(NOW),canPrev=y*12+mo>NOW.getFullYear()*12+NOW.getMonth();
  let g='';
  for(let i=0;i<cells;i++){
   const d=new Date(y,mo,1-first+i),k=iso(d),out=d.getMonth()!==mo,past=d<NOW,dis=out||past,A_=c.a===k,B_=c.b===k,range=c.a&&c.b&&c.b>c.a,inr=range&&k>c.a&&k<c.b;
   const cl=['day',k===nowIso?'today':'',dis&&out?'out':'',A_||B_?'sel':'',range&&A_?'start':'',range&&B_?'end':'',inr?'mid':''].filter(Boolean).join(' ');
-  g+=`<button type="button" class="${cl}" aria-label="${DFULL[d.getDay()]} ${d.getDate()} ${MFULL[d.getMonth()]}"${k===nowIso?' aria-current="date"':''}${A_||B_?' aria-pressed="true"':''}${dis?' disabled':` data-a="calday:${k}"`}><span>${d.getDate()}${!out&&td[k]?`<i class="dot" style="--g:${td[k]}"></i>`:''}</span></button>`;
+  const marker=!out?(td[k]?'trip':free.has(k)?'free':''):'';
+  const markerColor=marker==='trip'?td[k]:'var(--sky-500)';
+  const markerLabel=marker==='free'?' · Friends are free':marker==='trip'?(td[k]==='var(--amber)'?' · Trips pending':' · Trips booked'):'';
+  g+=`<button type="button" class="${cl}" aria-label="${DFULL[d.getDay()]} ${d.getDate()} ${MFULL[d.getMonth()]}${markerLabel}"${k===nowIso?' aria-current="date"':''}${A_||B_?' aria-pressed="true"':''}${dis?' disabled':` data-a="calday:${k}"`}><span>${d.getDate()}${marker?`<i class="dot ${marker}" style="--g:${markerColor}"></i>`:''}</span></button>`;
  }
  return `<div id="form-calendar" class="cal glass" role="dialog" aria-label="Choose trip dates" aria-modal="false"><div class="cal-h"><b aria-live="polite">${MFULL[mo]} ${y}</b><div class="cal-nav"><button type="button" class="btn mini" aria-label="Previous month" data-a="calmo:-1"${canPrev?'':' disabled'}>${ic('chevron-left',15)}</button><button type="button" class="btn mini" aria-label="Next month" data-a="calmo:1">${ic('chevron-right',15)}</button></div></div>
-<div class="cal-wd" aria-hidden="true">${['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${g}</div><div class="rule"></div>
+<div class="cal-wd" aria-hidden="true">${['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${g}</div><div class="cal-legend" aria-label="Calendar availability legend"><span><i class="coral"></i>Trips booked</span><span><i class="amber"></i>Trips pending</span><span><i class="sky"></i>Friends are free</span></div><div class="rule"></div>
 <div class="cal-f"><div><div class="s">${calHint(c)}</div><div class="micro">${calSub(c)}</div></div><div class="cal-act"><button type="button" class="btn sec sm2" data-a="calclear">Clear</button><button type="button" class="btn sm2" data-a="calset"${c.a?'':' disabled'}>Set dates</button></div></div></div>`};
 
 /* The compact Create Trip fields use DD MMM YY, while the calendar and other
