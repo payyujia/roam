@@ -66,10 +66,10 @@ const ov=(t,p)=>{const a=MA[t.id]||[20+T.indexOf(t)*23%60,30+T.indexOf(t)*13%22]
 /* Initial form state runs before pickers.js loads. Keep the shared date
    suggestion here so both startup and the calendar can use it safely. */
 /* Demo calendar: show the next Saturday–Sunday when the group is free.
-   For a MacRitchie day trip choose Sunday only, with no overnight end date. */
+   For the MacRitchie day trip, preset both date fields to Sunday (same-day). */
 const calendarFreeRange=()=>{
  const untilSaturday=(6-NOW.getDay()+7)%7||7;
  const saturday=addD(NOW,untilSaturday);
  return {a:iso(saturday),b:iso(addD(saturday,1))};
 };
-const newF=()=>({dest:'MacRitchie Hike',start:calendarFreeRange().b,end:'',budget:300,coll:['R','E'],auto:1});
+const newF=()=>({dest:'MacRitchie Hike',start:calendarFreeRange().b,end:calendarFreeRange().b,budget:300,coll:['R','E'],auto:1});
