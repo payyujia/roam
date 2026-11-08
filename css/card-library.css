@@ -632,6 +632,26 @@
 }
 
 
+/* Profile > Home city: the shared single-select menu is a floating
+   overlay, not an in-flow block. Open upward here so all three options
+   stay above the bottom tab bar without moving Save changes. */
+#dev #s-pdet .profile-home-city{
+  position:relative;
+  z-index:6;
+}
+#dev #s-pdet .profile-home-city .dd{position:relative}
+#dev #s-pdet .profile-home-city .dd-list{
+  position:absolute;
+  top:auto;
+  bottom:calc(100% + 8px);
+  left:0;
+  right:0;
+  width:100%;
+  box-sizing:border-box;
+  margin:0;
+  z-index:10;
+}
+
 /* Saved reels > Collection: the shared dropdown floats over the reel grid.
    Scope this to the Saved reels filter so other dropdowns keep their layout. */
 #dev #s-pdet .saved-reels-filter{
