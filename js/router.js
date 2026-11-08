@@ -47,10 +47,10 @@ document.addEventListener('scroll',e=>{
 const go=id=>{render(id);const st=cur(),i=st.indexOf(id);if(i>-1)st.length=i+1;else st.push(id);upd();if(!ROOT[id])$('#s-'+id).scrollTop=0};
 /* Review tasks should open without the horizontal transition exposing two screens at once. */
 const goInstant=id=>{const app=$('#app');app.classList.add('nt');go(id);requestAnimationFrame(()=>requestAnimationFrame(()=>app.classList.remove('nt')))};
-/* Trip details: enter by moving left (from the right edge), keeping the
-   originating Trips page painted underneath. Back uses the existing
-   rightward exit animation. Respect reduced-motion preferences. */
-const goTripSwipeLeft=()=>{
+/* Trip details: swipe right into view from the left edge, keeping the
+   originating Trips page painted underneath. Back swipes left.
+   Respect reduced-motion preferences. */
+const goTripSwipeRight=()=>{
  const fromId=topId();
  if(fromId==='trip'){go('trip');return}
  const parent=$('#s-'+fromId),screen=$('#s-trip');
