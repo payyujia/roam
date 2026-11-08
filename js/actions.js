@@ -10,7 +10,7 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
      starting the rightward exit so the animations cannot compete. */
   if(exitingId==='trip'){
     $('#s-trip')?.classList.remove('trip-enter');
-    $('.scr.trip-enter-parent').forEach(s=>s.classList.remove('trip-enter-parent'));
+    document.querySelectorAll('.scr.trip-enter-parent').forEach(s=>s.classList.remove('trip-enter-parent'));
   }
   const slideRight=exitingId==='thread'||exitingId==='pdet'||exitingId==='trip';
   const exiting=slideRight?$('#s-'+exitingId):null;
