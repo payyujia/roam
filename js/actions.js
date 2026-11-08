@@ -65,6 +65,7 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
  inv:v=>{S.inv=false;const t=trip('read'),old=t.date;if(v=='y')t.date=REQ;rr();toast(v=='y'?`${t.n} moved to ${fd(REQ)}`:'Reschedule request declined',()=>{S.inv=true;t.date=old;rr()})},
  newtrip:()=>{S.f=newF();S.fe={};goInstant('form')},
  fcol:(k,el)=>{const c=S.f.coll||[];S.f.coll=c.includes(k)?c.filter(x=>x!=k):[...c,k];el.classList.toggle('on');el.setAttribute('aria-pressed',S.f.coll.includes(k))},fsw:el=>{S.f.auto=S.f.auto?0:1;el.classList.toggle('on');el.setAttribute('aria-checked',!!S.f.auto)},
+ refreshFormNext:()=>{const button=$('#s-form [data-a="formnext"]');if(button)button.disabled=!canAdvanceNewTrip()},
  formnext:()=>{const f=S.f,e={};if(!f.dest.trim())e.dest='Add a destination';const s=f.start&&p8(f.start),en=f.end&&p8(f.end);if(!s)e.start='Pick a start date';else if(dd(s)<0)e.start='Can’t be in the past';if(s&&en&&en<s)e.end='Must be after the start';if(!(+f.budget>0))e.budget='Enter a budget above 0';
   S.fe=e;if(Object.keys(e).length){render('form');return}
   const days=Math.round(((en||s)-s)/864e5)+1,d=f.dest.trim(),id='n'+T.length,m='P'+(f.coll||[]).join(''),c=LINE[(T.length+3)%LINE.length];
