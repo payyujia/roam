@@ -636,7 +636,7 @@
    Profile > Save changes (#psave / .btn[data-a="psave"]) follow the
    library's .btn.sky: 46px high, 0 22px padding, 14px / 700, 8px gap,
    20px icon, frosted Sky fill. */
-#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button){
+#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button,#s-trip .altrow > .btn){
   height:46px;
   padding:0 22px;
   border-radius:999px;
@@ -647,7 +647,7 @@
   letter-spacing:0;
   gap:8px;
 }
-#dev :is(#fab,.vote-add-button,.btn[data-a="psave"]):not(:disabled){
+#dev :is(#fab,.vote-add-button,.btn[data-a="psave"],#s-trip .altrow > .btn):not(:disabled){
   --action-fill:var(--sky-fill)!important;
   --action-shadow:var(--control-shadow)!important;
 }
@@ -664,8 +664,24 @@
   cursor:not-allowed;
   transform:none!important;
 }
-#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button) svg{width:20px;height:20px;flex:none}
+#dev :is(#fab,#psave,.btn[data-a="psave"],.vote-add-button,#s-trip .altrow > .btn) svg{width:20px;height:20px;flex:none}
 #dev :is(#fab,.vote-add-button) span{font-size:14px;font-weight:700;line-height:1}
+
+/* View alternatives shares the Create trip button component, but remains
+   centred in the itinerary instead of floating above the bottom tab bar. */
+#dev #s-trip .altrow > .btn{
+  align-self:center;
+  width:max-content;
+  max-width:100%;
+  white-space:nowrap;
+}
+#dev #s-trip .altrow > .btn:disabled{
+  --action-fill:var(--sky-fill)!important;
+  --action-ink:var(--ink)!important;
+  --action-shadow:var(--control-shadow)!important;
+  opacity:.45;
+}
+
 
 /* PROFILE DETAIL SAVE POSITION — align the Save changes pill with the
    end of the form instead of pinning it near the bottom of the screen.
