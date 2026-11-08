@@ -1,21 +1,40 @@
 /* ===== MAP SCREEN, FORK FLOW SHEETS, TRIP PAGE HOOKS ===== */
 const pathChips=t=>{const fk=t.fork,me=myPath(t);return `<div class="pcs" role="group" aria-label="Paths">${[['main','Main path',mainMembers(t).length,me=='main'?mapTone(t):'inactive'],['fork',pn(fk.owner)+'’s path',fk.members.length,forkTone(t)]].map(([k,l,n,tone])=>`<button class="pc2" aria-pressed="${me==k}" data-a="pathpick:${k}:${t.id}"><span class="sw2 tone-${tone}"></span><span class="gr"><span>${esc(l)}</span><small>${n} going</small></span></button>`).join('')}</div>`};
+/* This prototype does not have GPS or routed-distance tracking. The first
+   50 m is a clearly labelled demo approach distance. Trail legs use rough
+   planning estimates (about 4.5 km from the reservoir to TreeTop Walk and
+   about 2.5 km from TreeTop Walk towards the Venus Drive exit); the latter
+   excludes the onward transfer to lunch. Do not present them as live distance. */
+const HIKE_DEMO_LEG_DISTANCE=[
+ {label:'50 m',mode:'demo'},
+ {label:'~4.5 km',mode:'estimate'},
+ {label:'~2.5 km',mode:'estimate'}
+];
 const navSheet=()=>{
  const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=ms.length>0&&live(t),
   cu=lv?Math.min(S.leg,ms.length-1):0,
   pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
  if(lv){
   const c=ms[cu],g=LEG(c),remaining=ms.length-cu,meet=g.start,
-   hikeToLunch=t.id==='hike'&&cu===2,
+   hike=t.id==='hike',hikeDistance=hike?HIKE_DEMO_LEG_DISTANCE[cu]:null,
+   hikeToLunch=hike&&cu===2,
+   rawDistance=hikeDistance?.label||g.km,
+   distParts=rawDistance?rawDistance.split(' '):null,
    mt=tt(c.t).split(' '),
-   metric=meet?mt[0]:g.km?g.km.split(' ')[0]:g.m!=null?(g.m>=60?'~'+ +(g.m/60).toFixed(1):String(g.m)):'Next',
-   unit=meet?mt.slice(1).join(' '):g.km?g.km.split(' ').slice(1).join(' '):g.m!=null?(g.m>=60?'hr':'min'):'stop',
-   lead=meet?'Meet at '+c.n:hikeToLunch?'Hike out, then head to '+c.n:g.hike?'Hike to '+c.n:g.vb+' to '+c.n,
-   detail=meet?'Meet at main entrance':hikeToLunch?'Via Venus Drive · ~1.5 hr exit hike + transfer':g.text||'Travel details unavailable',
-   subtitle=meet?'Scheduled meeting time':'Planned arrival '+tt(c.t),
-   status='Planned route';
-  return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big${meet?' meet-time':''}">${ic(meet?'map-pin':g.ic,32)}<b>${metric}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${subtitle}</span></div></div><div class="nvh-r"><span class="status"><i></i>${status}</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
- <div class="nvt"><span class="nvt-ic">${ic(meet?'navigation':g.ic,22)}</span><div class="gr"><b>${esc(lead)}</b><div class="cap sm">${esc(detail)}</div></div></div>
+   metric=distParts?distParts[0]:meet?mt[0]:g.m!=null?(g.m>=60?'~'+ +(g.m/60).toFixed(1):String(g.m)):'Next',
+   unit=distParts?distParts.slice(1).join(' '):meet?mt.slice(1).join(' '):g.m!=null?(g.m>=60?'hr':'min'):'stop',
+   lead=hike&&cu===0?'Walk 50 m to MacRitchie Reservoir Park'
+    :hike&&cu===1?'Hike ~4.5 km to TreeTop Walk'
+    :hikeToLunch?'Hike ~2.5 km to Venus Drive exit'
+    :meet?'Meet at '+c.n:g.hike?'Hike to '+c.n:g.vb+' to '+c.n,
+   detail=hike&&cu===0?'Demo approach · Meet at main entrance'
+    :hike&&cu===1?'Via forest trails · approx. 2 hr'
+    :hikeToLunch?'Then transfer to The Roti Prata House for lunch'
+    :g.text||'Travel details unavailable',
+   subtitle='Arrive '+tt(c.t)+(hikeToLunch?' · Exit trail first':''),
+   status=hikeDistance?(hikeDistance.mode==='demo'?'Demo distance':'Approx. distance'):'Planned route';
+  return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big${!distParts&&meet?' meet-time':''}">${ic(hike?'walk':meet?'map-pin':g.ic,32)}<b>${metric}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${subtitle}</span></div></div><div class="nvh-r"><span class="status"><i></i>${status}</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
+ <div class="nvt"><span class="nvt-ic">${ic(hike?'navigation':meet?'navigation':g.ic,22)}</span><div class="gr"><b>${esc(lead)}</b><div class="cap sm">${esc(detail)}</div></div></div>
  ${NavTL(t,ms,cu,lv)}`;
  }
  const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`${ms.length?'Preview · opens the day before':'No stops in the itinerary.'} <button class="lk" data-a="opentrip">Open trip</button>`;
