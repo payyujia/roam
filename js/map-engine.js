@@ -89,7 +89,7 @@ function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
  if(p.pill)return `<button class="pb tone-${p.tone}" style="${L}" data-a="${p.a}" aria-label="${p.pill}’s path">${p.pill}</button>`;
  if(p.lab)return `<span class="pl2" style="${L}">${p.lab}</span>`;
  const g=p.a?'button':'span',badge=p.alert||p.mark;
- const photo=p.photo?(/^https:\/\//.test(p.photo)?`<img src="${esc(p.photo)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`:Pic(p.photo,p.label,96)):'';
+ const photo=p.photo?(/^(?:https:\/\/|assets\/)/.test(p.photo)?`<img src="${esc(p.photo)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`:Pic(p.photo,p.label,96)):'';
  const accessible=p.a?`data-a="${p.a}"`:'role="img"';
  return `<${g} class="pn tone-${p.tone} ${p.cls||''}" style="${L};z-index:${Math.round(y)}" ${accessible} aria-label="${esc(p.label)}">
   <span class="pn-face" aria-hidden="true"></span>${PIN_RIM}
