@@ -2082,62 +2082,16 @@ body{font-weight:500}
 #dev :is(#s-trip,#lyc) .ban>div>.cap{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
 
 
-<<<<<<< HEAD
-/* Visitor reviews, shown on every reel's Info page
-   Uses the Sunrise Frost library palette, glass surfaces and approved type scale. */
-=======
-/* PLACE DETAILS · reusable sample visitor reviews — unboxed editorial list */
->>>>>>> 30c2df67c01902d012469c3f28e59b1a26dee95b
-#dev .mac-review-section{
-  margin:18px 24px 22px;
-  padding:16px;
-  border:1px solid rgba(255,255,255,.78);
-  border-radius:24px;
-  background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(255,255,255,.42));
-  box-shadow:0 12px 30px rgba(49,116,190,.12),inset 0 1px 0 rgba(255,255,255,.9);
-}
-#dev .mac-review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-#dev .mac-review-intro{min-width:0;flex:1}
-#dev .mac-review-eyebrow{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;font-weight:700;line-height:16px;letter-spacing:.06em}
-#dev .mac-review-eyebrow svg{width:14px;height:14px}
-#dev .mac-review-intro h3{margin:7px 0 4px;font-size:20px;line-height:1.25;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
-#dev .mac-review-intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5;max-width:250px}
-#dev .mac-review-score{flex:none;min-width:74px;text-align:center;padding:9px 8px 7px;border-radius:18px;background:rgba(109,182,255,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
-#dev .mac-review-score>strong{font-size:23px;line-height:1.2;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
-#dev .mac-review-score>span{font-size:12px;line-height:16px;font-weight:500;color:var(--muted)}
-<<<<<<< HEAD
-#dev .mac-score-stars{margin-top:3px}
-#dev .mac-score-stars .stars{gap:0}
-=======
-#dev .mac-review-count{
- display:flex;
- align-items:center;
- gap:7px;
- margin:0 0 5px;
- font-size:12px;
- font-weight:500;
- line-height:16px;
- color:var(--muted);
-}
-#dev .mac-review-count-dot{
- display:inline-block;
- flex:none;
- width:6px;
- height:6px;
- border-radius:50%;
- background:var(--sky-500);
-}
->>>>>>> 30c2df67c01902d012469c3f28e59b1a26dee95b
+/* Visitor reviews · unboxed editorial list, aligned to the info-sheet content gutter. */
+#dev .mac-review-section{margin:18px 24px 22px;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+#dev .mac-review-count{display:flex;align-items:center;gap:7px;margin:0 0 12px;color:var(--muted);font-size:12px;font-weight:500;line-height:16px}
+#dev .mac-review-count-dot{display:inline-block;flex:none;width:6px;height:6px;border-radius:50%;background:var(--sky-500)}
 #dev .mac-review-section .stars{color:var(--amber)!important}
 #dev .mac-review-section .stars svg{width:16px;height:16px;fill:currentColor;stroke:currentColor;filter:none}
-#dev .mac-review-section .stars svg[fill="none"]{fill:none;opacity:.4}
-#dev .mac-review-section .star-frac{position:relative;display:inline-block;width:16px;height:16px;line-height:0}
-#dev .mac-review-section .star-fill{position:absolute;left:0;top:0;height:16px;overflow:hidden}
-#dev .mac-review-section .star-fill svg{max-width:none}
-#dev .mac-review-count{display:flex;align-items:center;gap:7px;margin:13px 0 10px;color:var(--muted);font-size:12px;font-weight:500;line-height:16px}
-#dev .mac-review-count-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none}
-#dev .mac-review-list{display:grid;gap:9px}
-#dev .mac-review-card{padding:12px;border-radius:18px;background:rgba(255,255,255,.56);border:1px solid rgba(255,255,255,.8);box-shadow:0 4px 12px rgba(49,116,190,.07),inset 0 1px 0 rgba(255,255,255,.82)}
+#dev .mac-review-list{display:grid;gap:0}
+#dev .mac-review-card{padding:14px 0;border:0;border-bottom:1px solid rgba(14,17,22,.12);border-radius:0;background:none;box-shadow:none}
+#dev .mac-review-card:first-child{padding-top:0}
+#dev .mac-review-card:last-child{padding-bottom:0;border-bottom:0}
 #dev .mac-review-stars .stars svg{width:16px;height:16px}
 #dev .mac-review-card>p{margin:7px 0 10px;font-size:14px;line-height:1.5;font-weight:500;color:var(--ink)}
 #dev .mac-review-author{display:flex;align-items:center;gap:8px}
@@ -2145,7 +2099,4 @@ body{font-weight:500}
 #dev .mac-review-author>span:last-child{display:flex;flex-direction:column;gap:1px}
 #dev .mac-review-author b{font-size:14px;line-height:1.5;font-weight:700;color:var(--ink)}
 #dev .mac-review-author small{font-size:12px;line-height:16px;font-weight:500;color:var(--muted)}
-@media(max-width:360px){
-  #dev .mac-review-section{margin-inline:18px;padding:13px}
-  #dev .mac-review-score{min-width:68px;padding-inline:6px}
-}
+@media(max-width:360px){#dev .mac-review-section{margin-inline:18px}}
