@@ -133,7 +133,7 @@ const Img=(x,dots=1)=>{
  return `<div class="iimg l-${x.c}">${image}<span class="loc">${ic('map-pin',14)}<span>${x.loc}</span></span>${dots?'<span class="dots"><i></i><i></i><i></i></span>':''}</div>`;
 };
 const Chk=()=>`<div class="pad ck"><button class="fld" data-a="cmpick">${ic('search',20)}<span class="gr">Check against saved places</span>${ic('bookmark',20)}</button></div>`;
-/* Sample visitor reviews shown at the bottom of each reel's info pop-up, keyed by place name.
+/* Visitor reviews shown at the bottom of each reel's info pop-up, keyed by place name.
    Each review is [quote, name, who they are, stars (optional, default 5)]. */
 const REVIEWS={
  'MacRitchie Reservoir':{head:'A little escape, loved by many.',blurb:'Fresh air, still water and miles of green right in the heart of Singapore.',list:[
@@ -165,11 +165,7 @@ const REVIEWS={
    The fill width is mapped to the star's drawn shape (about 4% to 96% of its box) so it looks proportional. */
 const StarsFrac=sc=>`<span class="stars" role="img" aria-label="${sc} out of 5">${[0,1,2,3,4].map(i=>{const f=Math.max(0,Math.min(1,sc-i)),w=f>=1?100:+(4.2+f*91.6).toFixed(1);return `<span class="star-frac">${ic('star',16,'none')}${f>0?`<span class="star-fill" style="width:${w}%">${ic('star',16,'currentColor')}</span>`:''}</span>`}).join('')}</span>`;
 const reviewsHTML=(x,score,count)=>{const r=REVIEWS[/^MacRitchie Reservoir(?: Park)?$/i.test(x.n)?'MacRitchie Reservoir':x.n];if(!r||!Number.isFinite(score))return '';return `<section class="mac-review-section" aria-label="${esc(x.n)} visitor reviews">
- <div class="mac-review-head">
-  <div class="mac-review-intro"><span class="mac-review-eyebrow">${ic('sparkles',13)} COMMUNITY LOVE</span><h3>${r.head}</h3><p>${r.blurb}</p></div>
-  <div class="mac-review-score"><strong>${score.toFixed(1)}</strong><span>/ 5</span><div class="mac-score-stars">${StarsFrac(score)}</div></div>
- </div>
- <div class="mac-review-count"> <span class="mac-review-count-dot"></span> ${count} visitor reviews · Sample demo content</div>
+ <div class="mac-review-count"><span class="mac-review-count-dot"></span>${count} visitor reviews</div>
  <div class="mac-review-list">${r.list.map(([q,n,w,st=5])=>`<article class="mac-review-card"><div class="mac-review-stars">${Stars(st,'')}</div><p>“${q}”</p><div class="mac-review-author"><span class="mac-review-avatar">${n[0]}</span><span><b>${n}</b><small>${w}</small></span></div></article>`).join('')}</div>
 </section>`};
 const infoHTML=gi=>{const x=typeof gi==='number'?PXr(gi):gi,isMacRitchie=/^MacRitchie Reservoir(?: Park)?$/i.test(x.n),score=isMacRitchie?4.9:x.sc,review=Number.isFinite(score);return `<div class="mh"><h2 class="gr">${x.n}</h2>${IBtn('x','closeLy','Close')}</div><div class="pad">${Img(x)}<dl class="kv"><dt>Review</dt><dd>${review?Stars(score,isMacRitchie?'2.8k':x.rv):'Not available yet'}</dd><dt>Price</dt><dd>${x.pr||'Not available yet'}</dd><dt>ROAM says</dt><dd>${review?ana({sc:score}):'There is not enough review information for an analysis yet.'}</dd></dl></div>${reviewsHTML(x,score,isMacRitchie?'2.8k':x.rv)}<div style="height:24px"></div>${Chk()}`};
