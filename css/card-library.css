@@ -915,9 +915,21 @@
 
 /* Profile > Rate past trips: the entire title + rating subtitle opens details;
    star-rating controls remain separate, and the original alignment is kept. */
+/* Stretch the invisible trip-details tap target through all free space
+   on the left of the separate star controls. No visual link decoration. */
+#dev #s-pdet .rating-trip-info{
+  flex:1 1 0;
+  min-width:0;
+  align-self:stretch;
+  display:flex;
+}
 #dev #s-pdet .rating-trip-link{
-  display:block;
-  max-width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  width:100%;
+  min-height:44px;
   padding:0;
   border:0;
   background:transparent;
