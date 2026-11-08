@@ -1,12 +1,23 @@
 /* ===== MAP SCREEN, FORK FLOW SHEETS, TRIP PAGE HOOKS ===== */
 const pathChips=t=>{const fk=t.fork,me=myPath(t);return `<div class="pcs" role="group" aria-label="Paths">${[['main','Main path',mainMembers(t).length,me=='main'?mapTone(t):'inactive'],['fork',pn(fk.owner)+'’s path',fk.members.length,forkTone(t)]].map(([k,l,n,tone])=>`<button class="pc2" aria-pressed="${me==k}" data-a="pathpick:${k}:${t.id}"><span class="sw2 tone-${tone}"></span><span class="gr"><span>${esc(l)}</span><small>${n} going</small></span></button>`).join('')}</div>`};
-const navSheet=()=>{const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=ms.length>0&&live(t),cu=lv?Math.min(S.leg,ms.length-1):0,pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
- if(lv){const c=ms[cu],g=LEG(c),rest=ms.slice(cu),mins=rest.reduce((a,s)=>a+LEG(s).m,0),dist=rest.reduce((a,s)=>a+LEG(s).d,0),[dv,du]=g.km.split(' '),seg=c.s.split(' · '),via=seg[1]&&!/min/.test(seg[1])?seg[1]:seg[0];
-  return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(cu==2?'car':g.ic,32)}<b>${dv}</b><span>${du}</span></div><div class="nvh-meta"><span>Arrive ${tt(c.t)}</span></div></div><div class="nvh-r"><span class="status ok"><i></i>On time</span><span class="micro">${fdur(mins)} to go</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
-<div class="nvt"><span class="nvt-ic">${ic('navigation',22)}</span><div class="gr"><b>${g.vb} ${g.km} to ${c.n}</b><div class="cap sm">via ${via}</div></div></div>
-${NavTL(t,ms,cu,lv)}`}
- const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`${ms.length?'Preview · opens the day before':'No stops in the itinerary.'} <button class="lk" data-a="opentrip">Open trip</button>`;
- return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,lv)}`};
+const navSheet=function(){
+  const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=ms.length>0&&live(t),
+    cu=lv?Math.min(S.leg,ms.length-1):0,
+    pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
+  if(lv){
+    const c=ms[cu],g=LEG(c),remaining=ms.length-cu,
+      value=g.start?'Start':g.km?g.km.split(' ')[0]:g.m!=null?(g.m>=60?'~'+ +(g.m/60).toFixed(1):String(g.m)):'Next',
+      unit=g.start?'':g.km?g.km.split(' ').slice(1).join(' '):g.m!=null?(g.m>=60?(g.hike?'hr hike':'hr'):'min'):'stop',
+      move=g.start?'Meet at '+c.n:g.vb+' to '+c.n,
+      detail=g.text||'Travel details not available',
+      when=(g.start?'Meet ':'Planned arrival ')+tt(c.t);
+    return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(g.ic,32)}<b>${value}</b>${unit?`<span>${unit}</span>`:''}</div><div class="nvh-meta"><span>${when}</span></div></div><div class="nvh-r"><span class="status"><i></i>Route preview</span><span class="micro">${remaining} stop${remaining===1?'':'s'} left</span></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
+<div class="nvt"><span class="nvt-ic">${ic(g.ic,22)}</span><div class="gr"><b>${esc(move)}</b><div class="cap sm">${esc(detail)}${t.id==='hike'&&g.hike?' · Follow marked trails':''}</div></div></div>
+${NavTL(t,ms,cu,lv)}`;
+  }
+  const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`${ms.length?'Preview · opens the day before':'No stops in the itinerary.'} <button class="lk" data-a="opentrip">Open trip</button>`;
+  return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,lv)}`;
+};
 /* ---------- fork flow: ONE swap card for both steps (.fcard.fswap) ----------
    Rail: affected stop (top node) -> replacement (bottom node). Step "flag" shows the
    replacement as empty; step "alts" fills it from the chosen map pin or a chip. */
