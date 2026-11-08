@@ -686,26 +686,40 @@
    connecting the alternatives action more closely with the route above. */
 #dev #s-trip .altrow{
   padding-top:20px;
+  align-items:center;
+  gap:8px;
+}
+/* Keep the main action and its supporting copy on the same visual axis. */
+#dev #s-trip .altrow .cap{
+  max-width:100%;
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  text-align:center;
+  white-space:normal;
 }
 
 /* The vote review action is an accessible text link, secondary to the
    View alternatives Sky pill. It reuses the existing step:1 navigation. */
 #dev #s-trip .itinerary-review-wrap{
-  margin-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:4px;
 }
 #dev #s-trip .itinerary-review-votes{
   display:inline-flex;
   align-items:center;
-  justify-content:flex-start;
+  justify-content:center;
   gap:6px;
   max-width:100%;
   min-height:44px;
   font-family:var(--font);
-  font-size:14px;
+  font-size:12px;
   font-weight:700;
-  line-height:21px;
+  line-height:16px;
   color:var(--sky-600);
-  text-align:left;
+  text-align:center;
   text-decoration:underline;
   text-underline-offset:3px;
 }
