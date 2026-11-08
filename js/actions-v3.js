@@ -1,6 +1,6 @@
 /* ===== v3 ACTIONS: fork flow, paths, chat search, profile ===== */
 const flagsFor=t=>{const ms=mstops(t),fr={};ms.forEach((s,i)=>{const r=S.fx.filter(id=>EXI.find(e=>e.id==id).f(s,i,t));if(r.length)fr[i]=r});return fr};
-const altsFor=(t,i)=>{const ms=mstops(t),c=sll(t,ms[i]),pv=i?sll(t,ms[i-1]):oll(t),o=[[.0062,-.0085],[-.0048,.0098],[.0088,.0071],[-.0079,-.0052]];return ALTP.map((a,j)=>{const ll=[c[0]+o[j][0]*(1+.2*(i%2)),c[1]+o[j][1]];return Object.assign({},a,{ll,leg:legTxt(pv,ll)})})};
+const altsFor=(t,i)=>{const ms=mstops(t),c=sll(t,ms[i]),pv=i?sll(t,ms[i-1]):oll(t),o=[[.0062,-.0085],[-.0048,.0098],[.0088,.0071]];return ALTP.map((a,j)=>{const ll=[c[0]+o[j][0]*(1+.2*(i%2)),c[1]+o[j][1]];return Object.assign({},a,{ll,leg:legTxt(pv,ll)})})};
 Object.assign(A,{
  rgo:i=>{const r=R[+i];if(!r)return;S.fyp=r.f?1:0;tab('reels');const at=()=>{const f=$('#s-reels .rfeed');if(f)f.scrollTop=Math.max(0,visR().indexOf(r))*f.clientHeight};at();requestAnimationFrame(at)},
  open:id=>{S.cur=id;S.pv=null;S.step=fin(trip(id))?2:1;go('trip')},
