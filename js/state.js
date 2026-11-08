@@ -8,4 +8,13 @@ const taskDue=id=>id=='inv'?1e15:trip(id).close?+toDate(trip(id).close):1e15,tas
 const unread=()=>CH.reduce((a,c)=>a+c.u,0),downvoted=t=>t.stops.some(s=>s.m==-1);
 const SVL=()=>{const x=[...SAVED];R.forEach((r,i)=>{if(S.saved[i]&&!x.some(y=>y.n==r.n))x.push({n:r.n,s:r.loc,i:r.i,k:'Eat',by:'P'})});return x};
 const byTxt=(by='P')=>{const n=[...by].map(k=>k=='P'?'you':PE[k]?PE[k][2]:k);return 'Saved by '+(n.length>2?n.slice(0,2).join(', ')+` +${n.length-2}`:n.join(' & '))};
-const recs=d=>[[`${d} Old Town`,'10:00','map-pin','Sightseeing · 2 hrs','Do','20 min by car'],['Heritage museum','11:30','image','Museum · 1 hr','Do','10 min walk'],['Local lunch spot','13:00','coffee','Lunch · $$','Eat','8 min walk'],['Riverside café','15:00','coffee','Café · $','Eat','12 min walk'],['Sunset viewpoint','17:30','sun','Scenic · Free','Do','15 min by taxi'],['Night market','19:00','bag','Street food · $','Eat','10 min by taxi']].map((r,j)=>sp(r[0],r[1],r[2],r[3],r[4],25+j*19%52,26+j*13%24,r[5]));
+/* Use MacRitchie hiking stops for the story's day-trip vote list.
+   The Roti Prata House remains available for Plaise to suggest separately. */
+const recs=d=>{
+ if(/^macritchie(?:\s+(?:hike|reservoir(?:\s+park)?))?$/i.test(String(d).trim()))
+  return [
+   sp('MacRitchie Reservoir Park','07:30','map-pin','Reservoir views · 30 min visit','Do',30,42,'Meet at main entrance'),
+   sp('TreeTop Walk','10:00','sun','Bridge & photos · 30 min visit','Do',58,30,'Approx. 2 hr hike to TreeTop Walk')
+  ];
+ return [[`${d} Old Town`,'10:00','map-pin','Sightseeing · 2 hrs','Do','20 min by car'],['Heritage museum','11:30','image','Museum · 1 hr','Do','10 min walk'],['Local lunch spot','13:00','coffee','Lunch · $$','Eat','8 min walk'],['Riverside café','15:00','coffee','Café · $','Eat','12 min walk'],['Sunset viewpoint','17:30','sun','Scenic · Free','Do','15 min by taxi'],['Night market','19:00','bag','Street food · $','Eat','10 min by taxi']].map((r,j)=>sp(r[0],r[1],r[2],r[3],r[4],25+j*19%52,26+j*13%24,r[5]));
+};
