@@ -202,7 +202,7 @@ ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Publ
  health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>ProfilePreferencePicker('health')},
  likes:{t:'Interests',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>InterestPicker()},
  notif:{t:'Notifications',i:'clock',c:'red',v:()=>Object.values(S.p.notif).filter(Boolean).length+' on',b:()=>{const n=S.p.notif;return `<div class="fl" style="margin-top:12px">${Switch('remind','Trip reminders','The day before, and on the morning',n.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',n.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',n.fork)}</div>`}},
- rate:{t:'My trip ratings',i:'star',c:'yellow',v:()=>'Rate completed trips',b:()=>{
+ rate:{t:'Rate past trips',i:'star',c:'yellow',v:()=>'Rate completed trips',b:()=>{
   // Match the app's Past tab, and only show trips the profile owner joined.
   const completed=PAST().filter(t=>t.m.includes('P')),p=S.p;
   return `<div class="pad" style="margin-top:12px">
