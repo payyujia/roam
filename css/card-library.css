@@ -822,7 +822,7 @@
   padding:16px 24px;color:var(--muted);font-size:12px;line-height:18px;
 }
 #dev #lyc.form-collections-sheet .form-collection-sheet-footer{
-  flex:none;padding:14px 20px calc(18px + env(safe-area-inset-bottom,0px));
+  flex:none;padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px));
   /* Let the scrollable list blend into the sticky action area. Keep the
      same Sunrise Frost blue as the sheet, only gradually more opaque. */
   border-top:0;
