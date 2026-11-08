@@ -1,11 +1,11 @@
 /* ===== COMPONENTS (each has one builder of the same name) ===== */
 const Bullet=(t,z='')=>`<span class="bl ${z} l-${t.c}" aria-hidden="true">${t.b}</span>`;
-const PH={hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b7833e8f5570',game:'photo-1511512578047-dfb367046420',jb:'photo-1519501025264-65ba15a82390',cn:'photo-1508804185872-d7badad00f7d',laz:'photo-1507525428034-b723cf961d3e',nan:'photo-1544025162-d76694265947',sun:'photo-1470252649378-9c29740c9fa8'};
+const PH={bay:'photo-1525625293386-3f8f99389edd',hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b7833e8f5570',game:'photo-1511512578047-dfb367046420',jb:'photo-1519501025264-65ba15a82390',cn:'photo-1508804185872-d7badad00f7d',laz:'photo-1507525428034-b723cf961d3e',nan:'photo-1544025162-d76694265947',sun:'photo-1470252649378-9c29740c9fa8'};
 const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f','photo-1441974231531-c6227db76b6e'];
 const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
 /* Match the MacRitchie demo by trip name as well as the seeded ID, so
    newly created trips keep the same photo throughout the app. */
-const isMacRitchieTrip=t=>!!t&&(t.id==='hike'||/^macritchie hike$/i.test(String(t.n||'').trim()));
+const isMacRitchieTrip=t=>!!t&&/^macritchie hike$/i.test(String(t.n||'').trim());
 const Cover=(t,z='m')=>{
  const image=isMacRitchieTrip(t)
   ? `<img src="${esc(activityPhotoSource({n:'MacRitchie Reservoir Park'},t))}" alt="" decoding="async" onerror="photoLoadFallback(this,'${esc(activityPhotoBackup({n:'MacRitchie Reservoir Park'}))}')">`
@@ -58,6 +58,11 @@ const VoteStopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`;
 const ACTIVITY_PHOTO_BY_NAME={
  // Genuine photo supplied by the real Studio Asobi pottery studio.
  'Studio Asobi':'https://i0.wp.com/studioasobi.com/wp-content/uploads/2014/09/Studio_Asobi_1_BTS_LowRes-102a-revised-e1573138075922.jpg?ssl=1',
+ // Real Singapore attraction photos from Unsplash; the trip cover is a
+ // Marina Bay skyline image and the stop photos match their named places.
+ 'Gardens by the Bay':'unsplash:McM5BW4jQHc',
+ 'ArtScience Museum':'unsplash:IviJEqeznLc',
+ 'Merlion Park':'photo-1600664356348-10686526af4f',
  // These are fictional demo venues: category-matched, royalty-free Unsplash
  // illustrations, not photos claiming to show those exact businesses.
  'Tea & Tales Café':'https://images.unsplash.com/photo-1749214136520-38365aa2027d?auto=format&fit=crop&w=960&q=75',
@@ -114,7 +119,7 @@ const ActivityPhoto=(s,t)=>{
 const StopIc=s=>`<div class="si">${ic(activityIcon(s),20)}</div>`,Mi=(i,l,a,x='')=>`<button class="mi ${x}" data-a="${a}">${ic(i)}${l}</button>`;
 const stxt=t=>fin(t)?(t.st=='done'?'<span class="dotc off"></span>Completed':'<span class="dotc ok"></span>Itinerary ready'):'<span class="dotc wait"></span>Voting open';
 const Stepper=(t,at,live)=>{const dn=t?[1,+!!t.vs.P,+fin(t)]:[0,0,0],g=live?'button':'div';return `<div class="step${t?' l-'+t.c:''}"${live?' role="tablist"':''}>${['Details','Vote','Itinerary'].map((n,i)=>{const lk=t&&i==2&&!fin(t),on=i==at;return `<${g} class="stp${dn[i]?' done':''}${on?' on':''}${lk?' lock':''}"${live?` role="tab" aria-selected="${on}" data-a="step:${i}"`:''}><span class="sd">${lk?ic('lock',12):dn[i]?ic('check',13):i+1}</span>${n}</${g}>`}).join('')}</div>`};
-const Timeline=(t,o)=>`<ol class="tl${o.official?' official':''} l-${t.c}">${o.origin?`<li class="tn org"><span class="nd">${ic('map-pin',16)}</span><div class="gr"><b>${o.origin}</b><div class="cap sm">Meeting point</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}<span class="tl-leg-copy">${t.id==='hike'?esc(s.tr):`${esc(s.tr)} to ${esc(s.n)}`}</span></span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div>${s.alt?'<span class="tag">Changed</span>':''}</div></li>`}).join('')}</ol>`;
+const Timeline=(t,o)=>`<ol class="tl${o.official?' official':''} l-${t.c}">${o.origin?`<li class="tn org"><span class="nd">${ic('map-pin',16)}</span><div class="gr"><b>${o.origin}</b><div class="cap sm">Meeting point</div></div></li>`:''}${o.stops.map((s,i)=>{const lv=o.leg!=null,c=lv&&i==o.leg,d=lv&&i<o.leg;return `${i||o.origin?`<li class="tc${d?' done':''}"><span class="ln"></span><span class="cap sm">${ic('clock',12)}<span class="tl-leg-copy">${isMacRitchieTrip(t)?esc(s.tr):`${esc(s.tr)} to ${esc(s.n)}`}</span></span></li>`:''}<li class="tn${c?' cur':''}${d?' done':''}"${o.live?` data-a="leg:${i}" role="button" tabindex="0"`:''}><span class="nd">${d?ic('check',14):i+1}</span><div class="gr"><b>${s.n}</b><div class="cap sm">${tt(s.t)} · ${s.s}</div>${s.alt?'<span class="tag">Changed</span>':''}</div></li>`}).join('')}</ol>`;
 const Members=t=>[...t.m].map(k=>Row({lead:Av(k,'big'),title:PE[k][2],trail:t.vs[k]?'<span class="tag ok">Voted</span>':'<span class="tag">Voting…</span>'})).join('');
 /* Details and voting are sibling controls: tapping a vote never opens the details panel. */
 /* Only the small info button opens activity details; voting uses separate controls. */
