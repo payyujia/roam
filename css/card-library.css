@@ -1574,12 +1574,15 @@
 /* ---------- PLACE CARD · VOTE VARIANT ----------
    Follow docs/card-components.html · 07 Place: full-bleed photo,
    compact icon-led metadata, vote tally and surface-free vote actions. */
+/* Match ROAM's 24px spacing rhythm: 24px between voting cards and
+   24px from the filter row (which already has 4px bottom margin)
+   to the first activity card. */
 #dev #s-trip .vote-place-list{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:24px;
   width:calc(100% - 48px);
-  margin:10px 24px 0;
+  margin:20px 24px 0;
 }
 #dev #s-trip .vote-place{
   position:relative;
