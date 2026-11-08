@@ -1953,3 +1953,9 @@
   padding-bottom:20px;
   -webkit-overflow-scrolling:touch;
 }
+/* Expanded map sheet: leave the last stop clear of the raised Trips tab.
+   Its floating icon projects ~28px above the 94px navigation bar, so a
+   56px trailing gap leaves comfortable breathing space at scroll end. */
+#dev #s-map .msh.nav.x #mc{
+  padding-bottom:56px;
+}
