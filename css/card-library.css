@@ -1265,3 +1265,16 @@
   #dev #s-trip .vote-row .vt{width:76px;grid-template-columns:repeat(2,36px)}
   #dev #s-trip .vote-row .vb{width:36px}
 }
+
+/* New Trip · textbox values: Card Components Library Subtitle · 12. */
+/* Field labels and card titles retain their existing component styles. */
+#dev #s-form .fld > input.in,
+#dev #s-form .form-date-picker .dd-trigger > .dd-val,
+#dev #s-form .invite-friends-picker .tq-row > input {
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  letter-spacing:normal;
+  color:var(--muted);
+}
