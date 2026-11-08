@@ -78,7 +78,19 @@ const activityHTML=i=>{
  const fields=[['Category',s.k],['Scheduled time',tt(s.t)],['Activity information',s.s],['Travel to this stop',s.tr]].filter(([,v])=>v);
  return `<div class="mh"><span class="si">${ic(activityIcon(s),20)}</span><div class="gr"><h2>${esc(s.n)}</h2><span class="cap sm">${esc(t.n)}</span></div>${IBtn('x','closeLy','Close activity details')}</div><div class="pad activity-details">${ActivityPhoto(s,t)}<dl class="activity-facts">${fields.map(([label,value])=>`<div><dt>${label}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><div class="activity-vote-totals"><b>Group votes</b><div><span>${ic('thumbs-up',18)} ${s.u} up</span><span>${ic('thumbs-down',18)} ${s.d} down</span></div></div><p class="cap sm">Use the thumbs-up or thumbs-down buttons in the activity list to cast your vote.</p></div>`;
 };
-const menuHTML=()=>{const t=trip(S.cur);return `${hdr(t)}${Mi('share','Share trip','mshare')}${Mi('calendar','Reschedule','mresch')}${Mi('log-out','Leave trip','mleave','dg')}`};
+/* Trip options uses the same slide-up sheet and title hierarchy as
+   New Trip > Select collections; existing actions are unchanged. */
+const menuHTML=()=>{
+ const t=trip(S.cur);
+ return `<div class="mh trip-options-sheet-header">
+  <div class="trip-options-sheet-title">${Cover(t,'xs')}<div class="gr"><h2>${esc(t.n)}</h2><span class="cap sm">${esc(fd(t.date))}</span></div></div>
+  ${IBtn('x','closeLy','Close trip options')}
+ </div><div class="trip-options-actions">
+ ${Mi('share','Share trip','mshare')}
+ ${Mi('calendar','Reschedule','mresch')}
+ ${Mi('log-out','Leave trip','mleave','dg')}
+ </div>`;
+};
 const shareHTML=()=>{const t=trip(S.cur);return `${hdr(t,'Share trip')}<div class="pad" style="display:flex;flex-direction:column;gap:16px"><div style="display:flex;gap:8px;align-items:center;background:var(--s2);border-radius:8px;padding:6px 6px 6px 14px"><span class="gr cap">roam.app/t/${t.id}</span><button class="btn sm2" data-a="copylink">${ic('link',14)}Copy</button></div><b>Send to friends</b><div class="chips">${FR.map(([n,k])=>Pill(n,'shsel:'+k,S.sh.includes(k))).join('')}</div>${Btn('Send invite'+(S.sh.length?` to ${S.sh.length}`:''),'shsend',{off:!S.sh.length})}</div>`};
 const reschHTML=()=>{const t=trip(S.cur),o=[7,14,21].map(n=>addD(t.date,n));return `${hdr(t,'Reschedule')}<div class="pad" style="display:flex;flex-direction:column;gap:16px"><p class="cap">Currently ${fd(t.date,1)}. Pick up to 3 dates and the group will vote.</p><div class="chips">${o.map(d=>Pill(fd(d),'rsel:'+iso(d),S.rs.includes(iso(d)))).join('')}</div>${Btn('Send poll'+(S.rs.length?` (${S.rs.length})`:''),'rsend',{off:!S.rs.length})}</div>`};
 const leaveHTML=()=>{const t=trip(S.cur);return `<h2>Leave ${t.n}?</h2><p class="cap" style="margin-bottom:12px">You’ll lose access to the itinerary and chat. Everyone else will be notified.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${Btn('Stay','closeLy',{v:'sec'})}${Btn('Leave','leave',{v:'dg'})}</div>`};
