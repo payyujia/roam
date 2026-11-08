@@ -37,6 +37,69 @@ Object.assign(A,{
  cq:v=>{S.cq=v;$('#clist').innerHTML=chatList();const x=$('#s-chat .x');if(x)x.hidden=!v},cqclear:()=>{S.cq='';render('chat');const i=$('#cq');i&&i.focus()},
  /* profile */
 
+ /* Profile photo: choose or capture locally, crop, then stage until Save changes. */
+ profilePhotoOpen:()=>{
+  if(S.pd!=='acct')return;
+  profilePhotoCrop={image:null,zoom:1,dx:0,dy:0};
+  lay('sheet',profilePhotoMenuHTML(),'Change profile photo');
+  $('#lyc').classList.add('profile-photo-sheet');
+ },
+ profilePhotoMenu:()=>{
+  profilePhotoCrop={image:null,zoom:1,dx:0,dy:0};
+  setLy(profilePhotoMenuHTML());
+ },
+ profilePhotoLibrary:()=>{$('#profile-photo-library')?.click()},
+ profilePhotoCamera:()=>{$('#profile-photo-camera')?.click()},
+ profilePhotoRead:input=>{
+  const file=input.files&&input.files[0];
+  input.value='';
+  if(!file)return;
+  if(file.size>15*1024*1024){toast('Choose a photo smaller than 15 MB.');return}
+  if(file.type==='image/svg+xml'||(!file.type.startsWith('image/')&&!/\.(heic|heif|jpe?g|png|webp|gif)$/i.test(file.name))){
+   toast('Choose a supported image file.');return;
+  }
+  let url;
+  try{url=URL.createObjectURL(file)}catch(e){toast('Could not open this photo.');return}
+  const image=new Image();
+  image.onload=()=>{
+   URL.revokeObjectURL(url);
+   if(!$('#ly').classList.contains('open')||!$('#lyc').classList.contains('profile-photo-sheet'))return;
+   profilePhotoCrop={image,zoom:1,dx:0,dy:0};
+   setLy(profilePhotoCropHTML());
+   requestAnimationFrame(profilePhotoInitCrop);
+  };
+  image.onerror=()=>{URL.revokeObjectURL(url);toast('This photo format could not be opened.')};
+  image.src=url;
+ },
+ profilePhotoZoom:value=>{
+  if(!profilePhotoCrop.image)return;
+  profilePhotoCrop.zoom=Math.max(1,Math.min(3,Number(value)||1));
+  profilePhotoDrawCrop();
+ },
+ profilePhotoUse:()=>{
+  const canvas=$('#profile-photo-canvas');
+  if(!canvas||!profilePhotoCrop.image)return;
+  profilePhotoDrawCrop();
+  let result;
+  try{result=canvas.toDataURL('image/jpeg',.84)}
+  catch(e){toast('Could not crop this photo. Try another image.');return}
+  if(!/^data:image\/jpeg;base64,/.test(result)||result.length>350000){
+   toast('The photo could not be saved. Try a smaller image.');return;
+  }
+  S.p.avatarDraft=result;
+  profilePhotoCrop.image=null;
+  A.closeLy();
+  pd();render('pdet');
+  toast('Photo ready. Tap Save changes to confirm.');
+ },
+ profilePhotoRemove:()=>{
+  S.p.avatarDraft='none';
+  profilePhotoCrop.image=null;
+  A.closeLy();
+  pd();render('pdet');
+  toast('Photo removed in preview. Tap Save changes to confirm.');
+ },
+ profilePhotoCancel:()=>{profilePhotoCrop.image=null;A.closeLy()},
  prefSearch:q=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;S.prefSearch=q;},
  prefFirst:()=>{if(!PROFILE_PREFERENCE_PICKERS[S.pd])return;const name=(S.prefSearch||'').trim().replace(/\s+/g,' ').slice(0,30);if(name)A.prefAdd(encodeURIComponent(name))},
  prefAdd:value=>{const k=S.pd,config=PROFILE_PREFERENCE_PICKERS[k],draft=S.p[k+'Draft'];if(!config||!Array.isArray(draft)||!value)return;const typed=decodeURIComponent(value).trim().replace(/\s+/g,' ').slice(0,30);if(!typed)return;const name=config.catalog.find(x=>x.toLocaleLowerCase()===typed.toLocaleLowerCase())||typed;if(draft.some(x=>x.toLocaleLowerCase()===name.toLocaleLowerCase()))return;draft.push(name);S.prefSearch='';const input=$('#preference-search');if(input){input.value='';if(input.nextElementSibling)input.nextElementSibling.disabled=true}refreshProfilePreferencePicker(k)},
@@ -108,7 +171,14 @@ Object.assign(A,{
    S.p[k]=[...draft];
    S.p[k+'Draft']=null;
   }
-  S.p.dirty=0;A.back();toast('Changes saved')
+  let avatarStored=true;
+  if(S.pd==='acct'&&S.p.avatarDraft!==undefined){
+   S.p.avatar=S.p.avatarDraft;
+   delete S.p.avatarDraft;
+   try{localStorage.setItem('roam-profile-avatar-v1',S.p.avatar)}
+   catch(e){avatarStored=false}
+  }
+  S.p.dirty=0;A.back();toast(avatarStored?'Changes saved':'Photo updated for this session; browser storage is unavailable')
  },
  ppace:k=>{S.p.pace=k;pd();render('profile')},pmove:k=>{
   k=decodeURIComponent(k);
@@ -135,10 +205,14 @@ const discardProfileTagDraft=()=>{
  for(const k of Object.keys(PROFILE_PREFERENCE_PICKERS))S.p[k+'Draft']=null;
  S.prefSearch='';S.p.dirty=0;
 };
+const discardProfilePhotoDraft=()=>{delete S.p.avatarDraft};
 const tagEditorBack=A.back;
 A.back=(...args)=>{
- if(S.tab==='profile'&&topId()==='pdet'&&profileTagEditorActive()&&cur().length>1
-    &&!$('#app').classList.contains('back-pending'))discardProfileTagDraft();
+ if(S.tab==='profile'&&topId()==='pdet'&&cur().length>1
+    &&!$('#app').classList.contains('back-pending')){
+  if(profileTagEditorActive())discardProfileTagDraft();
+  if(S.pd==='acct')discardProfilePhotoDraft();
+ }
  return tagEditorBack(...args);
 };
 /* Bottom navigation always returns to the root Profile page, even if
@@ -148,6 +222,7 @@ const tagEditorTab=A.tab;
 A.tab=t=>{
  if(S.tab==='profile'){
   if(topId()==='pdet'&&profileTagEditorActive())discardProfileTagDraft();
+  if(topId()==='pdet'&&S.pd==='acct')discardProfilePhotoDraft();
   S.stack.profile=['profile'];
  }
  if(t==='profile')S.stack.profile=['profile'];
