@@ -1557,3 +1557,226 @@
   outline:2px solid var(--sky-600);
   outline-offset:3px;
 }
+
+
+/* ---------- PLACE CARD · VOTE VARIANT ----------
+   Follow docs/card-components.html · 07 Place: full-bleed photo,
+   compact icon-led metadata, vote tally and surface-free vote actions. */
+#dev #s-trip .vote-place-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:calc(100% - 48px);
+  margin:10px 24px 0;
+}
+#dev #s-trip .vote-place{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  min-width:0;
+  padding:0;
+  border:0;
+  border-radius:26px;
+  overflow:hidden;
+  text-align:left;
+  color:var(--ink);
+}
+#dev #s-trip .vote-place .place-media{
+  position:relative;
+  aspect-ratio:2/1;
+  overflow:hidden;
+  background:linear-gradient(160deg,#FFC9BC,#6DB6FF);
+}
+#dev #s-trip .vote-place .place-media img{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+#dev #s-trip .vote-place .place-media-fallback{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:var(--sky-600);
+}
+#dev #s-trip .vote-place .place-media.has-photo .place-media-fallback{visibility:hidden}
+#dev #s-trip .vote-place .place-body{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  min-width:0;
+  padding:12px 14px 0;
+}
+#dev #s-trip .vote-place .place-kick{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:var(--sky-600);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.18em;
+  line-height:14px;
+  text-transform:uppercase;
+}
+#dev #s-trip .vote-place .place-body>b{
+  display:block;
+  overflow:hidden;
+  color:var(--ink);
+  font-size:16px;
+  font-weight:700;
+  line-height:22px;
+  letter-spacing:-.02em;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#dev #s-trip .vote-place .pmeta{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:500;
+  line-height:16px;
+  white-space:nowrap;
+}
+#dev #s-trip .vote-place .pmeta>span{flex:none}
+#dev #s-trip .vote-place .pmeta>span:nth-child(2){
+  flex:0 1 auto;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#dev #s-trip .vote-place .pi{
+  display:inline-flex;
+  flex:none;
+}
+#dev #s-trip .vote-place .pi svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+}
+#dev #s-trip .vote-place .pi.sky{color:var(--sky-500)}
+#dev #s-trip .vote-place .pi.coral{color:var(--coral-500)}
+#dev #s-trip .vote-place .pi.rose{color:var(--rose)}
+#dev #s-trip .vote-place .pinfo{
+  display:grid;
+  flex:none;
+  place-items:center;
+  width:44px;
+  height:44px;
+  margin:-14px -12px -14px auto;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--sky-600);
+}
+#dev #s-trip .vote-place .pinfo svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+}
+#dev #s-trip .vote-place .ptally{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:10px 14px 0;
+}
+#dev #s-trip .vote-place .ptally-bar{
+  display:flex;
+  flex:1;
+  height:6px;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(91,104,120,.16);
+}
+#dev #s-trip .vote-place .ptally-bar i{
+  display:block;
+  height:100%;
+}
+#dev #s-trip .vote-place .ptally-bar .in{background:var(--sky-500)}
+#dev #s-trip .vote-place .ptally-bar .out{background:var(--coral-500)}
+#dev #s-trip .vote-place .ptally small{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+  white-space:nowrap;
+}
+#dev #s-trip .vote-place .place-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 14px 12px;
+}
+#dev #s-trip .vote-place .pwho{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+#dev #s-trip .vote-place .pwho .av{
+  width:26px;
+  height:26px;
+  margin:0;
+  flex:none;
+}
+#dev #s-trip .vote-place .pwho .cap{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#dev #s-trip .vote-place .pvote{
+  display:flex;
+  flex:none;
+  gap:2px;
+  margin-right:-8px;
+}
+#dev #s-trip .vote-place .pv{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-width:56px;
+  height:44px;
+  padding:0 8px;
+  border:0;
+  background:none;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:700;
+  transition:transform .15s;
+}
+#dev #s-trip .vote-place .pv:active{transform:scale(.94)}
+#dev #s-trip .vote-place .pv svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+}
+#dev #s-trip .vote-place .pv[aria-pressed=true].up{color:var(--sky-500)}
+#dev #s-trip .vote-place .pv[aria-pressed=true].dn{color:var(--coral-500)}
+#dev #s-trip .vote-place .pv[aria-pressed=true] svg{fill:currentColor}
+#dev #s-trip .vote-place .pv:focus-visible,
+#dev #s-trip .vote-place .pinfo:focus-visible{
+  outline:2px solid var(--sky-600);
+  outline-offset:2px;
+}
+@media(max-width:360px){
+  #dev #s-trip .vote-place-list{
+    width:calc(100% - 40px);
+    margin-inline:20px;
+  }
+  #dev #s-trip .vote-place .place-foot{gap:6px}
+  #dev #s-trip .vote-place .pv{min-width:48px;padding-inline:5px}
+}
