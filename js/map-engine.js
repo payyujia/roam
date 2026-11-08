@@ -67,7 +67,7 @@ function scene(){
  
  let pad={t:fk?190:140,r:50,b:400,l:50},maxZ=15;
  if(S.fk=='flag')pad.b=300;
- if(S.fk=='flag'||S.fk=='alts'){const i=S.fl[S.fi],c=cur[i],al=S.alts||[],AT=['rose','amber','sky5'];al.forEach((a,j)=>{pins.push({ll:a.ll,tone:AT[j%4],cls:'alt'+(S.ap===j&&S.fk=='alts'?' sel':''),icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Option ${String.fromCharCode(65+j)}: ${a.n}`})});
+ if(S.fk=='flag'||S.fk=='alts'){const i=S.fl[S.fi],c=cur[i],al=S.alts||[],AT=['rose','amber','sky5'];al.forEach((a,j)=>{pins.push({ll:a.ll,tone:AT[j],cls:'alt'+(S.ap===j&&S.fk=='alts'?' sel':''),icon:a.i,mark:String.fromCharCode(65+j),a:'fpick:'+j,label:`Option ${String.fromCharCode(65+j)}: ${a.n}`})});
   if(S.fk=='alts'&&S.ap!=null&&al[S.ap])pins.push({lab:esc(al[S.ap].n),ll:al[S.ap].ll});
   pad=S.fk=='alts'?{t:150,r:50,b:470,l:50}:{t:150,r:50,b:290,l:50};maxZ=16;fit.length=0;fit.push(c,...al.map(a=>a.ll))}
  if(S.fk=='flag'||S.fk=='alts')routes.forEach(r=>r.faded=1);
