@@ -642,9 +642,35 @@ body{font-weight:500}
   transition:none!important;
 }
 
-/* iOS-style back navigation for Chat threads and Profile detail pages.
-   Keep the departing page visible while it slides out to the right, revealing
-   the parent underneath. Other inactive screens remain instantly hidden. */
+/* Trip detail: the entering screen moves right from the left edge,
+   with its originating Trips page visible beneath it during the animation.
+   All other page entry transitions remain as they were. */
+@keyframes roam-trip-enter-right{
+  from{transform:translate3d(-100%,0,0)}
+  to{transform:translate3d(0,0,0)}
+}
+#dev #app .scr.trip-enter-parent.under{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+  z-index:1;
+}
+#dev #app #s-trip.scr.on.trip-enter{
+  visibility:visible!important;
+  z-index:3;
+  transition:none!important;
+  animation:roam-trip-enter-right .3s cubic-bezier(.22,.72,.26,1) both!important;
+}
+/* Show the returning page before the exiting trip swipes right. */
+#dev #app .scr.back-reveal{
+  visibility:visible!important;
+  transform:translate3d(0,0,0)!important;
+  transition:none!important;
+}
+
+/* Rightward exit for Chat threads, Profile details and Trip details.
+   Keep the departing page visible during the swipe, with the parent
+   painted underneath. Other inactive screens remain hidden. */
 @keyframes roam-back-slide-right{
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(100%,0,0)}
@@ -660,6 +686,7 @@ body{font-weight:500}
   transition:none!important;
 }
 @media(prefers-reduced-motion:reduce){
+  #dev #app #s-trip.scr.trip-enter{animation:none!important}
   #dev #app .scr.back-exit{
     animation:none!important;
     visibility:hidden!important;
