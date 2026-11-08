@@ -1363,3 +1363,17 @@
   opacity:1!important;
   cursor:not-allowed;
 }
+
+/* Trip progress steps are navigable tabs. Show a subtle desktop hover affordance
+   without changing iPhone/touch visuals or the stepper's node dimensions. */
+#dev #s-trip .step button.stp:not(.lock){cursor:pointer}
+@media (hover:hover) and (pointer:fine){
+  #dev #s-trip .step button.stp:not(.lock):hover{color:var(--ink)}
+  #dev #s-trip .step button.stp:not(.lock):hover .sd{
+    box-shadow:var(--control-shadow),0 0 0 4px rgba(109,182,255,.22)!important;
+  }
+}
+#dev #s-trip .step button.stp:focus-visible .sd{
+  outline:2px solid var(--sky-600);
+  outline-offset:3px;
+}
