@@ -204,5 +204,5 @@ function reelsAfter(){
  _rio=new IntersectionObserver(es=>{es.forEach(en=>{en.target.dataset.vis=en.isIntersecting?'1':'0';const v=en.target.querySelector('video.rvid');if(v&&!en.isIntersecting)v.currentTime=0});reelsSync()},{root:feed,threshold:.6});
  feed.querySelectorAll('.rv').forEach(a=>_rio.observe(a));
  /* tap anywhere (not on a button) to pause / resume */
- feed.addEventListener('click',e=>{if(e.target.closest('button'))return;const v=e.target.closest('.rv')?.querySelector('video.rvid');if(!v)return;if(v.paused){delete v.dataset.userPaused;const p=v.play();p&&p.catch(()=>{})}else{v.dataset.userPaused='1';v.pause()}});
+ feed.addEventListener('click',e=>{if(e.target.closest('button, .pills'))return;const v=e.target.closest('.rv')?.querySelector('video.rvid');if(!v)return;if(v.paused){delete v.dataset.userPaused;const p=v.play();p&&p.catch(()=>{})}else{v.dataset.userPaused='1';v.pause()}});
 }
