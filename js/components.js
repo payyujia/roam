@@ -3,10 +3,11 @@ const Bullet=(t,z='')=>`<span class="bl ${z} l-${t.c}" aria-hidden="true">${t.b}
 const PH={hike:'photo-1441974231531-c6227db76b6e',read:'photo-1481627834876-b7833e8f5570',game:'photo-1511512578047-dfb367046420',jb:'photo-1519501025264-65ba15a82390',cn:'photo-1508804185872-d7badad00f7d',laz:'photo-1507525428034-b723cf961d3e',nan:'photo-1544025162-d76694265947',sun:'photo-1470252649378-9c29740c9fa8'};
 const RP=['photo-1560275619-4662e36fa65c','photo-1568901346375-23c9450c58cd','photo-1563245372-f21724e3856d','photo-1544367567-0f2fcb009e0b','photo-1550745165-9bc0b252726f','photo-1441974231531-c6227db76b6e'];
 const Pic=(id,seed,w=600)=>`<img src="${id?`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`:`https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${w}`}" alt="" decoding="async" data-s="${encodeURIComponent(seed)}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://picsum.photos/seed/'+this.dataset.s+'/600/600'}else this.remove()">`;
-/* MacRitchie Hike uses the exact same photo source and backup as its first map pin.
-   All other trip covers retain their existing imagery. */
+/* Match the MacRitchie demo by trip name as well as the seeded ID, so
+   newly created trips keep the same photo throughout the app. */
+const isMacRitchieTrip=t=>!!t&&(t.id==='hike'||/^macritchie hike$/i.test(String(t.n||'').trim()));
 const Cover=(t,z='m')=>{
- const image=t.id==='hike'
+ const image=isMacRitchieTrip(t)
   ? `<img src="${esc(activityPhotoSource({n:'MacRitchie Reservoir Park'},t))}" alt="" decoding="async" onerror="photoLoadFallback(this,'${esc(activityPhotoBackup({n:'MacRitchie Reservoir Park'}))}')">`
   : Pic(PH[t.id],t.n,z==='l'||z==='xl'?600:240);
  return `<div class="cover z-${z} l-${t.c}" aria-hidden="true">${image}</div>`;
@@ -61,7 +62,7 @@ const ACTIVITY_PHOTO_BY_NAME={
  // illustrations, not photos claiming to show those exact businesses.
  'Tea & Tales Café':'https://images.unsplash.com/photo-1749214136520-38365aa2027d?auto=format&fit=crop&w=960&q=75',
  'The Little Gallery':'https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=960&q=75',
- 'MacRitchie Reservoir':PH.hike,
+ 'MacRitchie Reservoir':'https://upload.wikimedia.org/wikipedia/commons/f/fb/MacRitchie_Reservoir.jpg',
  'MacRitchie Reservoir Park':'https://upload.wikimedia.org/wikipedia/commons/f/fb/MacRitchie_Reservoir.jpg',
  'TreeTop Walk':'assets/treetop-walk.jpg',
  'Lornie Trail':PH.hike,
@@ -84,6 +85,7 @@ const ACTIVITY_PHOTO_BY_NAME={
    from Wikimedia Commons (Calvin Teo, CC BY-SA 3.0); NParks forest photo is
    now only a fallback. The shared source also powers its map pin and trip cover. */
 const ACTIVITY_PHOTO_BACKUP_BY_NAME={
+ 'MacRitchie Reservoir':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
  'MacRitchie Reservoir Park':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
  'TreeTop Walk':'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg/960px-Tree_Top_Walk_at_MacRitchie%2C_Singapore.jpg'
 };
