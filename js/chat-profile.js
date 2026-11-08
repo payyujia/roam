@@ -188,6 +188,13 @@ const ProfilePreferencePicker=k=>{
   </section>
  </div>`;
 };
+/* Count rated past trips in the same eligibility set as the ratings page.
+   The seeded Sunrise rating is kept as a fallback for existing prototype state. */
+const ratedPastTripCount=()=>PAST().filter(t=>{
+ if(!t.m.includes('P'))return false;
+ const rating=Number(S.p.ratings?.[t.id]??(t.id==='sun'?S.p.rate:0));
+ return Number.isInteger(rating)&&rating>=1&&rating<=5;
+}).length;
 const PD={
  acct:{t:'Profile',i:'user',c:'blue',v:()=>'',b:()=>{const p=S.p;return `<div class="pad" style="display:flex;justify-content:center;margin-top:12px"><div class="avwrap">${Av('P','xl')}<button class="avedit" data-a="toast:Photo picker would open here" aria-label="Change photo">${ic('camera',18)}</button></div></div>
 <div class="fl" style="margin-top:20px"><div><label class="lb" for="pn">Name</label><label class="fi">${ic('user',20)}<input id="pn" value="${esc(p.name)}" oninput="S.p.name=this.value;pd()" autocomplete="off"></label></div><div><label class="lb" for="pb">Bio</label><textarea class="in" id="pb" rows="3" oninput="S.p.bio=this.value;pd()">${esc(p.bio)}</textarea></div><div><span class="lb">Home city</span>${Dropdown({id:'home',aria:'Home city',value:p.home,opts:['Singapore','Johor Bahru','Kuala Lumpur'].map((c,i)=>({v:c,t:c,dot:TRIPDOT[i%4]})),pick:v=>{S.p.home=v;pd();rr()}})}</div></div>`}},
@@ -204,7 +211,7 @@ ${[['Walk','Walk','Short hops and scenic routes'],['MRT & bus','MRT & bus','Publ
  health:{nv:1,t:'Health conditions',i:'activity',c:'brown',v:()=>S.p.health.length?S.p.health.length+' added':'None',b:()=>ProfilePreferencePicker('health')},
  likes:{t:'Interests',i:'map-pin',c:'blue',v:()=>S.p.likes.length>1?S.p.likes[0]+' + '+(S.p.likes.length-1)+' more':pSum(S.p.likes),b:()=>InterestPicker()},
  notif:{t:'Notifications',i:'clock',c:'red',v:()=>Object.values(S.p.notif).filter(Boolean).length+' on',b:()=>{const n=S.p.notif;return `<div class="fl" style="margin-top:12px">${Switch('remind','Trip reminders','The day before, and on the morning',n.remind)}${Switch('vote','Voting nudges','When your group is waiting on you',n.vote)}${Switch('fork','Path activity','When someone forks a trip you’re on',n.fork)}</div>`}},
- rate:{t:'Rate past trips',i:'star',c:'yellow',v:()=>'Rate completed trips',b:()=>{
+ rate:{t:'Rate past trips',i:'star',c:'yellow',v:()=>`${ratedPastTripCount()} rated`,b:()=>{
   // Match the app's Past tab, and only show trips the profile owner joined.
   const completed=PAST().filter(t=>t.m.includes('P')),p=S.p;
   return `<div class="pad" style="margin-top:12px">
