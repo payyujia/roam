@@ -1175,12 +1175,16 @@
   margin:10px 24px 0;
   border-radius:var(--roam-card-radius);
 }
-/* The vote filter pills use .pills, whose global overflow-x:auto
-   also clips their shadows at the bottom edge, making a straight white
-   divider above the first card. Four categories fit the phone viewport,
-   so this filter row can leave both axes visible. */
+/* Vote filters: eliminate the full-width seam created where their
+   frosted drop shadows/backdrop blur meet the edge of the pill row.
+   Preserve each chip's glass fill, selected blue rim and dimensions. */
 #dev #s-trip .pills{
-  overflow:visible;
+  overflow:visible!important;
+}
+#dev #s-trip .pills > .pill{
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
 }
 /* Preserve the ROAM Card Components glass rim on voting cards, but keep
    the rim soft so it does not compete with the filter controls. */
