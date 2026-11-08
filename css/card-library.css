@@ -668,6 +668,10 @@
   width:100%;
   margin-top:8px;
   z-index:10;
+  /* Near-solid frost keeps collection options legible over the reel grid. */
+  background:rgba(245,249,255,.95)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  backdrop-filter:blur(22px) saturate(180%);
 }
 
 /* ---------- PROFILE SUBPAGES ----------
