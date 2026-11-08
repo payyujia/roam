@@ -1945,3 +1945,10 @@ body{font-weight:500}
   letter-spacing:-.02em;
   min-width:0;
 }
+
+/* Map top fade: stacking order is map layer (contained) < white fade < .mtop2 pills/overlays.
+   .mpl is its own stacking context so pin/label z-indexes (up to 9999) can no longer
+   climb above the fade or the top controls. */
+#dev .mp .mpl{z-index:0;isolation:isolate}
+#dev .mp .mp-fade{z-index:5;pointer-events:none}
+#dev .mp .mtop2{z-index:6}
