@@ -700,6 +700,17 @@
   white-space:normal;
 }
 
+/* Trip progress spacing: give the stepper more breathing room below
+   the Sky header, while keeping all three trip steps at the same position.
+   On Itinerary, reduce the gap from step labels to the section heading
+   by the same 12px to avoid pushing the route list further down. */
+#dev #s-trip .th + .step{
+  padding-top:32px;
+}
+#dev #s-trip div.sec.itinerary-section{
+  padding-top:16px;
+}
+
 /* The vote review action is an accessible text link, secondary to the
    View alternatives Sky pill. It reuses the existing step:1 navigation. */
 /* Trip itinerary heading: exact Card Components Library H3 · 20.
