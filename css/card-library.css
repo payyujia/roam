@@ -701,6 +701,17 @@
 
 /* The vote review action is an accessible text link, secondary to the
    View alternatives Sky pill. It reuses the existing step:1 navigation. */
+/* Trip itinerary heading: exact Card Components Library H3 · 20.
+   Scope to this section so all other trip headers retain their styles. */
+#dev #s-trip .itinerary-section > h2{
+  font-family:var(--font);
+  font-size:20px;
+  font-weight:800;
+  line-height:25px;
+  letter-spacing:-.02em;
+  margin:0;
+}
+
 #dev #s-trip .itinerary-review-wrap{
   display:flex;
   align-items:center;
