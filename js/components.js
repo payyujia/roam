@@ -63,7 +63,7 @@ const ACTIVITY_PHOTO_BY_NAME={
  'The Little Gallery':'https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=960&q=75',
  'MacRitchie Reservoir':PH.hike,
  'MacRitchie Reservoir Park':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hiking-hero-boardwalk.jpg',
- 'TreeTop Walk':'https://www.nparks.gov.sg/images/default-source/parks-img/central-catchment-nature-reserve/central-catchment-nature-reserve-hero-tree-walk.jpg',
+ 'TreeTop Walk':'assets/treetop-walk.jpg',
  'Lornie Trail':PH.hike,
  // Real photo supplied by the user; stored locally as a lightweight thumbnail.
  'The Roti Prata House':'assets/roti-prata-house-new.webp',
