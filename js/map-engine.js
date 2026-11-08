@@ -88,7 +88,7 @@ function mapTarget(W,H){
  const drawer=$('#msh');
  if(S.nav&&!S.fk&&S.pc==null&&drawer){
   const mapRect=$('#mp').getBoundingClientRect(),header=$('#mp .mtop2');
-  const top=Math.max(120,header?Math.ceil(header.getBoundingClientRect().bottom-mapRect.top+18):120);
+  const top=Math.max(120,header?Math.ceil((header.getBoundingClientRect().bottom-mapRect.top)*mapPointerScale()+18):120);
   const contents=$('#mc'),maxSheet=Math.max(0,Math.min(S.mx?600:400,H-150));
   const sheetHeight=Math.min(maxSheet,20+(contents?contents.scrollHeight:0));
   pad.t=top;
@@ -163,6 +163,9 @@ function mapAfter(){
 }
 /* Pointer drag, iPhone two-finger pinch zoom, and desktop wheel zoom.
    Pinching keeps the geographic point under the two fingers stationary. */
+/* Pointer locations are viewport CSS pixels; map coordinates are unscaled
+   device pixels. Normalize them when the desktop iPhone preview is zoomed. */
+const mapPointerScale=()=>{const map=$('#mp'),width=map?.getBoundingClientRect().width;return width&&map.clientWidth?map.clientWidth/width:1};
 const MD={on:0,id:null,x:0,y:0,dx:0,dy:0,moved:0,t:0};
 const MAP_TOUCH={points:new Map(),distance:0,z:0,anchor:null};
 const mapTouchPair=()=>[...MAP_TOUCH.points.values()].slice(0,2);
@@ -186,7 +189,7 @@ document.addEventListener('pointerdown',e=>{
    const p=mapTouchMetric(),rect=$('#mp').getBoundingClientRect();
    MAP_TOUCH.distance=p.distance;MAP_TOUCH.z=M.z;
    const [cx,cy]=MERC(M.lat,M.lng,M.z);
-   MAP_TOUCH.anchor=UNMERC(cx+p.x-rect.left-rect.width/2,cy+p.y-rect.top-rect.height/2,M.z);
+   MAP_TOUCH.anchor=UNMERC(cx+(p.x-rect.left-rect.width/2)*mapPointerScale(),cy+(p.y-rect.top-rect.height/2)*mapPointerScale(),M.z);
    return;
   }
  }
@@ -199,13 +202,13 @@ addEventListener('pointermove',e=>{
    const p=mapTouchMetric(),rect=$('#mp').getBoundingClientRect();
    M.z=Math.max(3,Math.min(17,MAP_TOUCH.z+Math.log2(p.distance/MAP_TOUCH.distance)));
    const [x,y]=MERC(MAP_TOUCH.anchor[0],MAP_TOUCH.anchor[1],M.z);
-   [M.lat,M.lng]=UNMERC(x-(p.x-rect.left-rect.width/2),y-(p.y-rect.top-rect.height/2),M.z);
+   [M.lat,M.lng]=UNMERC(x-(p.x-rect.left-rect.width/2)*mapPointerScale(),y-(p.y-rect.top-rect.height/2)*mapPointerScale(),M.z);
    M.moved=true;showMapRecenter();mapDraw();
    return;
   }
  }
  if(!MD.on||MD.id!==e.pointerId)return;
- MD.dx=e.clientX-MD.x;MD.dy=e.clientY-MD.y;
+ MD.dx=(e.clientX-MD.x)*mapPointerScale();MD.dy=(e.clientY-MD.y)*mapPointerScale();
  if(!MD.moved&&Math.hypot(MD.dx,MD.dy)>5){MD.moved=1;$('#mp').classList.add('drag')}
  if(MD.moved)$('#mpl').style.transform=`translate(${MD.dx}px,${MD.dy}px)`;
 });
