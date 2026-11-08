@@ -1894,6 +1894,16 @@ body{font-weight:500}
 #dev #toast.toast-contrast-light > span > span,
 #dev #toast.toast-contrast-light button{color:var(--ink)!important}
 
+/* Trip details title: exact Card Components H1 · 36,
+   rather than the shared responsive blue-hero font-size token. */
+#dev #s-trip .th .thd h1{
+  font-family:var(--font);
+  font-size:36px;
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-.05em;
+  margin:0;
+}
 /* Trip detail + trip options menu (.lyb): snap off-scale text to the card-components.html type scale.
    Subheader 16/700/22 · Regular 14/500/1.5. Menu items stay 13/700 (library .menu button). */
 #dev #s-trip .th .thd .dt{font-size:14px!important;font-weight:500!important;line-height:1.5!important}
