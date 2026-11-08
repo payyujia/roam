@@ -1937,3 +1937,14 @@ body{font-weight:500}
 #dev #mc .tn-t{font-size:12px;font-weight:500;line-height:16px}
 #dev #mc .tl.nv .tdone{font-size:14px;font-weight:500;line-height:1.5}
 #dev #mc .nvs{font-size:14px;font-weight:500;line-height:1.5}
+
+/* "View all" pages (Tasks / Upcoming trips / Past trips): page title = Component Library H3,
+   same as the Profile detail pages: 20px / 800 / 25px / -0.02em. */
+#dev #s-all .top .tt{
+  font-family:var(--font);
+  font-size:20px;
+  font-weight:800;
+  line-height:25px;
+  letter-spacing:-.02em;
+  min-width:0;
+}
