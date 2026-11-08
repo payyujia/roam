@@ -16,7 +16,9 @@ const T=[
 const trip=id=>T.find(t=>t.id==id);
 const TC={bay:['blue','M'],read:['red','R'],game:['purple','G'],jb:['orange','J'],cn:['blue','C'],laz:['teal','L'],nan:['brown','N'],sun:['grey','S']};
 T.forEach(t=>{[t.c,t.b]=TC[t.id];t.vs=Object.fromEntries([...t.m].map(k=>[k,1]));t.st=t.st=='confirmed'?'final':t.st=='draft'?'voting':t.st});
-/* Marina Bay Day Out is confirmed; its group votes are already complete. */Object.assign(trip('jb').vs,{P:0,L:0});Object.assign(trip('cn').vs,{P:0,E:0,J:0});Object.assign(trip('game').vs,{P:0});
+/* All three members approved the Marina Bay itinerary before it was finalised. */
+trip('bay').stops.forEach(s=>{s.m=1});
+/* MacRitchie remains the default user-created trip, not the seeded Home trip. */Object.assign(trip('jb').vs,{P:0,L:0});Object.assign(trip('cn').vs,{P:0,E:0,J:0});Object.assign(trip('game').vs,{P:0});
 trip('jb').stops.push(sp('Clown Show','20:00','smile','Live show · 90 min','Do',30,26,'25 min by car',0,3));
 [[2,1],[3,0],[2,1],[3,0]].forEach((v,i)=>{const s=trip('jb').stops[i];s.u=v[0];s.d=v[1]});trip('cn').stops.forEach((s,i)=>{s.u=[2,1,3][i];s.d=[0,1,0][i]});
 /* ===== v3 DATA: real coordinates, stop attributes, prototype clock ===== */
