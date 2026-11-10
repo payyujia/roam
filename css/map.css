@@ -1,11 +1,13 @@
 /* =========================================================
    8. MAP (real tiles + overlays)
    ========================================================= */
-/* Sunrise Frost map palette, shared by routes, badges and path chips. */
+/* Sunrise Frost map palette, shared by routes, badges and path chips.
+   Keep the OSM map's natural pastel greens, blue waterways, cream streets
+   and grey labels. Only soften contrast; avoid greyscale desaturation. */
 .mp{
   --map-color:var(--sky-400);
   position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:grab;
-  background:radial-gradient(circle at 30% 20%,#F7F1E3,#D9E3E6);
+  background:radial-gradient(circle at 30% 20%,#F8F6F0,#E6EFF1);
 }
 .mp.drag{cursor:grabbing}
 .mp .tone-coral{--map-color:var(--coral-500);--map-badge-ink:var(--ink)}
@@ -16,7 +18,7 @@
 .mp .tone-inactive{--map-color:#A9B1C0;--map-badge-ink:var(--ink)}
 .mp .tone-done{--map-color:var(--ink)}
 .mpl{position:absolute;inset:0;will-change:transform}
-.mp-t{position:absolute;inset:0;overflow:visible}.mp-t img{position:absolute;display:block;max-width:none;opacity:0;transition:opacity .3s;user-select:none;-webkit-user-drag:none;filter:grayscale(.64) saturate(.52) contrast(.86) brightness(1.10)}.mp-t img.ld{opacity:1}
+.mp-t{position:absolute;inset:0;overflow:visible}.mp-t img{position:absolute;display:block;max-width:none;opacity:0;transition:opacity .3s;user-select:none;-webkit-user-drag:none;filter:saturate(1.15) contrast(.93) brightness(1.035)}.mp-t img.ld{opacity:1}
 .mp-r{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .mp-r path{fill:none;stroke-linecap:round;stroke-linejoin:round}.mp-r .rh{stroke:transparent;stroke-width:28;pointer-events:stroke;cursor:pointer}
 .route-main{stroke:var(--map-color)}
