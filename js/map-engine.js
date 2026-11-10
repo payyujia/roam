@@ -7,6 +7,35 @@ const MERC=(lat,lng,z)=>{const s=256*2**z,sn=Math.sin(lat*Math.PI/180);return[(l
 const UNMERC=(x,y,z)=>{const s=256*2**z,n=Math.PI-2*Math.PI*y/s;return[180/Math.PI*Math.atan(.5*(Math.exp(n)-Math.exp(-n))),x/s*360-180]};
 const M={lat:1.35,lng:103.83,z:11,key:null,ok:0,raf:0,moved:false};
 const TILEBOX=document.createElement('div');TILEBOX.className='mp-t';TILEBOX._t={};
+/* Persist one vector basemap across Roam screen re-renders. The existing
+   camera projection, gestures, route SVGs and photo pins are preserved.
+   If WebGL or the vector style fails, raster tiles remain a fallback. */
+const GLBOX=document.createElement('div');GLBOX.className='mp-gl';
+let GLMAP=null,GLREADY=false,GLFAILED=false;
+function mapRasterClear(){for(const k in TILEBOX._t){TILEBOX._t[k].remove();delete TILEBOX._t[k]}}
+function mapGlFallback(err){
+ if(GLFAILED)return;
+ GLFAILED=true;GLREADY=false;
+ console.warn('Vector basemap unavailable; switching to raster fallback.',err);
+ if(GLMAP){try{GLMAP.remove()}catch(e){}GLMAP=null}
+ GLBOX.remove();
+ mapDraw();
+}
+function mapGlAttach(){
+ const layer=$('#mpl');
+ if(!layer||GLFAILED||!window.maplibregl)return;
+ if(GLBOX.parentNode!==layer)layer.insertBefore(GLBOX,$('#mpr'));
+ if(GLMAP){GLMAP.resize();return}
+ try{
+  GLMAP=new maplibregl.Map({
+   container:GLBOX,style:'https://tiles.openfreemap.org/styles/positron',
+   center:[M.lng,M.lat],zoom:Math.max(0,M.z-1),
+   interactive:false,attributionControl:false,renderWorldCopies:true
+  });
+  GLMAP.on('load',()=>{if(GLFAILED)return;GLREADY=true;GLBOX.classList.add('ready');mapRasterClear();mapDraw()});
+  GLMAP.on('error',e=>mapGlFallback(e&&e.error||e));
+ }catch(e){mapGlFallback(e)}
+}
 const MAP_TONES=['sky','coral','amber','rose','duo'];
 // Use the trip's insertion order so filtering or rescheduling cannot change its colour.
 const mapTone=t=>MAP_TONES[T.indexOf(t)%MAP_TONES.length];
@@ -39,7 +68,12 @@ function scene(){
    if(!ms.length)return;
    const pp=ms.map(s=>sll(t,s)),tone=mapTone(t),alert=badgeOf(t);
    fit.push(...pp);
-   routes.push({pts:pp,tone,walk:legWalk(ms).slice(1),a:'mload:'+t.id});
+   if(t.id==='bay'){
+    const start=oll(t);
+    fit.push(start);
+    routes.push({pts:[start,...pp],tone,walk:[],showcase:true,a:'mload:'+t.id});
+    pins.push({meet:1,ll:start,label:'Meet at Bayfront MRT Exit B, 9:10 AM'});
+   }else routes.push({pts:pp,tone,walk:legWalk(ms).slice(1),a:'mload:'+t.id});
    pp.slice(1).forEach(ll=>pins.push({dot:1,ll,tone}));
    pins.push({ll:pp[0],tone,icon:t.i,photo:isMacRitchieTrip(t)?activityPhotoSource(ms[0],t):PH[t.id],photoFallback:isMacRitchieTrip(t)?activityPhotoBackup(ms[0]):'',mark:t.b,alert,a:'mload:'+t.id,
     label:t.n+(alert?', needs your attention':'')});
@@ -56,13 +90,19 @@ function scene(){
  /* Collapsed: fit the whole itinerary as in the original compact map.
     Expanded: focus on the active leg without removing other pins. */
  const fit=[...cur],focusLeg=!!S.nav&&!S.fk&&S.pc==null&&!!S.mx&&cur.length>0;
+ if(t.id==='bay'&&!S.fk){
+  const start=oll(t);
+  routes.forEach(r=>{r.pts=[start,...r.pts];r.walk=[];r.showcase=true});
+  fit.push(start);
+  pins.push({meet:1,ll:start,label:'Meet at Bayfront MRT Exit B, 9:10 AM'});
+ }
  if(focusLeg){
   const a=Math.max(0,cu-1),b=Math.min(cur.length,Math.max(cu+1,2));
   fit.splice(0,fit.length,...cur.slice(a,b));
  }
  if(fk&&!focusLeg)(me=='fork'?mp:fp).forEach(p=>fit.push(p));
  mine.forEach((s,i)=>{if((S.fk=='flag'||S.fk=='alts')&&i!==S.fl[S.fi])return;const ll=cur[i],fr=S.fk&&S.fr[i],reel=R.findIndex(r=>r.n===s.n),
-  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='bay'?activityPhotoSource(s,t):(isMacRitchieTrip(t)?activityPhotoSource(s,t):RP[reel]),photoFallback:isMacRitchieTrip(t)?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`};
+  o={ll,tone:me=='fork'?forkTone(t):tone,icon:s.i,photo:t.id==='bay'?activityPhotoSource(s,t):(isMacRitchieTrip(t)?activityPhotoSource(s,t):RP[reel]),photoFallback:isMacRitchieTrip(t)?activityPhotoBackup(s):'',mark:i+1,label:`Stop ${i+1}: ${s.n}`,tour:t.id==='bay'};
   if(fr){Object.assign(o,{tone:'coral',alert:'!',a:'fsel:'+i});if(S.fl[S.fi]==i)o.cls='editing sel'}
   else if(S.fk=='alts')o.cls='dim';
   else if(!S.fk){if(t.st=='voting'&&!t.vs.P&&s.m==0)o.alert='!';if(lv&&i<cu){o.mark=ic('check',14);o.tone='done'}if(lv&&i==cu)o.cls='sel';o.a='pstop:'+i;if(S.pc===i)o.cls='sel'}
@@ -108,13 +148,14 @@ function pathD(P){if(P.length<2)return '';const f=n=>n.toFixed(1),q=p=>f(p[0])+'
  let d=`M${q(P[0])}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;d+=`C${f(p1[0]+(p2[0]-p0[0])/6)} ${f(p1[1]+(p2[1]-p0[1])/6)} ${f(p2[0]-(p3[0]-p1[0])/6)} ${f(p2[1]-(p3[1]-p1[1])/6)} ${q(p2)}`}return d}
 function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
  if(p.you)return `<span class="you" style="${L}" role="img" aria-label="You are here"></span>`;
+ if(p.meet)return `<span class="map-meet" style="${L}" role="img" aria-label="${esc(p.label)}"><span class="map-meet-dot"></span><span class="map-meet-text">Start · 9:10</span></span>`;
  if(p.dot)return `<span class="mdot tone-${p.tone}" style="${L}" aria-hidden="true"></span>`;
  if(p.pill)return `<button class="pb tone-${p.tone}" style="${L}" data-a="${p.a}" aria-label="${p.pill}’s path">${p.pill}</button>`;
  if(p.lab)return `<span class="pl2" style="${L}">${p.lab}</span>`;
  const g=p.a?'button':'span',badge=p.alert||p.mark;
  const photo=p.photo?(/^(?:https:\/\/|assets\/)/.test(p.photo)?`<img src="${esc(p.photo)}" alt="" loading="eager" decoding="async" onerror="photoLoadFallback(this,'${esc(p.photoFallback||'')}')">`:Pic(p.photo,p.label,96)):'';
  const accessible=p.a?`data-a="${p.a}"`:'role="img"';
- return `<${g} class="pn tone-${p.tone} ${p.cls||''}" style="${L};z-index:${Math.round(y)}" ${accessible} aria-label="${esc(p.label)}">
+ return `<${g} class="pn tone-${p.tone} ${p.tour?'tour-stop':''} ${p.cls||''}" style="${L};z-index:${Math.round(y)}" ${accessible} aria-label="${esc(p.label)}">
   <span class="pn-face" aria-hidden="true"></span>${PIN_RIM}
   <span class="pn-cover img-fallback" aria-hidden="true">${S.nav?'':ic(p.icon,18)}${photo}${p.alert?`<span class="pn-mark">${p.mark}</span>`:''}</span>
   <span class="bg${p.tone==='done'&&p.mark?' done':''}" aria-hidden="true">${badge}</span>
@@ -123,17 +164,20 @@ function pinH(p,x,y){const L=`left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`;
 function routeH(r,project){
  const P=r.pts.map(project),d=pathD(P);
  if(!d)return '';
- const width=r.muted?12:16,dots=` stroke-dasharray="0.1 ${width+10}"`,runs=[];
+ const width=r.muted?12:r.showcase?8:16,dots=` stroke-dasharray="0.1 ${width+10}"`,runs=[];
  for(let i=0;i<P.length-1;i++){const w=!!(r.walk&&r.walk[i]),L=runs[runs.length-1];if(L&&L.w==w)L.b=i+1;else runs.push({a:i,b:i+1,w})}
  const seg=(cls,sw)=>runs.map(u=>`<path class="${cls}" d="${pathRange(P,u.a,u.b)}" stroke-width="${sw}"${u.w?dots:''}/>`).join('');
- return `<g class="route tone-${r.tone}${r.faded?' faded':''}">${seg('route-edge',width)}${seg('route-main',r.muted?8:11)}</g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
+ return `<g class="route tone-${r.tone}${r.faded?' faded':''}">${seg('route-edge',width)}${seg('route-main',r.muted?8:r.showcase?5:11)}</g>${r.a?`<path class="rh" d="${d}" data-a="${r.a}"/>`:''}`;
 }
 function mapDraw(){const h=$('#mp');if(!h)return;const W=h.clientWidth,H=h.clientHeight;if(!W||!H)return;
+ if(GLMAP&&!GLFAILED)GLMAP.jumpTo({center:[M.lng,M.lat],zoom:Math.max(0,M.z-1)});
+ if(!GLREADY){
  const zi=Math.max(2,Math.min(18,Math.round(M.z))),sc=2**(M.z-zi),[cx,cy]=MERC(M.lat,M.lng,zi),n=2**zi,ts=256*sc,x0=Math.floor((cx-W/2/sc)/256)-1,x1=Math.floor((cx+W/2/sc)/256)+1,y0=Math.floor((cy-H/2/sc)/256)-1,y1=Math.floor((cy+H/2/sc)/256)+1,want=new Set(),C=TILEBOX._t;
  for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++){if(y<0||y>=n)continue;const k=zi+'/'+x+'/'+y;want.add(k);let im=C[k];
   if(!im){im=C[k]=new Image();im.alt='';im.draggable=false;im.onload=()=>im.classList.add('ld');im.onerror=()=>{};im.src=tileUrl(zi,((x%n)+n)%n,y);TILEBOX.appendChild(im);if(im.complete&&im.naturalWidth)im.classList.add('ld')}
   im.style.left=((x*256-cx)*sc+W/2).toFixed(2)+'px';im.style.top=((y*256-cy)*sc+H/2).toFixed(2)+'px';im.style.width=im.style.height=(ts+.6).toFixed(2)+'px'}
  for(const k in C)if(!want.has(k)){C[k].remove();delete C[k]}
+ }
  const sc2=scene(),[mx,my]=MERC(M.lat,M.lng,M.z),pr=ll=>{const q=MERC(ll[0],ll[1],M.z);return[q[0]-mx+W/2,q[1]-my+H/2]};
  $('#mpr .routes').innerHTML=sc2.routes.map(r=>routeH(r,pr)).join('');
  $('#mpp').innerHTML=sc2.pins.filter(p=>!p.lab).map(p=>{const q=pr(p.ll);return pinH(p,q[0],q[1])}).join('');
@@ -158,6 +202,8 @@ function mapReframe(animate=true){
 function mapAfter(){
  const h=$('#mp');if(!h)return;
  const l=$('#mpl');if(TILEBOX.parentNode!==l)l.prepend(TILEBOX);
+ mapGlAttach();
+ if(GLMAP)requestAnimationFrame(()=>{if(GLMAP&&!GLFAILED)GLMAP.resize()});
  if(M.key!==mapKey()){mapReframe(true);return}
  showMapRecenter();mapDraw();
 }

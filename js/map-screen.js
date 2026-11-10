@@ -9,7 +9,8 @@ const HIKE_LEG_DISTANCE=[
 const navSheet=()=>{
  const t=trip(S.mapTrip),ms=mstops(t),lk=!fin(t),lv=ms.length>0&&live(t),
   cu=lv?Math.min(S.leg,ms.length-1):0,
-  pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & ');
+  pn2=pend(t).map(k=>k=='P'?'you':PE[k][2]).join(' & '),
+  meetup=t.id==='bay'?`<div class="bay-meet-row"><span class="bay-meet-icon">${ic('map-pin',18)}</span><span class="gr"><b>9:10 am · Meet-up</b><small>${esc(t.origin)}</small></span></div><div class="bay-route-note">Planned walking stop order · not live turn-by-turn directions</div>`:'';
  if(lv){
   const c=ms[cu],g=LEG(c),meet=g.start,
    hike=isMacRitchieTrip(t),hikeDistance=hike?HIKE_LEG_DISTANCE[cu]:null,
@@ -25,7 +26,7 @@ const navSheet=()=>{
     :g.text||'Travel details unavailable',
    targetName=hikeToLunch?'Venus Drive exit':c.n;
   return `<div class="nvh"><div class="nvh-row"><div class="nvh-eta"><span class="kick">Stop ${cu+1} of ${ms.length}</span><div class="nvh-big">${ic(modeIcon,32)}<b>${metric}${unit?' '+unit:''}</b></div><div class="nvh-to">to ${esc(targetName)}</div><div class="nvh-meta"><span>${esc(detail)}</span></div></div></div><div class="nvh-bar" role="img" aria-label="Stop ${cu+1} of ${ms.length}">${ms.map((_,i)=>`<i class="${i<cu?'d':i==cu?'n':''}"></i>`).join('')}</div></div>
- ${NavTL(t,ms,cu,lv)}`;
+ ${meetup}${NavTL(t,ms,cu,lv)}`;
  }
  const sub=lk?`Locked until ${pn2} voted. <button class="lk" data-a="mvote">Go to vote</button>`:`No stops in the itinerary. <button class="lk" data-a="opentrip">Open trip</button>`;
  return `<div class="pad"><p class="nvs">${sub}</p></div>${NavTL(t,ms,cu,lv)}`;
@@ -60,7 +61,7 @@ V.map=()=>{const L=S.nav?trip(S.mapTrip):null;let top='',card='';if(L&&(S.fk=='f
  else if(L){const can=forkWin(L)&&fin(L)&&!S.fk&&dd(L.date)>=0;
   top=`<div class="mtop2"><div class="mrow">${S.fk?(S.fk=='alts'&&S.ap!=null?IBtn('arrow-left','fback','Back'):IBtn('x','fexit','Exit alternatives')):`<button class="chip" data-a="endnav" aria-label="Close trip">${ic('map-close',20)}<span>${L.n}</span></button>`}${can?`<button class="vbtn" data-a="forkopen">${ic('route-split',20)}View alternatives</button>`:''}</div>${L.fork&&!S.fk?pathChips(L):''}</div>`;
   card=S.fk=='alts'&&S.ap!=null&&S.alts[S.ap]?AltCard(S.alts[S.ap],S.ap):S.fk=='flag'||S.fk=='alts'?flagCard(L):`<div class="msh nav${S.mx?' x':''}" id="msh"><div class="grab" role="button" tabindex="0" aria-label="Expand or collapse panel" data-a="toggleMx"></div><div id="mc">${navSheet()}</div></div>`}
- return `<div class="mp" id="mp"><div class="mpl" id="mpl"><svg class="mp-r" id="mpr" aria-hidden="true">${MAP_DEFS}<g class="routes"></g></svg><div class="mp-p" id="mpp"></div><div class="mp-label-layer" id="mplabel"></div></div><div class="mp-fade"></div>${L&&!S.fk&&!pcs?`<button id="map-recenter" type="button" class="map-recenter" data-a="mapcenter" title="Recenter route" aria-label="Recenter route on map"${M.moved?'':' hidden'}>${ic('compass',20)}</button>`:''}<div class="mp-attr">© OpenStreetMap contributors</div>${top}${card}</div>`};
+ return `<div class="mp" id="mp"><div class="mpl" id="mpl"><svg class="mp-r" id="mpr" aria-hidden="true">${MAP_DEFS}<g class="routes"></g></svg><div class="mp-p" id="mpp"></div><div class="mp-label-layer" id="mplabel"></div></div><div class="mp-fade"></div>${L&&!S.fk&&!pcs?`<button id="map-recenter" type="button" class="map-recenter" data-a="mapcenter" title="Recenter route" aria-label="Recenter route on map"${M.moved?'':' hidden'}>${ic('compass',20)}</button>`:''}<div class="mp-attr"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a></div>${top}${card}</div>`};
 
 /* ---------- fork flow: layers ---------- */
 const exiHTML=()=>{const t=trip(S.mapTrip);return `<div class="mh"><div class="gr"><h2>What’s changed?</h2><div class="cap sm">${t.n}</div></div>${IBtn('x','closeLy','Close')}</div><div class="pad">${art('fork-intro')}</div><p class="cap pad" style="margin:12px 0 4px">Pick what’s going on. We’ll flag the stops you can’t do and suggest calmer places nearby.</p><div role="group" aria-label="What changed">${EXI.map(e=>`<button class="cx" role="checkbox" aria-checked="${S.fx.includes(e.id)}" data-a="fx:${e.id}"><span class="xic">${ic(e.ic,22)}</span><span class="gr"><b>${e.n}${e.prof&&S.p.health.includes(e.prof)?' <span class="tag">On your profile</span>':''}</b><span class="cap sm">${e.s}</span></span><span class="cbx">${ic('check',16)}</span></button>`).join('')}</div><div class="note">${ic('git-branch',16)}<span>Your group stays on the main path. A trip can have one extra path, and anyone can join it from the map.</span></div><div class="pad" style="margin-top:16px">${Btn('Flag affected stops','fapply',{off:!S.fx.length})}</div>`};
