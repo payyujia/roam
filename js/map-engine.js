@@ -1,10 +1,8 @@
 /* =========================================================
-   MAP ENGINE: real raster tiles (Esri, no API key), routes + pins drawn on top.
-   Set MAP_STYLE to 'light' or 'dark' for Esri Light/Dark Gray.
+   MAP ENGINE: OpenStreetMap raster tiles with muted Roam styling in css/map.css.
+   Routes and photo pins are rendered independently above the basemap.
    ========================================================= */
-const MAP_STYLE='color'; /* 'color' | 'light' | 'dark' */
-const MAP_LAYERS={color:'World_Street_Map',light:'Canvas/World_Light_Gray_Base',dark:'Canvas/World_Dark_Gray_Base'};
-const tileUrl=(z,x,y)=>`https://server.arcgisonline.com/ArcGIS/rest/services/${MAP_LAYERS[MAP_STYLE]}/MapServer/tile/${z}/${y}/${x}`;
+const tileUrl=(z,x,y)=>`https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
 const MERC=(lat,lng,z)=>{const s=256*2**z,sn=Math.sin(lat*Math.PI/180);return[(lng+180)/360*s,(.5-Math.log((1+sn)/(1-sn))/(4*Math.PI))*s]};
 const UNMERC=(x,y,z)=>{const s=256*2**z,n=Math.PI-2*Math.PI*y/s;return[180/Math.PI*Math.atan(.5*(Math.exp(n)-Math.exp(-n))),x/s*360-180]};
 const M={lat:1.35,lng:103.83,z:11,key:null,ok:0,raf:0,moved:false};
