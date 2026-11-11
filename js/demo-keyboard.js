@@ -56,6 +56,67 @@
  const escapeText=v=>String(v).replace(/[&<>"']/g,ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
  })[ch]);
+
+ /* iOS keycap preview for both virtual taps and physical desktop typing.
+    Only the focused chat composer activates this effect. */
+ let activeKeyPress=null;
+ const feedbackButton=(kind,value)=>{
+  if(kind==='char')return [...keyboard.querySelectorAll('.dk-char')].find(button=>
+   button.dataset.kbKey?.toLowerCase()===String(value).toLowerCase())||null;
+  return kind==='space'?keyboard.querySelector('.dk-space'):
+   keyboard.querySelector('.dk-key[data-kb-action="'+value+'"]');
+ };
+ function paintKeyPress(button){
+  if(!button||!activeKeyPress)return;
+  activeKeyPress.button=button;
+  button.classList.add('dk-pressed');
+  if(activeKeyPress.kind==='char'){
+   button.dataset.kbPop=button.textContent.trim();
+   button.classList.add('dk-pop');
+  }
+ }
+ function clearKeyPress(){
+  if(!activeKeyPress)return;
+  clearTimeout(activeKeyPress.timer);
+  const button=activeKeyPress.button;
+  if(button){
+   button.classList.remove('dk-pressed','dk-pop');
+   delete button.dataset.kbPop;
+  }
+  activeKeyPress=null;
+ }
+ function startKeyPress(button,source){
+  if(!button)return;
+  clearKeyPress();
+  const kind=button.classList.contains('dk-char')?'char':
+   button.classList.contains('dk-space')?'space':'action';
+  activeKeyPress={kind,value:kind==='char'||kind==='space'?
+   button.dataset.kbKey:button.dataset.kbAction,source,button:null,
+   started:Date.now(),timer:null};
+  paintKeyPress(button);
+ }
+ function restoreKeyPress(){
+  if(!activeKeyPress)return;
+  const button=feedbackButton(activeKeyPress.kind,activeKeyPress.value);
+  if(button)paintKeyPress(button);
+  else clearKeyPress();
+ }
+ function endKeyPress(source){
+  if(!activeKeyPress||activeKeyPress.source!==source)return;
+  clearTimeout(activeKeyPress.timer);
+  /* Keep quick key presses visible for at least 125ms. */
+  const left=Math.max(0,125-(Date.now()-activeKeyPress.started));
+  activeKeyPress.timer=setTimeout(clearKeyPress,left);
+ }
+ function physicalKeyButton(event){
+  if(event.key===' ')return keyboard.querySelector('.dk-space');
+  const actions={Backspace:'delete',Enter:'send',Shift:'shift'};
+  if(actions[event.key])return keyboard.querySelector(
+   '.dk-key[data-kb-action="'+actions[event.key]+'"]');
+  if(event.key.length!==1)return null;
+  return feedbackButton('char',event.key);
+ }
+
  const key=(value,label='',cls='')=>'<button type="button" class="dk-key '+cls+
   '" data-kb-key="'+escapeText(value)+'" aria-label="'+escapeText(label||value)+'">'+
   escapeText(label||value)+'</button>';
@@ -404,7 +465,7 @@
  /* Render the same four-row iPhone-style typing keyboard for letters,
     numbers and symbols. Keep the chat input editable by real keyboard too. */
  function draw(){
-  if(emojiMode){drawEmoji();return}
+  if(emojiMode){clearKeyPress();drawEmoji();return}
   const layout=numbers?
    (shifted?
     [
@@ -449,6 +510,7 @@
    '<div class="dk-accessories" aria-hidden="true"><span class="dk-globe">'+globeIcon+'</span><span class="dk-mic">'+micIcon+'</span></div>';
   updateSend();
   updatePredictions();
+  restoreKeyPress();
  }
  function updateSend(){
   const button=keyboard.querySelector('.dk-return');
@@ -480,6 +542,7 @@
   opened=false;
   dev.classList.remove('demo-keyboard-open');
   keyboard.hidden=true;
+  clearKeyPress();
   if(blur&&document.activeElement?.id==='cin')document.activeElement.blur();
  }
  function insert(value){
@@ -509,6 +572,7 @@
  }
  keyboard.addEventListener('pointerdown',e=>{
   if(e.target.closest('button'))e.preventDefault(); // retain input focus
+  startKeyPress(e.target.closest('.dk-key'),'pointer');
   clearTimeout(skinTimer);
   const candidate=e.target.closest('.dk-emoji-choice');
   if(!candidate||!SKIN_TONES[candidate.dataset.kbKey]){
@@ -521,8 +585,8 @@
    suppressedEmojiKey=candidate.dataset.kbKey;
   },480);
  });
- keyboard.addEventListener('pointerup',()=>clearTimeout(skinTimer));
- keyboard.addEventListener('pointercancel',()=>clearTimeout(skinTimer));
+ keyboard.addEventListener('pointerup',()=>{clearTimeout(skinTimer);endKeyPress('pointer')});
+ keyboard.addEventListener('pointercancel',()=>{clearTimeout(skinTimer);clearKeyPress()});
  keyboard.addEventListener('contextmenu',e=>{
   const candidate=e.target.closest('.dk-emoji-choice');
   if(candidate&&SKIN_TONES[candidate.dataset.kbKey]){
@@ -618,12 +682,17 @@
  },true);
  document.addEventListener('keyup',e=>{
   if(opened&&e.target.id==='cin')updatePredictions();
+  endKeyPress('physical:'+e.code);
  },true);
  document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&opened){
-   e.preventDefault();e.stopPropagation();hide(true);
+   e.preventDefault();e.stopPropagation();hide(true);return;
   }
+  if(!opened||emojiMode||e.target.id!=='cin'||e.ctrlKey||e.altKey||e.metaKey||e.isComposing)return;
+  const button=physicalKeyButton(e);
+  if(button)startKeyPress(button,'physical:'+e.code);
  },true);
+ window.addEventListener('blur',clearKeyPress);
  // Clicking outside the composer dismisses the demonstration keyboard.
  document.addEventListener('pointerdown',e=>{
   if(!opened||e.target.closest('#demo-keyboard,#s-thread .comp'))return;
