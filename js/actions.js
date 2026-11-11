@@ -81,9 +81,9 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
      the original Daytrip / D-N naming for every other destination. */
   const title=days===1&&/^macritchie(?:\s+hike)?$/i.test(d)?'MacRitchie Hike':days===1?`${esc(d)} Daytrip`:`${esc(d)} ${days}D${days-1}N`;
   T.push({id,dest:esc(d),n:title,date:s,t1:'08:30',c,b:esc(d[0].toUpperCase()),i:'map-pin',m,vs:Object.fromEntries([...m].map(k=>[k,0])),st:'voting',close:addD(NOW,7),budget:`SGD ${f.budget}`,origin:'Your location',o:[16,48],note:'',stops:f.auto?recs(d):[]});
-  /* Each new trip gets its own chat with the same invited members. */
-  CH.push({n:title,i:'map-pin',c,tid:id,t:'',u:0,u2:m,r:[],m:[],createdAt:Date.now()});
-  cur().pop();S.cur=id;S.step=1;S.seg='up';tab('trips');rr();go('trip');toast('Trip created. Invites sent.',null,'check')},
+  /* Group chats are only needed when the trip has at least one invited friend. */
+  if(m.length>1)CH.push({n:title,i:'map-pin',c,tid:id,t:'',u:0,u2:m,r:[],m:[],createdAt:Date.now()});
+  cur().pop();S.cur=id;S.step=1;S.seg='up';tab('trips');rr();go('trip');toast(m.length>1?'Trip created. Invites sent.':'Solo trip created.',null,'check')},
  feed:k=>{S.fyp=+k;render('reels')},rsave:gi=>{S.saved[gi]=!S.saved[gi];render('reels');toast(S.saved[gi]?'Saved to your places':'Removed from saved')},rshare:gi=>{S.shared[gi]=!S.shared[gi];render('reels');toast(S.shared[gi]?'Shared':'Share cancelled')},
  addto:gi=>lay('sheet',tripPick(+gi),'Add to trip'),addtrip:(gi,id)=>{const t=trip(id),r=R[+gi];if(t.stops.some(s=>s.n==r.n)){A.closeLy();return toast(`${r.n} is already in ${t.n}`)}addStop(t,{n:r.n,i:r.i,s:r.loc,k:'Eat'});A.closeLy();rr();toast(`Added to ${t.n}'s vote list`)},
  thread:i=>{S.th=+i;CH[i].u=0;S.typing=0;go('thread');bottom()},
