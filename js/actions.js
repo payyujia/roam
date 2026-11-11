@@ -86,7 +86,7 @@ const A={tadd:(k,v)=>{const f=FR.find(x=>x[0]==v);if(f&&!S.f.coll.includes(f[1])
   cur().pop();S.cur=id;S.step=1;S.seg='up';tab('trips');rr();go('trip');toast(m.length>1?'Trip created. Invites sent.':'Solo trip created.',null,'check')},
  feed:k=>{S.fyp=+k;render('reels')},rsave:gi=>{S.saved[gi]=!S.saved[gi];render('reels');toast(S.saved[gi]?'Saved to your places':'Removed from saved')},rshare:gi=>{S.shared[gi]=!S.shared[gi];render('reels');toast(S.shared[gi]?'Shared':'Share cancelled')},
  addto:gi=>lay('sheet',tripPick(+gi),'Add to trip'),addtrip:(gi,id)=>{const t=trip(id),r=R[+gi];if(t.stops.some(s=>s.n==r.n)){A.closeLy();return toast(`${r.n} is already in ${t.n}`)}addStop(t,{n:r.n,i:r.i,s:r.loc,k:'Eat'});A.closeLy();rr();toast(`Added to ${t.n}'s vote list`)},
- thread:i=>{S.th=+i;CH[i].u=0;S.typing=0;go('thread');bottom()},
+ thread:i=>{S.th=+i;CH[i].u=0;S.typing=CH[i].replyPending>0?1:0;go('thread');bottom()},
  send:()=>{const el=$('#cin'),v=el.value.trim();if(!v)return;const c=CH[S.th];c.m.push(['P',v,null,null,null,Date.now()]);S.typing=1;render('thread');$('#cin').focus();bottom();const th=S.th;setTimeout(()=>{const k=c.m.find(x=>x[0]!='P')[0];c.m.push([k,c.r[c.m.length%c.r.length],null,null,null,Date.now()]);if(S.th==th)S.typing=0;render('thread');bottom()},1500)},
  ptag:(k,x,el)=>{const a=S.p[k];S.p[k]=a.includes(x)?a.filter(y=>y!=x):[...a,x];el.classList.toggle('on');el.setAttribute('aria-pressed',S.p[k].includes(x));pd()},
  psave:()=>{S.p.dirty=0;render('profile');chrome();toast('Profile saved')},undo:()=>{S.undo&&S.undo();S.undo=null;$('#toast').classList.remove('on')}};
