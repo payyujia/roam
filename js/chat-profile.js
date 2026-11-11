@@ -22,7 +22,7 @@ const chatDemoSentAt=new WeakMap(CH.map(c=>{
 const chatLastMessage=c=>c.m.slice().reverse().find(m=>m[1]||m[3]==='fork')||null;
 const chatLatestSentAt=c=>{
  const m=chatLastMessage(c),ts=m&&m[5];
- return typeof ts==='number'&&Number.isFinite(ts)&&ts>0?ts:chatDemoSentAt.get(c)||null;
+ return typeof ts==='number'&&Number.isFinite(ts)&&ts>0?ts:c.createdAt||chatDemoSentAt.get(c)||null;
 };
 /* Use a local 24-hour clock time instead of a relative age for today/recent
    conversations, matching the 24-hour status-bar style. */
@@ -38,13 +38,14 @@ const syncChatAges=()=>{
   if(!ts)return;
   el.textContent=chatTimeOfDay(ts);
   const recorded=chatLastMessage(c)?.[5];
-  el.title=recorded?'Sent '+new Date(ts).toLocaleString():'Demo time estimated from sample label';
+  el.title=recorded?'Sent '+new Date(ts).toLocaleString():c.createdAt?'Chat created '+new Date(ts).toLocaleString():'Demo time estimated from sample label';
  });
 };
 const chatList=()=>{
  const q=(S.cq||'').trim().toLowerCase();
  const has=m=>(m[1]||'').toLowerCase().includes(q);
- const L=CH.map((c,i)=>[c,i]).filter(([c])=>!q||c.n.toLowerCase().includes(q)||c.m.some(has));
+ const L=CH.map((c,i)=>[c,i]).filter(([c])=>!q||c.n.toLowerCase().includes(q)||c.m.some(has))
+   .sort(([a],[b])=>(b.createdAt||0)-(a.createdAt||0));
  return L.length?L.map(([c,i])=>{
   const hit=q&&c.m.slice().reverse().find(has);
   const latest=chatLastMessage(c),preview=hit||latest;
@@ -52,7 +53,7 @@ const chatList=()=>{
   const body=preview?(preview[1]||'Shared a path'):'No messages yet';
   const ts=chatLatestSentAt(c),timeLabel=ts?chatTimeOfDay(ts):c.t||'';
   const recorded=latest&&typeof latest[5]==='number';
-  const fullTime=recorded?'Sent '+new Date(ts).toLocaleString():ts?'Demo time estimated from sample label':'Demo conversation: send time not recorded';
+  const fullTime=recorded?'Sent '+new Date(ts).toLocaleString():c.createdAt?'Chat created '+new Date(ts).toLocaleString():ts?'Demo time estimated from sample label':'Demo conversation: send time not recorded';
   return Row({
    x:'chat-row',a:'thread:'+i,
    label:c.n+(c.u?`, ${c.u} unread`:''),
