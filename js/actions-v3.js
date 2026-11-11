@@ -191,20 +191,33 @@ Object.assign(A,{
  pnotif:k=>{S.p.notif[k]=S.p.notif[k]?0:1;pd();render('profile')},prate:(id,n)=>{const t=trip(id);if(!t||!t.m.includes('P')||!PAST().some(p=>p.id===id))return;S.p.ratings={...(S.p.ratings||{}),[id]:+n};if(id==='sun')S.p.rate=+n;pd();render('pdet')}});
 /* send keeps working with the new message shape */
 A.send=()=>{
- const el=$('#cin'),v=el.value.trim();if(!v)return;
- const c=CH[S.th];
- /* Keep seeded demo replies, but don't simulate replies from friends in new chats. */
- const responder=c.m.find(m=>m[0]!=='P')?.[0],demoReply=!!(responder&&c.r?.length);
- c.m.push(['P',v,null,null,null,Date.now()]);
- S.typing=demoReply?1:0;
- render('thread');el.focus();bottom();
- if(!demoReply){tabbar();return}
- const th=S.th;
+ const input=$('#cin'),value=input?.value.trim();
+ if(!value)return;
+ const thread=S.th,chat=CH[thread];
+ if(!chat)return;
+ /* Generate from this trip's details, chat context and invited friend profiles. */
+ const planned=ROAM_CHAT_REPLIES.reply(chat,trip(chat.tid),value);
+ chat.m.push(['P',value,null,null,null,Date.now()]);
+ if(planned)chat.replyPending=(chat.replyPending||0)+1;
+ S.typing=chat.replyPending>0?1:0;
+ render('thread');
+ $('#cin')?.focus();
+ bottom();
+ if(!planned){tabbar();return}
+ /* A short typing delay makes the frontend-only simulation feel conversational. */
  setTimeout(()=>{
-  c.m.push([responder,c.r[c.m.length%c.r.length],null,null,null,Date.now()]);
-  if(S.th===th){S.typing=0;render('thread');bottom()}
+  chat.m.push([planned.speaker,planned.text,null,null,null,Date.now()]);
+  chat.replyPending=Math.max(0,(chat.replyPending||1)-1);
+  const viewing=S.tab==='chat'&&S.th===thread&&topId()==='thread';
+  if(viewing){
+   S.typing=chat.replyPending>0?1:0;
+   render('thread');bottom();
+  }else{
+   chat.u=(chat.u||0)+1;
+   if(S.tab==='chat'&&topId()==='chat'&&!S.cq)render('chat');
+  }
   tabbar();
- },1500);
+ },Math.min(2300,1000+value.length*18));
 };
 /* swipe in from the left edge = back (pushed screens only) */
 let SW=null;
